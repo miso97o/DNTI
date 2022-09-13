@@ -1,0 +1,39 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          naver:
+            redirect-uri: '{baseUrl}/{action}/oauth2/code/{registrationId}'
+            scope: name,email
+            authorization-grant-type: authorization_code
+            client-secret: rAQ1SkZ5E9
+            client-id: WUlcp4OjVaJlRnrWOplu
+            client-name: Naver
+        provider:
+          naver:
+            user-name-attribute: response
+            authorization-uri: https://nid.naver.com/oauth2.0/authorize
+            user-info-uri: https://openapi.naver.com/v1/nid/me
+            token-uri: https://nid.naver.com/oauth2.0/token
+  datasource:
+    password: ssafyA601
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: a601
+    url: jdbc:mysql://localhost:3306/dnti?serverTimezone=UTC
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: 'true'
+        show_sql: 'true'
+  profiles:
+    include: oauth
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace

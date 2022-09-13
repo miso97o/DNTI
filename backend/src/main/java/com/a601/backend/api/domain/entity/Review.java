@@ -1,6 +1,6 @@
-package com.a601.backend.api.entity;
+package com.a601.backend.api.domain.entity;
 
-import com.a601.backend.api.enums.KeywordType;
+import com.a601.backend.api.domain.enums.KeywordType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,14 +32,13 @@ public class Review extends BaseEntity{
     private String content;
 
     @Column(nullable = true)
-    private double score;
+    private Double score;
 
     @Column(nullable = true)
-    private Long reviewlike;
+    private Integer reviewLike;
 
     @Column(nullable = true)
     private KeywordType keyword;
-
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     private List<ReviewLike>reviewLikeList=new ArrayList<>();

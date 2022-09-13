@@ -1,4 +1,4 @@
-package com.a601.backend.api.entity;
+package com.a601.backend.api.domain.entity;
 
 import lombok.*;
 
@@ -16,12 +16,12 @@ import java.util.List;
 public class User {
 
     @Id
-    private String userid;
+    private String userId;
 
     @Column(unique = true, nullable = true, length = 10)
-    private String nickname;
+    private String nickName;
 
-    private LocalDate birthyear;
+    private LocalDate birthYear;
 
     @Column(nullable = true, length = 10)
     private String gu;

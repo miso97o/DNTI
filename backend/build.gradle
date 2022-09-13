@@ -28,6 +28,11 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//swagger
+	implementation group: 'io.swagger.core.v3', name: 'swagger-annotations', version: '2.2.2'
+	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+
+
 }
 
 tasks.named('test') {
