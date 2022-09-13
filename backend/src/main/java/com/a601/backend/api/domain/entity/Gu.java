@@ -1,4 +1,4 @@
-package com.a601.backend.api.entity;
+package com.a601.backend.api.domain.entity;
 
 import lombok.*;
 
@@ -14,9 +14,11 @@ import java.util.List;
 @Builder
 public class Gu {
     @Id
-    int guId;
+    Integer guId;
+
     @Column(nullable = false)
     String gu;
+
     @OneToMany(mappedBy = "gu", cascade = CascadeType.ALL)
     private List<Dong> dongList = new ArrayList<>();
 }

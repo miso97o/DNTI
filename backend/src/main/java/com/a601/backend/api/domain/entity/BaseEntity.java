@@ -1,4 +1,4 @@
-package com.a601.backend.api.entity;
+package com.a601.backend.api.domain.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

@@ -1,4 +1,4 @@
-package com.a601.backend.api.entity;
+package com.a601.backend.api.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +18,7 @@ public class Board extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long boardid;
+    private Long boardId;
 
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,7 +32,7 @@ public class Board extends BaseEntity{
 
     private Long hit;
 
-    private Long boardlike;
+    private Long boardLike;
 
     @OneToMany(mappedBy = "board",cascade = CascadeType.ALL)
     private List<Reply>replyList=new ArrayList<>();

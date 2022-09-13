@@ -1,4 +1,4 @@
-package com.a601.backend.api.entity;
+package com.a601.backend.api.domain.entity;
 
 import lombok.*;
 
@@ -12,7 +12,8 @@ import javax.persistence.*;
 @Builder
 public class Dong {
     @Id
-    private Long dongId;
+    private Integer dongId;
+
     @Column(nullable = false)
     private String dong;
 
