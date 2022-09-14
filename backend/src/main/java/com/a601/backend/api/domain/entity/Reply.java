@@ -16,7 +16,7 @@ public class Reply extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long replyId;
 
     @JoinColumn(name = "user_id")
     @ManyToOne
