@@ -1,9 +1,9 @@
 package com.a601.backend.api.service;
 
-import com.a601.backend.api.reponse.CommonResult;
-import com.a601.backend.api.reponse.ManyResult;
-import com.a601.backend.api.reponse.OneResult;
-import com.a601.backend.api.reponse.PageResult;
+import com.a601.backend.api.domain.response.CommonResult;
+import com.a601.backend.api.domain.response.ManyResult;
+import com.a601.backend.api.domain.response.OneResult;
+import com.a601.backend.api.domain.response.PageResult;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 

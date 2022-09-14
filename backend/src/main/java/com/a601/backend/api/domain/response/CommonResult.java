@@ -1,4 +1,4 @@
-package com.a601.backend.api.reponse;
+package com.a601.backend.api.domain.response;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
