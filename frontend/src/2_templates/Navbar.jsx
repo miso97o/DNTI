@@ -1,5 +1,5 @@
-import IconLink from "../molecules/IconLink";
-import PrimaryNavigation from "../molecules/PrimaryNavigation";
+import IconLink from "../1_molecules/IconLink";
+import PrimaryNavigation from "../1_molecules/PrimaryNavigation";
 
 export default function Navbar() {
   return (
