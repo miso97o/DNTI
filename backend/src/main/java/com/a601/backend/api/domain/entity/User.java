@@ -19,7 +19,7 @@ public class User {
     private String userId;
 
     @Column(unique = true, nullable = true, length = 10)
-    private String nickName;
+    private String nickname;
 
     private LocalDate birthYear;
 
@@ -42,7 +42,6 @@ public class User {
     private String favorite3;
 
     //연관관계 양방향 맵핑
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Review>reviewList=new ArrayList<>();
 
@@ -52,11 +51,11 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Board>boardList=new ArrayList<>();
 
+//    @Builder.Default
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<BoardLike>boardLikeList=new ArrayList<>();
 
+//    @Builder.Default
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Reply>replyList=new ArrayList<>();
-
-
 }
