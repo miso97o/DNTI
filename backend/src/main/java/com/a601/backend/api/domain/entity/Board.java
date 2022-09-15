@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -30,8 +31,10 @@ public class Board extends BaseEntity{
     @Column(length = 254)
     private String contents;
 
+    @ColumnDefault("0")
     private Long hit;
 
+    @ColumnDefault("0")
     private Long boardLike;
 
     @OneToMany(mappedBy = "board",cascade = CascadeType.ALL)
