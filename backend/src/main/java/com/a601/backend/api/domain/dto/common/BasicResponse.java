@@ -1,4 +1,4 @@
-package com.a601.backend.api.domain.dto.response;
+package com.a601.backend.api.domain.dto.common;
 
 import com.a601.backend.api.domain.enums.ErrorCode;
 import lombok.AllArgsConstructor;
