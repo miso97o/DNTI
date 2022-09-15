@@ -1,7 +1,7 @@
 package com.a601.backend.api.exception;
 
 import com.a601.backend.api.domain.enums.ErrorCode;
-import com.a601.backend.api.domain.response.ErrorResponse;
+import com.a601.backend.api.domain.dto.response.ErrorResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
