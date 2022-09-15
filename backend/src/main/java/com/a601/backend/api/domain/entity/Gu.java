@@ -14,10 +14,7 @@ import java.util.List;
 @Builder
 public class Gu {
     @Id
-    Integer guId;
-
-    @Column(nullable = false)
-    String gu;
+    String guName;
 
     @OneToMany(mappedBy = "gu", cascade = CascadeType.ALL)
     private List<Dong> dongList = new ArrayList<>();
