@@ -17,7 +17,12 @@ function PrimaryNavigation() {
         </div>
         <div className={styles.content}>
           <Link to={`kmMap`}>
-            <p>1KM</p>          
+            <p>1KM</p>
+          </Link>
+        </div>
+        <div className={styles.content}>
+          <Link to={`board`}>
+            <p>게시판</p>
           </Link>
         </div>
         <img

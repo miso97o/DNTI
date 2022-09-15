@@ -5,6 +5,7 @@ import "./index.css";
 import LandingPage from "./3_pages/LandingPage";
 import BoardPage from "./3_pages/BoardPage";
 import DnRecommendPage from "./3_pages/DnRecommendPage";
+import DntiMainComponent from "./2_templates/dnti/DntiMainComponent";
 import DntiResultComponent from "./2_templates/dnti/DntiResultComponent";
 import DntiTestComponent from "./2_templates/dnti/DntiTestComponent";
 import KmMapPage from "./3_pages/KmMapPage";
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
         children: [
           {
             path: "",
+            element: <DntiMainComponent />,
+          },
+          {
+            path: "test",
             element: <DntiTestComponent />,
           },
           {
