@@ -6,12 +6,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ApiResult<T>{
-    private final boolean success;
+    private final int status;
     private final T response;
-    private final ApiError apiError;
-    public ApiResult(boolean success, T response, ApiError apiError) {
-        this.success = success;
-        this.response = response;
-        this.apiError = apiError;
+
+    public ApiResult(int status, T response) {
+        this.status = status;       // 코드
+        this.response = response;   //성공이면 값, 실패면 에러객체
     }
 }
