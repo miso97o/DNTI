@@ -4,13 +4,26 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.Builder;
 
+import java.time.LocalDate;
+
 public class UserRequest {
+    @Getter
+    @Setter
+    @Builder
+    public static class SingIn {
+        String userId;
+        String nickname;
+        Integer birthYear;
+        String gu;
+        String dong;
+    }
+
     @Getter
     @Setter
     @Builder
     public static class NicknameModify {
         String userId;
-        String nickName;
+        String nickname;
     }
 
     @Getter
