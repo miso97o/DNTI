@@ -1,4 +1,4 @@
-package com.a601.backend.api.domain.request;
+package com.a601.backend.api.domain.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;
