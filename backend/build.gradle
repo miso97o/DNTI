@@ -29,7 +29,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	//swagger
 	implementation 'io.springfox:springfox-boot-starter:3.0.0'
-	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.9'
+//	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.9'
 	//Log4JDBC
 	implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
 }
