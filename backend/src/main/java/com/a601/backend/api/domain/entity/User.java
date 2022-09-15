@@ -21,7 +21,7 @@ public class User {
     @Column(unique = true, nullable = true, length = 10)
     private String nickname;
 
-    private LocalDate birthYear;
+    private Integer birthYear;
 
     @Column(nullable = true, length = 10)
     private String gu;
@@ -51,11 +51,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Board>boardList=new ArrayList<>();
 
-//    @Builder.Default
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<BoardLike>boardLikeList=new ArrayList<>();
 
-//    @Builder.Default
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Reply>replyList=new ArrayList<>();
 }
