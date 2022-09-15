@@ -6,8 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
-
-
+    //중복 닉네임 검사
     boolean existsByNickname(String nickname);
 
 }

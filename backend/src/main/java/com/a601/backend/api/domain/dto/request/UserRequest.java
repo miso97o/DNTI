@@ -21,24 +21,10 @@ public class UserRequest {
     @Getter
     @Setter
     @Builder
-    public static class NicknameModify {
+    public static class ModifyAll {
         String userId;
         String nickname;
-    }
-
-    @Getter
-    @Setter
-    @Builder
-    public static class DNTIModify {
-        String userId;
-        String dnti;
-    }
-
-    @Getter
-    @Setter
-    @Builder
-    public static class AddressModify {
-        String userId;
+        Integer birthYear;
         String gu;
         String dong;
     }
@@ -46,16 +32,20 @@ public class UserRequest {
     @Getter
     @Setter
     @Builder
-    public static class Favorite {
+    public static class ModifyDNTI {
         String userId;
-        String favorite;
+        String dnti;
     }
 
     @Getter
     @Setter
     @Builder
-    public static class SignOut{
-        private String memberId;
+    public static class ModifyAddress {
+        String userId;
+        String gu;
+        String dong;
     }
+
+
 
 }
