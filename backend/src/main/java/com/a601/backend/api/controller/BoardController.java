@@ -8,34 +8,57 @@ import com.a601.backend.api.domain.entity.Board;
 import com.a601.backend.api.repository.BoardRepository;
 import com.a601.backend.api.service.BoardService;
 import com.a601.backend.api.service.ResponseService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
+@Api(value = "동네게시판 API")
 @RequestMapping("/board")
 @AllArgsConstructor
 public class BoardController {
     private final BoardService boardService;
-    private final ResponseService responseService;
-    private final BoardRepository boardRepository;
 
     // 게시글 등록
-    @PostMapping
-    public ApiResult writeBoard(@RequestBody BoardRequest.WriteBoard writeBoard) {
-        Board board = Board.builder().boardId(writeBoard.getBoardId()).user(writeBoard.getUser())
-                .title(writeBoard.getTitle()).contents(writeBoard.getContents()).build();
-        boardRepository.save(board);
 
+
+    @ApiOperation(value = "게시글 등록", notes = "성공하면 게시글 id를 리턴")
+    @PostMapping
+    public ApiResult writeBoard(@RequestBody BoardRequest board) {
         // 성공하면 boardId 리턴
-        return new ApiResult<>(200, writeBoard.getBoardId());
+        return new ApiResult<>(200, boardService.writeBoard(board));
     }
-    
+
     // 게시글 하나 조회
+    @ApiOperation(value = "게시글 상세보기", notes = "성공하면 게시글 리턴")
     @GetMapping("/{boardId}")
     public ApiResult selectBoard(@PathVariable("boardId") Long boardId) {
-        Board board = boardService.findByBoardId(boardId);
+        // 성공하면 board 리턴
+        return new ApiResult(200, boardService.findByBoardId(boardId));
+    }
+    // 게시글 여러개 조회
+
+
+
+    // 게시글 삭제
+    @ApiOperation(value = "게시글 삭제", notes = "성공하면 삭제한 게시글 id 리턴")
+    @DeleteMapping("/{boardId}")
+    public ApiResult deleteBoard(@PathVariable("boardId") Long boardId) {
+        boardService.deleteBoard(boardId);
+        return new ApiResult(200, boardId);
+    }
+
+    // 게시글 수정
+    @ApiOperation(value = "게시글 수정", notes = "성공하면 수정한 게시글 리턴")
+    @PatchMapping("/{boardId}")
+    public ApiResult modifyBoard(@RequestBody BoardRequest board, @PathVariable("boardId") Long boardId){
+        boardService.modifyBoard(board, boardId);
         return new ApiResult(200, board);
     }
 }
