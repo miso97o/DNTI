@@ -19,12 +19,17 @@
   height: 60px;
 }
 
-p {
+.link {
   font-size: 24px;
   font-family: Noto Sans KR, sans-serif;
   font-weight: 500;
   color: rgba(0, 0, 0, 1);
   text-align: center;
   word-wrap: break-word;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
 }
 

@@ -1,0 +1,156 @@
+/* Landingpagein */
+
+@import url("https://fonts.googleapis.com/css2?family=Noto Sans KR:wght@500;700&display=swap");
+
+
+.clip-contents {
+  overflow: hidden;
+}
+
+.flex-col-hstart-vstart {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.flex-col-hcenter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flex-col-hcenter-vstart {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.flex-row-vcenter-hsb {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-row-vcenter-hcenter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-hcenter {
+  justify-content: center;
+}
+
+.landingpagein {
+  position: relative;
+  background-color: rgba(255, 255, 255, 1);
+  width: 1920px;
+  height: 1080px;
+}
+
+.rectangle-53 {
+  position: absolute;
+  top: 581px;
+  left: 0px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 4%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  height: 264px;
+  width: 100%;
+}
+
+.group-583 {
+  position: absolute;
+  top: 50px;
+  none: 0px;
+  height: 1030px;
+  width: 100%;
+}
+
+.navbar {
+  margin-bottom: 175px;
+  box-sizing: border-box;
+  border-bottom: 1.3px solid rgba(201, 201, 201, 1);
+  width: 100%;
+}
+
+.navbaritems {
+  width: fit-content;
+  height: 100%;
+}
+
+.navbarlinktolandingbtn {
+  height: 100%;
+}
+
+.maki-town {
+  width: 80px;
+  height: 67.1px;
+  margin-right: 6px;
+}
+
+.txt-496 {
+  font-size: 70px;
+  font-family: Noto Sans KR, sans-serif;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 1);
+  word-wrap: break-word;
+}
+
+.navbaroptarea {
+  padding: 29px 0px 0px 0px;
+  box-sizing: border-box;
+  height: fit-content;
+}
+
+.txt-967 {
+  font-size: 24px;
+  font-family: Noto Sans KR, sans-serif;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 1);
+  text-align: center;
+  word-wrap: break-word;
+  margin-right: 70px;
+}
+
+.bi-person {
+  width: 53px;
+  height: 100%;
+}
+
+.txt-983 {
+  font-size: 48px;
+  font-family: Noto Sans KR, sans-serif;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 1);
+  word-wrap: break-word;
+  margin-bottom: 57px;
+}
+
+.landingtodntibtn {
+  margin-bottom: 17px;
+  box-sizing: border-box;
+  border-radius: 24px;
+  background-color: rgba(0, 0, 244, 1);
+  width: 480px;
+  height: 110px;
+}
+
+.txt-1099 {
+  font-size: 40px;
+  font-family: Noto Sans KR, sans-serif;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 1);
+  word-wrap: break-word;
+}
+
+.pngitem-_53692961 {
+  height: 499px;
+  width: 100%;
+}
