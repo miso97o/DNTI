@@ -1,5 +1,15 @@
 use dnti;
 
+INSERT INTO `user`  VALUES ('skj@gmail.com',1994,'enfp','역삼동','강남구','팀장');
+INSERT INTO `user`  VALUES ('kth@gmail.com',1993,'ispf','역삼동','강남구','팀원1');
+INSERT INTO `user`  VALUES ('pyj@gmail.com',1997,'esfj','역삼동','강남구','팀원2');
+INSERT INTO `user`  VALUES ('yth@gmail.com',1993,'infp','역삼동','강남구','팀원3');
+INSERT INTO `user`  VALUES ('hjw@gmail.com',1997,'infj','역삼동','강남구','팀원4');
+INSERT INTO `user`  VALUES ('hiy@gmail.com',1996,'isfj','역삼동','강남구','팀원5');
+
+
+
+
 INSERT INTO `dnti`.`gu` (`gu_name`) VALUES ('종로구');
 INSERT INTO `dnti`.`gu` (`gu_name`) VALUES ('중구');
 INSERT INTO `dnti`.`gu` (`gu_name`) VALUES ('용산구');

@@ -1,10 +1,7 @@
 package com.a601.backend.api.domain.entity;
 
 import com.a601.backend.api.domain.enums.KeywordType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Getter
+@Setter
 public class Review extends BaseEntity{
 
     @Id
@@ -42,4 +40,5 @@ public class Review extends BaseEntity{
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     private List<ReviewLike>reviewLikeList=new ArrayList<>();
+
 }
