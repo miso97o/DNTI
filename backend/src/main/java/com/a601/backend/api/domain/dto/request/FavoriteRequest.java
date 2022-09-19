@@ -10,7 +10,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 public class FavoriteRequest {
-    Integer favoriteId;
+    Long favoriteId;
     String userId;
     String name;
     String address;

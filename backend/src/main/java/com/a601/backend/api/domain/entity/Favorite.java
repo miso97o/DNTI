@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class Favorite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer favoriteId;
+    private Long favoriteId;
 
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,7 +26,7 @@ public class Favorite {
     private String address;
 
     @Builder
-    public Favorite(Integer favoriteId, User user, String name, String address) {
+    public Favorite(Long favoriteId, User user, String name, String address) {
         this.favoriteId = favoriteId;
         this.user = user;
         this.name = name;

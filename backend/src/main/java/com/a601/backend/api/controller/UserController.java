@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Api(value = "회원 API", tags = {"학생"})
+@Api(value = "회원 API", tags = {"회원"})
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/users")
@@ -26,6 +26,7 @@ public class UserController {
     @ApiOperation(value="회원가입")
     @PostMapping
     public ApiResult singIn(@RequestBody UserRequest.SingIn singIn){
+        service.singIn(singIn);
         return new ApiResult<>(200, singIn.getNickname());
     }
 
@@ -61,6 +62,6 @@ public class UserController {
     @ApiOperation(value = "회원 목록", notes="회원 목록")
     @GetMapping("/list")
     public ApiResult getList() {
-        return new ApiResult(200,repository.findAll());
+        return new ApiResult(200,service.getList());
     }
 }

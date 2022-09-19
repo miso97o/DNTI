@@ -2,6 +2,9 @@ package com.a601.backend.api.service;
 
 
 import com.a601.backend.api.domain.dto.request.UserRequest;
+import com.a601.backend.api.domain.entity.User;
+
+import java.util.List;
 
 public interface UserService {
     //회원가입
@@ -21,5 +24,8 @@ public interface UserService {
 
     //닉네임 중복체크
     boolean hasNickname(String nickname) throws Exception;
+
+    //회원 목록
+    List<UserRequest.All> getList() throws Exception;
 }
 

@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService{
@@ -63,4 +66,20 @@ public class UserServiceImpl implements UserService{
     public boolean hasNickname(String nickname) {
         return repository.existsByNickname(nickname);
     }
+
+    //회원목록
+    @Override
+    public List<UserRequest.All> getList() {
+        List<User> list =  repository.findAll();
+        List<UserRequest.All> result = new ArrayList<>();
+        for(User one : list){
+            UserRequest.All temp = UserRequest.All.builder().userId(one.getUserId())
+                    .nickname(one.getNickname()).birthYear(one.getBirthYear()).gu(one.getGu()).dong(one.getDong())
+                    .dnti(one.getDnti()).build();
+            result.add(temp);
+        }
+        return result;
+    }
+
+
 }

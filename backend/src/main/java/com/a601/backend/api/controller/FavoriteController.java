@@ -2,6 +2,9 @@ package com.a601.backend.api.controller;
 
 import com.a601.backend.api.domain.dto.common.ApiResult;
 import com.a601.backend.api.domain.dto.request.FavoriteRequest;
+import com.a601.backend.api.domain.enums.ErrorCode;
+import com.a601.backend.api.exception.CustomException;
+import com.a601.backend.api.repository.FavoriteRepository;
 import com.a601.backend.api.service.FavoriteServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,16 +19,21 @@ import org.springframework.web.bind.annotation.*;
 public class FavoriteController {
 
     private final FavoriteServiceImpl service;
+    private final FavoriteRepository repository;
 
     @ApiOperation(value = "즐겨찾기 조회", notes="조회")
     @GetMapping
     public ApiResult getFavorite(String userId) {
+        if(userId==null || userId.equals("")) throw new CustomException(ErrorCode.METHOD_NOT_ALLOWED);
         return new ApiResult(200, service.getFavorite(userId));
     }
 
     @ApiOperation(value = "즐겨찾기 추가", notes="추가")
     @PostMapping
     public ApiResult addFavorite(@RequestBody FavoriteRequest favorite)  {
+        //해당 유저의 즐겨찾기 개수가 3개 이하가 아니면 메서드 허용 에러
+        if(!service.isUnder3(favorite.getUserId())) throw new CustomException(ErrorCode.METHOD_NOT_ALLOWED);
+
         service.addFavorite(favorite);
         return new ApiResult(200, favorite);
     }
@@ -41,7 +49,7 @@ public class FavoriteController {
     //favorite 삭제
     @ApiOperation(value = "즐겨찾기 삭제", notes="삭제")
     @DeleteMapping
-    public ApiResult deleteFavorite(@RequestParam Integer favoriteId) {
+    public ApiResult deleteFavorite(@RequestParam Long favoriteId) {
         service.deleteFavorite(favoriteId);
         return new ApiResult(200, favoriteId);
     }
