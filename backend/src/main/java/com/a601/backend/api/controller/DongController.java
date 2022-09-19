@@ -1,5 +1,6 @@
 package com.a601.backend.api.controller;
 
+import com.a601.backend.api.domain.dto.common.ApiResult;
 import com.a601.backend.api.domain.dto.response.DongScore;
 import com.a601.backend.api.domain.dto.response.ManyResult;
 import com.a601.backend.api.service.DongService;
@@ -27,9 +28,9 @@ public class DongController {
 
     @ApiOperation(value = "동 점수 계산", notes="점수 계산 후 점수순으로 리스트 반환")
     @GetMapping("/rank")
-    public ManyResult<DongScore> getRank(@RequestParam List<Integer> priorities){
+    public ApiResult<DongScore> getRank(@RequestParam List<Integer> priorities){
         List<DongScore> list = dongService.computeDongScore(priorities);
-        return responseService.getManyResult(list);
+        return new ApiResult(200, list);
     }
 
 }
