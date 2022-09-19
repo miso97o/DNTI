@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService{
             throw new CustomException(ErrorCode.METHOD_NOT_ALLOWED);
         }
 
-        User user = User.builder().userId(singIn.getUserId()).birthYear(singIn.getBirthYear()).nickname(singIn.getNickname())
+        User user = User.builder().email(singIn.getUserId()).birthYear(singIn.getBirthYear()).nickname(singIn.getNickname())
                 .gu(singIn.getGu()).dong(singIn.getDong()).build();
         repository.save(user);
     }
@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService{
         List<User> list =  repository.findAll();
         List<UserRequest.All> result = new ArrayList<>();
         for(User one : list){
-            UserRequest.All temp = UserRequest.All.builder().userId(one.getUserId())
+            UserRequest.All temp = UserRequest.All.builder().userId(one.getEmail())
                     .nickname(one.getNickname()).birthYear(one.getBirthYear()).gu(one.getGu()).dong(one.getDong())
                     .dnti(one.getDnti()).build();
             result.add(temp);
