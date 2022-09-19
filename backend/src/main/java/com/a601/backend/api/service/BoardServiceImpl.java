@@ -1,6 +1,7 @@
 package com.a601.backend.api.service;
 
 import com.a601.backend.api.domain.dto.request.BoardRequest;
+import com.a601.backend.api.domain.dto.response.BoardResponse;
 import com.a601.backend.api.domain.entity.Board;
 import com.a601.backend.api.domain.entity.User;
 import com.a601.backend.api.domain.enums.ErrorCode;
@@ -23,9 +24,11 @@ public class BoardServiceImpl implements BoardService {
 
 
     @Override
-    public Board findByBoardId(Long boardId) {
+    public BoardResponse findByBoardId(Long boardId) {
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
-        return board;
+        BoardResponse boardResponse = new BoardResponse(board);
+
+        return boardResponse;
     }
 
     @Override
@@ -51,7 +54,12 @@ public class BoardServiceImpl implements BoardService {
         board.modify(request.getTitle(), request.getContents());
     }
 
+    @Override
+    public void updateHit(Long boardId) {
+        Board board = boardRepository.findById(boardId).orElseThrow(()-> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+        board.increaseHit();
 
+    }
 
 
 }

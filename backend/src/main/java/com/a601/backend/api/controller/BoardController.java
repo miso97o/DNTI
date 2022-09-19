@@ -3,6 +3,7 @@ package com.a601.backend.api.controller;
 
 import com.a601.backend.api.domain.dto.common.ApiResult;
 import com.a601.backend.api.domain.dto.request.BoardRequest;
+import com.a601.backend.api.domain.dto.response.BoardResponse;
 import com.a601.backend.api.domain.entity.Board;
 
 import com.a601.backend.api.repository.BoardRepository;
@@ -26,8 +27,6 @@ public class BoardController {
     private final BoardService boardService;
 
     // 게시글 등록
-
-
     @ApiOperation(value = "게시글 등록", notes = "성공하면 게시글 id를 리턴")
     @PostMapping
     public ApiResult writeBoard(@RequestBody BoardRequest board) {
@@ -40,7 +39,9 @@ public class BoardController {
     @GetMapping("/{boardId}")
     public ApiResult selectBoard(@PathVariable("boardId") Long boardId) {
         // 성공하면 board 리턴
-        return new ApiResult(200, boardService.findByBoardId(boardId));
+        BoardResponse boardResponse = boardService.findByBoardId(boardId);
+//        System.out.println(boardResponse.getBoardId());
+        return new ApiResult(200, boardResponse);
     }
     // 게시글 여러개 조회
 
@@ -60,5 +61,12 @@ public class BoardController {
     public ApiResult modifyBoard(@RequestBody BoardRequest board, @PathVariable("boardId") Long boardId){
         boardService.modifyBoard(board, boardId);
         return new ApiResult(200, board);
+    }
+    // 조회수 증가
+    @ApiOperation(value = "조회수 1증가", notes = "성공하면 업데이트 된 조회수 리턴")
+    @PutMapping("/hit/{boardId}")
+    public ApiResult increaseHit(@PathVariable("boardId") Long boardId){
+        boardService.updateHit(boardId);
+        return new ApiResult(200,boardId);
     }
 }
