@@ -1,5 +1,3 @@
-import "./PostViewComponent.css";
-
 export default function PostViewComponent() {
   return (
     <div className="reviewviewpost flex-col-hstart-vstart clip-contents">

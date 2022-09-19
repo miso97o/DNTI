@@ -1,5 +1,3 @@
-import "./ReviewWriteComponent.css";
-
 export default function ReviewWriteComponent() {
   return (
     <div className="reviewwritepost flex-col-hstart-vstart clip-contents">

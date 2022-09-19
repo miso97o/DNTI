@@ -18,6 +18,8 @@ import ReviewWriteComponent from "./2_templates/board/ReviewWriteComponent";
 import DntiPage from "./3_pages/DntiPage";
 import ErrorPage from "./3_pages/ErrorPage";
 import Root from "./3_pages/Root";
+import LoginPage from "./3_pages/LoginPage";
+import SignUpPage from "./3_pages/SignUpPage";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,16 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <LandingPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "login",
+        element: <LoginPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "signup",
+        element: <SignUpPage />,
         errorElement: <ErrorPage />,
       },
       {

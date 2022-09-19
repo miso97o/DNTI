@@ -1,4 +1,4 @@
-import "./DntiTestComponent.css";
+import { Link } from "react-router-dom";
 
 function Progressbar() {
   return (
@@ -12,11 +12,13 @@ function Progressbar() {
 
 function TestSelectCard({ imgsrc, description, label }) {
   return (
-    <div className="testselectcard flex-col-hcenter-vstart">
-      <img src={imgsrc} alt="Not Found" className="image" />
-      <p className="txt-492 flex-hcenter">{description}</p>
-      <p className="txt-774 flex-hcenter">{label}</p>
-    </div>
+    <Link to={`/dnti/result`} style={{ textDecoration: "none" }}>
+      <div className="testselectcard flex-col-hcenter-vstart">
+        <img src={imgsrc} alt="Not Found" className="image" />
+        <p className="txt-492 flex-hcenter">{description}</p>
+        <p className="txt-774 flex-hcenter">{label}</p>
+      </div>
+    </Link>
   );
 }
 

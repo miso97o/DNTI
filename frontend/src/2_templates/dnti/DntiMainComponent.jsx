@@ -1,4 +1,4 @@
-import "./DntiMainComponent.css";
+import { Link } from "react-router-dom";
 
 export default function DntiMainComponent() {
   return (
@@ -18,9 +18,11 @@ export default function DntiMainComponent() {
               </p>
             </div>
           </div>
-          <div className="landingtodntibtn flex-row-vcenter-hcenter">
-            <p className="txt-571">검사 시작</p>
-          </div>
+          <Link to={`test`} style={{ textDecoration: "none" }}>
+            <button className="bg-sky-500 hover:bg-sky-600 active:bg-sky-700 focus:outline-none focus:ring focus:ring-sky-300">
+              검사 시작
+            </button>
+          </Link>
         </div>
       </div>
     </div>

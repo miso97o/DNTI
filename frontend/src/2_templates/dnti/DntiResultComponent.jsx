@@ -1,4 +1,4 @@
-import "./DntiResultComponent.css";
+import { Link } from "react-router-dom";
 
 function DntiResultCard({ imgsrc, type }) {
   return (
@@ -10,9 +10,11 @@ function DntiResultCard({ imgsrc, type }) {
           <p className="txt-313 flex-hcenter">이시네요!</p>
         </div>
         <div className="util-button flex-row-vcenter-hcenter">
-          <div className="label-_wrap flex-row-vcenter-hstart">
-            <p className="txt-996 flex-hcenter">동네 확인하기</p>
-          </div>
+          <Link to={`/dnRecommend`} style={{ textDecoration: "none" }}>
+            <div className="label-_wrap flex-row-vcenter-hstart">
+              <p className="txt-996 flex-hcenter">동네 확인하기</p>
+            </div>
+          </Link>
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-// import "./BoardMainComponent.css";
 import PostRow from "../../1_molecules/PostRow";
 
 function ReviewRow({ title, keywords, date, views, likes }) {

@@ -1,5 +1,3 @@
-import style from "./ReviewRow.module.css";
-
 export default function ReviewRow() {
   return (
     <div className="reviewrow flex-row-vcenter-hcenter">
