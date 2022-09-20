@@ -51,6 +51,7 @@ const router = createBrowserRouter([
             path: "",
             element: <BoardMainComponent />,
           },
+
           {
             path: "postview",
             element: <PostViewComponent />,

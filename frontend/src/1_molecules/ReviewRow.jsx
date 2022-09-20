@@ -1,28 +1,39 @@
-export default function ReviewRow() {
+import { Link } from "react-router-dom";
+
+function ReviewTag({ tagText }) {
+  return <p>{tagText}</p>;
+}
+
+export default function ReviewRow({ title, tags, score, likes }) {
   return (
-    <div className="reviewrow flex-row-vcenter-hcenter">
-      <div className="reviewrowtitlearea flex-row-vcenter-hstart">
-        <p className="txt-131">이만한 동네 없는듯</p>
-      </div>
-      <div className="reviewrowtitlearea flex-row-vcenter-hstart">
-        <p className="txt-537"># 가성비</p>
-      </div>
-      <div className="hotrowinfoarea flex-row-vcenter-hcenter">
-        <div className="hotrowlikearea flex-row-vcenter-hsb">
-          <img
-            src="https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/24olhau3htb-198%3A531?alt=media&token=04c043b4-b95c-4349-b8ee-f518c9af2d6d"
-            alt="Not Found"
-            className="hotrowlikelogo"
-          />
-          <p className="txt-537">333</p>
+    <Link to="/board/reviewview">
+      <div className="flex flex-row w-full items-center">
+        <div className="flex flex-row w-full items-stretch justify-between">
+          <p>{title}</p>
         </div>
-        <img
-          src="https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/24olhau3htb-379%3A432?alt=media&token=6e12f410-364c-46b3-b44e-cefb84f479bc"
-          alt="Not Found"
-          className="stareval"
-        />
-        <p className="txt-537">2022-09-05</p>
+        <div className="flex flex-row justify-between items-center">
+          {tags &&
+            tags.map((tag) => {
+              return <ReviewTag tagText={tag} key={tag} />;
+            })}
+        </div>
+        <div className="flex flex-row justify-between items-center">
+          <div className="flex flex-row items-center">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/24olhau3htb-198%3A531?alt=media&token=04c043b4-b95c-4349-b8ee-f518c9af2d6d"
+              alt="Not Found"
+              className="hotrowlikelogo"
+            />
+            <p className="txt-537">{score}</p>
+          </div>
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/24olhau3htb-379%3A432?alt=media&token=6e12f410-364c-46b3-b44e-cefb84f479bc"
+            alt="Not Found"
+            className="stareval"
+          />
+          <p>{likes}</p>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }

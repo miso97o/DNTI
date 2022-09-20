@@ -29,13 +29,8 @@ export default function Boardpage() {
     "중랑구",
   ];
   return (
-    <div>
-      <Link to={``}>게시판 메인</Link>
-      <Link to={`postview`}>글 보기</Link>
-      <Link to={`postwrite`}>글 쓰기</Link>
-      <Link to={`reviewview`}>리뷰 보기</Link>
-      <Link to={`reviewwrite`}>리뷰 쓰기</Link>
-      <div className="frame-40 flex-row-vcenter-hstart">
+    <div className="flex flex-col h-4/5">
+      <div className="">
         <select>
           {gulist.map((item) => {
             return <option value={item}>{item}</option>;
