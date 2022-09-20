@@ -1,0 +1,14 @@
+
+.container {
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 50px 80px 0px 80px;
+}
+
+.navUnderLine {
+    background-color: #c9c9c9;
+    /* border: 0; */
+    height: 1.3px;
+}

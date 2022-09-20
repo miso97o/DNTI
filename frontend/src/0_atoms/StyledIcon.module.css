@@ -1,0 +1,27 @@
+.click {
+  padding: 0px 19px;
+
+}
+
+.container {
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.logoImg {
+  width: 80px;
+  height: 67px;
+}
+
+.title {
+  font-size: 70px;
+  font-family: Noto Sans KR, sans-serif;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 1);
+  word-wrap: break-word;
+  margin: 0 0 0 6px;
+}
+
