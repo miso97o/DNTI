@@ -73,8 +73,8 @@ public class ReviewController {
 
     @ApiOperation(value = "각 리뷰 구선택 했을 떄 평균 평점")
     @GetMapping("/score/{gu}")
-    public ApiResult<ReviewResponse>reviewGu(@PathVariable String gu){
-        ReviewResponse reviewResponse=reviewService.reviewGu(gu);
+    public ApiResult<ReviewResponse>reviewScoreGu(@PathVariable String gu){
+        ReviewResponse reviewResponse=reviewService.reviewScoreGu(gu);
         return new ApiResult<>(200,reviewResponse);
     }
 
