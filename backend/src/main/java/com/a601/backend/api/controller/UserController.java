@@ -2,9 +2,7 @@ package com.a601.backend.api.controller;
 
 
 import com.a601.backend.api.domain.dto.common.ApiResult;
-import com.a601.backend.api.domain.dto.request.FavoriteRequest;
 import com.a601.backend.api.domain.dto.request.UserRequest;
-import com.a601.backend.api.domain.entity.User;
 import com.a601.backend.api.repository.UserRepository;
 import com.a601.backend.api.service.UserServiceImpl;
 import io.swagger.annotations.Api;
@@ -37,8 +35,26 @@ public class UserController {
         return new ApiResult(200, service.hasNickname(nickname));
     }
 
+    @ApiOperation(value = "회원 정보 조회", notes="해당 아이디 회원정보 조회")
+    @GetMapping("/{userId}")
+    public ApiResult getList(@PathVariable String userId) {
+        return new ApiResult(200,service.getInfo(userId));
+    }
+
+//    @ApiOperation(value = "마이페이지 정보 조회", notes="해당 아이디 회원정보 조회")
+//    @GetMapping("/{userId}")
+//    public ApiResult getMypage(@PathVariable String userId) {
+//        return new ApiResult(200,service.getInfo(userId));
+//    }
+
+    @ApiOperation(value = "회원 목록", notes="회원 목록")
+    @GetMapping("/list")
+    public ApiResult getList() {
+        return new ApiResult(200,service.getList());
+    }
+
     //내정보 수정
-    @ApiOperation(value = "내정보 수정", notes="내 정보 수정 후 해당 닉네임 반환")
+    @ApiOperation(value = "회원 정보 수정", notes="내 정보 수정 후 해당 닉네임 반환")
     @PatchMapping
     public ApiResult modifyInfo(@RequestBody UserRequest.ModifyAll modifyAll) {
         service.modifyInfo(modifyAll);
@@ -49,19 +65,16 @@ public class UserController {
 
     //내 지역 바꾸기
 
+    //회원조회
+
 
     //회원탈퇴
     @ApiOperation(value = "회원탈퇴", notes="탈퇴 후 해당 아이디 반환")
     @DeleteMapping("/{userId}")
-    public ApiResult signOut(@PathVariable String userId) {
-        service.singOut(userId);
-        return new ApiResult(200, userId);
+    public ApiResult signOut(@PathVariable String email) {
+        service.singOut(email);
+        return new ApiResult(200, email);
     }
 
-    //예시
-    @ApiOperation(value = "회원 목록", notes="회원 목록")
-    @GetMapping("/list")
-    public ApiResult getList() {
-        return new ApiResult(200,service.getList());
-    }
+
 }

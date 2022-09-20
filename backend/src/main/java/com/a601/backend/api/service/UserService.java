@@ -27,5 +27,10 @@ public interface UserService {
 
     //회원 목록
     List<UserRequest.All> getList() throws Exception;
+
+    //회원 정보 조회
+    UserRequest.All getInfo(String userId) throws Exception;
+
+//    UserRequest.MyPage getMypage(String userId) throws Exception;
 }
 

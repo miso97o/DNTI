@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.Builder;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class UserRequest {
     @Getter
@@ -17,6 +18,23 @@ public class UserRequest {
         String gu;
         String dong;
         String dnti;
+    }
+
+    @Getter
+    @Setter
+    @Builder
+    public static class MyPage {
+        String userId;
+        String nickname;
+        Integer birthYear;
+        String gu;
+        String dong;
+
+        DntiRequest dntiRequest;
+
+        List<FavoriteRequest> favoriteList;
+        List<ReviewRequest> reviewList;
+        List<BoardRequest> boardList;
     }
 
     @Getter

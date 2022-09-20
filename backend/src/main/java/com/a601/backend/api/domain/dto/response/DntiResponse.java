@@ -1,14 +1,14 @@
 package com.a601.backend.api.domain.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class DntiResponse {
-    String dnti;
-    long count;
-    long totalCount;
+    String type;
+    Long count;
+    Long percent;     //전체중 몇퍼센트의 성향
+    String hashtag1;
+    String hashtag2;
 }
