@@ -2,6 +2,7 @@ package com.a601.backend.api.controller;
 
 
 import com.a601.backend.api.domain.dto.common.ApiResult;
+import com.a601.backend.api.domain.dto.request.BoardLikeRequest;
 import com.a601.backend.api.domain.dto.request.BoardRequest;
 import com.a601.backend.api.domain.dto.response.BoardResponse;
 import com.a601.backend.api.domain.entity.Board;
@@ -43,11 +44,19 @@ public class BoardController {
 //        System.out.println(boardResponse.getBoardId());
         return new ApiResult(200, boardResponse);
     }
-    // 게시글 여러개 조회
-    @ApiOperation(value = "게시글 여러개 조회", notes = "page이용")
+
+    // 게시글 여러 개 조회
+    @ApiOperation(value = "게시글 여러개 조회", notes = "0번페이지부터 시작, 가장 최근에 작성된 글이 먼저 나옴")
     @GetMapping
-    public ApiResult selectBoardList(Pageable pageable){
-        return new ApiResult(200, boardService.findAll(pageable));
+    public ApiResult selectBoardList(Pageable pageable) {
+        return new ApiResult(200, boardService.findAllByOrderByCreatedTime(pageable));
+    }
+
+    // 제목으로 게시글 조회
+    @ApiOperation(value = "제목으로 게시글 조회", notes = "검색어를 포함한 제목을 가진 게시글 조회(최신순)")
+    @GetMapping("/title")
+    public ApiResult selectBoardListByTitle(String keyword, Pageable pageable) {
+        return new ApiResult(200, boardService.findByTitleContaining(keyword, pageable));
     }
 
 
@@ -62,15 +71,31 @@ public class BoardController {
     // 게시글 수정
     @ApiOperation(value = "게시글 수정", notes = "성공하면 수정한 게시글 리턴")
     @PatchMapping("/{boardId}")
-    public ApiResult modifyBoard(@RequestBody BoardRequest board, @PathVariable("boardId") Long boardId){
+    public ApiResult modifyBoard(@RequestBody BoardRequest board, @PathVariable("boardId") Long boardId) {
         boardService.modifyBoard(board, boardId);
         return new ApiResult(200, board);
     }
+
     // 조회수 증가
-    @ApiOperation(value = "조회수 1증가", notes = "성공하면 업데이트 된 조회수 리턴")
+    @ApiOperation(value = "조회수 1증가", notes = "성공하면 업데이트 된 게시글 id리턴")
     @PatchMapping("/hit/{boardId}")
-    public ApiResult increaseHit(@PathVariable("boardId") Long boardId){
+    public ApiResult increaseHit(@PathVariable("boardId") Long boardId) {
         boardService.updateHit(boardId);
-        return new ApiResult(200,boardId);
+        return new ApiResult(200, boardId);
     }
+
+    @ApiOperation(value = "좋아요 등록", notes = "성공하면 업데이트 된 게시글 id리턴")
+    @PatchMapping("/increase-like")
+    public ApiResult regiBoardLike(@RequestBody BoardLikeRequest boardLike) {
+        boardService.addBoardLike(boardLike);
+        return new ApiResult(200, boardLike.getBoardId());
+    }
+
+    @ApiOperation(value = "좋아요 취소", notes = "성공하면 삭제된 된 게시글 id리턴")
+    @PatchMapping("/decrease-like")
+    public ApiResult cancelBoardLike(@RequestBody BoardLikeRequest boardLike) {
+        boardService.cancelBoardLike(boardLike);
+        return new ApiResult(200, boardLike.getBoardLikeId());
+    }
+    
 }

@@ -1,6 +1,8 @@
 package com.a601.backend.api.service;
 
+import com.a601.backend.api.domain.dto.request.BoardLikeRequest;
 import com.a601.backend.api.domain.dto.request.BoardRequest;
+import com.a601.backend.api.domain.dto.request.UserRequest;
 import com.a601.backend.api.domain.dto.response.BoardResponse;
 import com.a601.backend.api.domain.entity.Board;
 import com.a601.backend.api.domain.entity.User;
@@ -15,7 +17,8 @@ public interface BoardService {
    BoardResponse findByBoardId(Long boardId);
 
    // 게시글 여러개 보기
-   Page<BoardResponse> findAll(Pageable pageable);
+   Page<BoardResponse> findAllByOrderByCreatedTime(Pageable pageable);
+
 
    // 게시글 생성
    Long writeBoard(BoardRequest board);
@@ -29,7 +32,14 @@ public interface BoardService {
    // 조회수 증가
    void updateHit(Long boardId);
 
+   // 제목으로 검색하기
+   Page<BoardResponse> findByTitleContaining(String keyword, Pageable pageable);
 
+   // 좋아요 등록
+   void addBoardLike(BoardLikeRequest boardLikeRequest);
+
+   // 좋아요 취소
+   void cancelBoardLike(BoardLikeRequest boardLikeRequest);
 
 
 }

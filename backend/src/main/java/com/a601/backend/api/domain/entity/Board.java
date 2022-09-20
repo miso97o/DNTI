@@ -51,6 +51,12 @@ public class Board extends BaseEntity{
     }
 
     public void increaseHit() {
-        this.hit += 1;
+        ++this.hit;
+    }
+    public void addBoardLike(){
+        ++this.boardLike;
+    }
+    public void cancelBoardLike(){
+        --this.boardLike;
     }
 }

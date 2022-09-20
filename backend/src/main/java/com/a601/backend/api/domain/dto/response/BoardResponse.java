@@ -6,6 +6,7 @@ import com.a601.backend.api.domain.entity.Reply;
 import com.a601.backend.api.domain.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Getter
 @AllArgsConstructor
 public class BoardResponse {
 
@@ -29,6 +31,8 @@ public class BoardResponse {
 
     private Long boardLike;
 
+    private Integer commentCount;
+
     private LocalDateTime createdTime;
 
     private LocalDateTime modifiedTime;
@@ -40,6 +44,7 @@ public class BoardResponse {
         this.contents = entity.getContents();
         this.hit = entity.getHit();
         this.boardLike = entity.getBoardLike();
+        this.commentCount = entity.getReplyList().size();
         this.createdTime = entity.getCreatedTime();
         this.modifiedTime =entity.getModifiedTime();
     }
