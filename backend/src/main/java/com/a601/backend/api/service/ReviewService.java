@@ -22,5 +22,8 @@ public interface ReviewService {
     ReviewResponse reviewScoreGu(String gu);
 
     List<ReviewResponse> reviewRecent(Long id,String gu);
-    List<ReviewResponse> reviewSearch(String title);
+    List<ReviewResponse> reviewSearch(String search,String word);
+
+    void reviewsaveLike(Long id,String email);
+    //void reviewdeleteLike(Long id,Long lid);
 }

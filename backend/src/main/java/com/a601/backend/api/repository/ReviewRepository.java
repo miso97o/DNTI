@@ -19,5 +19,8 @@ public interface ReviewRepository extends JpaRepository<Review,Long> {
     List<Review>findAllByGuOrderByHitDesc(String gu);
 
     List<Review>findAllByTitleContaining(String title);
+    List<Review>findAllByContentContaining(String content);
+    @Query("select r from Review r where r.user.email = :email")
+    List<Review>findAllUserReview(@Param("email") String email);
 
 }

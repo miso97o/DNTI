@@ -39,7 +39,7 @@ public class BoardResponse {
 
     public BoardResponse(Board entity){
         this.boardId = entity.getBoardId();
-        this.userId = entity.getUser().getUserId();
+        this.userId = entity.getUser().getEmail();
         this.title = entity.getTitle();
         this.contents = entity.getContents();
         this.hit = entity.getHit();

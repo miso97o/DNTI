@@ -5,6 +5,7 @@ import com.a601.backend.api.domain.dto.response.ReviewResponse;
 import com.a601.backend.api.domain.entity.Review;
 import com.a601.backend.api.domain.entity.ReviewLike;
 import com.a601.backend.api.domain.entity.User;
+import com.a601.backend.api.repository.ReviewLikeRepository;
 import com.a601.backend.api.repository.ReviewRepository;
 import com.a601.backend.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Autowired
     private ReviewRepository reviewRepository;
+
+    @Autowired
+    private ReviewLikeRepository reviewLikeRepository;
 
     @Override
     public void saveReview(ReviewRequest reviewRequest, String email) {
@@ -129,11 +133,13 @@ public class ReviewServiceImpl implements ReviewService{
         int sa=0; //안전
         int inf=0; //인프라
         int ren=0; //임대료
+        double total=0;
         for(Review review:reviewList){
             en+=review.getEnvironment();
             sa+=review.getSafety();
             inf+=review.getInfra();
             ren=review.getRental();
+            total+=review.getScore();
         }
 
         ReviewResponse reviewResponse= ReviewResponse.builder()
@@ -142,7 +148,7 @@ public class ReviewServiceImpl implements ReviewService{
                 .rental(ren/len)
                 .safety(sa/len)
                 .environment(en/len)
-                .score((inf+ren+sa+en)/(len*1.0))
+                .score(total/len)
                 .build();
         return reviewResponse;
     }
@@ -185,23 +191,79 @@ public class ReviewServiceImpl implements ReviewService{
         }
     }
 
-    public List<ReviewResponse>reviewSearch(String title){
-        List<ReviewResponse>reviewList=reviewRepository.findAllByTitleContaining(title)
-                .stream()
-                .map(review -> ReviewResponse.builder()
-                        .email(review.getUser().getEmail())
-                        .title(review.getTitle())
-                        .gu(review.getGu())
-                        .content(review.getContent())
-                        .score(review.getScore())
-                        .hit(review.getHit())
-                        .reviewLike(review.getReviewLikeList().size())
-                        .rental(review.getRental())
-                        .environment(review.getEnvironment())
-                        .infra(review.getInfra())
-                        .safety(review.getSafety())
-                        .build()).collect(Collectors.toList());
-        return reviewList;
+    public List<ReviewResponse>reviewSearch(String search,String word){
+        if(search.equals("제목")){
+            List<ReviewResponse>reviewList=reviewRepository.findAllByTitleContaining(word)
+                    .stream()
+                    .map(review -> ReviewResponse.builder()
+                            .email(review.getUser().getEmail())
+                            .title(review.getTitle())
+                            .gu(review.getGu())
+                            .content(review.getContent())
+                            .score(review.getScore())
+                            .hit(review.getHit())
+                            .reviewLike(review.getReviewLikeList().size())
+                            .rental(review.getRental())
+                            .environment(review.getEnvironment())
+                            .infra(review.getInfra())
+                            .safety(review.getSafety())
+                            .build()).collect(Collectors.toList());
+            return reviewList;
+        }else if(search.equals("내용")){
+            List<ReviewResponse>reviewList=reviewRepository.findAllByContentContaining(word)
+                    .stream()
+                    .map(review -> ReviewResponse.builder()
+                            .email(review.getUser().getEmail())
+                            .title(review.getTitle())
+                            .gu(review.getGu())
+                            .content(review.getContent())
+                            .score(review.getScore())
+                            .hit(review.getHit())
+                            .reviewLike(review.getReviewLikeList().size())
+                            .rental(review.getRental())
+                            .environment(review.getEnvironment())
+                            .infra(review.getInfra())
+                            .safety(review.getSafety())
+                            .build()).collect(Collectors.toList());
+            return reviewList;
+        }else{
+            List<ReviewResponse>reviewList=reviewRepository.findAllUserReview(word)
+                    .stream()
+                    .map(review -> ReviewResponse.builder()
+                            .email(review.getUser().getEmail())
+                            .title(review.getTitle())
+                            .gu(review.getGu())
+                            .content(review.getContent())
+                            .score(review.getScore())
+                            .hit(review.getHit())
+                            .reviewLike(review.getReviewLikeList().size())
+                            .rental(review.getRental())
+                            .environment(review.getEnvironment())
+                            .infra(review.getInfra())
+                            .safety(review.getSafety())
+                            .build()).collect(Collectors.toList());
+            return reviewList;
+        }
     }
+
+    public void reviewsaveLike(Long id,String email){
+        Review review=reviewRepository.findById(id).get();
+        User user=userRepository.findByEmail(email).get();
+        ReviewLike reviewLike=ReviewLike.builder()
+                .user(user)
+                .review(review)
+                .build();
+        reviewLikeRepository.save(reviewLike);
+        review.setReviewLike(review.getReviewLikeList().size());
+        reviewRepository.save(review);
+    }
+
+//    @Override
+//    public void reviewdeleteLike(Long id,Long lid) {
+//        reviewLikeRepository.deleteById(lid);
+//        Review review=reviewRepository.findById(id).get();
+//        review.setReviewLike(review.getReviewLikeList().size());
+//        reviewRepository.save(review);
+//    }
 
 }
