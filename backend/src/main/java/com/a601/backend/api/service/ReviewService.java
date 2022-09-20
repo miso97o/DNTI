@@ -16,4 +16,11 @@ public interface ReviewService {
     ReviewResponse detailReview(Long id);
 
     void updateReview(Long id,ReviewRequest reviewRequest);
+
+
+    List<ReviewResponse> reviewTopList();
+    ReviewResponse reviewScoreGu(String gu);
+
+    List<ReviewResponse> reviewRecent(Long id,String gu);
+    List<ReviewResponse> reviewSearch(String title);
 }

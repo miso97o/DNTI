@@ -122,7 +122,7 @@ public class ReviewServiceImpl implements ReviewService{
         return reviewTopList;
     }
 
-    public ReviewResponse reviewGu(String gu){
+    public ReviewResponse reviewScoreGu(String gu){
         List<Review>reviewList=reviewRepository.findAllByGuOrderByCreatedTimeDesc(gu);
         int len=reviewList.size();
         int en=0; //환경
@@ -186,7 +186,7 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     public List<ReviewResponse>reviewSearch(String title){
-        List<ReviewResponse>reviewList=reviewRepository.findAllByTitleOrderByCreatedTimeDesc(title)
+        List<ReviewResponse>reviewList=reviewRepository.findAllByTitleContaining(title)
                 .stream()
                 .map(review -> ReviewResponse.builder()
                         .email(review.getUser().getEmail())

@@ -2,6 +2,8 @@ package com.a601.backend.api.repository;
 
 import com.a601.backend.api.domain.entity.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,10 +15,9 @@ public interface ReviewRepository extends JpaRepository<Review,Long> {
 
     List<Review>findTop3ByOrderByHitDesc();
 
-    List<Review>findAllByGu(String gu);
     List<Review>findAllByGuOrderByCreatedTimeDesc(String gu);
     List<Review>findAllByGuOrderByHitDesc(String gu);
 
-    List<Review>findAllByTitleOrderByCreatedTimeDesc(String title);
+    List<Review>findAllByTitleContaining(String title);
 
 }
