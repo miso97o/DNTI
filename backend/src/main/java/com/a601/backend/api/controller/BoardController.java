@@ -44,7 +44,11 @@ public class BoardController {
         return new ApiResult(200, boardResponse);
     }
     // 게시글 여러개 조회
-
+    @ApiOperation(value = "게시글 여러개 조회", notes = "page이용")
+    @GetMapping
+    public ApiResult selectBoardList(Pageable pageable){
+        return new ApiResult(200, boardService.findAll(pageable));
+    }
 
 
     // 게시글 삭제
@@ -64,7 +68,7 @@ public class BoardController {
     }
     // 조회수 증가
     @ApiOperation(value = "조회수 1증가", notes = "성공하면 업데이트 된 조회수 리턴")
-    @PutMapping("/hit/{boardId}")
+    @PatchMapping("/hit/{boardId}")
     public ApiResult increaseHit(@PathVariable("boardId") Long boardId){
         boardService.updateHit(boardId);
         return new ApiResult(200,boardId);

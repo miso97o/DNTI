@@ -9,6 +9,7 @@ import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,10 @@ public class BoardResponse {
 
     private Long boardLike;
 
+    private LocalDateTime createdTime;
+
+    private LocalDateTime modifiedTime;
+
     public BoardResponse(Board entity){
         this.boardId = entity.getBoardId();
         this.userId = entity.getUser().getUserId();
@@ -35,5 +40,9 @@ public class BoardResponse {
         this.contents = entity.getContents();
         this.hit = entity.getHit();
         this.boardLike = entity.getBoardLike();
+        this.createdTime = entity.getCreatedTime();
+        this.modifiedTime =entity.getModifiedTime();
     }
+
+
 }

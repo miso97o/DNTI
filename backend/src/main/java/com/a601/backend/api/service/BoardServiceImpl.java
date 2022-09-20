@@ -9,6 +9,7 @@ import com.a601.backend.api.exception.CustomException;
 import com.a601.backend.api.repository.BoardRepository;
 import com.a601.backend.api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,11 @@ public class BoardServiceImpl implements BoardService {
         BoardResponse boardResponse = new BoardResponse(board);
 
         return boardResponse;
+    }
+
+    @Override
+    public Page<BoardResponse> findAll(Pageable pageable) {
+        return boardRepository.findAll(pageable).map(BoardResponse::new);
     }
 
     @Override
@@ -55,6 +61,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    @Transactional
     public void updateHit(Long boardId) {
         Board board = boardRepository.findById(boardId).orElseThrow(()-> new CustomException(ErrorCode.POSTS_NOT_FOUND));
         board.increaseHit();

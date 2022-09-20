@@ -1,10 +1,7 @@
 package com.a601.backend.api.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -17,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Getter
+@Setter
 @DynamicInsert
 public class Board extends BaseEntity{
 
@@ -52,7 +50,7 @@ public class Board extends BaseEntity{
         this.contents = contents;
     }
 
-    public void increaseHit(){
-        ++this.hit;
+    public void increaseHit() {
+        this.hit += 1;
     }
 }
