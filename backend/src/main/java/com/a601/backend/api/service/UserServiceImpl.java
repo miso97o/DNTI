@@ -4,7 +4,6 @@ import com.a601.backend.api.domain.dto.request.UserRequest;
 import com.a601.backend.api.domain.entity.User;
 import com.a601.backend.api.domain.enums.ErrorCode;
 import com.a601.backend.api.exception.CustomException;
-import com.a601.backend.api.repository.FavoriteRepository;
 import com.a601.backend.api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +16,7 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService{
     private final UserRepository repository;
+    private final DntiServiceImpl dntiService;
 
     //회원가입
     @Override
@@ -81,5 +81,32 @@ public class UserServiceImpl implements UserService{
         return result;
     }
 
+    @Override
+    public UserRequest.All getInfo(String email) {
+        User oUser = repository.findById(email).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
 
+        UserRequest.All result = UserRequest.All.builder()
+                .userId(oUser.getEmail()).birthYear(oUser.getBirthYear()).dong(oUser.getDong()).gu(oUser.getGu()).dnti(oUser.getDnti()).nickname(oUser.getNickname()).build();
+        return result;
+    }
+
+//    @Override
+//    public UserRequest.MyPage getMypage(String email) {
+//        //user
+//        User oUser = repository.findById(email).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+//        //dnti
+//        DntiResponse dnti = dntiService.getDnti(oUser.getDnti());
+//        //favorite
+//
+//        //dnti - place
+//
+//        //review
+//
+//        //board
+//
+//
+//        UserRequest. MyPage result = UserRequest.All.builder()
+//                .userId(oUser.getEmail()).birthYear(oUser.getBirthYear()).dong(oUser.getDong()).gu(oUser.getGu()).dnti(oUser.getDnti()).nickname(oUser.getNickname()).build();
+//        return result;
+//    }
 }

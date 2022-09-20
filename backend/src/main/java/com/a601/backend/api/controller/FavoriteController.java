@@ -22,8 +22,8 @@ public class FavoriteController {
     private final FavoriteRepository repository;
 
     @ApiOperation(value = "즐겨찾기 조회", notes="조회")
-    @GetMapping
-    public ApiResult getFavorite(String userId) {
+    @GetMapping("/{userId}")
+    public ApiResult getFavorite(@PathVariable String userId) {
         if(userId==null || userId.equals("")) throw new CustomException(ErrorCode.METHOD_NOT_ALLOWED);
         return new ApiResult(200, service.getFavorite(userId));
     }
@@ -48,8 +48,8 @@ public class FavoriteController {
 
     //favorite 삭제
     @ApiOperation(value = "즐겨찾기 삭제", notes="삭제")
-    @DeleteMapping
-    public ApiResult deleteFavorite(@RequestParam Long favoriteId) {
+    @DeleteMapping("/{userId}")
+    public ApiResult deleteFavorite(@PathVariable Long favoriteId) {
         service.deleteFavorite(favoriteId);
         return new ApiResult(200, favoriteId);
     }
