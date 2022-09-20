@@ -10,6 +10,18 @@ public class UserRequest {
     @Getter
     @Setter
     @Builder
+    public static class All{
+        String userId;
+        String nickname;
+        Integer birthYear;
+        String gu;
+        String dong;
+        String dnti;
+    }
+
+    @Getter
+    @Setter
+    @Builder
     public static class SingIn {
         String userId;
         String nickname;

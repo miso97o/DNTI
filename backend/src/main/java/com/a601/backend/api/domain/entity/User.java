@@ -14,7 +14,7 @@ import java.util.List;
 public class User {
 
     @Id
-    private String userId;
+    private String email;
 
     @Column(unique = true, nullable = true, length = 10)
     private String nickname;
@@ -50,8 +50,8 @@ public class User {
     private List<Reply> replyList = new ArrayList<>();
 
     @Builder
-    public User(String userId, String nickname, Integer birthYear, String gu, String dong, String dnti, List<Favorite> favoriteList, List<Review> reviewList, List<ReviewLike> reviewLikeList, List<Board> boardList, List<BoardLike> boardLikeList, List<Reply> replyList) {
-        this.userId = userId;
+    public User(String email, String nickname, Integer birthYear, String gu, String dong, String dnti, List<Favorite> favoriteList, List<Review> reviewList, List<ReviewLike> reviewLikeList, List<Board> boardList, List<BoardLike> boardLikeList, List<Reply> replyList) {
+        this.email = email;
         this.nickname = nickname;
         this.birthYear = birthYear;
         this.gu = gu;

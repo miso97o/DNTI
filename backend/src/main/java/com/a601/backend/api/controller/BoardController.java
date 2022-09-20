@@ -7,16 +7,12 @@ import com.a601.backend.api.domain.dto.request.BoardRequest;
 import com.a601.backend.api.domain.dto.response.BoardResponse;
 import com.a601.backend.api.domain.entity.Board;
 
-import com.a601.backend.api.repository.BoardRepository;
 import com.a601.backend.api.service.BoardService;
-import com.a601.backend.api.service.ResponseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 
