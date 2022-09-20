@@ -1,6 +1,5 @@
 package com.a601.backend.api.domain.entity;
 
-import com.a601.backend.api.domain.enums.KeywordType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,7 +23,10 @@ public class Review extends BaseEntity{
     private User user;
 
     @Column(length = 10)
-    private String dong;
+    private String gu;
+
+    @Column(length = 30)
+    private String title;
 
     @Column(length = 254)
     private String content;
@@ -36,7 +38,22 @@ public class Review extends BaseEntity{
     private Integer reviewLike;
 
     @Column(nullable = true)
-    private KeywordType keyword;
+    private Integer hit;
+
+    @Column(nullable = true)
+    private Integer rental;
+
+    @Column(nullable = true)
+    private Integer infra;
+
+    @Column(nullable = true)
+    private Integer environment;
+
+    @Column(nullable = true)
+    private Integer safety;
+
+
+
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     private List<ReviewLike>reviewLikeList=new ArrayList<>();

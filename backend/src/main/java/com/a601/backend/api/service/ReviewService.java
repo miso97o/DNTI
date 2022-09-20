@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ReviewService {
 
-    ReviewResponse saveReview(ReviewRequest reviewRequest, String email);
+    void saveReview(ReviewRequest reviewRequest, String email);
 
     void deleteReview(Long id);
 
@@ -15,5 +15,5 @@ public interface ReviewService {
 
     ReviewResponse detailReview(Long id);
 
-    ReviewResponse updateReview(Long id,ReviewRequest reviewRequest);
+    void updateReview(Long id,ReviewRequest reviewRequest);
 }

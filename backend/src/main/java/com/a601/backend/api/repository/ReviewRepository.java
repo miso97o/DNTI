@@ -9,5 +9,14 @@ import java.util.List;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review,Long> {
 
-    List<Review> findAllByOrderByCreatedTimeAsc();
+    List<Review> findAllByOrderByCreatedTimeDesc();
+
+    List<Review>findTop3ByOrderByHitDesc();
+
+    List<Review>findAllByGu(String gu);
+    List<Review>findAllByGuOrderByCreatedTimeDesc(String gu);
+    List<Review>findAllByGuOrderByHitDesc(String gu);
+
+    List<Review>findAllByTitleOrderByCreatedTimeDesc(String title);
+
 }
