@@ -22,7 +22,7 @@ public class ReviewController {
     ReviewServiceImpl reviewService;
 
     //게시글 저장
-    @ApiOperation(value = "리뷰 게시글 조회")
+    @ApiOperation(value = "리뷰 게시글 저장")
     @PostMapping("/save")
     public ApiResult<?>saveReview(@RequestBody ReviewRequest reviewRequest){
         //유저 로그인 했는지 여부 파악
@@ -78,12 +78,13 @@ public class ReviewController {
         return new ApiResult<>(200,reviewResponse);
     }
 
-    @ApiOperation(value = "검색 기능")
-    @GetMapping("/search/{title}")
-    public ApiResult<List<ReviewResponse>>reviewSearch(@PathVariable String title){
-        List<ReviewResponse>reviewResponseList=reviewService.reviewSearch(title);
+    @ApiOperation(value = "제목, 내용, 아이디 검색 기능")
+    @GetMapping("/search")
+    public ApiResult<List<ReviewResponse>>reviewSearchTitle(@RequestParam("search") String search ,@RequestParam("word") String word){
+        List<ReviewResponse>reviewResponseList=reviewService.reviewSearch(search,word);
         return new ApiResult<>(200,reviewResponseList);
     }
+
 
     @ApiOperation(value = " 구 최신 순(0) 조회수(1)")
     @GetMapping("/recent")
@@ -91,6 +92,22 @@ public class ReviewController {
         List<ReviewResponse>reviewResponseList=reviewService.reviewRecent(id,gu);
         return new ApiResult<>(200,reviewResponseList);
     }
+
+    @ApiOperation(value = " 좋아요 추가 기능 ")
+    @GetMapping("/reviewlike/save")
+    public ApiResult<?>reviewsaveLike(@RequestParam("id") Long id){
+        String email="hjw@gmail.com";
+        reviewService.reviewsaveLike(id,email);
+        return new ApiResult<>(200,"review_like");
+    }
+
+//    @ApiOperation(value = " 좋아요 삭제 기능 ")
+//    @DeleteMapping("/reviewlike/delete")
+//    public ApiResult<?>reviewdeleteLike(@RequestParam("id") Long id,@RequestParam("lid") Long lid){
+//        reviewService.reviewdeleteLike(id,lid);
+//        return new ApiResult<>(200,"review_like");
+//    }
+
 
 
 }
