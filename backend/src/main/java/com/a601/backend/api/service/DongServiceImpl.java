@@ -39,7 +39,8 @@ public class DongServiceImpl implements DongService{
             rankList.add(tmp);
         }
         rankList.sort(Collections.reverseOrder());              //점수 내림차순으로 정렬 후 반환
-        return rankList;
+        List<DongScore> result = rankList.subList(0,5);
+        return result;
     }
 
     public double getScore(int idx, Dong dong) {    //idx에 따라서 해당하는 점수를 가져오는 메서드

@@ -8,7 +8,7 @@ import lombok.*;
 public class DntiResponse {
     String type;
     Long count;
-    Long percent;     //전체중 몇퍼센트의 성향
+    double  percent;     //전체중 몇퍼센트의 성향
     String hashtag1;
     String hashtag2;
 }
