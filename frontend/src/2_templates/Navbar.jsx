@@ -6,11 +6,11 @@ function Navbar() {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-      <IconLink />
-      <PrimaryNavigation />
+        <IconLink />
+        <PrimaryNavigation />
       </div>
       <hr className="navUnderline" />
     </div>
   );
 }
-export default Navbar
+export default Navbar;
