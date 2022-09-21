@@ -1,6 +1,7 @@
 import PostRow from "../../1_molecules/PostRow";
 import ReviewRow from "../../1_molecules/ReviewRow";
 import Carousel from "react-elastic-carousel";
+import { Link } from "react-router-dom";
 
 function YoutubeItem({ title }) {
   return (
@@ -34,7 +35,9 @@ export default function BoardMainComponent() {
             <div className="flex flex-row justify-between items-center m-10">
               <p className="font-medium text-2xl">자유게시판</p>
 
-              <p>더보기...</p>
+              <Link to="post">
+                <p>더보기...</p>
+              </Link>
             </div>
 
             <div className="flex flex-col h-full items-center justify-between m-10">

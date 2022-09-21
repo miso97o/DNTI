@@ -1,7 +1,7 @@
 import Pagination from "@mui/material/Pagination";
-import PostRow from "../../1_molecules/PostRow";
+import ReviewRow from "../../1_molecules/ReviewRow";
 
-export default function FreeMainComponent() {
+export default function ReviewMainComponent() {
   return (
     <div className="container mx-auto flex flex-col w-screen items-center">
       <div className="flex flex-row w-4/5 justify-between items-center">
@@ -10,7 +10,7 @@ export default function FreeMainComponent() {
       </div>
       <div className="flex flex-col w-4/5">
         <div className="flex flex-col w-full">
-          <PostRow />
+          <ReviewRow />
         </div>
         <div className="flex flex-row justify-center">
           <p>검색창</p>
