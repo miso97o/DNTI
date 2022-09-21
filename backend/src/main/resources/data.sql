@@ -105,3 +105,13 @@ INSERT INTO `dnti`.`dnti` (`type`, `count`) VALUES ('NIPS', '1');
 INSERT INTO `dnti`.`dnti` (`type`, `count`) VALUES ('NISP', '1');
 INSERT INTO `dnti`.`dnti` (`type`, `count`) VALUES ('NSPI', '1');
 INSERT INTO `dnti`.`dnti` (`type`, `count`) VALUES ('NSIP', '1');
+
+--더미 보드 데이터
+INSERT INTO `dnti`.`board` (`created_time`, `contents`, `title`, `user_id`) VALUES ('2022-07-21 09:30:22.232051', '피카츄는 꼬리가 길어', '피카츄는전기쥐', 'yth@gmail.com');
+INSERT INTO `dnti`.`board` (`created_time`, `contents`, `title`, `user_id`) VALUES ('2022-07-20 09:30:22.232051', '피카츄빵은 맛 없음', '가라 피카츄!', 'yth@gmail.com');
+INSERT INTO `dnti`.`board` (`created_time`, `contents`, `title`, `user_id`) VALUES ('2022-07-23 09:30:22.232051', '파이리는 피카츄를 싫어해', '피카츄라이츄', 'yth@gmail.com');
+INSERT INTO `dnti`.`board` (`created_time`, `contents`, `title`, `user_id`) VALUES ('2022-07-16 09:30:22.232051', '잠만보는잠자', '파이리와파이참', 'yth@gmail.com');
+INSERT INTO `dnti`.`board` (`created_time`, `contents`, `title`, `user_id`) VALUES ('2022-07-18 09:30:22.232051', '신림동꼬렛', '깨비드릴조', 'yth@gmail.com');
+INSERT INTO `dnti`.`board` (`created_time`, `contents`, `title`, `user_id`) VALUES ('2022-07-25 09:30:22.232051', '사내 식당 밥 맛있어용', '멀티캠퍼스시', 'skj@gmail.com');
+INSERT INTO `dnti`.`board` (`created_time`, `contents`, `title`, `user_id`) VALUES ('2022-07-25 10:30:22.232051', '사내 식당 밥 맛없는데요?', '패스트캠퍼스', 'skj@gmail.com');
+INSERT INTO `dnti`.`board` (`created_time`, `contents`, `title`, `user_id`) VALUES ('2022-07-25 12:30:22.232051', '밥 먹고 싶어', '호랑이선생님', 'skj@gmail.com');

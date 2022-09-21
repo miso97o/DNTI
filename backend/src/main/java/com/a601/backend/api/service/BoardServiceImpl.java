@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -82,9 +83,16 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Page<BoardResponse> findByTitleContaining(String keyword, Pageable pageable) {
-
-        return boardRepository.findByTitleContainingOrderByCreatedTimeDesc(keyword, pageable).map(BoardResponse::new);
+    public Page<BoardResponse> searchBoard(Long category, String keyword, Pageable pageable) {
+        // 제목으로 검색
+        if(category== 0){
+            return boardRepository.findByTitleContainingOrderByCreatedTimeDesc(keyword, pageable).map(BoardResponse::new);
+        } 
+        // 내용으로 검색
+        else if(category ==1){
+            return boardRepository.findByContentsContainingOrderByCreatedTimeDesc(keyword, pageable).map(BoardResponse::new);
+        }
+        return null;
     }
 
     @Override
@@ -107,14 +115,32 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public void cancelBoardLike(BoardLikeRequest boardLikeRequest) {
-        BoardLike boardLike = boardLikeRepository.findById(boardLikeRequest.getBoardLikeId()).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
-        Board board = boardRepository.findById(boardLikeRequest.getBoardLikeId()).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+        Board board = boardRepository.findById(boardLikeRequest.getBoardId()).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+        board.cancelBoardLike();
+
+        BoardLike boardLike = boardLikeRepository.findByEmailAndBoardId(boardLikeRequest.getUserId(), boardLikeRequest.getBoardId());
         if(boardLike != null){
-            boardLikeRepository.deleteById(boardLike.getBoardLikeId());
+            boardLikeRepository.delete(boardLike);
         }
-        if(board != null){
-            board.cancelBoardLike();
-        }
+    }
+
+    @Override
+    public List<BoardResponse> getMyBoard(String email) {
+        List<BoardResponse> myList = boardRepository.findMyBoard(email)
+                .stream()
+                .map(board -> BoardResponse.builder()
+                        .boardId(board.getBoardId())
+                        .userId(board.getUser().getEmail())
+                        .title(board.getTitle())
+                        .contents(board.getContents())
+                        .hit(board.getHit())
+                        .boardLike(board.getBoardLike())
+                        .commentCount(board.getReplyList().size())
+                        .createdTime(board.getCreatedTime())
+                        .modifiedTime(board.getModifiedTime())
+                        .build()).collect(Collectors.toList());
+
+        return myList;
     }
 
 
