@@ -29,6 +29,7 @@ public class Reply extends BaseEntity{
     @Column(nullable = true, length = 100)
     private String contents;
 
-    //대댓글 기능 구현하려면 필요 , 필요 없으면 삭제 가능
-    private Integer pid;
+    public void modify(String contents){
+        this.contents = contents;
+    }
 }
