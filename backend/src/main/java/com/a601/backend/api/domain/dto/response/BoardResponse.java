@@ -5,6 +5,7 @@ import com.a601.backend.api.domain.entity.BoardLike;
 import com.a601.backend.api.domain.entity.Reply;
 import com.a601.backend.api.domain.entity.User;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Data
 @Getter
+@Builder
 @AllArgsConstructor
 public class BoardResponse {
 

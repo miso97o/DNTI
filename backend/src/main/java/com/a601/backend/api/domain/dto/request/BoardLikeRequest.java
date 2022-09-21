@@ -12,6 +12,5 @@ import lombok.Setter;
 public class BoardLikeRequest {
     String UserId;
     Long boardId;
-    Long boardLikeId;
 
 }

@@ -15,4 +15,5 @@ public class BoardRequest {
     String userId;
     String title;
     String contents;
+
 }

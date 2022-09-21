@@ -32,14 +32,17 @@ public interface BoardService {
    // 조회수 증가
    void updateHit(Long boardId);
 
-   // 제목으로 검색하기
-   Page<BoardResponse> findByTitleContaining(String keyword, Pageable pageable);
+   // 게시글 키워드로 검색하기
+   Page<BoardResponse> searchBoard(Long category, String keyword, Pageable pageable);
 
    // 좋아요 등록
    void addBoardLike(BoardLikeRequest boardLikeRequest);
 
    // 좋아요 취소
    void cancelBoardLike(BoardLikeRequest boardLikeRequest);
+
+   // 내가 쓴 게시글 조회
+   List<BoardResponse> getMyBoard(String email);
 
 
 }
