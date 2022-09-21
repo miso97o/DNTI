@@ -1,0 +1,21 @@
+.page {
+  font-family: 'TmoneyRoundWindRegular';
+  padding: 50px 100px 0px 100px;
+}
+
+.container {
+  display: grid;
+  flex-direction: row;
+  justify-content: space-between;
+  grid-template-columns: 1fr 3fr;
+}
+
+.choose {
+  margin-right: 20px;
+  border: solid 2px #d9d9d9;
+  height: 800px;
+}
+
+.map {
+  overflow: hidden;
+}
