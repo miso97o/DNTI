@@ -17,8 +17,6 @@ public class Dong {
     @Column(nullable = false)
     private String dong;
 
-    private Long population;
-
     private Double price;
 
     private Double traffic_score;
@@ -31,7 +29,7 @@ public class Dong {
 
     private Double env_score;
 
-    @JoinColumn(name = "gu_id")
+    @JoinColumn(name = "gu_name")
     @ManyToOne(fetch = FetchType.LAZY)
     private Gu gu;
 }

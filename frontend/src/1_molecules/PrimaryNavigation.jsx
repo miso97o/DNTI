@@ -1,26 +1,27 @@
 import { Link } from "react-router-dom";
+import styles from "./PrimaryNavigation.module.css";
 
 function PrimaryNavigation() {
   return (
     <div>
-      <div>
-        <div>
-          <Link to={`dnti`} style={{ textDecoration: "none" }}>
+      <div className={styles.container}>
+        <div className={styles.content}>
+          <Link to={`dnti`} className={styles.link}>
             <p>동네TI</p>
           </Link>
         </div>
-        <div>
-          <Link to={`dnrecommend`}>
+        <div className={styles.content}>
+          <Link to={`dnrecommend`} className={styles.link}>
             <p>동네추천</p>
           </Link>
         </div>
-        <div>
-          <Link to={`kmMap`}>
+        <div className={styles.content}>
+          <Link to={`kmMap`} className={styles.link}>
             <p>1KM</p>
           </Link>
         </div>
-        <div>
-          <Link to={`board`}>
+        <div className={styles.content}>
+          <Link to={`board`} className={styles.link}>
             <p>게시판</p>
           </Link>
         </div>
