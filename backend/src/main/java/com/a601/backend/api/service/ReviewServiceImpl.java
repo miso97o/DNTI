@@ -193,7 +193,7 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     public List<ReviewResponse>reviewSearch(String search,String word){
-        if(search.equals("제목")){
+        if(search.equals("title")){
             List<ReviewResponse>reviewList=reviewRepository.findAllByTitleContainingOrderByCreatedTimeDesc(word)
                     .stream()
                     .map(review -> ReviewResponse.builder()
@@ -210,7 +210,7 @@ public class ReviewServiceImpl implements ReviewService{
                             .safety(review.getSafety())
                             .build()).collect(Collectors.toList());
             return reviewList;
-        }else if(search.equals("내용")){
+        }else if(search.equals("content")){
             List<ReviewResponse>reviewList=reviewRepository.findAllByContentContainingOrderByCreatedTimeDesc(word)
                     .stream()
                     .map(review -> ReviewResponse.builder()
