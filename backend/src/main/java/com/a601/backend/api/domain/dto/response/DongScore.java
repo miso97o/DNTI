@@ -1,10 +1,12 @@
 package com.a601.backend.api.domain.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class DongScore implements Comparable<DongScore> {
     private String dongName;
     private double totalScore;
