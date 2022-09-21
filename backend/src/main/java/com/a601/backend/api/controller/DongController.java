@@ -6,10 +6,7 @@ import com.a601.backend.api.service.DongService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,4 +25,10 @@ public class DongController {
         return new ApiResult(200, list);
     }
 
+    @ApiOperation(value = "dnti로 동 점수 계산", notes="점수 계산 후 점수순으로 리스트 반환")
+    @GetMapping("/{dnti}")
+    public ApiResult<DongScore> getRankByDnti(@PathVariable String dnti){
+        List<DongScore> list = dongService.computeDongScoreByDnti(dnti);
+        return new ApiResult(200, list);
+    }
 }
