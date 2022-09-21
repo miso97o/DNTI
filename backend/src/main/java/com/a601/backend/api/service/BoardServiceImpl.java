@@ -27,9 +27,9 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
+
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
-
     private final BoardLikeRepository boardLikeRepository;
 
 

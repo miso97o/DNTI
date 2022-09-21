@@ -115,3 +115,12 @@ INSERT INTO `dnti`.`board` (`created_time`, `contents`, `title`, `user_id`) VALU
 INSERT INTO `dnti`.`board` (`created_time`, `contents`, `title`, `user_id`) VALUES ('2022-07-25 09:30:22.232051', '사내 식당 밥 맛있어용', '멀티캠퍼스시', 'skj@gmail.com');
 INSERT INTO `dnti`.`board` (`created_time`, `contents`, `title`, `user_id`) VALUES ('2022-07-25 10:30:22.232051', '사내 식당 밥 맛없는데요?', '패스트캠퍼스', 'skj@gmail.com');
 INSERT INTO `dnti`.`board` (`created_time`, `contents`, `title`, `user_id`) VALUES ('2022-07-25 12:30:22.232051', '밥 먹고 싶어', '호랑이선생님', 'skj@gmail.com');
+
+--더비 댓글 데이터
+INSERT INTO `dnti`.`reply` (`created_time`, `modified_time`, `contents`, `board_id`, `user_id`) VALUES ('2022-09-21 06:38:53.281000', '2022-09-21 06:38:53.281000', '댓글을 달아봐', '1', 'yth@gmail.com');
+INSERT INTO `dnti`.`reply` (`created_time`, `modified_time`, `contents`, `board_id`, `user_id`) VALUES ('2022-09-21 06:38:53.281000', '2022-09-21 06:38:53.281000', '댓글을 달아봐2', '1', 'yth@gmail.com');
+INSERT INTO `dnti`.`reply` (`created_time`, `modified_time`, `contents`, `board_id`, `user_id`) VALUES ('2022-09-21 06:38:53.281000', '2022-09-21 06:38:53.281000', '나를 쓰러트려봐', '1', 'yth@gmail.com');
+INSERT INTO `dnti`.`reply` (`created_time`, `modified_time`, `contents`, `board_id`, `user_id`) VALUES ('2022-09-21 06:38:53.281000', '2022-09-21 06:38:53.281000', '우왕ㅋ굳ㅋ', '1', 'yth@gmail.com');
+INSERT INTO `dnti`.`reply` (`created_time`, `modified_time`, `contents`, `board_id`, `user_id`) VALUES ('2022-09-21 06:38:53.281000', '2022-09-21 06:38:53.281000', '롤 잘함?', '1', 'yth@gmail.com');
+
+
