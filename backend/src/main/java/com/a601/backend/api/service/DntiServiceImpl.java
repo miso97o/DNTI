@@ -30,9 +30,10 @@ public class DntiServiceImpl implements DntiService{
     public DntiResponse getDnti(String type) {
         List<Dnti> list = dntiRepository.findAll();
         Dnti cur = dntiRepository.getReferenceById(type);
-        long sum = 0;
+        double sum = 0;
         for(Dnti el : list) sum += el.getCount();
-        return new DntiResponse(type, cur.getCount(), (cur.getCount()/sum)*100, cur.getHashtag1(), cur.getHashtag2());
+        double percent = (cur.getCount()/sum)*100;
+        return new DntiResponse(type, cur.getCount(), Math.round(percent*100)/100.0, cur.getHashtag1(), cur.getHashtag2());
     }
 
     @Override
@@ -40,10 +41,12 @@ public class DntiServiceImpl implements DntiService{
         List<Dnti> list = dntiRepository.findAll();
         List<DntiResponse> result = new ArrayList<>();
 
+        double sum = 0;
+        for(Dnti el : list) sum += el.getCount();
+
         for(Dnti el : list) {
-            long sum = 0;
-            sum += el.getCount();
-            result.add(new DntiResponse(el.getType(), el.getCount(), (el.getCount()/sum)*100, el.getHashtag1(), el.getHashtag2()));
+            double percent = (el.getCount()/sum)*100;
+            result.add(new DntiResponse(el.getType(), el.getCount(), Math.round(percent*100)/100.0, el.getHashtag1(), el.getHashtag2()));
         }
         return result;
     }
