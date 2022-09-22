@@ -64,7 +64,9 @@ export default function BoardMainComponent() {
             <div className="flex flex-col h-full">
               <div className="flex flex-row justify-between items-center m-10">
                 <p className="font-medium text-2xl">리뷰 게시판</p>
-                <p>더보기...</p>
+                <Link to="review">
+                  <p>더보기...</p>
+                </Link>
               </div>
 
               <div className="flex flex-col h-full justify-between items-center m-10">
