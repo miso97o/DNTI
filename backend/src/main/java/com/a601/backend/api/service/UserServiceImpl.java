@@ -89,24 +89,4 @@ public class UserServiceImpl implements UserService{
                 .userId(oUser.getEmail()).birthYear(oUser.getBirthYear()).dong(oUser.getDong()).gu(oUser.getGu()).dnti(oUser.getDnti()).nickname(oUser.getNickname()).build();
         return result;
     }
-
-//    @Override
-//    public UserRequest.MyPage getMypage(String email) {
-//        //user
-//        User oUser = repository.findById(email).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
-//        //dnti
-//        DntiResponse dnti = dntiService.getDnti(oUser.getDnti());
-//        //favorite
-//
-//        //dnti - place
-//
-//        //review
-//
-//        //board
-//
-//
-//        UserRequest. MyPage result = UserRequest.All.builder()
-//                .userId(oUser.getEmail()).birthYear(oUser.getBirthYear()).dong(oUser.getDong()).gu(oUser.getGu()).dnti(oUser.getDnti()).nickname(oUser.getNickname()).build();
-//        return result;
-//    }
 }

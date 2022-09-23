@@ -30,7 +30,5 @@ public interface UserService {
 
     //회원 정보 조회
     UserRequest.All getInfo(String userId) throws Exception;
-
-//    UserRequest.MyPage getMypage(String userId) throws Exception;
 }
 
