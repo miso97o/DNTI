@@ -11,7 +11,7 @@ export default function PostViewComponent() {
   };
   return (
     <div className="flex flex-col w-4/5 h-full items-center m-5">
-      <div className="flex flex-row w-full m-5">
+      <div className="flex flex-row w-full">
         <p className="font-medium text-2xl">게시판 글 보기</p>
       </div>
       <div className="flex flex-row w-full justify-between m-5">

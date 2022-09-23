@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { Button, TextField } from "@mui/material";
 
 export default function PostWriteComponent() {
-  const [value, setValue] = React.useState("");
+  const [postContents, setPostContents] = React.useState("");
   const handleChange = (event) => {
-    setValue(event.target.value);
+    setPostContents(event.target.value);
   };
   return (
     <div className="flex flex-col w-4/5 h-full items-center m-5">
@@ -29,7 +29,7 @@ export default function PostWriteComponent() {
             multiline
             fullWidth
             minRows={20}
-            value={value}
+            value={postContents}
             onChange={handleChange}
           />
         </div>

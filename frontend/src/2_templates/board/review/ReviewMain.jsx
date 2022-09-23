@@ -1,19 +1,11 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
-import {
-  Button,
-  Pagination,
-  TextField,
-  IconButton,
-  Rating,
-} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import ReviewRow from "../../1_molecules/ReviewRow";
+import { Outlet, Link } from "react-router-dom";
+import { Button, Rating } from "@mui/material";
 
 function GuCard({ totalScore, rentScore, infraScore, envScore, safeScore }) {
   console.log(totalScore);
   return (
-    <div className="w-2/5 h-1/2 m-5">
+    <div className="w-2/5 h-1/2 p-5">
       <div className="flex flex-col h-full">
         <div className="flex flex-row justify-center">
           <p>강남구</p>
@@ -47,22 +39,22 @@ function GuCard({ totalScore, rentScore, infraScore, envScore, safeScore }) {
   );
 }
 
-export default function ReviewMainComponent() {
+export default function ReviewMain() {
   const [totalScore, setTotalScore] = React.useState(2);
   const [rentScore, setRentScore] = React.useState(2);
   const [infraScore, setInfraScore] = React.useState(2);
   const [envScore, setEnvScore] = React.useState(2);
   const [safeScore, setSafeScore] = React.useState(2);
   return (
-    <div className="container mx-auto flex flex-col h-full w-screen items-center">
-      <div className="flex flex-row w-4/5 justify-start">
+    <div className="flex flex-col h-full w-4/5 items-center">
+      <div className="flex flex-row w-full justify-start">
         <Link to="/board">
           <Button>뒤로</Button>
         </Link>
       </div>
-      <div className="flex flex-row w-4/5 justify-between items-center">
+      <div className="flex flex-row w-full justify-between items-center">
         <p>리뷰 게시판</p>
-        <Link to="/board/postwrite">
+        <Link to="/board/review/write">
           <Button>글쓰기</Button>
         </Link>
       </div>
@@ -75,24 +67,7 @@ export default function ReviewMainComponent() {
           safeScore={safeScore}
         />
         <div className="h-full w-3/5">
-          <div className="flex flex-col h-full w-4/5 items-center">
-            <div className="flex flex-col h-4/5 w-full">
-              <ReviewRow
-                title="제목을 뭐로 할까요"
-                writer="tttkim"
-                score={3}
-                tags={["#태그"]}
-                likes="333"
-              />
-            </div>
-            <div className="flex flex-row justify-center items-center m-10">
-              <TextField variant="outlined" />
-              <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-                <SearchIcon />
-              </IconButton>
-            </div>
-            <Pagination count={10} variant="outlined" color="primary" />
-          </div>
+          <Outlet />
         </div>
       </div>
     </div>
