@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ShowOptions from "../../0_atoms/ShowOptions"
+import ShowOptions from "./ShowOptions"
 // import { Selected} from "../../0_atoms/selected"
 import styles from "./Show.module.css";
 
