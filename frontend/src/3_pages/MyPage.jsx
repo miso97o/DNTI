@@ -50,6 +50,18 @@ function ProfileCard() {
   );
 }
 
+function FrequentRow() {
+  return (
+    <div className="flex flex-row justify-between">
+      <p className="">멀티캠퍼스</p>
+      <p className="">강남구 테헤란로 212</p>
+      <IconButton>
+        <ClearIcon />
+      </IconButton>
+    </div>
+  );
+}
+
 function FrequentPlace() {
   return (
     <div className="flex flex-col h-1/2">
@@ -61,13 +73,7 @@ function FrequentPlace() {
         <p className="txt-959">최대 3곳까지 등록 가능합니다.</p>
       </div>
       <div className="flex flex-col">
-        <div className="flex flex-row justify-between">
-          <p className="">멀티캠퍼스</p>
-          <p className="">강남구 테헤란로 212</p>
-          <IconButton>
-            <ClearIcon />
-          </IconButton>
-        </div>
+        <FrequentRow />
       </div>
     </div>
   );
