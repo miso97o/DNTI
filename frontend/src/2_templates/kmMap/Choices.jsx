@@ -7,10 +7,10 @@ function Choices() {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <p>ChoiceBoxArea</p>
-        <div className={styles.search}>
+        {/* <p>ChoiceBoxArea</p> */}
+        {/* <div className={styles.search}>
           <Search />
-        </div>
+        </div> */}
         <div className={styles.show}>
           <Show />
         </div>
