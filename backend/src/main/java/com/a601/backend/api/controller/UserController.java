@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "마이페이지 정보 조회", notes="해당 아이디 회원정보 조회")
-    @GetMapping("/{userId}")
+    @GetMapping("/mypage/{userId}")
     public ApiResult getMypage(@PathVariable String email) {
         //user
         UserRequest.All user = service.getInfo(email);
