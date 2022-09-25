@@ -5,7 +5,7 @@ import axios from "../utils/axios";
 function googleLogIn() {
   console.log("googleLogIn()");
   // window.location.replace("http://j7a601.p.ssafy.io/api/google/login");
-  axios.get(`/users/list`).then((data) => {
+  axios.get(`/google/login`).then((data) => {
     console.log(data);
   });
 }
