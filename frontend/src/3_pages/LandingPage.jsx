@@ -7,7 +7,7 @@ export default function LandingPage() {
       <div className="m-20">
         <Link to={`dnti`} style={{ textDecoration: "none" }}>
           <button className="bg-sky-500 hover:bg-sky-600 active:bg-sky-700 focus:outline-none focus:ring focus:ring-sky-300">
-            동네TI 검사하러 가기
+            동네TI 검사
           </button>
         </Link>
       </div>
