@@ -7,14 +7,7 @@ function ReviewTag({ tagText }) {
   return <p className="mx-2">{tagText}</p>;
 }
 
-export default function ReviewRow({
-  title,
-  datetime,
-  writer,
-  tags,
-  score,
-  likes,
-}) {
+export default function ReviewRow({ title, datetime, tags, score, likes }) {
   return (
     <Link to="/board/review/view">
       <div className="flex flex-row w-full items-center">
