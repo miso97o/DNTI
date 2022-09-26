@@ -12,7 +12,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 public class BoardRequest {
-    String userId;
+    String email;
     String title;
     String contents;
 

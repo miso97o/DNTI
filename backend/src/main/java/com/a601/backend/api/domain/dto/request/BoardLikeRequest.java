@@ -10,7 +10,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 public class BoardLikeRequest {
-    String UserId;
+    String email;
     Long boardId;
 
 }

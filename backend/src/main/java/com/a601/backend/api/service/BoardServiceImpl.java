@@ -50,7 +50,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public Long writeBoard(BoardRequest request) {
-        User user = userRepository.getReferenceById(request.getUserId());
+        User user = userRepository.getReferenceById(request.getEmail());
         Board board = Board.builder()
                 .user(user)
                 .title(request.getTitle())
@@ -99,7 +99,7 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     public void addBoardLike(BoardLikeRequest boardLikeRequest) {
         Board board = boardRepository.findById(boardLikeRequest.getBoardId()).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
-        User user = userRepository.findById(boardLikeRequest.getUserId()).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+        User user = userRepository.findById(boardLikeRequest.getEmail()).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
         // 좋아요 1 증가
         board.addBoardLike();
         BoardLike boardLike = BoardLike.builder()
@@ -118,7 +118,7 @@ public class BoardServiceImpl implements BoardService {
         Board board = boardRepository.findById(boardLikeRequest.getBoardId()).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
         board.cancelBoardLike();
 
-        BoardLike boardLike = boardLikeRepository.findByEmailAndBoardId(boardLikeRequest.getUserId(), boardLikeRequest.getBoardId());
+        BoardLike boardLike = boardLikeRepository.findByEmailAndBoardId(boardLikeRequest.getEmail(), boardLikeRequest.getBoardId());
         if(boardLike != null){
             boardLikeRepository.delete(boardLike);
         }
@@ -130,7 +130,7 @@ public class BoardServiceImpl implements BoardService {
                 .stream()
                 .map(board -> BoardResponse.builder()
                         .boardId(board.getBoardId())
-                        .userId(board.getUser().getEmail())
+                        .email(board.getUser().getEmail())
                         .title(board.getTitle())
                         .contents(board.getContents())
                         .hit(board.getHit())
