@@ -21,4 +21,6 @@ public class Km {
     double lat;
 
     double lng;
+
+    String address;
 }
