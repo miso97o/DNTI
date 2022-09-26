@@ -14,7 +14,7 @@ function BtnGoogleSignIn() {
   return (
     <div className="flex flex-row items-center border-2 py-2 pr-6 shadow-md">
       <div className="h-10 w-10 mx-5">
-        <img src="img/google.png" alt="google signin" />
+        <img src="img/google.png" alt="google login" />
       </div>
       <p className="font-sans">Sign in with google</p>
     </div>
@@ -31,7 +31,7 @@ export default function LoginPage() {
         <p>회원가입</p>
         <Link to={`/signup`} style={{ textDecoration: "none" }}>
           <div className="h-20 w-20 mx-5">
-            <img src="img/google.png" />
+            <img src="img/google.png" alt="google signin" />
           </div>
         </Link>
       </div>
