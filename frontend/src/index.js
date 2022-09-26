@@ -23,6 +23,8 @@ import ReviewMain from "./2_templates/board/review/ReviewMain";
 import ReviewMainComponent from "./2_templates/board/review/ReviewMainComponent";
 import ReviewViewComponent from "./2_templates/board/review/ReviewViewComponent";
 import ReviewWriteComponent from "./2_templates/board/review/ReviewWriteComponent";
+import store from "./app/store";
+import { Provider } from "react-redux";
 
 const router = createBrowserRouter([
   {
@@ -125,7 +127,9 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <Provider store={store}>
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
+  </Provider>
 );
