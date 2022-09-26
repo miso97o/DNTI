@@ -1,10 +1,11 @@
 package com.a601.backend.api.domain.dto.request;
 
+import com.a601.backend.api.domain.dto.response.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.Builder;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class UserRequest {
@@ -23,18 +24,15 @@ public class UserRequest {
     @Getter
     @Setter
     @Builder
+    @AllArgsConstructor
     public static class MyPage {
-        String userId;
-        String nickname;
-        Integer birthYear;
-        String gu;
-        String dong;
+        UserRequest.All user;
+        DntiResponse dntiRequest;
 
-        DntiRequest dntiRequest;
-
-        List<FavoriteRequest> favoriteList;
-        List<ReviewRequest> reviewList;
-        List<BoardRequest> boardList;
+        List<DongScore> dongList;
+        List<FavoriteResponse> favoriteList;
+        List<ReviewResponse> reviewList;
+        List<BoardResponse> boardList;
     }
 
     @Getter

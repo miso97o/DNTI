@@ -9,6 +9,7 @@ import com.a601.backend.api.repository.ReviewLikeRepository;
 import com.a601.backend.api.repository.ReviewRepository;
 import com.a601.backend.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,8 +59,8 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public List<ReviewResponse> reviewList() {
-        List<ReviewResponse>reviewList=reviewRepository.findAllByOrderByCreatedTimeDesc()
+    public List<ReviewResponse> reviewList(Pageable pageable) {
+        List<ReviewResponse>reviewList=reviewRepository.findAllByOrderByCreatedTimeDesc(pageable)
                 .stream()
                 .map(review -> ReviewResponse.builder()
                         .email(review.getUser().getEmail())
@@ -192,8 +193,8 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     public List<ReviewResponse>reviewSearch(String search,String word){
-        if(search.equals("제목")){
-            List<ReviewResponse>reviewList=reviewRepository.findAllByTitleContaining(word)
+        if(search.equals("title")){
+            List<ReviewResponse>reviewList=reviewRepository.findAllByTitleContainingOrderByCreatedTimeDesc(word)
                     .stream()
                     .map(review -> ReviewResponse.builder()
                             .email(review.getUser().getEmail())
@@ -209,8 +210,8 @@ public class ReviewServiceImpl implements ReviewService{
                             .safety(review.getSafety())
                             .build()).collect(Collectors.toList());
             return reviewList;
-        }else if(search.equals("내용")){
-            List<ReviewResponse>reviewList=reviewRepository.findAllByContentContaining(word)
+        }else if(search.equals("content")){
+            List<ReviewResponse>reviewList=reviewRepository.findAllByContentContainingOrderByCreatedTimeDesc(word)
                     .stream()
                     .map(review -> ReviewResponse.builder()
                             .email(review.getUser().getEmail())
@@ -258,12 +259,12 @@ public class ReviewServiceImpl implements ReviewService{
         reviewRepository.save(review);
     }
 
-//    @Override
-//    public void reviewdeleteLike(Long id,Long lid) {
-//        reviewLikeRepository.deleteById(lid);
+    @Override
+    public void reviewdeleteLike(Long id,Long lid) {
+        reviewLikeRepository.deleteById(lid);
 //        Review review=reviewRepository.findById(id).get();
 //        review.setReviewLike(review.getReviewLikeList().size());
 //        reviewRepository.save(review);
-//    }
+    }
 
 }

@@ -8,6 +8,8 @@ import com.a601.backend.api.service.ReviewServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +26,7 @@ public class ReviewController {
     //게시글 저장
     @ApiOperation(value = "리뷰 게시글 저장")
     @PostMapping("/save")
-    public ApiResult<?>saveReview(@RequestBody ReviewRequest reviewRequest){
+    public ApiResult saveReview(@RequestBody ReviewRequest reviewRequest){
         //유저 로그인 했는지 여부 파악
         String email="skj@gmail.com";
         reviewService.saveReview(reviewRequest,email);
@@ -34,8 +36,8 @@ public class ReviewController {
     //게시글 전체 조회
     @ApiOperation(value = "리뷰 게시글 전체 조회")
     @GetMapping("/list")
-    public ApiResult<List<ReviewResponse>>reviewList(){
-        List<ReviewResponse>reviewResponseList=reviewService.reviewList();
+    public ApiResult reviewList(Pageable pageable){
+        List<ReviewResponse>reviewResponseList=reviewService.reviewList(pageable);
         return new ApiResult<>(200,reviewResponseList);
     }
 
@@ -101,12 +103,12 @@ public class ReviewController {
         return new ApiResult<>(200,"review_like");
     }
 
-//    @ApiOperation(value = " 좋아요 삭제 기능 ")
-//    @DeleteMapping("/reviewlike/delete")
-//    public ApiResult<?>reviewdeleteLike(@RequestParam("id") Long id,@RequestParam("lid") Long lid){
-//        reviewService.reviewdeleteLike(id,lid);
-//        return new ApiResult<>(200,"review_like");
-//    }
+    @ApiOperation(value = " 좋아요 삭제 기능 ")
+    @DeleteMapping("/reviewlike/delete")
+    public ApiResult<?>reviewdeleteLike(@RequestParam("id") Long id,@RequestParam("lid") Long lid){
+        reviewService.reviewdeleteLike(id,lid);
+        return new ApiResult<>(200,"review_like");
+    }
 
 
 

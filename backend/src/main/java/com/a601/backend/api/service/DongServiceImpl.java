@@ -24,7 +24,6 @@ public class DongServiceImpl implements DongService{
         for(Dong dong : dongList) {
 //            boolean[] computed = new boolean[7];                //우선순위에 안담긴 지표를 확인하기 위한 배열
             double weight = 2.0;                                //가중치
-            DongScore tmp = new DongScore();
             double sum = 0;                                     //점수 합
             for(int p : priorities) {                           //우선순위 순으로 조회
                 sum += getScore(p,dong)*weight;                 //해당하는 점수에 가중치 곱함
@@ -34,8 +33,35 @@ public class DongServiceImpl implements DongService{
 //            for(int i=1; i<7; ++i){                             //우선순위 없는 점수 더함
 //                if(!computed[i]) sum += getScore(i,dong);
 //            }
-            tmp.setDongName(dong.getDong());                    //리스트에 추가
-            tmp.setTotalScore(sum);
+            DongScore tmp = new DongScore(dong.getDong(),sum);
+            rankList.add(tmp);
+        }
+        rankList.sort(Collections.reverseOrder());              //점수 내림차순으로 정렬 후 반환
+        List<DongScore> result = rankList.subList(0,5);
+        return result;
+    }
+
+    @Override
+    public List<DongScore> computeDongScoreByDnti(String dnti) {
+        List<Dong> dongList = dongRepository.findAll();
+        List<DongScore> rankList = new ArrayList<>();
+        for(Dong dong : dongList) {
+            double weight = 2.0;
+            double sum = 0;
+            for(int i=0; i<dnti.length(); ++i){
+                char cur = dnti.charAt(i);
+                if(cur == 'P') sum += getScore(1,dong)*weight;
+                else if(cur == 'I') {
+                    double infra = 0;
+                    infra += getScore(2,dong)*weight;
+                    infra += getScore(3,dong)*weight;
+                    infra += getScore(4,dong)*weight;
+                    sum += infra/3;
+                } else if(cur == 'S') sum += getScore(5,dong)*weight;
+                else if(cur == 'N') sum += getScore(6,dong)*weight;
+                weight -= 0.5;
+            }
+            DongScore tmp = new DongScore(dong.getDong(), sum);
             rankList.add(tmp);
         }
         rankList.sort(Collections.reverseOrder());              //점수 내림차순으로 정렬 후 반환

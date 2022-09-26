@@ -49,11 +49,18 @@ public class BoardController {
         return new ApiResult(200, boardService.findAllByOrderByCreatedTime(pageable));
     }
 
-    // 제목으로 게시글 조회
-    @ApiOperation(value = "제목으로 게시글 조회", notes = "검색어를 포함한 제목을 가진 게시글 조회(최신순)")
-    @GetMapping("/title")
-    public ApiResult selectBoardListByTitle(String keyword, Pageable pageable) {
-        return new ApiResult(200, boardService.findByTitleContaining(keyword, pageable));
+    // 키워드로 게시글 조회
+    @ApiOperation(value = "키워드로 게시글 조회", notes = "검색어를 포함한 제목/내용을 가진 게시글 조회(최신순)")
+    @GetMapping("/search")
+    public ApiResult selectBoardListByKeyword(@RequestParam Long category, @RequestParam String keyword, Pageable pageable) {
+        return new ApiResult(200, boardService.searchBoard(category, keyword, pageable));
+    }
+
+    // 내가 쓴 게시글 조회
+    @ApiOperation(value = "내가 쓴 게시글 조회", notes = "성공하면 게시글 list 리턴")
+    @GetMapping("/my-board/{email}")
+    public ApiResult getMyBoard(@PathVariable("email") String email){
+        return new ApiResult(200, boardService.getMyBoard(email));
     }
 
 
@@ -83,7 +90,7 @@ public class BoardController {
 
     @ApiOperation(value = "좋아요 등록", notes = "성공하면 업데이트 된 게시글 id리턴")
     @PatchMapping("/increase-like")
-    public ApiResult regiBoardLike(@RequestBody BoardLikeRequest boardLike) {
+    public ApiResult addBoardLike(@RequestBody BoardLikeRequest boardLike) {
         boardService.addBoardLike(boardLike);
         return new ApiResult(200, boardLike.getBoardId());
     }
@@ -92,7 +99,7 @@ public class BoardController {
     @PatchMapping("/decrease-like")
     public ApiResult cancelBoardLike(@RequestBody BoardLikeRequest boardLike) {
         boardService.cancelBoardLike(boardLike);
-        return new ApiResult(200, boardLike.getBoardLikeId());
+        return new ApiResult(200, boardLike.getBoardId());
     }
     
 }

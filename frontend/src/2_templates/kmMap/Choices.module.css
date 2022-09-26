@@ -1,5 +1,52 @@
 .page {
-  border: solid 2px #d9d9d9;
-  height: 800px;
-
+  font-family: 'TmoneyRoundWindRegular';
 }
+
+.show {
+  gap: 16px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 28px;
+  margin-left: 5px;
+  color: #333333;
+}
+
+.selectedContainer {
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+
+.selectedOptArea {
+  width: 60px;
+  height: 70px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.selectedOptIcon img {
+  width: 60px;
+  height: 60px;
+}
+
+.selectedBlank {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+}
+
+.selectedUnderline {
+  background-color: #f0f0f0;
+  border: 0;
+  height: 1.3px;
+  width: 100%;
+}
+
+

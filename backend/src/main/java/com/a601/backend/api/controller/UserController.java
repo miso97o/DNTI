@@ -3,12 +3,14 @@ package com.a601.backend.api.controller;
 
 import com.a601.backend.api.domain.dto.common.ApiResult;
 import com.a601.backend.api.domain.dto.request.UserRequest;
-import com.a601.backend.api.repository.UserRepository;
-import com.a601.backend.api.service.UserServiceImpl;
+import com.a601.backend.api.domain.dto.response.*;
+import com.a601.backend.api.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Api(value = "회원 API", tags = {"회원"})
 @RestController
@@ -18,7 +20,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserServiceImpl service;
-    private final UserRepository repository;
+    private final DntiServiceImpl dntiService;
+    private final FavoriteServiceImpl favoriteService;
+    private final ReviewServiceImpl reviewService;
+    private final BoardServiceImpl boardService;
+    private final DongServiceImpl dongService;
+
 
     //회원가입(닉네임,생년, 구, 동, 휴대폰번호, 아이디)
     @ApiOperation(value="회원가입")
@@ -41,11 +48,31 @@ public class UserController {
         return new ApiResult(200,service.getInfo(userId));
     }
 
-//    @ApiOperation(value = "마이페이지 정보 조회", notes="해당 아이디 회원정보 조회")
-//    @GetMapping("/{userId}")
-//    public ApiResult getMypage(@PathVariable String userId) {
-//        return new ApiResult(200,service.getInfo(userId));
-//    }
+    @ApiOperation(value = "마이페이지 정보 조회", notes="해당 아이디 회원정보 조회")
+    @GetMapping("/mypage/{email}")
+    public ApiResult getMypage(@PathVariable String email) {
+        //user
+        UserRequest.All user = service.getInfo(email);
+
+        //dnti
+        DntiResponse dnti = dntiService.getDnti(user.getDnti());
+
+        //dnti - place
+        List<DongScore> dong = dongService.computeDongScoreByDnti(user.getDnti());
+
+        //favorite
+        List<FavoriteResponse> favoriteList = favoriteService.getFavorite(email);
+
+        //review
+        List<ReviewResponse> reviewList = reviewService.reviewSearch(email,"아이디");
+
+        //board
+        List<BoardResponse> boardList = boardService.getMyBoard(email);
+
+        UserRequest.MyPage result = new UserRequest.MyPage(user, dnti, dong, favoriteList, reviewList, boardList);
+
+        return new ApiResult(200,result);
+    }
 
     @ApiOperation(value = "회원 목록", notes="회원 목록")
     @GetMapping("/list")
