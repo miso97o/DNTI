@@ -14,7 +14,7 @@ function BtnGoogleSignIn() {
   return (
     <div className="flex flex-row items-center border-2 py-2 pr-6 shadow-md">
       <div className="h-10 w-10 mx-5">
-        <img src="img/google.png" />
+        <img src="img/google.png" alt="google signin" />
       </div>
       <p className="font-sans">Sign in with google</p>
     </div>
