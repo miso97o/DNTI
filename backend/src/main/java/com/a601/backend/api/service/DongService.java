@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface DongService {
     //동네 점수 계산
-    List<DongScore> computeDongScore(List<Integer> priorities);
+    List<DongScore> computeDongScore(List<Integer> priorities, String gu);
     List<DongScore> computeDongScoreByDnti(String dnti);
 }

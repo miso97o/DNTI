@@ -17,27 +17,24 @@ public class DongServiceImpl implements DongService{
     private DongRepository dongRepository;
 
     @Override
-    public List<DongScore> computeDongScore(List<Integer> priorities) { //우선순위에 따른 점수 계산, 리스트 반환
+    public List<DongScore> computeDongScore(List<Integer> priorities, String gu) { //우선순위에 따른 점수 계산, 리스트 반환
         //priorities는 순위가 들어있음
         List<Dong> dongList = dongRepository.findAll();         //전체 리스트 가져오기
         List<DongScore> rankList = new ArrayList<>();           //동,점수 객체를 담을 리스트
+        System.out.println(gu);
         for(Dong dong : dongList) {
-//            boolean[] computed = new boolean[7];                //우선순위에 안담긴 지표를 확인하기 위한 배열
             double weight = 2.0;                                //가중치
             double sum = 0;                                     //점수 합
             for(int p : priorities) {                           //우선순위 순으로 조회
                 sum += getScore(p,dong)*weight;                 //해당하는 점수에 가중치 곱함
                 weight -= 0.2;                                  //가중치 낮추기
-//                computed[p] = true;                             //계산한 것 표시
             }
-//            for(int i=1; i<7; ++i){                             //우선순위 없는 점수 더함
-//                if(!computed[i]) sum += getScore(i,dong);
-//            }
             DongScore tmp = new DongScore(dong.getDong(),sum);
-            rankList.add(tmp);
+            if(dong.getGu().getGuName().equals(gu) || gu == null) rankList.add(tmp);
         }
         rankList.sort(Collections.reverseOrder());              //점수 내림차순으로 정렬 후 반환
-        List<DongScore> result = rankList.subList(0,5);
+        int len = rankList.size() > 5 ? 5 : rankList.size();
+        List<DongScore> result = rankList.subList(0,len);
         return result;
     }
 
