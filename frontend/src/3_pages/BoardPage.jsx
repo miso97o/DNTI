@@ -29,8 +29,8 @@ export default function Boardpage() {
     "중랑구",
   ];
   return (
-    <div className="flex flex-col h-4/5">
-      <div className="">
+    <div className="flex flex-col w-full h-full items-center p-10">
+      <div className="flex w-4/5 p-5">
         <select>
           {gulist.map((item) => {
             return <option value={item}>{item}</option>;
