@@ -17,6 +17,7 @@ import java.util.List;
 
 @Api(value = "리뷰 API", tags = {"리뷰"})
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/review")
 public class ReviewController {
 

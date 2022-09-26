@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@CrossOrigin("*")
 @Api(value = "동네게시판 API")
 @RequestMapping("/board")
 @AllArgsConstructor

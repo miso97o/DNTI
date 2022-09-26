@@ -17,11 +17,10 @@ public class DongServiceImpl implements DongService{
     private DongRepository dongRepository;
 
     @Override
-    public List<DongScore> computeDongScore(List<Integer> priorities, String gu) { //우선순위에 따른 점수 계산, 리스트 반환
+    public List<DongScore> computeDongScore(List<Integer> priorities, List<String> guList) { //우선순위에 따른 점수 계산, 리스트 반환
         //priorities는 순위가 들어있음
         List<Dong> dongList = dongRepository.findAll();         //전체 리스트 가져오기
         List<DongScore> rankList = new ArrayList<>();           //동,점수 객체를 담을 리스트
-        System.out.println(gu);
         for(Dong dong : dongList) {
             double weight = 2.0;                                //가중치
             double sum = 0;                                     //점수 합
@@ -30,7 +29,10 @@ public class DongServiceImpl implements DongService{
                 weight -= 0.2;                                  //가중치 낮추기
             }
             DongScore tmp = new DongScore(dong.getDong(),sum);
-            if(dong.getGu().getGuName().equals(gu) || gu == null) rankList.add(tmp);
+            for(String gu : guList) if(dong.getGu().getGuName().equals(gu) || gu == null) {
+                rankList.add(tmp);
+                break;
+            }
         }
         rankList.sort(Collections.reverseOrder());              //점수 내림차순으로 정렬 후 반환
         int len = rankList.size() > 5 ? 5 : rankList.size();
@@ -72,6 +74,7 @@ public class DongServiceImpl implements DongService{
         else if(idx == 3) return dong.getEating_score();
         else if(idx == 4) return dong.getCulture_score();
         else if(idx == 5) return dong.getSafety_score();
-        else return dong.getEnv_score();
+        else if(idx == 6) return dong.getEnv_score();
+        else return 0;
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin("*")
 @Api(value = "동네게시판 댓글 API")
 @RequestMapping("/reply")
 @AllArgsConstructor
