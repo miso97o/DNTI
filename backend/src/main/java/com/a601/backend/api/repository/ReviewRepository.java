@@ -1,7 +1,6 @@
 package com.a601.backend.api.repository;
 
 import com.a601.backend.api.domain.entity.Review;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,7 +21,7 @@ public interface ReviewRepository extends JpaRepository<Review,Long> {
 
     List<Review>findAllByTitleContainingOrderByCreatedTimeDesc(String title);
     List<Review>findAllByContentContainingOrderByCreatedTimeDesc(String content);
-    @Query("select r from Review r where r.user.email = :email order by createdtime Desc")
+    @Query("select r from Review r where r.user.email = :email order by r.createdTime Desc")
     List<Review>findAllUserReview(@Param("email") String email);
 
 }
