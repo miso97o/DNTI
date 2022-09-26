@@ -72,6 +72,7 @@ public class DongServiceImpl implements DongService{
         else if(idx == 3) return dong.getEating_score();
         else if(idx == 4) return dong.getCulture_score();
         else if(idx == 5) return dong.getSafety_score();
-        else return dong.getEnv_score();
+        else if(idx == 6) return dong.getEnv_score();
+        else return 0;
     }
 }
