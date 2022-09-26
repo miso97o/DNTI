@@ -13,15 +13,16 @@ import MyPage from "./3_pages/MyPage";
 import BoardMainComponent from "./2_templates/board/BoardMainComponent";
 import PostViewComponent from "./2_templates/board/PostViewComponent";
 import PostWriteComponent from "./2_templates/board/PostWriteComponent";
-import ReviewViewComponent from "./2_templates/board/ReviewViewComponent";
-import ReviewWriteComponent from "./2_templates/board/ReviewWriteComponent";
 import DntiPage from "./3_pages/DntiPage";
 import ErrorPage from "./3_pages/ErrorPage";
 import Root from "./3_pages/Root";
 import LoginPage from "./3_pages/LoginPage";
 import SignUpPage from "./3_pages/SignUpPage";
 import PostMainComponent from "./2_templates/board/PostMainComponent";
-import ReviewMainComponent from "./2_templates/board/ReviewMainComponent";
+import ReviewMain from "./2_templates/board/review/ReviewMain";
+import ReviewMainComponent from "./2_templates/board/review/ReviewMainComponent";
+import ReviewViewComponent from "./2_templates/board/review/ReviewViewComponent";
+import ReviewWriteComponent from "./2_templates/board/review/ReviewWriteComponent";
 
 const router = createBrowserRouter([
   {
@@ -59,7 +60,21 @@ const router = createBrowserRouter([
           },
           {
             path: "review",
-            element: <ReviewMainComponent />,
+            element: <ReviewMain />,
+            children: [
+              {
+                path: "",
+                element: <ReviewMainComponent />,
+              },
+              {
+                path: "view",
+                element: <ReviewViewComponent />,
+              },
+              {
+                path: "write",
+                element: <ReviewWriteComponent />,
+              },
+            ],
           },
           {
             path: "postview",
@@ -68,14 +83,6 @@ const router = createBrowserRouter([
           {
             path: "postwrite",
             element: <PostWriteComponent />,
-          },
-          {
-            path: "reviewview",
-            element: <ReviewViewComponent />,
-          },
-          {
-            path: "reviewwrite",
-            element: <ReviewWriteComponent />,
           },
         ],
       },

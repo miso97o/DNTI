@@ -1,4 +1,9 @@
 import { Link } from "react-router-dom";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import PersonIcon from "@mui/icons-material/Person";
+import { pink } from "@mui/material/colors";
 
 export default function PostRow({
   title,
@@ -10,40 +15,30 @@ export default function PostRow({
 }) {
   return (
     <Link to="/board/postview">
-      <div className="flex flex-row w-full items-center">
+      <div className="flex flex-row w-full items-center p-1">
         <div className="flex flex-row w-full items-stretch justify-between">
-          <div className="flex flex-row items-center w-1/2">
+          <div className="flex flex-row items-center w-1/3">
             <p>{title}</p>
           </div>
-          <div className="flex flex-row justify-between items-center w-1/2">
-            <div className="flex flex-row items-center w-1/10">
-              <img
-                src="https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/jyb5vmsqhak-357%3A682?alt=media&token=d1643e84-9fe3-48b9-b80a-2ce3eb03efba"
-                alt="Not Found"
-              />
+          <div className="flex flex-row justify-between items-center w-2/3">
+            <div className="flex flex-row items-center w-1/3">
+              <PersonIcon />
               <p>{writer}</p>
             </div>
-            <p>{date}</p>
-            <div className="flex flex-row items-center">
-              <img
-                src="https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/jyb5vmsqhak-357%3A682?alt=media&token=d1643e84-9fe3-48b9-b80a-2ce3eb03efba"
-                alt="Not Found"
-              />
-              <p>{replies}</p>
-            </div>
-            <div className="flex flex-row items-center">
-              <img
-                src="https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/jyb5vmsqhak-332%3A499?alt=media&token=ee5cbef4-b128-489b-979f-bd01554717ca"
-                alt="Not Found"
-              />
-              <p>{views}</p>
-            </div>
-            <div className="flex flex-row items-center">
-              <img
-                src="https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/jyb5vmsqhak-332%3A502?alt=media&token=99d639ef-8fa1-4d91-9e35-bcaf8184eb41"
-                alt="Not Found"
-              />
-              <p>{likes}</p>
+            <div className="flex flex-row w-full justify-between">
+              <p>{date}</p>
+              <div className="flex flex-row items-center">
+                <ChatBubbleOutlineOutlinedIcon />
+                <p>{replies}</p>
+              </div>
+              <div className="flex flex-row items-center">
+                <VisibilityOutlinedIcon />
+                <p>{views}</p>
+              </div>
+              <div className="flex flex-row items-center">
+                <FavoriteIcon sx={{ color: pink[500] }} />
+                <p>{likes}</p>
+              </div>
             </div>
           </div>
         </div>
