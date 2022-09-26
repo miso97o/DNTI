@@ -1,11 +1,11 @@
 use dnti;
 
-INSERT INTO `user`  VALUES ('skj@gmail.com',1994,'enfp','역삼동','강남구','팀장');
-INSERT INTO `user`  VALUES ('kth@gmail.com',1993,'ispf','상일동','강동구','팀원1');
-INSERT INTO `user`  VALUES ('pyj@gmail.com',1997,'esfj','상도동','동작구','팀원2');
-INSERT INTO `user`  VALUES ('yth@gmail.com',1993,'infp','양재동','서초구','팀원3');
-INSERT INTO `user`  VALUES ('hjw@gmail.com',1997,'infj','신대방동','동작구','팀원4');
-INSERT INTO `user`  VALUES ('hiy@gmail.com',1996,'isfj','잠실동','송파구','팀원5');
+INSERT INTO `user`  VALUES ('skj@gmail.com',1994,'ENFP','역삼동','강남구','팀장');
+INSERT INTO `user`  VALUES ('kth@gmail.com',1993,'ISPF','상일동','강동구','팀원1');
+INSERT INTO `user`  VALUES ('pyj@gmail.com',1997,'ESFJ','상도동','동작구','팀원2');
+INSERT INTO `user`  VALUES ('yth@gmail.com',1993,'INFP','양재동','서초구','팀원3');
+INSERT INTO `user`  VALUES ('hjw@gmail.com',1997,'INFJ','신대방동','동작구','팀원4');
+INSERT INTO `user`  VALUES ('hiy@gmail.com',1996,'ISFJ','잠실동','송파구','팀원5');
 
 
 
