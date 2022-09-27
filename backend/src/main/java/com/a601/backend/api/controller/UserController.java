@@ -55,8 +55,10 @@ public class UserController {
         //user
         UserRequest.All user = service.getInfo(email);
 
+        DntiResponse dntiResponse = dntiService.getDnti(user.getDnti());
+
         //dnti - place
-        List<DongScore> dong = dongService.computeDongScoreByDnti(user.getDnti().getDntiId());
+        List<DongScore> dong = dongService.computeDongScoreByDnti(user.getDnti());
 
         //favorite
         List<FavoriteResponse> favoriteList = favoriteService.getFavorite(email);
@@ -67,7 +69,7 @@ public class UserController {
         //board
         List<BoardResponse> boardList = boardService.getMyBoard(email);
 
-        UserRequest.MyPage result = new UserRequest.MyPage(user, dong, favoriteList, reviewList, boardList);
+        UserRequest.MyPage result = new UserRequest.MyPage(user, dntiResponse, dong, favoriteList, reviewList, boardList);
 
         return new ApiResult(200,result);
     }

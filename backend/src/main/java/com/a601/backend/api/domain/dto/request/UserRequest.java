@@ -1,7 +1,6 @@
 package com.a601.backend.api.domain.dto.request;
 
 import com.a601.backend.api.domain.dto.response.*;
-import com.a601.backend.api.domain.entity.Dnti;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,7 +18,7 @@ public class UserRequest {
         Integer birthYear;
         String gu;
         String dong;
-        Dnti dnti;
+        String dnti;
     }
 
     @Getter
@@ -28,6 +27,7 @@ public class UserRequest {
     @AllArgsConstructor
     public static class MyPage {
         UserRequest.All user;
+        DntiResponse dnti;
 
         List<DongScore> dongList;
         List<FavoriteResponse> favoriteList;
