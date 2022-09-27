@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class UserServiceImpl implements UserService{
     //회원가입
     @Override
     @Transactional
-    public void singIn(UserRequest.SingIn singIn) {
+    public void singIn(UserRequest.SingIn singIn, HttpServletRequest request) {
         //이미 가입된 유저인지 확인(아이디로)
         if(repository.existsById(singIn.getUserId())){
             //예외 던지기
@@ -30,6 +32,8 @@ public class UserServiceImpl implements UserService{
 
         User user = User.builder().email(singIn.getUserId()).birthYear(singIn.getBirthYear()).nickname(singIn.getNickname())
                 .gu(singIn.getGu()).dong(singIn.getDong()).build();
+        HttpSession session= request.getSession();
+        session.setAttribute("user_email",singIn.getUserId());
         repository.save(user);
     }
 

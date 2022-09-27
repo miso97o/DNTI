@@ -4,11 +4,12 @@ package com.a601.backend.api.service;
 import com.a601.backend.api.domain.dto.request.UserRequest;
 import com.a601.backend.api.domain.entity.User;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface UserService {
     //회원가입
-    void singIn(UserRequest.SingIn singIn) throws Exception;
+    void singIn(UserRequest.SingIn singIn, HttpServletRequest request) throws Exception;
 
     //회원정보 수정
     void modifyInfo(UserRequest.ModifyAll modifyAll) throws Exception;
