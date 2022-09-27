@@ -125,41 +125,42 @@ function KmMap() {
     // 지도에 원을 표시
     circle.setMap(map);
   };
-  // geocoder.addressSearch(`${searchAddress}`, callback);
 
-  ps.keywordSearch(`${searchAddress}`, callback);
-}
+  // 맵 옵션 변경될때마다 로딩
+  useEffect(() => {
+    mapscript();
+  }, [options]);
 
-// useEffect(() => {
-//   makeCoffeeMarker()
-// }, [getChange[0]])
+  // useEffect(() => {
+  //   makeCoffeeMarker()
+  // }, [getChange[0]])
 
-return (
-  <div className={styles.page}>
-    <div className={styles.container}>
-      <div className={styles.choices} onClick={setGetList}>
-        <div className={styles.search}>
-          <input
-            className={styles.searchInput}
-            onChange={handleSearchAddress}
-            placeholder="원하는 지점을 검색해주세요"
-          />
-          <span className={styles.field__labelwrap} aria-hidden="true">
-            <span className={styles.field__label}>주소 검색</span>
-          </span>
-          <button className={styles.searchBtn} onClick={SearchMap}>
-            검색
-          </button>
+  return (
+    <div className={styles.page}>
+      <div className={styles.container}>
+        <div className={styles.choices} onClick={setGetList}>
+          <div className={styles.search}>
+            <input
+              className={styles.searchInput}
+              onChange={handleSearchAddress}
+              placeholder="원하는 지점을 검색해주세요"
+            />
+            <span className={styles.field__labelwrap} aria-hidden="true">
+              <span className={styles.field__label}>주소 검색</span>
+            </span>
+            <button className={styles.searchBtn} onClick={SearchMap}>
+              검색
+            </button>
+          </div>
+
+          <Choices setGetList={setGetList}></Choices>
         </div>
-
-        <Choices setGetList={setGetList}></Choices>
-      </div>
-      <div className={styles.map}>
-        {/* <Map /> */}
-        <div className={styles.kakaoMap} id="kakaoMap"></div>
+        <div className={styles.map}>
+          {/* <Map /> */}
+          <div className={styles.kakaoMap} id="kakaoMap"></div>
+        </div>
       </div>
     </div>
-  </div>
-);
-
+  );
+}
 export default KmMap;

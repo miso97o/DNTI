@@ -6,7 +6,7 @@ import { useDaumPostcodePopup } from "react-daum-postcode";
 import { useCookies } from "react-cookie";
 
 export default function SignUpPage() {
-  const [cookies, setCookie] = useCookies(["email"]);
+  const [cookies, setCookie] = useCookies(["user_email"]);
   const email = cookies.email;
 
   const [nickName, setNickName] = React.useState("");
@@ -50,7 +50,7 @@ export default function SignUpPage() {
   return (
     <div className="container mx-auto h-4/5 w-screen flex flex-col justify-content-center place-items-center">
       <p className="text-6xl m-10">회원가입</p>
-      <div className="flex flex-col">
+      <div className="flex flex-col items-center">
         <div className="flex flex-col">
           <div className="flex flex-col">
             <div className="flex flex-row">
@@ -58,7 +58,7 @@ export default function SignUpPage() {
                 <TextField label="닉네임" color="primary" />
               </div>
               <div className="">
-                <Button variant="contained">중복 확인</Button>
+                <Button>중복 확인</Button>
               </div>
             </div>
             <p className="txt-893">사용할 수 있는 닉네임입니다.</p>
@@ -73,7 +73,7 @@ export default function SignUpPage() {
               />
             </div>
             <div className="signupinputzipcodebtn flex-col-hcenter-vcenter">
-              <Button variant="contained">우편번호 찾기</Button>
+              <Button onClick={handleClick}>주소 찾기</Button>
             </div>
           </div>
           <div className="">
@@ -107,7 +107,9 @@ export default function SignUpPage() {
             올바른 형식으로 입력해주세요.(000-0000-0000)
           </p>
         </div>
-        <Button variant="contained">회원가입</Button>
+        <Link to="/">
+          <Button>회원가입</Button>
+        </Link>
       </div>
     </div>
   );
