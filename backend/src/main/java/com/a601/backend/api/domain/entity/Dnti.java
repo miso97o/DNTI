@@ -14,7 +14,10 @@ import javax.persistence.Table;
 @Table(name = "dnti")
 public class Dnti {
     @Id
-    String type;
+    String dntiId;
+
+    @Column(length = 13)
+    String keyword;
 
     Long count;
 
