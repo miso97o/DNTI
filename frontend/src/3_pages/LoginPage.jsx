@@ -1,15 +1,3 @@
-import { Link } from "react-router-dom";
-import Button from "@mui/material/Button";
-import axios from "../utils/axios";
-
-function googleLogIn() {
-  console.log("googleLogIn()");
-  // window.location.replace("http://j7a601.p.ssafy.io/api/google/login");
-  axios.get(`/google/login`).then((data) => {
-    console.log(data);
-  });
-}
-
 function BtnGoogleSignIn() {
   return (
     <div className="flex flex-row items-center border-2 py-2 pr-6 shadow-md">

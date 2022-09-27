@@ -28,7 +28,7 @@ export default function BoardMainComponent() {
   ];
 
   return (
-    <div className="container mx-auto flex flex-col h-full w-screen items-center">
+    <div className="flex flex-col h-full w-4/5 items-center">
       <div className="flex flex-col h-full w-full items-center">
         <div className="flex flex-row w-full justify-center h-full">
           <div className="flex flex-col w-1/2 h-full px-3">
