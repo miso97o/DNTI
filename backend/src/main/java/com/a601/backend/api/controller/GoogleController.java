@@ -15,14 +15,13 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -63,8 +62,8 @@ public class GoogleController {
     }
 
     @GetMapping(value = "/login/redirect")
-    public ResponseEntity<GoogleResponse> redirectGoogleLogin(
-            @RequestParam(value = "code") String authCode, HttpServletRequest request
+    public String redirectGoogleLogin(
+            @RequestParam(value = "code") String authCode, HttpServletResponse response
     ){
         System.out.println(authCode);
         // HTTP 통신을 위해 RestTemplate 활용
@@ -73,12 +72,12 @@ public class GoogleController {
         Optional<User>user=userRepository.findByEmail(email);
 
         if(!user.isPresent()){
-            GoogleResponse googleResponse1=GoogleResponse.builder()
-                    .email(googleLoginDto.getEmail())
-                    .flag(false)
-                    .domain("http://localhost:9090/api/google/signup")
-                    .build();
-            return ResponseEntity.ok().body(googleResponse1);
+
+            ResponseCookie cookie = ResponseCookie.from("userEmail",email).path("/").domain("localhost").sameSite("None").secure(true).build();
+            response.setHeader("Set-Cookie", cookie.toString());
+
+            return "redirect:http://localhost:3000/signup";
+
         }
         GoogleResponse googleResponse2=GoogleResponse.builder()
                 .email(googleLoginDto.getEmail())
@@ -86,12 +85,17 @@ public class GoogleController {
                 .domain("http://localhost:9090/api")
                 .build();
 
-        HttpSession httpSession=request.getSession();
-        httpSession.setAttribute("user_email",email);
+        ResponseCookie cookie = ResponseCookie.from("userEmail",email).path("/").domain("localhost").sameSite("None").secure(true).build();
+        response.setHeader("Set-Cookie", cookie.toString());
 
         //여기서 세션에 값 넣으면 될듯?
-        return ResponseEntity.ok().body(googleResponse2);
+        return "redirect:http://localhost:3000";
     }
 
+    @PostMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
+    }
 
 }
