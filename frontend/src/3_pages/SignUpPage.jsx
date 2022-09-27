@@ -3,8 +3,12 @@ import Button from "@mui/material/Button";
 import { Outlet, Link } from "react-router-dom";
 import * as React from "react";
 import { useDaumPostcodePopup } from "react-daum-postcode";
+import { useCookies } from "react-cookie";
 
 export default function SignUpPage() {
+  const [cookies, setCookie] = useCookies(["email"]);
+  const email = cookies.email;
+
   const [nickName, setNickName] = React.useState("");
   const [postalCode, setPostalCode] = React.useState("");
   const [mainAddr, setMainAddr] = React.useState("");
@@ -16,6 +20,7 @@ export default function SignUpPage() {
   const handleComplete = (data) => {
     let fullAddress = data.address;
     let extraAddress = "";
+    let code = data.zonecode;
 
     if (data.addressType === "R") {
       if (data.bname !== "") {
@@ -29,10 +34,17 @@ export default function SignUpPage() {
     }
 
     setMainAddr(fullAddress);
+    setPostalCode(code);
   };
 
   const handleClick = () => {
     open({ onComplete: handleComplete });
+  };
+  const handleDetailAddrChange = (event) => {
+    setDetailAddr(event.target.value);
+  };
+  const handlePhoneNoChange = (event) => {
+    setPhoneNo(event.target.value);
   };
 
   return (
@@ -53,21 +65,44 @@ export default function SignUpPage() {
           </div>
           <div className="flex flex-row">
             <div className="signupinputzipcode flex-col-hstart-vcenter">
-              <TextField label="우편번호" color="primary" disabled />
+              <TextField
+                label="우편번호"
+                color="primary"
+                value={postalCode}
+                disabled
+              />
             </div>
             <div className="signupinputzipcodebtn flex-col-hcenter-vcenter">
               <Button onClick={handleClick}>주소 찾기</Button>
             </div>
           </div>
           <div className="">
-            <TextField label="주소" color="primary" fullWidth disabled />
+            <TextField
+              label="주소"
+              color="primary"
+              value={mainAddr}
+              fullWidth
+              disabled
+            />
           </div>
           <div className="">
-            <TextField label="상세주소" color="primary" fullWidth />
+            <TextField
+              label="상세주소"
+              color="primary"
+              value={detailAddr}
+              onChange={handleDetailAddrChange}
+              fullWidth
+            />
           </div>
         </div>
         <div className="signupinputarea flex-col-hcenter-vstart">
-          <TextField label="휴대전화" id="fullWidth" fullWidth />
+          <TextField
+            label="휴대전화"
+            id="fullWidth"
+            value={phoneNo}
+            onChange={handlePhoneNoChange}
+            fullWidth
+          />
           <p className="txt-1102">
             올바른 형식으로 입력해주세요.(000-0000-0000)
           </p>

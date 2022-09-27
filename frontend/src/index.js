@@ -25,6 +25,7 @@ import ReviewViewComponent from "./2_templates/board/review/ReviewViewComponent"
 import ReviewWriteComponent from "./2_templates/board/review/ReviewWriteComponent";
 import store from "./app/store";
 import { Provider } from "react-redux";
+import { CookiesProvider } from "react-cookie";
 
 const router = createBrowserRouter([
   {
@@ -129,7 +130,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <React.StrictMode>
-      <RouterProvider router={router} />
+      <CookiesProvider>
+        <RouterProvider router={router} />
+      </CookiesProvider>
     </React.StrictMode>
   </Provider>
 );
