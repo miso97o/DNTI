@@ -1,8 +1,53 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import District from "../../1_molecules/recommendation/District";
 import Priority from "../../1_molecules/recommendation/Priority";
 import styles from "./Choose.module.css";
 
-function Choices() {
+function Choices(props) {
+  const [selectedList, setSelectedList] = useState([])
+  const addSelected = selected => {
+    setSelectedList([...selectedList, selected])
+    alert( `${selected.key} added!`)
+    console.log(selectedList, '지금까지 선택된것들')
+  }
+  // console.log(selectedList)
+
+  function renderList() {
+    selectedList.map((item, index) => 
+    <div key={index}>{item}</div>)
+  }
+
+
+
+  // useEffect(() => {
+  //   localStorage.setItem("selectedStorage", JSON.stringify(selectedList))
+  //   console.log('더해요',selectedList)
+  // }, [selectedList]);
+
+  const [myRegions, setMyRegions] = useState()
+
+  async function getMyRegion() {
+    await axios(`http://j7a601.p.ssafy.io:9090/api/users/list`, {
+      method: "GET",
+      headers: {
+        // Authorization: jwt,
+        "Content-Type": "application/string",
+      },
+    })
+      .then(res => {
+        setMyRegions(res.data.response);
+        console.log(res.data.response, '!!!!!!!!!!즐겨찾기!@');
+      })
+      .catch(error => {
+        console.error("실패:", error);
+      });
+  }
+
+  useEffect(() => {
+    getMyRegion();
+  }, []);
+  
   return (
     <div className={styles.page}>
       <div className={styles.container}>
@@ -11,7 +56,60 @@ function Choices() {
         </div>
 
         <div className={styles.favorites}>
-          <Priority />
+          <div className={styles.title}>
+            <p>설정된 지표 우선순위</p>
+          </div>
+          <div className={styles.selectedContainer}>
+          <div className={styles.selectedOptArea}>
+              <div className={styles.selectedOptIcon}>
+                {selectedList.length ? selectedList[0].image : 
+                <div className={styles.selectedBlank} />
+                }
+              </div>
+            </div>
+            <div className={styles.selectedOptArea}>
+              <div className={styles.selectedOptIcon}>
+                {selectedList.length > 1 ? selectedList[1].image : 
+                  <div className={styles.selectedBlank} />
+                }
+              </div>
+            </div>
+            <div className={styles.selectedOptArea}>
+              <div className={styles.selectedOptIcon}>
+                {selectedList.length > 2 ? selectedList[2].image : 
+                  <div className={styles.selectedBlank} />
+                }
+                </div>
+            </div>
+            <div className={styles.selectedOptArea}>
+              <div className={styles.selectedOptIcon}>
+                {selectedList.length > 3 ? selectedList[3].image : 
+                  <div className={styles.selectedBlank} />
+                }
+              </div>
+            </div>
+            <div className={styles.selectedOptArea}>
+              <div className={styles.selectedOptIcon}>
+                {selectedList.length > 4 ? selectedList[4].image : 
+                  <div className={styles.selectedBlank} />
+                }
+              </div>
+            </div>
+            <div className={styles.selectedOptArea}>
+              <div className={styles.selectedOptIcon}>
+                {selectedList.length > 5 ? selectedList[5].image : 
+                  <div className={styles.selectedBlank} />
+                }
+              </div>
+            </div>
+            
+          </div>
+          <hr className={styles.selectedUnderline} />
+          <div className={styles.options}>
+            <div>우선순위 선택</div>
+            <Priority addSelectedProp = {addSelected}/>
+            
+          </div>
         </div>
 
         
