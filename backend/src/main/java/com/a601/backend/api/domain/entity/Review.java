@@ -52,7 +52,7 @@ public class Review extends BaseEntity{
     @Column(nullable = true)
     private Integer safety;
 
-
+    
 
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)

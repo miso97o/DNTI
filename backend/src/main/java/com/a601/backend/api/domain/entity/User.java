@@ -27,8 +27,8 @@ public class User {
     @Column(nullable = true, length = 10)
     private String dong;
 
-    @Column(nullable = true, length = 4)
-    private String dnti;
+    @OneToOne(mappedBy = "dntiId")
+    private Dnti dnti;
 
     //연관관계 양방향 맵핑
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -49,8 +49,9 @@ public class User {
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Reply> replyList = new ArrayList<>();
 
+    
     @Builder
-    public User(String email, String nickname, Integer birthYear, String gu, String dong, String dnti, List<Favorite> favoriteList, List<Review> reviewList, List<ReviewLike> reviewLikeList, List<Board> boardList, List<BoardLike> boardLikeList, List<Reply> replyList) {
+    public User(String email, String nickname, Integer birthYear, String gu, String dong, Dnti dnti, List<Favorite> favoriteList, List<Review> reviewList, List<ReviewLike> reviewLikeList, List<Board> boardList, List<BoardLike> boardLikeList, List<Reply> replyList) {
         this.email = email;
         this.nickname = nickname;
         this.birthYear = birthYear;
@@ -65,8 +66,7 @@ public class User {
         this.replyList = replyList;
     }
 
-
-//    public void modify(String nickname, Integer birthYear, String gu, String dong){
+    //    public void modify(String nickname, Integer birthYear, String gu, String dong){
 //        this.nickname = nickname;
 //        this.birthYear = birthYear;
 //        this.gu = gu;
