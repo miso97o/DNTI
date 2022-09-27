@@ -14,6 +14,22 @@
   margin-right: 20px;
   border: solid 2px #d9d9d9;
   height: 800px;
+  min-width: 400px;
+}
+
+.btnArea {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.searchBtn {
+  color: white;
+  background-color: #2200F4;
+  width: 150px;
+  height: 40px;
+  font-size: 22px;
+  border-radius: 20px;
 }
 
 .map {

@@ -3,7 +3,7 @@ export default function ReviewWriteComponent() {
     <div className="reviewwritepost flex-col-hstart-vstart clip-contents">
       <div className="group-459 flex-col-hcenter">
         <div className="group-8105 flex-col">
-          <p className="txt-572">글 작성</p>
+          <p className="txt-572">리뷰 글 작성</p>
           <div className="group-795 flex-col-hcenter">
             <div className="group-374 flex-row-vend">
               <div className="line-5" />
