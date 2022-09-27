@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 
 export default function LandingPage() {
-  const dispatch = useDispatch();
   return (
     <div className="container mx-auto flex flex-col h-4/5 w-screen items-center ">
       <p className="font-medium text-5xl m-20">나와 딱맞는 동네는 어딜까?</p>
