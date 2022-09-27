@@ -5,11 +5,12 @@ import com.a601.backend.api.domain.dto.request.UserRequest;
 import com.a601.backend.api.domain.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public interface UserService {
     //회원가입
-    void singIn(UserRequest.SingIn singIn, HttpServletRequest request) throws Exception;
+    void singIn(UserRequest.SingIn singIn,  HttpServletResponse response) throws Exception;
 
     //회원정보 수정
     void modifyInfo(UserRequest.ModifyAll modifyAll) throws Exception;
