@@ -5,7 +5,12 @@ import styles from "./Show.module.css";
 
 function Show() {
   const [selected, setSelected] = useState([])
-  const [text, setText] = useState('')
+  console.log("stringfy된거", JSON.stringify(selected))
+  useEffect(() => {
+    localStorage.setItem("selectedStorage", JSON.stringify(selected))
+    console.log('더해요',selected)
+  }, [selected]);
+  
   return (
     <div className={styles.page}>
       <div className={styles.container}>
