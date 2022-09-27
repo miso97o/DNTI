@@ -13,6 +13,8 @@ import MyPage from "./3_pages/MyPage";
 import BoardMainComponent from "./2_templates/board/BoardMainComponent";
 import PostViewComponent from "./2_templates/board/PostViewComponent";
 import PostWriteComponent from "./2_templates/board/PostWriteComponent";
+import ReviewViewComponent from "./2_templates/board/ReviewViewComponent";
+import ReviewWriteComponent from "./2_templates/board/ReviewWriteComponent";
 import DntiPage from "./3_pages/DntiPage";
 import ErrorPage from "./3_pages/ErrorPage";
 import Root from "./3_pages/Root";
@@ -63,21 +65,7 @@ const router = createBrowserRouter([
           },
           {
             path: "review",
-            element: <ReviewMain />,
-            children: [
-              {
-                path: "",
-                element: <ReviewMainComponent />,
-              },
-              {
-                path: "view",
-                element: <ReviewViewComponent />,
-              },
-              {
-                path: "write",
-                element: <ReviewWriteComponent />,
-              },
-            ],
+            element: <ReviewMainComponent />,
           },
           {
             path: "postview",
@@ -86,6 +74,14 @@ const router = createBrowserRouter([
           {
             path: "postwrite",
             element: <PostWriteComponent />,
+          },
+          {
+            path: "reviewview",
+            element: <ReviewViewComponent />,
+          },
+          {
+            path: "reviewwrite",
+            element: <ReviewWriteComponent />,
           },
         ],
       },

@@ -140,10 +140,11 @@ function ShowOptions({addSelectedProp}) {
       if(num < 5) {
         setNum(num + 1)
         addSelected(e)
-        console.log(`${e}, ${num}, 실행됨`)
+        console.log(`${e.value}, ${num}, 실행됨`)
       }
     }
   }
+  
   
   
 

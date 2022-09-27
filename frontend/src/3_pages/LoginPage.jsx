@@ -13,7 +13,7 @@ function BtnGoogleSignIn() {
 
 export default function LoginPage() {
   return (
-    <div className="container mx-auto h-full w-screen flex flex-col items-center">
+    <div className="container mx-auto h-4/5 w-screen flex flex-col justify-content-center place-items-center">
       <h1 className="text-6xl m-10">로그인/회원가입</h1>
       <a href="https://accounts.google.com/o/oauth2/v2/auth?scope=profile%20email%20openid&response_type=code&redirect_uri=http://localhost:9090/api/google/login/redirect&client_id=429814945555-cvulqpkcp494j5n0ujmnnd6slp7ehieh.apps.googleusercontent.com">
         로그인

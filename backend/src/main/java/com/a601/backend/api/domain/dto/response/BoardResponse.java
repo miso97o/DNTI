@@ -23,7 +23,7 @@ public class BoardResponse {
 
     private Long boardId;
 
-    private String userId;
+    private String email;
 
     private String title;
 
@@ -41,7 +41,7 @@ public class BoardResponse {
 
     public BoardResponse(Board entity){
         this.boardId = entity.getBoardId();
-        this.userId = entity.getUser().getEmail();
+        this.email = entity.getUser().getEmail();
         this.title = entity.getTitle();
         this.contents = entity.getContents();
         this.hit = entity.getHit();

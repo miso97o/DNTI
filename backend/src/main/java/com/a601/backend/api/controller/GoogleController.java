@@ -15,17 +15,21 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Optional;
 
 @Controller
+@CrossOrigin("*")
 @RequestMapping(value = "/google")
 public class GoogleController {
 
@@ -60,7 +64,7 @@ public class GoogleController {
 
     @GetMapping(value = "/login/redirect")
     public ResponseEntity<GoogleResponse> redirectGoogleLogin(
-            @RequestParam(value = "code") String authCode
+            @RequestParam(value = "code") String authCode, HttpServletRequest request
     ){
         System.out.println(authCode);
         // HTTP 통신을 위해 RestTemplate 활용
@@ -72,17 +76,21 @@ public class GoogleController {
             GoogleResponse googleResponse1=GoogleResponse.builder()
                     .email(googleLoginDto.getEmail())
                     .flag(false)
-                    .domain("http://localhost:9090/google/signup")
+                    .domain("http://localhost:9090/api/google/signup")
                     .build();
             return ResponseEntity.ok().body(googleResponse1);
         }
         GoogleResponse googleResponse2=GoogleResponse.builder()
                 .email(googleLoginDto.getEmail())
                 .flag(true)
-                .domain("http://localhost:9090")
+                .domain("http://localhost:9090/api")
                 .build();
-        return ResponseEntity.badRequest().build();
 
+        HttpSession httpSession=request.getSession();
+        httpSession.setAttribute("user_email",email);
+
+        //여기서 세션에 값 넣으면 될듯?
+        return ResponseEntity.ok().body(googleResponse2);
     }
 
 

@@ -12,7 +12,7 @@ import javax.persistence.Id;
 @Setter
 public class Km {
     @Id
-    long baseId;
+    Long baseId;
 
     String type;
 
@@ -20,5 +20,7 @@ public class Km {
 
     double lat;
 
-    double lng;
+    double lon;
+
+    String address;
 }
