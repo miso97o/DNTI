@@ -20,9 +20,9 @@ public class KmServiceImpl implements KmService {
     public List<KmResponse> calculateKm(double lat, double lon) {
         List<Km> allPoint = kmRepository.findAll();
         List<KmResponse> result = new ArrayList<>();
-        System.out.println(allPoint.size());
+//        System.out.println(allPoint.size());
         for (Km km:allPoint) {
-            if(distance(lat, lon, km.getLat(), km.getLon()) < 1){
+            if(distance(lat, lon, km.getLat(), km.getLon()) < 0.5){
                 KmResponse kmResponse = KmResponse.builder()
                         .type(km.getType())
                         .lat(km.getLat())
@@ -36,6 +36,7 @@ public class KmServiceImpl implements KmService {
         for(int i = 0 ; i < result.size(); i++){
             System.out.println(result.get(i).getAddress());
         }
+//        System.out.println(result.size());
         return result;
     }
 
