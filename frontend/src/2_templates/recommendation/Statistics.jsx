@@ -12,20 +12,23 @@ function Statistics() {
 
   const priorites = temp.substr(0, temp.length-1)
   console.log(priorites)
+  let gus = localStorage.getItem("guStorage")
+  if (gus && gus.length > 0) {
+    gus = "&gu="+ gus
+  }
 
 
 
   async function getRank() {
-    await axios(`http://j7a601.p.ssafy.io:9090/api/dong/rank?priorities=${priorites}&gu=마포구`, {
+    await axios(`http://j7a601.p.ssafy.io:9090/api/dong/rank?priorities=${priorites}${gus}`, {
       method: "GET",
       headers: {
-        // Authorization: jwt,
         "Content-Type": "application/json",
       },
     })
       .then(function(res) {
         setRank(res.data.response);
-        console.log("data", rank, res.data.response);
+        console.log("data", rank, res.data);
 
       })
       .catch(error => {
@@ -65,16 +68,25 @@ function Statistics() {
           {rank[0].dongName}
         </div>
         <div className={styles.ranking}>
-          {rank[1].dongName}
+          {rank.length > 1 ?  rank[1].dongName: 
+            <div />
+          }
         </div>
         <div className={styles.ranking}>
-          {rank[2].dongName}
+          {rank.length > 2 ?  rank[2].dongName: 
+            <div />
+          }
         </div>
         <div className={styles.ranking}>
-          {rank[3].dongName}
+          {rank.length > 3 ?  rank[3].dongName: 
+            <div />
+          }
         </div>
         <div className={styles.ranking}>
-          {rank[4].dongName}
+          {rank.length > 4 ?  rank[4].dongName: 
+            <div />
+          }
+          
         </div>
         </div>
         <div className={styles.favorites}>

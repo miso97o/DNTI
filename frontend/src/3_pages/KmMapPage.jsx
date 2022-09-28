@@ -41,6 +41,7 @@ function KmMap() {
       center: new kakao.maps.LatLng(37.497486063, 127.027661548),
       level: 3,
       isPanto: true,
+      disableDoubleClickZoom: true
     });
     // 주소검색
     const [searchAddress, SetSearchAddress] = useState();
@@ -75,7 +76,17 @@ function KmMap() {
   
       //map
       const map = new kakao.maps.Map(container, options);
-      
+      kakao.maps.event.addListener(map, 'dblclick', function(mouseEvent) {
+        const latlng = mouseEvent.latLng;
+        console.log(options.center.La)
+
+        setOptions({
+          center: new kakao.maps.LatLng(latlng.Ma, latlng.La)
+        })
+        console.log(options.center.La)
+        getMarker()
+        // alert('double click! ' + latlng.toString().substr(1, latlng.toString().length-2));
+      });
   
       // ---------------- 마커 -------------------
   
@@ -132,8 +143,8 @@ function KmMap() {
     };
 
 
-    async function getCoors() {
-      await axios(`http://j7a601.p.ssafy.io:9090/api/km?lat=37.6115764&lon=126.9781298`, {
+    async function getMarker() {
+      await axios(`http://j7a601.p.ssafy.io:9090/api/km?lat=${options.center.Ma}&lon=${options.center.La}`, {
         method: "GET",
         headers: {
           // Authorization: jwt,
@@ -154,10 +165,7 @@ function KmMap() {
       mapscript()
     }, [options]);
 
-    // useEffect(() => {
-    //   makeCoffeeMarker()
-    // }, [getChange[0]])
-
+    
   return (
     <div className={styles.page}>
       <div className={styles.container}>
