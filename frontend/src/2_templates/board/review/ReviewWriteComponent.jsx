@@ -1,10 +1,22 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Rating, TextField } from "@mui/material";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 export default function ReviewWriteComponent() {
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
+  useEffect(() => {
+    if (user.userId == null) {
+      alert("로그인이 필요합니다.");
+      // 로그인되어있지 않은 경우, 로그인 화면으로 redirect
+      navigate("/login", { replace: true });
+    }
+  });
+
   const [postContents, setPostContents] = React.useState("");
-  const handleChange = (event) => {
+  const handlePostContentsChange = (event) => {
     setPostContents(event.target.value);
   };
   const [totalScore, setTotalScore] = React.useState(2);
@@ -19,11 +31,9 @@ export default function ReviewWriteComponent() {
           <p className="txt-572">리뷰 글 작성</p>
           <div className="group-795 flex-col-hcenter">
             <div className="flex flex-row justify-between">
-              <p className="txt-123">동</p>
+              <p className="txt-123">{user.dong}</p>
               <p className="txt-197">제목</p>
-              <p className="txt-073">작성자</p>
-              <p className="txt-456">작성일시</p>
-              <p className="txt-9210">좋아요</p>
+              <p className="txt-073">{user.nickname}</p>
             </div>
             <div className="flex h-4/5 p-5">
               <TextField
@@ -31,7 +41,7 @@ export default function ReviewWriteComponent() {
                 fullWidth
                 minRows={10}
                 value={postContents}
-                onChange={handleChange}
+                onChange={handlePostContentsChange}
               />
             </div>
             <div className="flex flex-col items-center">

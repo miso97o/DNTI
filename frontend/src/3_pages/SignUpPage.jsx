@@ -10,10 +10,11 @@ import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import moment from "moment";
 import "moment/locale/ko";
 import axios from "../utils/axios";
-import { FormControlUnstyledContext } from "@mui/base";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUpPage() {
   const [cookies, setCookie] = useCookies(["userEmail"]);
+  const navigate = useNavigate();
   const email = cookies["userEmail"];
   console.log(email);
 
@@ -51,6 +52,7 @@ export default function SignUpPage() {
 
     axios.post("/users", userInfo).then((data) => {
       console.log(data);
+      navigate("/", { replace: true });
     });
   };
 
