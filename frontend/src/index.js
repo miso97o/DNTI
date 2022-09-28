@@ -20,13 +20,10 @@ import Root from "./3_pages/Root";
 import LoginPage from "./3_pages/LoginPage";
 import SignUpPage from "./3_pages/SignUpPage";
 import PostMainComponent from "./2_templates/board/PostMainComponent";
-import ReviewMain from "./2_templates/board/review/ReviewMain";
 import ReviewMainComponent from "./2_templates/board/review/ReviewMainComponent";
+import ReviewMain from "./2_templates/board/review/ReviewMain";
 import ReviewViewComponent from "./2_templates/board/review/ReviewViewComponent";
 import ReviewWriteComponent from "./2_templates/board/review/ReviewWriteComponent";
-import store from "./app/store";
-import { Provider } from "react-redux";
-import { CookiesProvider } from "react-cookie";
 
 const router = createBrowserRouter([
   {
@@ -129,11 +126,7 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <CookiesProvider>
-        <RouterProvider router={router} />
-      </CookiesProvider>
-    </React.StrictMode>
-  </Provider>
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
 );

@@ -2,14 +2,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import District from "../../1_molecules/recommendation/District";
 import Priority from "../../1_molecules/recommendation/Priority";
+import {options} from "../../0_atoms/data/RecommendOpts";
 import styles from "./Choose.module.css";
 
 function Choices(props) {
   const [selectedList, setSelectedList] = useState([])
   const addSelected = selected => {
-    setSelectedList([...selectedList, selected])
+    setSelectedList([...selectedList, selected.key])
     alert( `${selected.key} added!`)
     console.log(selectedList, '지금까지 선택된것들')
+
   }
   // console.log(selectedList)
 
@@ -62,42 +64,42 @@ function Choices(props) {
           <div className={styles.selectedContainer}>
           <div className={styles.selectedOptArea}>
               <div className={styles.selectedOptIcon}>
-                {selectedList.length ? selectedList[0].image : 
+                {selectedList.length ? options[selectedList[0]-1].image : 
                 <div className={styles.selectedBlank} />
                 }
               </div>
             </div>
             <div className={styles.selectedOptArea}>
               <div className={styles.selectedOptIcon}>
-                {selectedList.length > 1 ? selectedList[1].image : 
+                {selectedList.length > 1 ? options[selectedList[1]-1].image : 
                   <div className={styles.selectedBlank} />
                 }
               </div>
             </div>
             <div className={styles.selectedOptArea}>
               <div className={styles.selectedOptIcon}>
-                {selectedList.length > 2 ? selectedList[2].image : 
+                {selectedList.length > 2 ? options[selectedList[2]-1].image : 
                   <div className={styles.selectedBlank} />
                 }
                 </div>
             </div>
             <div className={styles.selectedOptArea}>
               <div className={styles.selectedOptIcon}>
-                {selectedList.length > 3 ? selectedList[3].image : 
+                {selectedList.length > 3 ? options[selectedList[3]-1].image : 
                   <div className={styles.selectedBlank} />
                 }
               </div>
             </div>
             <div className={styles.selectedOptArea}>
               <div className={styles.selectedOptIcon}>
-                {selectedList.length > 4 ? selectedList[4].image : 
+                {selectedList.length > 4 ? options[selectedList[4]-1].image : 
                   <div className={styles.selectedBlank} />
                 }
               </div>
             </div>
             <div className={styles.selectedOptArea}>
               <div className={styles.selectedOptIcon}>
-                {selectedList.length > 5 ? selectedList[5].image : 
+                {selectedList.length > 5 ? options[selectedList[5]-1].image : 
                   <div className={styles.selectedBlank} />
                 }
               </div>

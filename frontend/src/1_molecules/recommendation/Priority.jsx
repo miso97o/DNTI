@@ -3,81 +3,16 @@ import React from "react";
 import { useState } from "react";
 import { render } from "react-dom";
 import Select from 'react-select'
-import BusLogo from "../../0_atoms/Icon/BusLogo.png";
-import SubwayLogo from "../../0_atoms/Icon/SubwayLogo.png";
-import BikeLogo from "../../0_atoms/Icon/BikeLogo.png";
-import OYLogo from "../../0_atoms/Icon/OYLogo.png";
-import DaisoLogo from "../../0_atoms/Icon/DaisoLogo.png";
-import MartLogo from "../../0_atoms/Icon/MartLogo.png";
-import CVSLogo from "../../0_atoms/Icon/CVSLogo.png";
-import ParkLogo from "../../0_atoms/Icon/ParkLogo.png";
-import GymLogo from "../../0_atoms/Icon/GymLogo.png";
+import {options} from "../../0_atoms/data/RecommendOpts";
 
 
 
 
-const options = [
-  {
-    value: "rent",
-    label: 
-    // <div>
-    //   <img src={BusLogo} alt="BusLogo" className={styles.BusLogo}/>
-    //   <p className={styles.labelTxt}>버스정류장</p>
-    // </div>
-    <p className={styles.labelTxt}>전월세</p>,
-    image:
-    <img src={BusLogo} alt="BusLogo" className={styles.BusLogo}/>,
-    key: "1",
-    checked : false
 
-  },
-  {
-    value: "restaurant",
-    label: 
-    <p className={styles.labelTxt}>식생활</p>,
-    image:
-    <img src={SubwayLogo} alt="SubwayLogo" className={styles.SubwayLogo}/>,
-    key: "2",
-    checked : false
-  },
-  {
-    value: "safety",
-    label: 
-    <p className={styles.labelTxt}>안전</p>,
-    image:
-    <img src={BikeLogo} alt="BikeLogo" className={styles.BikeLogo}/>,
-    key: "3",
-    checked : false
-  },
-  {
-    value: "environment",
-    label: 
-    <p className={styles.labelTxt}>환경</p>,
-    image:
-    <img src={OYLogo} alt="OYLogo" className={styles.OYLogo}/>,
-    key: "4",
-    checked : false
-  },
-  {
-    value: "traffic",
-    label: 
-    <p className={styles.labelTxt}>교통</p>,
-    image:
-    <img src={DaisoLogo} alt="DaisoLogo" className={styles.DaisoLogo}/>,
-    key: "5",
-    checked : false
-  },
-  {
-    value: "culture",
-    label: 
-    <p className={styles.labelTxt}>문화</p>,
-    image:
-    <img src={MartLogo} alt="MartLogo" className={styles.MartLogo}/>,
-    key: "6",
-    checked : false
-  },
-  
-];
+localStorage.setItem("priorityStorage", [])
+
+
+
 function Priority({addSelectedProp}) {
   const [opt, setOpt] = useState()
   const addSelected =(e)=> {
@@ -85,7 +20,6 @@ function Priority({addSelectedProp}) {
     setOpt(e)
     // console.log(opt)
   }
-
   const [num, setNum] = useState(0)
 
   function changeChecked(e) {
@@ -98,6 +32,9 @@ function Priority({addSelectedProp}) {
         setNum(num + 1)
         addSelected(e)
         console.log(`${e.value}, ${num}, 실행됨`)
+        const tmp = (localStorage.getItem("priorityStorage") + (e.key + ","))
+        localStorage.setItem("priorityStorage", (tmp))
+        // console.log(localStorage.getItem("priorityStorage").length)
       }
     }
   }
