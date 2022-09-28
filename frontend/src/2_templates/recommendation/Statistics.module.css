@@ -1,4 +1,36 @@
 .page {
+  display: flex;
+  flex-direction: column;
+}
 
+.title {
+  font-size: 28px;
+  margin-left: 5px;
+  color: #333333;
+}
 
+.rankingContainer {
+  margin-bottom: 20px;
+}
+
+.ranking {
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.RankImg {
+  height: 30px;
+
+}
+
+.review {
+  display: flex;
+  justify-content: space-between;
+}
+
+.board {
+  display: flex;
+  justify-content: space-between;
 }

@@ -1,11 +1,8 @@
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { Outlet, Link } from "react-router-dom";
-import * as React from "react";
-import { useDaumPostcodePopup } from "react-daum-postcode";
-import { useCookies } from "react-cookie";
 
 export default function SignUpPage() {
+
   const [cookies, setCookie] = useCookies(["user_email"]);
   const email = cookies.email;
 
@@ -65,44 +62,18 @@ export default function SignUpPage() {
           </div>
           <div className="flex flex-row">
             <div className="signupinputzipcode flex-col-hstart-vcenter">
-              <TextField
-                label="우편번호"
-                color="primary"
-                value={postalCode}
-                disabled
-              />
+              <TextField label="우편번호" color="primary" />
             </div>
             <div className="signupinputzipcodebtn flex-col-hcenter-vcenter">
               <Button onClick={handleClick}>주소 찾기</Button>
             </div>
           </div>
           <div className="">
-            <TextField
-              label="주소"
-              color="primary"
-              value={mainAddr}
-              fullWidth
-              disabled
-            />
-          </div>
-          <div className="">
-            <TextField
-              label="상세주소"
-              color="primary"
-              value={detailAddr}
-              onChange={handleDetailAddrChange}
-              fullWidth
-            />
+            <TextField label="상세주소" color="primary" />
           </div>
         </div>
         <div className="signupinputarea flex-col-hcenter-vstart">
-          <TextField
-            label="휴대전화"
-            id="fullWidth"
-            value={phoneNo}
-            onChange={handlePhoneNoChange}
-            fullWidth
-          />
+          <TextField fullWidth label="휴대전화" id="fullWidth" />
           <p className="txt-1102">
             올바른 형식으로 입력해주세요.(000-0000-0000)
           </p>

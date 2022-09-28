@@ -1,16 +1,19 @@
 import React from "react";
+import { useState } from "react";
 import styles from "./District.module.css";
 import {Multiselect} from "multiselect-react-dropdown"
+import ReactSelect from "react-select";
 
 function District() {
   const gulist = [
-    {gu: "강남구"},
-    {gu: "강동구"},
-    {gu: "강북구"},
-    {gu: "강서구"},
-    {gu: "관악구"},
-    {gu: "광진구"},
-    {gu: "구로구"},
+    {label: "강남구", value: "1"},
+    {label: "강동구", value: "2"},
+    {label: "강북구", value: "3"},
+    {label: "강서구", value: "4"},
+    {label: "관악구", value: "5"},
+    {label: "광진구", value: "6"},
+    {label: "구로구", value: "7"},
+
     {gu: "금천구"},
     {gu: "노원구"},
     {gu: "도봉구"},
@@ -30,15 +33,22 @@ function District() {
     {gu: "중구"},
     {gu: "중랑구"},
   ];
+  const [select, setSelect] = useState();
+
+  const handleChange = event => {
+    // setSelect(event.target.value);
+    console.log(select," selected:")
+  };
+
   return (
     <div className={styles.page}>
       <div className={styles.container}>
         <p>관심 있는 지역(구)을 선택해주세요.</p>
-        <Multiselect options={gulist} displayValue="gu" placeholder="지역(구)를 선택해주세요">
+        <ReactSelect options={gulist} value={gulist.value} placeholder="지역(구)를 선택해주세요" onChange={handleChange} isMulti>
           {/* {gulist.map((item) => {
             return <options value={item}>{item}</options>;
           })} */}
-        </Multiselect>
+        </ReactSelect>
       </div>
     </div>
   );
