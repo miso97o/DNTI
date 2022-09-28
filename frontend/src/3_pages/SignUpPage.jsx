@@ -44,7 +44,7 @@ export default function SignUpPage() {
     } else if (!userInfo.gu || !userInfo.dong) {
       alert("주소를 입력해주세요.");
       return;
-    } else if (!userInfo.email) {
+    } else if (userInfo.email === "") {
       alert("잘못된 접근입니다.");
       return;
     }
