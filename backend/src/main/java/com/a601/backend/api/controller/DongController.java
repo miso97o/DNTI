@@ -21,7 +21,7 @@ public class DongController {
 
     @ApiOperation(value = "동 점수 계산", notes="점수 계산 후 점수순으로 리스트 반환")
     @GetMapping("/rank")
-    public ApiResult<DongScore> getRank(@RequestParam List<Integer> priorities, List<String> guList){
+    public ApiResult<DongScore> getRank(@RequestParam List<Integer> priorities, @RequestParam(name = "gu") List<String> guList){
         List<DongScore> list = dongService.computeDongScore(priorities, guList);
         return new ApiResult(200, list);
     }

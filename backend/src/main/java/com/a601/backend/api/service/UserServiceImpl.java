@@ -6,10 +6,12 @@ import com.a601.backend.api.domain.enums.ErrorCode;
 import com.a601.backend.api.exception.CustomException;
 import com.a601.backend.api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ public class UserServiceImpl implements UserService{
     //회원가입
     @Override
     @Transactional
-    public void singIn(UserRequest.SingIn singIn, HttpServletRequest request) {
+    public void singIn(UserRequest.SingIn singIn, HttpServletResponse response) {
         //이미 가입된 유저인지 확인(아이디로)
         if(repository.existsById(singIn.getUserId())){
             //예외 던지기
@@ -32,8 +34,10 @@ public class UserServiceImpl implements UserService{
 
         User user = User.builder().email(singIn.getUserId()).birthYear(singIn.getBirthYear()).nickname(singIn.getNickname())
                 .gu(singIn.getGu()).dong(singIn.getDong()).build();
-        HttpSession session= request.getSession();
-        session.setAttribute("user_email",singIn.getUserId());
+
+        ResponseCookie cookie = ResponseCookie.from("userEmail",singIn.getUserId()).path("/").domain("localhost").sameSite("None").secure(true).build();
+        response.setHeader("Set-Cookie", cookie.toString());
+
         repository.save(user);
     }
 
