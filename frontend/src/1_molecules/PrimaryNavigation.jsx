@@ -4,8 +4,13 @@ import { Link, redirect } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import styles from "./PrimaryNavigation.module.css";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { resetUser } from "../features/user/userSlice";
 
 function PrimaryNavigation() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
   const [cookies, removeCookie] = useCookies(["userEmail"]);
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -21,15 +26,16 @@ function PrimaryNavigation() {
 
   const logOut = (dest) => {
     removeCookie("userEmail");
+    dispatch(resetUser());
     handleClose(dest);
     navigate("/", { replace: true });
   };
 
-  const email = cookies["userEmail"];
   let logInButton;
-  if (email !== "undefined") {
+  if (user.userId !== null) {
     logInButton = (
       <div className="flex flex-col">
+        <p className="flex flex-row w-full px-4 mb-2">{user.nickname}</p>
         <Link to="mypage">
           <MenuItem onClick={handleClose}>마이페이지</MenuItem>
         </Link>

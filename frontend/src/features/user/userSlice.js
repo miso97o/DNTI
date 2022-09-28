@@ -19,9 +19,17 @@ export const userSlice = createSlice({
       state.dong = action.payload.dong;
       state.dnti = action.payload.dnti;
     },
+    resetUser: (state, action) => {
+      state.userId = null;
+      state.nickname = null;
+      state.birthYear = null;
+      state.gu = null;
+      state.dong = null;
+      state.dnti = null;
+    },
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, resetUser } = userSlice.actions;
 
 export default userSlice.reducer;

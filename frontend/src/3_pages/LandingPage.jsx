@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "../utils/axios";
-import { useDispatch } from "react-redux";
 import { setUser } from "../features/user/userSlice";
 import { useEffect } from "react";
 
