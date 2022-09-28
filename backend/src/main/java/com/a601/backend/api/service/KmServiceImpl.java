@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@CrossOrigin("*")
 @RequiredArgsConstructor
 public class KmServiceImpl implements KmService {
 

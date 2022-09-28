@@ -7,6 +7,7 @@ import com.a601.backend.api.service.KmService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Api(value = "1Km API")
 @RequestMapping("/km")
+@CrossOrigin("*")
 @AllArgsConstructor
 public class KmController {
 
