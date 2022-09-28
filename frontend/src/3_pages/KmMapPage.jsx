@@ -1,4 +1,5 @@
 import React, { useEffect, useState, setState } from "react";
+import axios from "axios";
 import Choices from "../2_templates/kmMap/Choices";
 import Map from "../2_templates/kmMap/Map";
 import { coffeePositions, bikePositions, cvsPositions } from "../0_atoms/data/MarkerData";
@@ -13,6 +14,7 @@ const { kakao } = window;
 function KmMap() {
     // const getChange = [0, 0, 0]
     const [getList, setGetList] = useState()
+    const [forCoors, setForCoors] = useState()
 
     console.log(getList, "==============================")
     // useEffect(() => {
@@ -37,7 +39,7 @@ function KmMap() {
     const [options, setOptions] = useState({
       // center: new kakao.maps.LatLng(37.525078, 126.975702), // 서울중심어딘가
       center: new kakao.maps.LatLng(37.497486063, 127.027661548),
-      level: 4,
+      level: 3,
       isPanto: true,
     });
     // 주소검색
@@ -53,7 +55,7 @@ function KmMap() {
             center: new kakao.maps.LatLng(newSearch.y, newSearch.x) 
           })
           console.log('중심좌표변경 실행됨')
-          console.log(options.center)
+          console.log(options.center,'sssssCENTER')
         }
       };
         // geocoder.addressSearch(`${searchAddress}`, callback);
@@ -111,7 +113,6 @@ function KmMap() {
           title: el.title,
           image: new kakao.maps.MarkerImage(BikeMarker, markerSize, markerPlace)
         });
-        console.log('bike marker 나와라')
       });
 
   
@@ -130,6 +131,24 @@ function KmMap() {
       circle.setMap(map);
     };
 
+
+    async function getCoors() {
+      await axios(`http://j7a601.p.ssafy.io:9090/api/km?lat=37.6115764&lon=126.9781298`, {
+        method: "GET",
+        headers: {
+          // Authorization: jwt,
+          "Content-Type": "application/string",
+        },
+      })
+        .then(res => {
+          setForCoors(res.data.response);
+          console.log(res.data.response, '!!!!!!!!!!즐겨찾기!@');
+        })
+        .catch(error => {
+          console.error("실패:", error);
+        });
+    }
+
     // 맵 옵션 변경될때마다 로딩
     useEffect(() => {
       mapscript()
@@ -142,7 +161,7 @@ function KmMap() {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <div className={styles.choices} onClick={setGetList}>
+        <div className={styles.choices}>
           <div className={styles.search}>
             <input className={styles.searchInput} onChange={handleSearchAddress} placeholder='원하는 지점을 검색해주세요' />
             <span className={styles.field__labelwrap} aria-hidden="true">

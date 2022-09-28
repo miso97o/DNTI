@@ -2,53 +2,100 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Ranking from "../../1_molecules/statistics/Ranking";
 import Details from "../../1_molecules/statistics/Details";
+import RankImg from "../../0_atoms/Img/Rank.png";
 import styles from "./Statistics.module.css";
 
 function Statistics() {
-
+  const [check, setCheck] = useState(false);
   const [rank, setRank] = useState()
+  const temp = localStorage.getItem("priorityStorage")
+
+  const priorites = temp.substr(0, temp.length-1)
+  console.log(priorites)
+
+
+
   async function getRank() {
-    await axios(`http://j7a601.p.ssafy.io:9090/api/dong/rank?priorities=2,5,3&gu=마포구`, {
+    await axios(`http://j7a601.p.ssafy.io:9090/api/dong/rank?priorities=${priorites}&gu=마포구`, {
       method: "GET",
       headers: {
         // Authorization: jwt,
         "Content-Type": "application/json",
       },
     })
-      .then(res => {
-        setRank(res.data);
-        console.log("data", res.data);
+      .then(function(res) {
+        setRank(res.data.response);
+        console.log("data", rank, res.data.response);
+
       })
       .catch(error => {
         console.error("실패:", error);
       });
   }
+  // function changeCheck() {
+  //   if(rank) {
+  //     setCheck(true);
+  //   }
+  // }
+  
+  useEffect(() => {
+    if (rank) {
+      setCheck(true);
+      console.log("changeCheck")      
+      
+    }
+  })
+
 
   useEffect(() => {
     getRank();
   }, []);
+  console.log(rank)
 
   return (
+    <div>
+    {check ? (
     <div className={styles.page}>
       <div className={styles.container}>
-        <div className={styles.search}>
-          <Ranking />
+        <div className={styles.rankingContainer}>
+        <div className={styles.title}>동네랭킹</div>
+        
+        <div className={styles.ranking}>
+          <img src={RankImg} alt="RankImg" className={styles.RankImg}/>
+          {rank[0].dongName}
         </div>
-
+        <div className={styles.ranking}>
+          {rank[1].dongName}
+        </div>
+        <div className={styles.ranking}>
+          {rank[2].dongName}
+        </div>
+        <div className={styles.ranking}>
+          {rank[3].dongName}
+        </div>
+        <div className={styles.ranking}>
+          {rank[4].dongName}
+        </div>
+        </div>
         <div className={styles.favorites}>
           <Details />
         </div>
         <div className={styles.review}>
-          리뷰
+          <div className={styles.title}>{rank[0].dongName} 리뷰</div>
           <button className={styles.moreBtn}>더보기</button>
         </div>
         <div className={styles.board}>
-          게시글
+          <div className={styles.title}>{rank[0].dongName} 게시글</div>
           <button className={styles.moreBtn}>더보기</button>
         </div>
         
         
       </div>
+    </div> 
+    ) : (
+      <div>loading</div>
+    )
+    }
     </div>
   );
 }
