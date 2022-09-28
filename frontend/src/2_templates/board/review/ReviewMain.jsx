@@ -3,7 +3,6 @@ import { Outlet, Link } from "react-router-dom";
 import { Button, Rating } from "@mui/material";
 
 function GuCard({ totalScore, rentScore, infraScore, envScore, safeScore }) {
-  console.log(totalScore);
   return (
     <div className="w-2/5 h-1/2 p-5">
       <div className="flex flex-col h-full">

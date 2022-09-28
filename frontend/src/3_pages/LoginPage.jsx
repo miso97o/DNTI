@@ -1,14 +1,12 @@
-import { Link } from "react-router-dom";
-
-import Button from "@mui/material/Button";
-import axios from "../utils/axios";
-
-function googleLogIn() {
-  console.log("googleLogIn()");
-  // window.location.replace("http://j7a601.p.ssafy.io/api/google/login");
-  axios.get(`/google/login`).then((data) => {
-    console.log(data);
-  });
+function BtnGoogleSignIn() {
+  return (
+    <div className="flex flex-row items-center border-2 py-2 pr-6 shadow-md">
+      <div className="h-10 w-10 mx-5">
+        <img src="img/google.png" alt="google login" />
+      </div>
+      <p className="font-sans">Sign in with google</p>
+    </div>
+  );
 }
 
 export default function LoginPage() {
@@ -20,4 +18,5 @@ export default function LoginPage() {
         <BtnGoogleSignIn />
       </a>
     </div>
-  );}
+  );
+}

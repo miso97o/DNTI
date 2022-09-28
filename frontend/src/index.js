@@ -20,7 +20,10 @@ import Root from "./3_pages/Root";
 import LoginPage from "./3_pages/LoginPage";
 import SignUpPage from "./3_pages/SignUpPage";
 import PostMainComponent from "./2_templates/board/PostMainComponent";
-import ReviewMainComponent from "./2_templates/board/ReviewMainComponent";
+import ReviewMainComponent from "./2_templates/board/review/ReviewMainComponent";
+import ReviewMain from "./2_templates/board/review/ReviewMain";
+import ReviewViewComponent from "./2_templates/board/review/ReviewViewComponent";
+import ReviewWriteComponent from "./2_templates/board/review/ReviewWriteComponent";
 
 const router = createBrowserRouter([
   {

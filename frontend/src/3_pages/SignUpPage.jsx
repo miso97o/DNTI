@@ -1,23 +1,66 @@
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { Outlet, Link } from "react-router-dom";
+import * as React from "react";
+import { useDaumPostcodePopup } from "react-daum-postcode";
+import { useCookies } from "react-cookie";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import moment from "moment";
+import "moment/locale/ko";
+import axios from "../utils/axios";
+import { FormControlUnstyledContext } from "@mui/base";
 
 export default function SignUpPage() {
-
-  const [cookies, setCookie] = useCookies(["user_email"]);
-  const email = cookies.email;
+  const [cookies, setCookie] = useCookies(["userEmail"]);
+  const email = cookies["userEmail"];
+  console.log(email);
 
   const [nickName, setNickName] = React.useState("");
-  const [postalCode, setPostalCode] = React.useState("");
   const [mainAddr, setMainAddr] = React.useState("");
-  const [detailAddr, setDetailAddr] = React.useState("");
-  const [phoneNo, setPhoneNo] = React.useState("");
+  const [gu, setGu] = React.useState("");
+  const [dong, setDong] = React.useState("");
+  const [birthDate, setBirthDate] = React.useState("");
+  console.log(nickName);
+
+  let userInfo = {
+    birthYear: moment(birthDate).format("YYYYMMDD") * 1,
+    dong: dong,
+    gu: gu,
+    nickname: nickName,
+    userId: email,
+  };
+
+  const signUp = (userInfo, e) => {
+    console.log(e.target.value);
+    console.log(userInfo);
+    if (userInfo.nickName === "") {
+      alert("닉네임을 입력해주세요.");
+      return;
+    } else if (userInfo.birthDate === "Invalid date") {
+      alert("생년월일을 입력해주세요.");
+      return;
+    } else if (!userInfo.gu || !userInfo.dong) {
+      alert("주소를 입력해주세요.");
+      return;
+    } else if (userInfo.email === "") {
+      alert("잘못된 접근입니다.");
+      return;
+    }
+
+    axios.post("/users", userInfo).then((data) => {
+      console.log(data);
+    });
+  };
 
   const open = useDaumPostcodePopup();
 
   const handleComplete = (data) => {
     let fullAddress = data.address;
+    let sigungu = data.sigungu;
+    let dong = data.bname;
     let extraAddress = "";
-    let code = data.zonecode;
 
     if (data.addressType === "R") {
       if (data.bname !== "") {
@@ -31,17 +74,19 @@ export default function SignUpPage() {
     }
 
     setMainAddr(fullAddress);
-    setPostalCode(code);
+    setGu(sigungu);
+    setDong(dong);
   };
 
   const handleClick = () => {
     open({ onComplete: handleComplete });
   };
-  const handleDetailAddrChange = (event) => {
-    setDetailAddr(event.target.value);
+  const handleBirthDateChange = (newValue) => {
+    setBirthDate(newValue);
   };
-  const handlePhoneNoChange = (event) => {
-    setPhoneNo(event.target.value);
+  const handleNickNameChange = (event) => {
+    setNickName(event.target.value);
+    console.log(nickName);
   };
 
   return (
@@ -52,7 +97,12 @@ export default function SignUpPage() {
           <div className="flex flex-col">
             <div className="flex flex-row">
               <div className="">
-                <TextField label="닉네임" color="primary" />
+                <TextField
+                  label="닉네임"
+                  color="primary"
+                  value={nickName}
+                  onChange={handleNickNameChange}
+                />
               </div>
               <div className="">
                 <Button>중복 확인</Button>
@@ -60,27 +110,37 @@ export default function SignUpPage() {
             </div>
             <p className="txt-893">사용할 수 있는 닉네임입니다.</p>
           </div>
+          <LocalizationProvider dateAdapter={AdapterMoment}>
+            <DesktopDatePicker
+              label="생년월일"
+              inputFormat="YYYY/MM/DD"
+              value={birthDate}
+              onChange={handleBirthDateChange}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
           <div className="flex flex-row">
-            <div className="signupinputzipcode flex-col-hstart-vcenter">
-              <TextField label="우편번호" color="primary" />
-            </div>
             <div className="signupinputzipcodebtn flex-col-hcenter-vcenter">
               <Button onClick={handleClick}>주소 찾기</Button>
             </div>
           </div>
           <div className="">
-            <TextField label="상세주소" color="primary" />
+            <TextField
+              label="주소"
+              color="primary"
+              value={mainAddr}
+              fullWidth
+              disabled
+            />
           </div>
         </div>
-        <div className="signupinputarea flex-col-hcenter-vstart">
-          <TextField fullWidth label="휴대전화" id="fullWidth" />
-          <p className="txt-1102">
-            올바른 형식으로 입력해주세요.(000-0000-0000)
-          </p>
-        </div>
-        <Link to="/">
-          <Button>회원가입</Button>
-        </Link>
+        <Button
+          onClick={(e) => {
+            signUp(userInfo, e);
+          }}
+        >
+          회원가입
+        </Button>
       </div>
     </div>
   );
