@@ -1,10 +1,13 @@
 import * as React from "react";
 import { Menu, MenuItem } from "@mui/material";
 import { Link, redirect } from "react-router-dom";
-
+import { useCookies } from "react-cookie";
 import styles from "./PrimaryNavigation.module.css";
+import { useNavigate } from "react-router-dom";
 
 function PrimaryNavigation() {
+  const [cookies, removeCookie] = useCookies(["userEmail"]);
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -15,6 +18,33 @@ function PrimaryNavigation() {
     setAnchorEl(null);
     return redirect(`/${dest}`);
   };
+
+  const logOut = (dest) => {
+    removeCookie("userEmail");
+    handleClose(dest);
+    navigate("/", { replace: true });
+  };
+
+  const email = cookies["userEmail"];
+  let logInButton;
+  if (email !== "undefined") {
+    logInButton = (
+      <div className="flex flex-col">
+        <Link to="mypage">
+          <MenuItem onClick={handleClose}>마이페이지</MenuItem>
+        </Link>
+        <Link to="/">
+          <MenuItem onClick={logOut}>로그아웃</MenuItem>
+        </Link>
+      </div>
+    );
+  } else {
+    logInButton = (
+      <Link to="login">
+        <MenuItem onClick={handleClose}>로그인</MenuItem>
+      </Link>
+    );
+  }
 
   return (
     <div>
@@ -53,12 +83,7 @@ function PrimaryNavigation() {
             "aria-labelledby": "basic-button",
           }}
         >
-          <Link to="mypage">
-            <MenuItem onClick={handleClose}>마이페이지</MenuItem>
-          </Link>
-          <Link to="/">
-            <MenuItem onClick={handleClose}>로그아웃</MenuItem>
-          </Link>
+          {logInButton}
         </Menu>
       </div>
     </div>
