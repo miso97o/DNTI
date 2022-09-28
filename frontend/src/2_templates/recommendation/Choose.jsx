@@ -4,6 +4,7 @@ import District from "../../1_molecules/recommendation/District";
 import Priority from "../../1_molecules/recommendation/Priority";
 import {options} from "../../0_atoms/data/RecommendOpts";
 import styles from "./Choose.module.css";
+import "./Choose.css";
 
 function Choices(props) {
   const [selectedList, setSelectedList] = useState([])
@@ -45,11 +46,19 @@ function Choices(props) {
         console.error("실패:", error);
       });
   }
+  console.log(styles.color+`${selectedList[0]}`)
 
   useEffect(() => {
     getMyRegion();
   }, []);
   
+  const number1 = "selectedOptArea1 color"+selectedList[0]
+  const number2 = "selectedOptArea2 color"+selectedList[1]
+  const number3 = "selectedOptArea3 color"+selectedList[2]
+  const number4 = "selectedOptArea4 color"+selectedList[3]
+  const number5 = "selectedOptArea5 color"+selectedList[4]
+  const number6 = "selectedOptArea6 color"+selectedList[5]
+
   return (
     <div className={styles.page}>
       <div className={styles.container}>
@@ -62,42 +71,42 @@ function Choices(props) {
             <p>설정된 지표 우선순위</p>
           </div>
           <div className={styles.selectedContainer}>
-          <div className={styles.selectedOptArea}>
+            <div className={number1}>
               <div className={styles.selectedOptIcon}>
                 {selectedList.length ? options[selectedList[0]-1].image : 
-                <div className={styles.selectedBlank} />
+                <div className={styles.color0} />
                 }
               </div>
             </div>
-            <div className={styles.selectedOptArea}>
+            <div className={number2}>
               <div className={styles.selectedOptIcon}>
                 {selectedList.length > 1 ? options[selectedList[1]-1].image : 
                   <div className={styles.selectedBlank} />
                 }
               </div>
             </div>
-            <div className={styles.selectedOptArea}>
+            <div className={number3}>
               <div className={styles.selectedOptIcon}>
                 {selectedList.length > 2 ? options[selectedList[2]-1].image : 
                   <div className={styles.selectedBlank} />
                 }
                 </div>
             </div>
-            <div className={styles.selectedOptArea}>
+            <div className={number4}>
               <div className={styles.selectedOptIcon}>
                 {selectedList.length > 3 ? options[selectedList[3]-1].image : 
                   <div className={styles.selectedBlank} />
                 }
               </div>
             </div>
-            <div className={styles.selectedOptArea}>
+            <div className={number5}>
               <div className={styles.selectedOptIcon}>
                 {selectedList.length > 4 ? options[selectedList[4]-1].image : 
                   <div className={styles.selectedBlank} />
                 }
               </div>
             </div>
-            <div className={styles.selectedOptArea}>
+            <div className={number6}>
               <div className={styles.selectedOptIcon}>
                 {selectedList.length > 5 ? options[selectedList[5]-1].image : 
                   <div className={styles.selectedBlank} />

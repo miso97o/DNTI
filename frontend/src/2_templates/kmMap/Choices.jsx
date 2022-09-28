@@ -27,28 +27,7 @@ function Choices(props) {
     sendSelected()
   }, [selectedList]);
 
-  const [myRegions, setMyRegions] = useState()
 
-  async function getMyRegion() {
-    await axios(`http://j7a601.p.ssafy.io:9090/api/users/list`, {
-      method: "GET",
-      headers: {
-        // Authorization: jwt,
-        "Content-Type": "application/string",
-      },
-    })
-      .then(res => {
-        setMyRegions(res.data.response);
-        console.log(res.data.response, '!!!!!!!!!!즐겨찾기!@');
-      })
-      .catch(error => {
-        console.error("실패:", error);
-      });
-  }
-
-  useEffect(() => {
-    getMyRegion();
-  }, []);
   
 
   return (

@@ -1,0 +1,54 @@
+.selectedOptArea1 {
+    width: 50px;
+    height: 300px;
+    border-radius: 10px;
+}
+.selectedOptArea2 {
+    width: 50px;
+    height: 260px;
+    border-radius: 10px;
+}
+.selectedOptArea3 {
+    width: 50px;
+    height: 220px;
+    border-radius: 10px;
+    align-items: baseline;
+}
+.selectedOptArea4 {
+    width: 50px;
+    height: 180px;
+    border-radius: 10px;
+}
+.selectedOptArea5 {
+    width: 50px;
+    height: 140px;
+    border-radius: 10px;
+}
+.selectedOptArea6 {
+    width: 50px;
+    height: 100px;
+    border-radius: 10px;
+}
+
+
+.color1 {
+    background-color: #FFBB33;
+}
+.color2 {
+    background-color: #FF6795;
+}  
+.color3 {
+    background-color: #8145FF;
+}
+.color4 {
+    background-color: #B83DBA;
+}
+.color5 {
+    background-color: #296194;
+}
+.color6 {
+    background-color: #41BC8B;
+}
+.colorundefined {
+    background-color: #f0f0f0;
+}
