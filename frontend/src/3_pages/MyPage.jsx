@@ -1,83 +1,96 @@
-import { Avatar, Button, IconButton } from "@mui/material";
-import * as React from "react";
-import { Outlet, Link } from "react-router-dom";
-import LogoutIcon from "@mui/icons-material/Logout";
-import EditIcon from "@mui/icons-material/Edit";
-import ClearIcon from "@mui/icons-material/Clear";
-import ReviewRow from "../1_molecules/ReviewRow";
-import PostRow from "../1_molecules/PostRow";
-import Tooltip from "@mui/material/Tooltip";
+import { Avatar, Button, IconButton } from '@mui/material';
+import * as React from 'react';
+import { Outlet, Link } from 'react-router-dom';
+import LogoutIcon from '@mui/icons-material/Logout';
+import EditIcon from '@mui/icons-material/Edit';
+import ClearIcon from '@mui/icons-material/Clear';
+import ReviewRow from '../1_molecules/ReviewRow';
+import PostRow from '../1_molecules/PostRow';
+import Tooltip from '@mui/material/Tooltip';
+import st from './MyPage.module.css';
 
-function ProfileCard() {
+const ProfileCard = () => {
   return (
-    <div className="flex flex-row w-5/6 h-1/4 justify-center items-start p-10">
-      <div className="flex flex-row w-full h-full justify-start items-center">
-        <div className="p-5">
-          <Avatar src="" sx={{ width: 200, height: 200 }} />
+    <div className={st.profileContainer}>
+      <div>
+        <Avatar src="" sx={{ width: '70%', height: '70%', margin: '10px' }} />
+      </div>
+      <div className={st.colContainer}>
+        <div className={st.rowContainer}>
+          <span>별명</span>
+          <span>이메일</span>
         </div>
-        <div className="flex flex-col w-2/3 h-full ">
-          <div className="flex flex-row h-1/2 items-end">
-            <p className="font-medium text-2xl">어둠의다크니스</p>
-            <p className="font-medium text-medium">tttkim</p>
-          </div>
-          <div className="flex flex-row h-1/2 w-full items-start">
-            <div className="flex flex-row w-5/6 items-end">
-              <p className="font-medium text-2xl w-1/6">INFP</p>
-              <div className="flex flex-row">
-                <p className="font-medium text-xl"># 공원 좋아</p>
-                <p className="font-medium text-xl"># 문화시설 좋아</p>
-              </div>
-            </div>
-            <Link to="/dnti">
-              <Button>다시 검사하기</Button>
-            </Link>
-          </div>
+        <div className={st.rowContainer}>
+          <span>dnti</span>
+
+          <span>#해쉬태그1 #해쉬태그2</span>
         </div>
       </div>
-      <div className="flex flex-row">
-        <Tooltip title="정보 수정">
-          <IconButton>
-            <EditIcon />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="회원 탈퇴">
-          <IconButton>
-            <LogoutIcon />
-          </IconButton>
-        </Tooltip>
+      <div className={st.colContainer}>
+        <div>
+          <Tooltip title="정보 수정">
+            <IconButton>
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="회원 탈퇴">
+            <IconButton>
+              <LogoutIcon />
+            </IconButton>
+          </Tooltip>
+        </div>
+        <div>
+          <Link to="/dnti">
+            <Button>다시 검사하기</Button>
+          </Link>
+        </div>
       </div>
     </div>
   );
-}
+};
 
-function FrequentRow() {
+const FrequentRow = () => {
   return (
-    <div className="flex flex-row justify-between">
-      <p className="">멀티캠퍼스</p>
-      <p className="">강남구 테헤란로 212</p>
-      <IconButton>
-        <ClearIcon />
-      </IconButton>
+    <div style={{ border: '1px solid', width: '100%', margin: '0px' }}>
+      <div className={st.frequentRowContainer}>
+        <p className="">멀티캠퍼스</p>
+        <p className="">강남구 테헤란로 212</p>
+        <IconButton>
+          <ClearIcon />
+        </IconButton>
+      </div>
+      <div className={st.frequentRowContainer}>
+        <p className="">멀티캠퍼스</p>
+        <p className="">강남구 테헤란로 212</p>
+        <IconButton>
+          <ClearIcon />
+        </IconButton>
+      </div>
+      <div className={st.frequentRowContainer}>
+        <p className="">멀티캠퍼스</p>
+        <p className="">강남구 테헤란로 212</p>
+        <IconButton>
+          <ClearIcon />
+        </IconButton>
+      </div>
     </div>
   );
-}
+};
 
-function FrequentPlace() {
+const FrequentPlace = () => {
   return (
-    <div className="flex flex-col h-1/2">
-      <div className="flex flex-row justify-between">
-        <div className="flex flex-row">
-          <p className="font-medium text-2xl">자주 가는 곳</p>
-          <Button>추가</Button>
-        </div>
+    <div className={st.colContainer}>
+      <div className={st.rowContainer}>
+        <p className="font-medium text-2xl">자주 가는 곳</p>
+        <Button>추가</Button>
         <p className="txt-959">최대 3곳까지 등록 가능합니다.</p>
       </div>
-      <div className="flex flex-col">
+      <div>
         <FrequentRow />
       </div>
     </div>
   );
-}
+};
 
 function RecommendRow() {
   return (
@@ -106,13 +119,13 @@ function RecommendedRegion() {
 
 function MyRegion() {
   return (
-    <div className="flex flex-col h-1/6">
+    <div>
       <div className="flex flex-row">
         <p className="font-medium text-2xl">나의 지역</p>
         <Button>바꾸기</Button>
       </div>
-      <div className="flex flex-row place-content-center">
-        <p className="">서울특별시 광진구 구의1동</p>
+      <div style={{ border: '1px solid', width: '100%', margin: '0px' }}>
+        <p>서울특별시 광진구 구의1동</p>
       </div>
     </div>
   );
@@ -127,7 +140,7 @@ function MyReview() {
           <p className="txt-542 flex-hcenter">더보기</p>
         </Link>
       </div>
-      <div className="flex flex-col">
+      <div style={{ border: '1px solid', width: '100%', margin: '0px' }}>
         <ReviewRow />
       </div>
     </div>
@@ -143,7 +156,7 @@ function MyPosts() {
           <p className="txt-542 flex-hcenter">더보기</p>
         </Link>
       </div>
-      <div className="flex flex-col">
+      <div style={{ border: '1px solid', width: '100%', margin: '0px' }}>
         <PostRow />
       </div>
     </div>
@@ -152,20 +165,21 @@ function MyPosts() {
 
 export default function MyPage() {
   return (
-    <div className="flex flex-col h-full w-screen items-center">
-      <div className="flex flex-col w-5/6 h-full items-center">
-        <ProfileCard />
-        <div className="flex flex-row w-full h-3/4">
-          <div className="flex flex-col w-1/2 h-full p-5">
-            <FrequentPlace />
-            <RecommendedRegion />
-          </div>
-          <div className="flex flex-col w-1/2 h-full p-5">
-            <MyRegion />
-            <MyReview />
-            <MyPosts />
-          </div>
+    <div className={st.mainContainer}>
+      <ProfileCard />
+      <div className={st.rowContainer}>
+        <div>
+          <FrequentPlace />
         </div>
+        <div>
+          <MyRegion />
+          <MyReview />
+          <MyPosts />
+        </div>
+      </div>
+      <div className="flex flex-row w-full h-3/4">
+        <div className="flex flex-col w-1/2 h-full p-5">{/* <RecommendedRegion /> */}</div>
+        <div className="flex flex-col w-1/2 h-full p-5"></div>
       </div>
     </div>
   );
