@@ -1,20 +1,23 @@
 import { Link } from "react-router-dom";
 
+import Button from "@mui/material/Button";
+import axios from "../utils/axios";
+
+function googleLogIn() {
+  console.log("googleLogIn()");
+  // window.location.replace("http://j7a601.p.ssafy.io/api/google/login");
+  axios.get(`/google/login`).then((data) => {
+    console.log(data);
+  });
+}
+
 export default function LoginPage() {
   return (
-    <div className="container mx-auto h-4/5 w-screen flex flex-col justify-content-center place-items-center">
+    <div className="container mx-auto h-full w-screen flex flex-col items-center">
       <h1 className="text-6xl m-10">로그인/회원가입</h1>
-      <img src="img/btn_google_login.png" alt="googleLogin" />
-      <div className="flex flex-col place-content-center place-items-center">
-        <p>회원가입</p>
-        <Link to={`/signup`} style={{ textDecoration: "none" }}>
-          <img
-            src="https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/w1yuhngvkv-222%3A1074?alt=media&token=69dc3706-e89a-4b9a-a91f-51905693c111"
-            alt="Not Found"
-            className="signupbtnarea"
-          />
-        </Link>
-      </div>
+
+      <a href="https://accounts.google.com/o/oauth2/v2/auth?scope=profile%20email%20openid&response_type=code&redirect_uri=http://localhost:9090/api/google/login/redirect&client_id=429814945555-cvulqpkcp494j5n0ujmnnd6slp7ehieh.apps.googleusercontent.com">
+        <BtnGoogleSignIn />
+      </a>
     </div>
-  );
-}
+  );}

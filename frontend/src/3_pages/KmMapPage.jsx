@@ -154,6 +154,7 @@ function KmMap() {
           <Choices setGetList={setGetList}>
 
           </Choices>
+
         </div>
         <div className={styles.map}>
           {/* <Map /> */}
@@ -163,4 +164,5 @@ function KmMap() {
     </div>
   );
 }
-export default KmMap
+
+export default KmMap;

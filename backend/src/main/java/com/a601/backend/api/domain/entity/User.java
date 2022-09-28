@@ -49,6 +49,7 @@ public class User {
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Reply> replyList = new ArrayList<>();
 
+    
     @Builder
     public User(String email, String nickname, Integer birthYear, String gu, String dong, String dnti, List<Favorite> favoriteList, List<Review> reviewList, List<ReviewLike> reviewLikeList, List<Board> boardList, List<BoardLike> boardLikeList, List<Reply> replyList) {
         this.email = email;
@@ -65,8 +66,7 @@ public class User {
         this.replyList = replyList;
     }
 
-
-//    public void modify(String nickname, Integer birthYear, String gu, String dong){
+    //    public void modify(String nickname, Integer birthYear, String gu, String dong){
 //        this.nickname = nickname;
 //        this.birthYear = birthYear;
 //        this.gu = gu;

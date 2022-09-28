@@ -27,7 +27,7 @@ public class UserRequest {
     @AllArgsConstructor
     public static class MyPage {
         UserRequest.All user;
-        DntiResponse dntiRequest;
+        DntiResponse dnti;
 
         List<DongScore> dongList;
         List<FavoriteResponse> favoriteList;
@@ -62,7 +62,7 @@ public class UserRequest {
     @Builder
     public static class ModifyDNTI {
         String userId;
-        String dnti;
+        DntiResponse dnti;
     }
 
     @Getter
@@ -73,7 +73,4 @@ public class UserRequest {
         String gu;
         String dong;
     }
-
-
-
 }

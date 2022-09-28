@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Api(value = "회원 API", tags = {"회원"})
@@ -31,8 +32,8 @@ public class UserController {
     //회원가입(닉네임,생년, 구, 동, 휴대폰번호, 아이디)
     @ApiOperation(value="회원가입")
     @PostMapping
-    public ApiResult singIn(@RequestBody UserRequest.SingIn singIn,HttpServletRequest request){
-        service.singIn(singIn,request);
+    public ApiResult singIn(@RequestBody UserRequest.SingIn singIn, HttpServletResponse response){
+        service.singIn(singIn,response);
         return new ApiResult<>(200, singIn.getNickname());
     }
 
@@ -55,8 +56,7 @@ public class UserController {
         //user
         UserRequest.All user = service.getInfo(email);
 
-        //dnti
-        DntiResponse dnti = dntiService.getDnti(user.getDnti());
+        DntiResponse dntiResponse = dntiService.getDnti(user.getDnti());
 
         //dnti - place
         List<DongScore> dong = dongService.computeDongScoreByDnti(user.getDnti());
@@ -70,7 +70,7 @@ public class UserController {
         //board
         List<BoardResponse> boardList = boardService.getMyBoard(email);
 
-        UserRequest.MyPage result = new UserRequest.MyPage(user, dnti, dong, favoriteList, reviewList, boardList);
+        UserRequest.MyPage result = new UserRequest.MyPage(user, dntiResponse, dong, favoriteList, reviewList, boardList);
 
         return new ApiResult(200,result);
     }
