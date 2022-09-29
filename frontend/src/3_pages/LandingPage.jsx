@@ -12,7 +12,8 @@ export default function LandingPage() {
 
   useEffect(() => {
     const email = cookies["userEmail"];
-    if (email !== "undefined") {
+    console.log(process.env.REACT_APP_FRONT);
+    if (email !== "undefined" && email !== undefined) {
       axios.get(`/users/${email}`).then(({ data }) => {
         dispatch(setUser(data.response));
 
@@ -20,8 +21,8 @@ export default function LandingPage() {
       });
     }
   }, [cookies]);
-  console.log("after reduce-------------------------");
-  console.log(user);
+  // console.log("after reduce-------------------------");
+  // console.log(user);
   return (
     <div className="container mx-auto flex flex-col h-full w-screen items-center ">
       <p className="font-medium text-5xl m-20">나와 딱맞는 동네는 어딜까?</p>

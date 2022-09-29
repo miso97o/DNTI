@@ -5,6 +5,7 @@ module.exports = function (app) {
     "/api",
     createProxyMiddleware({
       target: "http://localhost:9090",
+      // target: "http://j7a601.p.ssafy.io",
       changeOrigin: true,
     })
   );
