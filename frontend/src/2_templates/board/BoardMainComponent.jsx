@@ -1,6 +1,5 @@
 import PostRow from "../../1_molecules/PostRow";
 import ReviewRow from "../../1_molecules/ReviewRow";
-import Carousel from "react-elastic-carousel";
 import { Link } from "react-router-dom";
 
 function YoutubeItem({ title }) {
@@ -79,12 +78,6 @@ export default function BoardMainComponent() {
                 <div className="flex flex-row w-full justify-start">
                   <p className="font-medium text-2xl">관련 영상</p>
                 </div>
-                <Carousel breakPoints={breakPoints}>
-                  {youtubeItems &&
-                    youtubeItems.map((item) => (
-                      <YoutubeItem key={item.id} title={item.title} />
-                    ))}
-                </Carousel>
               </div>
             </div>
           </div>
