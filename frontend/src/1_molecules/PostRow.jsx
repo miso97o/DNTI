@@ -5,7 +5,10 @@ import PersonIcon from "@mui/icons-material/Person";
 import { pink } from "@mui/material/colors";
 import { Link } from "react-router-dom";
 
+
+
 export default function PostRow({
+  Id,
   title,
   writer,
   date,
@@ -13,8 +16,12 @@ export default function PostRow({
   views,
   likes,
 }) {
+
+
   return (
-    <Link to="/board/postview">
+    <Link to="/board/postview"
+      state={{boardId: Id}}
+    >
       <div className="flex flex-row w-full items-center p-1">
         <div className="flex flex-row w-full items-stretch justify-between">
           <div className="flex flex-row items-center w-1/3">
