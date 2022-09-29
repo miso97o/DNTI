@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Button, Pagination, TextField, IconButton } from "@mui/material";
 import Reply from "../../1_molecules/post/Reply";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import axios from "axios";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -11,6 +12,7 @@ export default function PostViewComponent() {
   const [value, setValue] = React.useState("");
   const [postDetail, setPostDetail] = React.useState({});
   const [replies, setReplies] = React.useState([]);
+  const [like, setLike] = React.useState(false);
   const handleChange = (event) => {
     setValue(event.target.value);
   };
@@ -44,6 +46,13 @@ export default function PostViewComponent() {
       getReply(1);
     })
   }
+  function clickLike() {
+    setLike(!like);
+    // axios.patch(`/board/increase-like`)
+    // .then((res) => {
+    //   console.log(res.data);
+    // })
+  }
   
   useEffect(() => {
     getDetail();
@@ -71,8 +80,8 @@ export default function PostViewComponent() {
       <div className="flex flex-col h-4/5 w-full m-5">
         <div className="flex h-4/5 m-5">{postDetail.contents}</div>
         <div className="flex flex-row justify-center">
-          <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-            <FavoriteBorderIcon />
+          <IconButton type="button" sx={{ p: "10px" }} aria-label="search" onClick={() => {clickLike()}}>
+            {like ? <FavoriteIcon/> : <FavoriteBorderIcon /> }
           </IconButton>
         </div>
         <div className="flex flex-row justify-center items-center m-5">
