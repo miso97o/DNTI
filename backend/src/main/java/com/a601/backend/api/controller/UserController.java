@@ -56,11 +56,13 @@ public class UserController {
         //user
         UserRequest.All user = service.getInfo(email);
 
-        DntiResponse dntiResponse = dntiService.getDnti(user.getDnti());
-
-        //dnti - place
-        List<DongScore> dong = dongService.computeDongScoreByDnti(user.getDnti());
-
+        DntiResponse dntiResponse = null;
+        List<DongScore> dong = null;
+        if(user.getDnti()!=null){
+            dntiResponse = dntiService.getDnti(user.getDnti());
+            //dnti - place
+            dong = dongService.computeDongScoreByDnti(user.getDnti());
+        }
         //favorite
         List<FavoriteResponse> favoriteList = favoriteService.getFavorite(email);
 
