@@ -54,14 +54,6 @@ export default function FreeMainComponent() {
                 />
               )
             }))}
-            {/* <PostRow
-              title="제목을 뭐라할까"
-              writer="tttkim"
-              date="2022-09-05"
-              replies="20"
-              views="500"
-              likes="333"
-            /> */}
           </div>
           <div className="flex flex-row justify-center items-center m-10">
             <TextField variant="outlined" />

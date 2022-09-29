@@ -5,25 +5,49 @@ import Reply from "../../1_molecules/post/Reply";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import axios from "axios";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 export default function PostViewComponent() {
-  const [value, setValue] = React.useState("이 글은 어떠셨나요?");
+  const [value, setValue] = React.useState("");
   const [postDetail, setPostDetail] = React.useState({});
+  const [replies, setReplies] = React.useState([]);
   const handleChange = (event) => {
     setValue(event.target.value);
   };
   const location = useLocation();
+  const boardId = location.state.boardId;
+  const user = useSelector((state) => state.user);
 
-    function getDetail(boardId) {
+  function getDetail() {
     axios.get(`/board/${boardId}`)
     .then((res) => {
       console.log(res.data);
       setPostDetail(res.data.response);
     })
   }
+  function getReply(page) {
+    console.log('boardId', boardId)
+    axios.get(`/reply/${boardId}?page=${page-1}`)
+    .then((res) => {
+      console.log('reply', res.data);
+      setReplies(res.data.response.content);
+    })
+  }
+  function writeReply() {
+    axios.post(`/reply`,{
+      email: user.userId,
+      boardId: boardId,
+      contents: value
+    })
+    .then((res) => {
+      console.log('write', res.data);
+      getReply(1);
+    })
+  }
   
   useEffect(() => {
-    getDetail(location.state.boardId);
+    getDetail();
+    getReply(1);
   },[])
   
   return (
@@ -65,7 +89,7 @@ export default function PostViewComponent() {
           <p>댓글</p>
         </div>
         <div className="flex flex-col w-4/5">
-          <div className="flex m-3">닉네임</div>
+          <div className="flex m-3">{user.nickname}</div>
           <div className="flex flex-row w-full justify-center m-3">
             <TextField
               multiline
@@ -73,20 +97,25 @@ export default function PostViewComponent() {
               maxRows={4}
               value={value}
               onChange={handleChange}
+              placeholder="이글은 어떠셨나요?"
             />
-            <Button>입력</Button>
+            <Button onClick={() => {writeReply()}}>입력</Button>
           </div>
         </div>
       </div>
       <div className="flex flex-col w-4/5 items-center m-5">
         <div className="flex flex-col w-full">
-          <Reply
-            nickname={"tttkim"}
-            datetime={"2022-09-21 11:54:00"}
-            contents={"댓글 내용"}
-          />
+          {replies && replies.map((x => {
+              return (
+                <Reply
+                  nickname={x.email}
+                  datetime={x.createdTime.substring(0,10)}
+                  contents={x.contents}
+                />
+              )
+            }))}
         </div>
-        <Pagination />
+        <Pagination count={10} variant="outlined" color="primary" onChange={(e) => getReply(e.target.outerText)}/>
       </div>
     </div>
   );
