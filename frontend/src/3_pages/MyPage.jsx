@@ -14,6 +14,47 @@ import axios from 'axios';
 
 
 
+
+export default function MyPage() {
+  const user = useSelector((state) => state.user);
+  const [myPlace, setMyPlace] = useState([]);
+  const [myInfo, setMyInfo] = useState([]);
+  
+  
+  useEffect(()=>{
+    if(user !== null){
+      axios.get(`/users/mypage/${user.userId}`).then(({data})=>{
+        setMyPlace(data.response.favoriteList);
+        setMyInfo(data.response);
+      })
+    }
+    
+  },[])
+
+  return (
+    <>
+    {myInfo.length !== 0 && myPlace.length !== 0 ? 
+    <div className={st.mainContainer}>
+      <ProfileCard info={myInfo.user} dnti={myInfo.dnti} />
+      <div className={st.rowContainer}>
+        <div>
+          <FrequentPlace myPlace={myPlace}/>
+        </div>
+        <div>
+          <MyRegion info={myInfo.user} />
+          <MyReview info={myInfo.reviewList}/>
+          <MyPosts info={myInfo.boardList} />
+        </div>
+      </div>
+      <div className="flex flex-row w-full h-3/4">
+        <div className="flex flex-col w-1/2 h-full p-5"><RecommendedRegion info={myInfo.dongList}/></div>
+        <div className="flex flex-col w-1/2 h-full p-5"></div>
+      </div>
+    </div> : null}
+  </>
+  );
+}
+
 const ProfileCard = (props) => {
   return (
     <div className={st.profileContainer}>
@@ -22,13 +63,13 @@ const ProfileCard = (props) => {
       </div>
       <div className={st.colContainer}>
         <div className={st.rowContainer}>
-          <span>{props.nickname}</span>
-          <span>{props.email}</span>
+          <span>{props.info.nickname}</span>
+          <span>{props.info.userId}</span>
         </div>
         <div className={st.rowContainer}>
-          <span>{props.dnti ? props.dnti : "dnti검사를 해주세요!"}</span>
+          <span>{props.dnti.type ? props.dnti.type : "dnti검사를 해주세요!"}</span>
 
-          <span>#해쉬태그1 #해쉬태그2</span>
+          <span>{`#${props.dnti.hashtag1}  #${props.dnti.hashtag2}`}</span>
         </div>
       </div>
       <div className={st.colContainer}>
@@ -54,37 +95,32 @@ const ProfileCard = (props) => {
   );
 };
 
-const FrequentRow = () => {
+// 즐겨찾기
+const FrequentRow = (props) => {
+
+  // 삭제버튼 클릭시
+  const deleteFavorite = (id) => {
+    axios.delete(`/favorite/${id}`).then((data)=>{
+      alert("삭제되었습니다.")
+    })
+  }
+  
+  
   return (
-    <div style={{ border: '1px solid', width: '100%', margin: '0px' }}>
+    <div>
       <div className={st.frequentRowContainer}>
-        <p className="">멀티캠퍼스</p>
-        <p className="">강남구 테헤란로 212</p>
+        <p className="">{props.name}</p>
+        <p className="">{props.address}</p>
         <IconButton>
-          <ClearIcon />
-        </IconButton>
-      </div>
-      <div className={st.frequentRowContainer}>
-        <p className="">멀티캠퍼스</p>
-        <p className="">강남구 테헤란로 212</p>
-        <IconButton>
-          <ClearIcon />
-        </IconButton>
-      </div>
-      <div className={st.frequentRowContainer}>
-        <p className="">멀티캠퍼스</p>
-        <p className="">강남구 테헤란로 212</p>
-        <IconButton>
-          <ClearIcon />
+          <ClearIcon onClick={() => deleteFavorite(props.favoriteId)}/>
         </IconButton>
       </div>
     </div>
   );
 };
 
-const FrequentPlace = (props) => {
-  console.log("자주가는장소: ")
-  console.log(props);
+function FrequentPlace(props) {
+
   return (
     <div className={st.colContainer}>
       <div className={st.rowContainer}>
@@ -93,19 +129,22 @@ const FrequentPlace = (props) => {
         <p className="txt-959">최대 3곳까지 등록 가능합니다.</p>
       </div>
       <div>
-        <FrequentRow />
+        {props.myPlace.map((place)=> {
+            return(
+            <div key={place.name}>
+            <FrequentRow favoriteId={place.favoriteId} name={place.name} address={place.address} />
+            </div>)
+          
+        })}
       </div>
     </div>
   );
 };
 
-function RecommendRow() {
+function RecommendRow(props) {
   return (
     <div className="flex flex-row justify-between">
-      <p className="">양재동</p>
-      <div className="flex flex-row">
-        <p className=""># 공원 좋아</p>
-      </div>
+      <p className="">{props.dong}</p>
       <Link to="/dnRecommend">
         <Button>보러 가기</Button>
       </Link>
@@ -113,18 +152,24 @@ function RecommendRow() {
   );
 }
 
-function RecommendedRegion() {
+function RecommendedRegion(props) {
   return (
     <div className="flex flex-col h-1/2">
       <p className="font-medium text-2xl">나와 어울리는 지역</p>
       <div className="flex flex-col">
-        <RecommendRow />
+      {props.info.map((region)=> {
+            return(
+            <div key={region.index} className="flex flex-row justify-around">
+              <RecommendRow dong={region.dongName} />
+            </div>)
+          
+        })}
       </div>
     </div>
   );
 }
 
-function MyRegion() {
+function MyRegion(props) {
   return (
     <div>
       <div className="flex flex-row">
@@ -132,13 +177,13 @@ function MyRegion() {
         <Button>바꾸기</Button>
       </div>
       <div style={{ border: '1px solid', width: '100%', margin: '0px' }}>
-        <p>서울특별시 광진구 구의1동</p>
+        <p>{`${props.info.gu} ${props.info.dong}`}</p>
       </div>
     </div>
   );
 }
 
-function MyReview() {
+function MyReview(props) {
   return (
     <div className="flex flex-col h-2/6">
       <div className="flex flex-row items-end">
@@ -148,13 +193,20 @@ function MyReview() {
         </Link>
       </div>
       <div style={{ border: '1px solid', width: '100%', margin: '0px' }}>
-        <ReviewRow />
+      {props.info.map((review)=> {
+            return(
+            <div key={review.index} className="flex flex-row justify-around">
+              <p>{review.gu}</p>
+              <ReviewRow title={review.title} score={review.score} />
+            </div>)
+          
+        })}
       </div>
     </div>
   );
 }
 
-function MyPosts() {
+function MyPosts(props) {
   return (
     <div className="flex flex-col">
       <div className="flex flex-row items-end">
@@ -164,43 +216,16 @@ function MyPosts() {
         </Link>
       </div>
       <div style={{ border: '1px solid', width: '100%', margin: '0px' }}>
-        <PostRow />
+      {props.info.map((post)=> {
+            return(
+            <div key={post.name}>
+            <PostRow title={post.title} boardLike={post.boardLike} hit={post.hit} commentCount={post.commentCount}/>
+            </div>)
+          
+        })}
       </div>
     </div>
   );
 }
 
-export default function MyPage() {
-  const user = useSelector((state) => state.user);
-  const [FrequentPlace, setFrequentPlace] = useState([]);
-  console.log(user);
 
-  useEffect(()=>{
-    if(user !== null){
-      axios.get(`/favorite/${user.userId}`).then(({data})=>{
-        setFrequentPlace(data);
-      })
-    }
-    console.log(FrequentPlace);
-  })
-
-  return (
-    <div className={st.mainContainer}>
-      <ProfileCard nickname={user.nickname} email={user.userId} dnti={user.dnti}/>
-      <div className={st.rowContainer}>
-        <div>
-          <FrequentPlace place={FrequentPlace}/>
-        </div>
-        <div>
-          <MyRegion />
-          <MyReview />
-          <MyPosts />
-        </div>
-      </div>
-      <div className="flex flex-row w-full h-3/4">
-        <div className="flex flex-col w-1/2 h-full p-5">{/* <RecommendedRegion /> */}</div>
-        <div className="flex flex-col w-1/2 h-full p-5"></div>
-      </div>
-    </div>
-  );
-}
