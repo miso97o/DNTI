@@ -15,6 +15,7 @@ export default function PostWriteComponent() {
     setPostTitle(event.target.value);
   };
   const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
   useEffect(() => {
     if (user.userId == null) {
       alert("로그인이 필요합니다.");
