@@ -8,8 +8,13 @@ import ReviewRow from '../1_molecules/ReviewRow';
 import PostRow from '../1_molecules/PostRow';
 import Tooltip from '@mui/material/Tooltip';
 import st from './MyPage.module.css';
+import {useSelector} from "react-redux";
+import {useState,useEffect} from 'react';
+import axios from 'axios';
 
-const ProfileCard = () => {
+
+
+const ProfileCard = (props) => {
   return (
     <div className={st.profileContainer}>
       <div>
@@ -17,11 +22,11 @@ const ProfileCard = () => {
       </div>
       <div className={st.colContainer}>
         <div className={st.rowContainer}>
-          <span>별명</span>
-          <span>이메일</span>
+          <span>{props.nickname}</span>
+          <span>{props.email}</span>
         </div>
         <div className={st.rowContainer}>
-          <span>dnti</span>
+          <span>{props.dnti ? props.dnti : "dnti검사를 해주세요!"}</span>
 
           <span>#해쉬태그1 #해쉬태그2</span>
         </div>
@@ -77,7 +82,9 @@ const FrequentRow = () => {
   );
 };
 
-const FrequentPlace = () => {
+const FrequentPlace = (props) => {
+  console.log("자주가는장소: ")
+  console.log(props);
   return (
     <div className={st.colContainer}>
       <div className={st.rowContainer}>
@@ -164,12 +171,25 @@ function MyPosts() {
 }
 
 export default function MyPage() {
+  const user = useSelector((state) => state.user);
+  const [FrequentPlace, setFrequentPlace] = useState([]);
+  console.log(user);
+
+  useEffect(()=>{
+    if(user !== null){
+      axios.get(`/favorite/${user.userId}`).then(({data})=>{
+        setFrequentPlace(data);
+      })
+    }
+    console.log(FrequentPlace);
+  })
+
   return (
     <div className={st.mainContainer}>
-      <ProfileCard />
+      <ProfileCard nickname={user.nickname} email={user.userId} dnti={user.dnti}/>
       <div className={st.rowContainer}>
         <div>
-          <FrequentPlace />
+          <FrequentPlace place={FrequentPlace}/>
         </div>
         <div>
           <MyRegion />
