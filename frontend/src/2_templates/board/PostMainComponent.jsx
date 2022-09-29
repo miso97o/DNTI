@@ -5,8 +5,26 @@ import PostRow from "../../1_molecules/PostRow";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
+import axios from "axios";
+import * as React from "react";
+import { useEffect } from "react";
 
 export default function FreeMainComponent() {
+
+  async function getBoard(page) {
+    await axios.get(`/board?page=${page-1}`)
+      .then((res) => {
+        console.log(res.data);
+        setBoardList(res.data.response.content);
+      })
+  }
+
+  const [boardList, setBoardList] = React.useState([]);
+
+  useEffect(() => {
+    getBoard(1)
+  },[])
+  
   return (
     <div className="flex flex-col h-full w-4/5 items-center">
       <div className="flex flex-row w-full justify-start">
@@ -23,14 +41,27 @@ export default function FreeMainComponent() {
         </div>
         <div className="flex flex-col h-full w-full items-center">
           <div className="flex flex-col h-4/5 w-full">
-            <PostRow
-              title="제목을 뭐로 할까요"
+            {boardList.map((x => {
+              return (
+                <PostRow
+                  Id={x.boardId}
+                  title={x.title}
+                  writer={x.email}
+                  date={x.createdTime.substring(0,10)}
+                  replies={x.commentCount}
+                  views={x.hit}
+                  likes={x.boardLike}
+                />
+              )
+            }))}
+            {/* <PostRow
+              title="제목을 뭐라할까"
               writer="tttkim"
               date="2022-09-05"
               replies="20"
               views="500"
               likes="333"
-            />
+            /> */}
           </div>
           <div className="flex flex-row justify-center items-center m-10">
             <TextField variant="outlined" />
@@ -38,7 +69,7 @@ export default function FreeMainComponent() {
               <SearchIcon />
             </IconButton>
           </div>
-          <Pagination count={10} variant="outlined" color="primary" />
+          <Pagination count={10} variant="outlined" color="primary" onChange={(e) => getBoard(e.target.outerText)}/>
         </div>
       </div>
     </div>

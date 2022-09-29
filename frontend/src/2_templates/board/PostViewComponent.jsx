@@ -1,14 +1,31 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button, Pagination, TextField, IconButton } from "@mui/material";
 import Reply from "../../1_molecules/post/Reply";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import axios from "axios";
+import { useEffect } from "react";
 
 export default function PostViewComponent() {
   const [value, setValue] = React.useState("이 글은 어떠셨나요?");
+  const [postDetail, setPostDetail] = React.useState({});
   const handleChange = (event) => {
     setValue(event.target.value);
   };
+  const location = useLocation();
+
+    function getDetail(boardId) {
+    axios.get(`/board/${boardId}`)
+    .then((res) => {
+      console.log(res.data);
+      setPostDetail(res.data.response);
+    })
+  }
+  
+  useEffect(() => {
+    getDetail(location.state.boardId);
+  },[])
+  
   return (
     <div className="flex flex-col w-4/5 h-full items-center m-5">
       <div className="flex flex-row w-full">
@@ -17,16 +34,18 @@ export default function PostViewComponent() {
       <div className="flex flex-row w-full justify-between m-5">
         <div className="flex flex-row w-1/2">
           <p className="w-1/4">동</p>
-          <p>제목</p>
+          <p>{postDetail.title}</p>
         </div>
         <div className="flex flex-row w-1/2 justify-between">
-          <p>작성자</p>
-          <p>작성일시</p>
-          <p>좋아요</p>
+          <p>{postDetail.email}</p>
+          {
+            postDetail.createdTime == undefined ? null : <p>{postDetail.createdTime.substring(0,10)}</p>
+          }
+          <p>{postDetail.boardLike}</p>
         </div>
       </div>
       <div className="flex flex-col h-4/5 w-full m-5">
-        <div className="flex h-4/5 m-5">본문</div>
+        <div className="flex h-4/5 m-5">{postDetail.contents}</div>
         <div className="flex flex-row justify-center">
           <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
             <FavoriteBorderIcon />
