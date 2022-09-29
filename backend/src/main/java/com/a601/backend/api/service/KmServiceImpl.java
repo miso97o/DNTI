@@ -5,6 +5,7 @@ import com.a601.backend.api.domain.entity.Km;
 import com.a601.backend.api.repository.KmRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.ArrayList;
 import java.util.List;

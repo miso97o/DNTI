@@ -12,6 +12,11 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	all {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+		exclude group: 'ch.qos.logback', module: 'logback-classic'
+		exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+	}
 }
 
 repositories {
@@ -32,15 +37,13 @@ dependencies {
 //	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.9'
 	//Log4JDBC
 //	implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
-//
-//
+
 //	//hadoop 추가가
-//	implementation group: 'org.apache.hadoop', name: 'hadoop-common', version: '3.3.4'
-//
-//	// https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-mapreduce-client-core
-//	implementation group: 'org.apache.hadoop', name: 'hadoop-mapreduce-client-core', version: '3.3.2'
-//
-//	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	implementation group: 'org.apache.hadoop', name: 'hadoop-common', version: '3.3.4'
+
+	implementation group: 'org.apache.hadoop', name: 'hadoop-mapreduce-client-core', version: '3.3.2'
+
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 }
 

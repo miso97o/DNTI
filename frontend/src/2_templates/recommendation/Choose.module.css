@@ -2,50 +2,62 @@
     font-family: 'TmoneyRoundWindRegular';
   }
   
-  .show {
-    gap: 16px 0px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .title {
-    font-size: 28px;
-    margin-left: 5px;
-    color: #333333;
-  }
-  
-  .selectedContainer {
-    padding-bottom: 10px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-  
-  
-  .selectedOptIcon {
-    width: 50px;
-    height: 50px;
-  }
+.show {
+  gap: 16px 0px;
+  display: flex;
+  flex-direction: column;
+}
 
-  .selectedOptIcon img {
-    width: 50px;
-    height: 50px;
-  }
-  
-  .selectedBlank {
-    width: 50px;
-    height: 50px;
+.title {
+  font-size: 28px;
+  margin-left: 5px;
+  color: #333333;
+}
 
-    border-radius: 50%;
-    background-color: #f0f0f0;
-  }
-  
-  .selectedUnderline {
-    background-color: #f0f0f0;
-    border: 0;
-    height: 1.3px;
-    width: 100%;
-  }
-  
-  
-  
+.selectedContainer {
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+
+.selectedOptArea {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+
+
+.selectedOptIcon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  /* align-items: flex-end; */
+}
+
+.selectedOptIcon img {
+  width: 45px;
+  height: 45px;
+  margin-top: 4px;
+}
+
+.selectedBlank {
+  width: 50px;
+  height: 50px;
+
+  border-radius: 50%;
+  background-color: #f0f0f0;
+}
+
+.selectedUnderline {
+  background-color: #f0f0f0;
+  border: 0;
+  height: 1.3px;
+  width: 100%;
+}
+
+

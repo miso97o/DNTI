@@ -29,10 +29,12 @@ public class DongServiceImpl implements DongService{
                 weight -= 0.2;                                  //가중치 낮추기
             }
             DongScore tmp = new DongScore(dong.getDong(),sum);
-            for(String gu : guList) if(dong.getGu().getGuName().equals(gu) || gu == null) {
-                rankList.add(tmp);
-                break;
-            }
+            if(guList != null){
+                for(String gu : guList) if(dong.getGu().getGuName().equals(gu)) {
+                    rankList.add(tmp);
+                    break;
+                }
+            } else rankList.add(tmp);
         }
         rankList.sort(Collections.reverseOrder());              //점수 내림차순으로 정렬 후 반환
         int len = rankList.size() > 5 ? 5 : rankList.size();
