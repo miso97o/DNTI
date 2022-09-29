@@ -39,7 +39,7 @@ export default function PostViewComponent() {
         <div className="flex flex-row w-1/2 justify-between">
           <p>{postDetail.email}</p>
           {
-            postDetail.createdTime == undefined ? null : <p>{postDetail.createdTime.substring(0,10)}</p>
+            postDetail.createdTime === undefined ? null : <p>{postDetail.createdTime.substring(0,10)}</p>
           }
           <p>{postDetail.boardLike}</p>
         </div>
