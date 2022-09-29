@@ -64,6 +64,7 @@ public class ReviewServiceImpl implements ReviewService{
                 .stream()
                 .map(review -> ReviewResponse.builder()
                         .email(review.getUser().getEmail())
+                        .id(review.getReviewId())
                         .title(review.getTitle())
                         .gu(review.getGu())
                         .content(review.getContent())
@@ -86,6 +87,7 @@ public class ReviewServiceImpl implements ReviewService{
         review.setHit(cnt+1);
         ReviewResponse reviewResponse=ReviewResponse.builder()
                 .email(review.getUser().getEmail())
+                .id(review.getReviewId())
                 .title(review.getTitle())
                 .gu(review.getUser().getGu())
                 .content(review.getContent())
