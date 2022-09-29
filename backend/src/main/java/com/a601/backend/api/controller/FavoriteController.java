@@ -48,7 +48,7 @@ public class FavoriteController {
 
     //favorite 삭제
     @ApiOperation(value = "즐겨찾기 삭제", notes="삭제")
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/{favoriteId}")
     public ApiResult deleteFavorite(@PathVariable Long favoriteId) {
         service.deleteFavorite(favoriteId);
         return new ApiResult(200, favoriteId);
