@@ -31,8 +31,11 @@ function PrimaryNavigation() {
     navigate("/", { replace: true });
   };
 
+  console.log("user.userId======================");
+  console.log(user.userId);
+
   let logInButton;
-  if (user.userId !== null) {
+  if (user.userId != null) {
     logInButton = (
       <div className="flex flex-col">
         <p className="flex flex-row w-full px-4 mb-2">{user.nickname}</p>
