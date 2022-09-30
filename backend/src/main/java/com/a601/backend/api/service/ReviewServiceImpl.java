@@ -287,6 +287,11 @@ public class ReviewServiceImpl implements ReviewService{
         }
     }
 
+    @Override
+    public boolean isReviewLike(Long reviewId, String email) {
+        return reviewLikeRepository.existsByReview_ReviewIdAndUser_Email(reviewId, email);
+    }
+
     public void reviewsaveLike(Long id,String email){
         Review review=reviewRepository.findById(id).get();
         User user=userRepository.findByEmail(email).get();

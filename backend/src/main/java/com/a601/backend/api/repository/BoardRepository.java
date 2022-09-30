@@ -27,6 +27,4 @@ public interface BoardRepository  extends JpaRepository<Board, Long> {
 
     // 내가 쓴글 상위 3개
     List<Board> findTop3ByUser_EmailContainingOrderByCreatedTimeDesc(String email);
-//    @Query("select board from Board board where board.user.email = :email limit 3")
-//    List<Board> findMyBoard(@Param("email") String email);
 }
