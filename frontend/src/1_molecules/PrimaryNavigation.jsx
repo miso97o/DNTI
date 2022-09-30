@@ -19,7 +19,7 @@ function PrimaryNavigation() {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = (dest) => {
-    console.log(dest);
+    // console.log(dest);
     setAnchorEl(null);
     return redirect(`/${dest}`);
   };
@@ -31,8 +31,6 @@ function PrimaryNavigation() {
     navigate("/", { replace: true });
   };
 
-  console.log("user.userId======================");
-  console.log(user.userId);
 
   let logInButton;
   if (user.userId != null) {
