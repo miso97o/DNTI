@@ -19,6 +19,8 @@ public interface BoardService {
    // 게시글 여러개 보기
    Page<BoardResponse> findAllByOrderByCreatedTime(Pageable pageable);
 
+   // 핫한 게시글 조회
+   List<BoardResponse> getHot3Board(String gu, String dong);
 
    // 게시글 생성
    Long writeBoard(BoardRequest board);
