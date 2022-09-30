@@ -1,6 +1,7 @@
 .page {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .title {
@@ -9,18 +10,17 @@
   color: #333333;
 }
 
-.rankingContainer {
-  margin-bottom: 20px;
-}
-
-
-
-.RankImg {
-  height: 28px;
-
-}
-
 .review {
+  display: flex;
+  flex-direction: column;
+}
+
+.titleArea {
+  display: flex;
+  justify-content: space-between;
+}
+
+.contentLine {
   display: flex;
   justify-content: space-between;
 }

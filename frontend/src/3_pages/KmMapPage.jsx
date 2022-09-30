@@ -1,7 +1,6 @@
 import React, { useEffect, useState, setState } from "react";
 import axios from "axios";
 import Choices from "../2_templates/kmMap/Choices";
-import Map from "../2_templates/kmMap/Map";
 import { coffeePositions, bikePositions, cvsPositions } from "../0_atoms/data/MarkerData";
 import BusMarker from "../0_atoms/markers/BusMarker.png";
 import BikeMarker from "../0_atoms/markers/BikeMarker.png";
@@ -153,7 +152,7 @@ function KmMap() {
       })
         .then(res => {
           setForCoors(res.data.response);
-          console.log(res.data.response, '!!!!!!!!!!즐겨찾기!@');
+          console.log(res.data.response, '!!!!!!!!!!즐겨찾기!@', options.center.La);
         })
         .catch(error => {
           console.error("실패:", error);
@@ -184,7 +183,6 @@ function KmMap() {
 
         </div>
         <div className={styles.map}>
-          {/* <Map /> */}
           <div className={styles.kakaoMap} id="kakaoMap"></div>
         </div>
       </div>

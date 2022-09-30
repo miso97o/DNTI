@@ -1,5 +1,7 @@
 /* global kakao */
-import React, { useEffect } from "react";
+import axios from "axios";
+import React from "react";
+import { useState, useEffect } from "react";
 // import cn from "classnames";
 import styles from "./Map.module.css";
 import geojson from "../../0_atoms/data/seoul_geojson";
@@ -8,12 +10,15 @@ import geojson from "../../0_atoms/data/seoul_geojson";
 
 
 
-
 function Map() {
   const { kakao } = window;
+  const [check, setCheck] = useState(true);
+
+
 
   useEffect(() => {
     let data = geojson.features;
+    // console.log(data)
     let coordinates = []; //좌표 저장 배열
     let name = ''; //행정구 이름
 
@@ -22,7 +27,6 @@ function Map() {
     const mapContainer = document.getElementById('kakaoMap'); // 지도를 표시할 div
     const mapOption = {
       center: new kakao.maps.LatLng(37.525078, 126.975702), // 지도의 중심좌표
-      
       level: 7, // 지도의 확대 레벨
     };
 
@@ -61,19 +65,14 @@ function Map() {
       kakao.maps.event.addListener(polygon, 'mouseover', function (mouseEvent) {
         polygon.setOptions({ fillColor: '#09f' });
 
-        customOverlay.setContent('<div className={styles.title}>' + name + '</div>');
-
+        // customOverlay.setContent('<div className={styles.title}>' + name + '</div>');
         // customOverlay.setPosition(mouseEvent.latLng);
-        customOverlay.setMap(map);
+        // customOverlay.setMap(map);
       });
 
-      // 다각형에 mousemove 이벤트를 등록하고 이벤트가 발생하면 커스텀 오버레이의 위치를 변경합니다
-      // kakao.maps.event.addListener(polygon, 'mousemove', function (mouseEvent) {
-      //   customOverlay.setPosition(mouseEvent.latLng);
-      // });
 
-      // 다각형에 mouseout 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 원래색으로 변경합니다
-      // 커스텀 오버레이를 지도에서 제거합니다
+
+      // 다각형에 mouseout 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 원래색으로 변경
       kakao.maps.event.addListener(polygon, 'mouseout', function () {
         polygon.setOptions({ fillColor: '#fff' });
         customOverlay.setMap(null);
@@ -113,15 +112,30 @@ function Map() {
   //   //map
   //   const map = new kakao.maps.Map(container, options);
   // }
-  
+  // useEffect(() => {
+  //   if (rank) {
+  //     for (let i = 0; 1 < rank.length; i ++){
+  //     localStorage.setItem("dongResult", rank[i])
+  //     }
+  //     setCheck(true);
+  //     console.log(rank)      
+      
+  //   }
+  // })
 
 
   return (
-    <div className={styles.page}>
-      <div className={styles.container}>
-        <div className={styles.TmpMap} id="kakaoMap"></div>
-          
+    <div>
+      {check ? (
+      <div className={styles.page}>
+        <div className={styles.container}>
+          <div className={styles.TmpMap} id="kakaoMap"></div>
+            
+        </div>
       </div>
+      ) : (
+        <div>map loading...</div>
+      )}
     </div>
   );
 }
