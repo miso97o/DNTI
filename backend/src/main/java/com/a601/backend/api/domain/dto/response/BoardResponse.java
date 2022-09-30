@@ -25,6 +25,11 @@ public class BoardResponse {
 
     private String email;
 
+    private String nickname;
+
+    private String gu;
+    private String dong;
+
     private String title;
 
     private String contents;
@@ -42,6 +47,19 @@ public class BoardResponse {
     public BoardResponse(Board entity){
         this.boardId = entity.getBoardId();
         this.email = entity.getUser().getEmail();
+        this.nickname = entity.getUser().getNickname();
+        //작성시에는 유저의 구/동, 수정및 조회시에는 저장된 구/동 가져오기
+        if(entity.getGu()==null){
+            this.gu = entity.getUser().getGu();
+        } else{
+            this.gu = entity.getGu();
+        }
+
+        if(entity.getDong()==null){
+            this.dong = entity.getUser().getDong();
+        } else{
+            this.dong = entity.getDong();
+        }
         this.title = entity.getTitle();
         this.contents = entity.getContents();
         this.hit = entity.getHit();

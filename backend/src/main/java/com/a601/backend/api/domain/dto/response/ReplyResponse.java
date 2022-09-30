@@ -16,6 +16,7 @@ public class ReplyResponse {
 
     private Long replyId;
     private String email;
+    private String nickname;
     private Long boardId;
     private String contents;
     private LocalDateTime createdTime;
@@ -24,6 +25,7 @@ public class ReplyResponse {
     public ReplyResponse(Reply entity){
         this.replyId = entity.getReplyId();
         this.email= entity.getUser().getEmail();
+        this.nickname= entity.getUser().getNickname();
         this.boardId = entity.getBoard().getBoardId();
         this.contents = entity.getContents();
         this.createdTime = entity.getCreatedTime();

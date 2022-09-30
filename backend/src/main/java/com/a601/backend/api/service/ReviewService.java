@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ReviewService {
 
-    void saveReview(ReviewRequest reviewRequest, String email);
+    void saveReview(ReviewRequest reviewRequest);
 
     void deleteReview(Long id);
 
@@ -19,12 +19,15 @@ public interface ReviewService {
     void updateReview(Long id,ReviewRequest reviewRequest);
 
 
-    List<ReviewResponse> reviewTopList();
+    List<ReviewResponse> reviewTopList(String gu, String dong);
     ReviewResponse reviewScoreGu(String gu);
 
     List<ReviewResponse> reviewRecent(Long id,String gu);
-    List<ReviewResponse> reviewSearch(String search,String word);
+    List<ReviewResponse> reviewSearch(String gu, String dong,String search,String word);
 
-    void reviewsaveLike(Long id,String email);
-    void reviewdeleteLike(Long id,Long lid);
+    //리뷰 좋아요 확인
+    boolean isReviewLike(String email, Long reviewId);
+
+    void reviewsaveLike(String email,Long reviewId);
+    void reviewdeleteLike(String email,Long reviewId);
 }

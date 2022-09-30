@@ -1,0 +1,31 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.title {
+  font-size: 28px;
+  margin-left: 5px;
+  color: #333333;
+}
+
+.review {
+  display: flex;
+  flex-direction: column;
+}
+
+.titleArea {
+  display: flex;
+  justify-content: space-between;
+}
+
+.contentLine {
+  display: flex;
+  justify-content: space-between;
+}
+
+.board {
+  display: flex;
+  justify-content: space-between;
+}

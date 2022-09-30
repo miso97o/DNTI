@@ -1,8 +1,7 @@
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import PersonIcon from "@mui/icons-material/Person";
-import { pink } from "@mui/material/colors";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -46,8 +45,8 @@ export default function PostRow({
                 <p>{hit}</p>
               </div>
               <div className="flex flex-row items-center">
-                <FavoriteIcon sx={{ color: pink[500] }} />
-                <p>{boardLike}</p>
+                <FavoriteBorderOutlinedIcon />
+                <p>{likes}</p>
               </div>
             </div>
           </div>

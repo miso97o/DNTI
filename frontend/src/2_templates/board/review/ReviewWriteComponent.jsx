@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button, Rating, TextField } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -8,54 +8,92 @@ import axios from "../../../utils/axios";
 export default function ReviewWriteComponent() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const location = useLocation();
+  const [reviewTitle, setReviewTitle] = React.useState("");
+  const handleReviewTitleChange = (event) => {
+    setReviewTitle(event.target.value);
+  };
+  const [reviewContents, setReviewContents] = React.useState("");
+  const handleReviewContentsChange = (event) => {
+    setReviewContents(event.target.value);
+  };
+  const [rentScore, setRentScore] = React.useState(0);
+  const [infraScore, setInfraScore] = React.useState(0);
+  const [envScore, setEnvScore] = React.useState(0);
+  const [safeScore, setSafeScore] = React.useState(0);
+  const [totalScore, setTotalScore] = React.useState(
+    (rentScore + infraScore + envScore + safeScore) / 4
+  );
+
   useEffect(() => {
+    console.log("location state ====================");
+    if (location.state.reviewId !== "newReview") {
+      axios
+        .get(`/review/detail/${location.state.reviewId}`)
+        .then(({ data }) => {
+          setReviewContents(data.response.content);
+          setReviewTitle(data.response.title);
+          setRentScore(data.response.rental);
+          setInfraScore(data.response.infra);
+          setEnvScore(data.response.environment);
+          setSafeScore(data.response.safety);
+          setTotalScore(data.response.score);
+        });
+    }
+  }, []);
+  const updateTotalScore = () => {
+    setTotalScore((rentScore + infraScore + envScore + safeScore) / 4);
+    console.log(`totalScore : ${totalScore}`);
+  };
+
+  let payload = {
+    content: reviewContents,
+    environment: envScore,
+    infra: infraScore,
+    rental: rentScore,
+    safety: safeScore,
+    title: reviewTitle,
+  };
+
+  const submitReview = (payload) => {
     if (user.userId == null) {
       alert("로그인이 필요합니다.");
       // 로그인되어있지 않은 경우, 로그인 화면으로 redirect
       navigate("/login", { replace: true });
     }
-  });
-
-  const [postTitle, setPostTitle] = React.useState("");
-  const handlePostTitleChange = (event) => {
-    setPostTitle(event.target.value);
-  };
-  const [postContents, setPostContents] = React.useState("");
-  const handlePostContentsChange = (event) => {
-    setPostContents(event.target.value);
-  };
-  const [rentScore, setRentScore] = React.useState(2);
-  const [infraScore, setInfraScore] = React.useState(2);
-  const [envScore, setEnvScore] = React.useState(2);
-  const [safeScore, setSafeScore] = React.useState(2);
-  const [totalScore, setTotalScore] = React.useState(
-    (rentScore + infraScore + envScore + safeScore) / 4
-  );
-
-  let payload = {
-    content: postContents,
-    environment: envScore,
-    infra: infraScore,
-    rental: rentScore,
-    safety: safeScore,
-    title: postTitle,
-  };
-
-  const submitReview = (payload) => {
+    if (payload.title === "") {
+      alert("제목을 입력해주세요.");
+      return;
+    }
     if (payload.content === "") {
-      alert("내용을 ");
+      alert("내용을 입력해주세요.");
+      return;
     }
 
-    axios
-      .post("/review/save", payload)
-      .then((data) => {
-        console.log("review post success");
-        console.log("data================");
-        console.log(data);
-      })
-      .catch(() => {
-        console.log("review post error");
-      });
+    if (location.state.reviewId === "newReview") {
+      axios
+        .post("/review/save", payload)
+        .then((data) => {
+          alert("리뷰가 작성되었습니다.");
+          navigate("/board/review", { replace: true });
+        })
+        .catch(() => {
+          console.log("review post error");
+        });
+    } else {
+      axios
+        .put(`/review/udpate/${location.state.reviewId}`, payload)
+        .then(() => {
+          alert("리뷰 수정이 완료되었습니다.");
+          navigate("/board/review/view", {
+            state: { reviewId: location.state.reviewId },
+            replace: true,
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   };
 
   return (
@@ -74,8 +112,8 @@ export default function ReviewWriteComponent() {
                   id="standard-basic"
                   label="제목"
                   variant="standard"
-                  value={postTitle}
-                  onChange={handlePostTitleChange}
+                  value={reviewTitle}
+                  onChange={handleReviewTitleChange}
                   fullWidth
                 />
               </div>
@@ -85,8 +123,8 @@ export default function ReviewWriteComponent() {
                 label="내용"
                 fullWidth
                 minRows={10}
-                value={postContents}
-                onChange={handlePostContentsChange}
+                value={reviewContents}
+                onChange={handleReviewContentsChange}
               />
             </div>
             <div className="flex flex-col items-center">
@@ -95,25 +133,53 @@ export default function ReviewWriteComponent() {
                 <Rating
                   name="total"
                   value={totalScore}
-                  precision={0.1}
+                  precision={0.25}
                   readOnly
                 />
               </div>
               <div className="flex flex-row">
                 <p>임대료</p>
-                <Rating name="total" value={rentScore} />
+                <Rating
+                  name="total"
+                  value={rentScore}
+                  onChange={(event, newValue) => {
+                    setRentScore(newValue);
+                    updateTotalScore();
+                  }}
+                />
               </div>
               <div className="flex flex-row">
                 <p>인프라</p>
-                <Rating name="total" value={infraScore} />
+                <Rating
+                  name="total"
+                  value={infraScore}
+                  onChange={(event, newValue) => {
+                    setInfraScore(newValue);
+                    updateTotalScore();
+                  }}
+                />
               </div>
               <div className="flex flex-row">
                 <p>환경</p>
-                <Rating name="total" value={envScore} />
+                <Rating
+                  name="total"
+                  value={envScore}
+                  onChange={(event, newValue) => {
+                    setEnvScore(newValue);
+                    updateTotalScore();
+                  }}
+                />
               </div>
               <div className="flex flex-row">
                 <p>안전</p>
-                <Rating name="total" value={safeScore} />
+                <Rating
+                  name="total"
+                  value={safeScore}
+                  onChange={(event, newValue) => {
+                    setSafeScore(newValue);
+                    updateTotalScore();
+                  }}
+                />
               </div>
             </div>
 

@@ -39,7 +39,7 @@ public class DntiServiceImpl implements DntiService{
 
     @Override
     public List<DntiResponse> getAllDnti() {
-        List<Dnti> list = dntiRepository.findAll();
+        List<Dnti> list = dntiRepository.findAllByOrderByCountDesc();
         List<DntiResponse> result = new ArrayList<>();
 
         double sum = 0;

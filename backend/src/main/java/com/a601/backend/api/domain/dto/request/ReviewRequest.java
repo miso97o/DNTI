@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReviewRequest {
-
+    private String email;
     private String title;
     private String content;
     private Integer rental;

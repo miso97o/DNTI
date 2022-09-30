@@ -7,18 +7,12 @@ function ReviewTag({ tagText }) {
   return <p className="mx-2">{tagText}</p>;
 }
 
-export default function ReviewRow({ title, datetime, tags, score, likes }) {
+export default function ReviewRow({ id, title, datetime, score, likes }) {
   return (
-    <Link to="/board/review/view">
-      <div className="flex flex-row w-full items-center">
-        <div className="flex flex-row w-1/3 items-stretch justify-between">
+    <Link to="/board/review/view" state={{ reviewId: id }}>
+      <div className="flex flex-row w-full justify-between items-center">
+        <div className="flex flex-row w-2/3 items-stretch justify-between">
           <p>{title}</p>
-        </div>
-        <div className="flex flex-row w-1/3 items-center">
-          {tags &&
-            tags.map((tag) => {
-              return <ReviewTag tagText={tag} key={tag} />;
-            })}
         </div>
         <div className="flex flex-row w-1/3 justify-between items-center">
           <Rating value={score} readOnly />
