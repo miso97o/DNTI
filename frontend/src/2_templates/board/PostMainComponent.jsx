@@ -10,6 +10,13 @@ import * as React from "react";
 import { useEffect } from "react";
 
 export default function FreeMainComponent() {
+  const [boardList, setBoardList] = React.useState([]);
+  const [searchKey, setSearchKey] = React.useState("");
+  const [searchCat, setSearchCat] = React.useState(0);
+
+  function handleKeyword(e) {
+    setSearchKey(e.target.value);
+  }
 
   async function getBoard(page) {
     await axios.get(`/board?page=${page-1}`)
@@ -19,7 +26,14 @@ export default function FreeMainComponent() {
       })
   }
 
-  const [boardList, setBoardList] = React.useState([]);
+  function searchBoard() {
+    console.log(searchCat)
+    axios.get(`/board/search?category=${searchCat}&keyword=${searchKey}`)
+    .then((res) => {
+      console.log(res);
+      setBoardList(res.data.response.content);
+    })
+  }
 
   useEffect(() => {
     getBoard(1)
@@ -46,7 +60,7 @@ export default function FreeMainComponent() {
                 <PostRow
                   Id={x.boardId}
                   title={x.title}
-                  writer={x.email}
+                  writer={x.nickname}
                   date={x.createdTime.substring(0,10)}
                   replies={x.commentCount}
                   views={x.hit}
@@ -56,8 +70,12 @@ export default function FreeMainComponent() {
             }))}
           </div>
           <div className="flex flex-row justify-center items-center m-10">
-            <TextField variant="outlined" />
-            <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+            <select name="검색 조건" onChange={(e) => setSearchCat(e.target.value)}>
+              <option value="0">제목</option>
+              <option value="1">내용</option>
+            </select>
+            <TextField variant="outlined" onChange={(e) => handleKeyword(e)}/>
+            <IconButton type="button" sx={{ p: "10px" }} aria-label="search" onClick={() => searchBoard()}>
               <SearchIcon />
             </IconButton>
           </div>
