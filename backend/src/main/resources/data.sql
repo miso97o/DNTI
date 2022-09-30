@@ -81,9 +81,8 @@ INSERT INTO `dnti`.`dnti` (`dnti_id`, `count`, `keyword`, `hashtag1`, `hashtag2`
 INSERT INTO `dnti`.`dnti` (`dnti_id`, `count`, `keyword`, `hashtag1`, `hashtag2`) VALUES ('NOTS', '1','우유부단한 대장부', '우유부단','용감');
 
 
---더미 자유게시판 데이터
-INTO `dnti`.`board` (`created_time`, `contents`, `title`, `user_id`) VALUES ('2022-07-25 12:30:22.232051', '밥 먹고 싶어', '호랑이선생님', 'skj@gmail.com');
-
+--더미 보드 데이터
+INSERT INTO `board` VALUES (1,'2022-07-21 09:30:22.232051',NULL,0,'피카츄는 꼬리가 길어','역삼동','강남구',0,'피카츄는전기쥐','yth@gmail.com'),(2,'2022-07-20 09:30:22.232051',NULL,0,'피카츄빵은 맛 없음','신사동','관악구',0,'가라 피카츄!','yth@gmail.com'),(3,'2022-07-23 09:30:22.232051',NULL,0,'파이리는 피카츄를 싫어해','신림동','관악구',0,'피카츄라이츄','yth@gmail.com'),(4,'2022-07-16 09:30:22.232051',NULL,0,'잠만보는잠자','역삼동','강남구',0,'파이리와파이참','yth@gmail.com'),(5,'2022-07-18 09:30:22.232051',NULL,0,'신림동꼬렛','신림동','관악구',0,'깨비드릴조','yth@gmail.com'),(6,'2022-07-25 09:30:22.232051',NULL,0,'사내 식당 밥 맛있어용','신대방동','동작구',0,'멀티캠퍼스시','skj@gmail.com'),(7,'2022-07-25 10:30:22.232051',NULL,0,'사내 식당 밥 맛없는데요?','청운동','종로구',0,'패스트캠퍼스','skj@gmail.com'),(8,'2022-07-25 12:30:22.232051',NULL,0,'밥 먹고 싶어','신교동','종로구',0,'호랑이선생님','skj@gmail.com');
 
 --더비 댓글 데이터
 INSERT INTO `dnti`.`reply` (`created_time`, `modified_time`, `contents`, `board_id`, `user_id`) VALUES ('2022-09-21 06:38:53.281000', '2022-09-21 06:38:53.281000', '댓글을 달아봐', '1', 'yth@gmail.com');

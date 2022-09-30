@@ -207,9 +207,9 @@ public class ReviewServiceImpl implements ReviewService{
         }
     }
 
-    public List<ReviewResponse>reviewSearch(String search,String word){
+    public List<ReviewResponse>reviewSearch(String gu, String dong,String search,String word){
         if(search.equals("title")){
-            List<ReviewResponse>reviewList=reviewRepository.findAllByTitleContainingOrderByCreatedTimeDesc(word)
+            List<ReviewResponse>reviewList=reviewRepository.findByGuContainingAndDongContainingAndTitleContaining(gu, dong, word)
                     .stream()
                     .map(review -> ReviewResponse.builder()
                             .email(review.getUser().getEmail())
@@ -228,7 +228,7 @@ public class ReviewServiceImpl implements ReviewService{
                             .build()).collect(Collectors.toList());
             return reviewList;
         }else if(search.equals("content")){
-            List<ReviewResponse>reviewList=reviewRepository.findAllByContentContainingOrderByCreatedTimeDesc(word)
+            List<ReviewResponse>reviewList=reviewRepository.findByGuContainingAndDongContainingAndContentContaining(gu, dong,word)
                     .stream()
                     .map(review -> ReviewResponse.builder()
                             .email(review.getUser().getEmail())
@@ -246,27 +246,8 @@ public class ReviewServiceImpl implements ReviewService{
                             .safety(review.getSafety())
                             .build()).collect(Collectors.toList());
             return reviewList;
-        }else if(search.equals("dong")){
-            List<ReviewResponse>reviewList=reviewRepository.findAllByDongContainingOrderByCreatedTimeDesc(word)
-                    .stream()
-                    .map(review -> ReviewResponse.builder()
-                            .email(review.getUser().getEmail())
-                            .nickname(review.getUser().getNickname())
-                            .title(review.getTitle())
-                            .gu(review.getGu())
-                            .dong(review.getDong())
-                            .content(review.getContent())
-                            .score(review.getScore())
-                            .hit(review.getHit())
-                            .reviewLike(review.getReviewLikeList().size())
-                            .rental(review.getRental())
-                            .environment(review.getEnvironment())
-                            .infra(review.getInfra())
-                            .safety(review.getSafety())
-                            .build()).collect(Collectors.toList());
-            return reviewList;
-        } else{ //id
-            List<ReviewResponse>reviewList=reviewRepository.findAllUserReview(word)
+        }else if(search.equals("id")){
+            List<ReviewResponse>reviewList=reviewRepository.findByGuContainingAndDongContainingAndUser_EmailContaining(gu, dong,word)
                     .stream()
                     .map(review -> ReviewResponse.builder()
                             .email(review.getUser().getEmail())
@@ -285,6 +266,7 @@ public class ReviewServiceImpl implements ReviewService{
                             .build()).collect(Collectors.toList());
             return reviewList;
         }
+        return null;
     }
 
     @Override
