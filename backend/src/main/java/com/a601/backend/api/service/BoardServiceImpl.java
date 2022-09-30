@@ -99,6 +99,12 @@ public class BoardServiceImpl implements BoardService {
         throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
     }
 
+    // 해당 게시물 좋아요 늘렀는지 여부
+    @Override
+    public boolean isBoardLike(Long boardId, String email) {
+        return boardLikeRepository.existsByBoard_BoardIdAndUser_Email(boardId, email);
+    }
+
     @Override
     @Transactional
     public void addBoardLike(BoardLikeRequest boardLikeRequest) {

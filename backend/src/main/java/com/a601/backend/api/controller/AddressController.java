@@ -30,7 +30,7 @@ public class AddressController {
     }
 
     //구에 따른 동조회
-    @ApiOperation(value = "동 조회", notes = "구에 해당하는 조회")
+    @ApiOperation(value = "동 조회", notes = "구에 해당하는 동ㄴ조회")
     @GetMapping("/dong/{gu}")
     public ApiResult getDong(@PathVariable String gu){
         return new ApiResult(200, service.getDong(gu));

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
-@Api(value = "동네게시판 API")
+@Api(value = "자유게시판 API", tags = {"자유게시판"})
 @RequestMapping("/board")
 @AllArgsConstructor
 public class BoardController {
@@ -87,6 +87,12 @@ public class BoardController {
     public ApiResult increaseHit(@PathVariable("boardId") Long boardId) {
         boardService.updateHit(boardId);
         return new ApiResult(200, boardId);
+    }
+
+    @ApiOperation(value = "게시물 좋아요 눌렀는지 여부", notes = "해당 아이디가 해당 게시물 좋아요를 눌렀는지 여부(눌렀으면 true, 아니면 false)")
+    @GetMapping("/like")
+    public ApiResult isBoardLike(@RequestParam Long boardId, @RequestParam  String email) {
+        return new ApiResult(200, boardService.isBoardLike(boardId, email));
     }
 
     @ApiOperation(value = "좋아요 등록", notes = "성공하면 업데이트 된 게시글 id리턴")

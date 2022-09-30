@@ -96,6 +96,12 @@ public class ReviewController {
         return new ApiResult<>(200,reviewResponseList);
     }
 
+    @ApiOperation(value = "리뷰 좋아요 눌렀는지 여부", notes = "해당 아이디가 해당 리뷰 좋아요를 눌렀는지 여부(눌렀으면 true, 아니면 false)")
+    @GetMapping("/reviewlike")
+    public ApiResult isReviewLike(@RequestParam Long reviewId, @RequestParam  String email) {
+        return new ApiResult(200, reviewService.isReviewLike(reviewId, email));
+    }
+
     @ApiOperation(value = " 좋아요 추가 기능 ")
     @GetMapping("/reviewlike/save")
     public ApiResult<?>reviewsaveLike(@RequestParam("id") Long id){
