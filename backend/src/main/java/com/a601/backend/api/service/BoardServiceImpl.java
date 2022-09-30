@@ -48,8 +48,6 @@ public class BoardServiceImpl implements BoardService {
         return boardRepository.findAllByOrderByCreatedTimeDesc(pageable).map(BoardResponse::new);
     }
 
-
-
     @Override
     public Long writeBoard(BoardRequest request) {
         User user = userRepository.getReferenceById(request.getEmail());

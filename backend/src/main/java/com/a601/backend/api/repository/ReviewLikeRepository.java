@@ -5,5 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReviewLikeRepository extends JpaRepository<ReviewLike,Long> {
     //내가 좋아요 누른 글인지 여부
-    Boolean existsByReview_ReviewIdAndUser_Email(Long reviewId, String email);
+    Boolean existsByUser_EmailAndReview_ReviewId(String email, Long reviewId);
+
+
+    //좋아요 삭제
+    void deleteByUser_EmailAndReview_ReviewId(String email,Long reviewId);
 }
