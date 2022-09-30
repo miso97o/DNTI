@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Outlet, Link } from "react-router-dom";
 import { Button, Rating } from "@mui/material";
+import axios from "axios";
+import { useEffect } from "react";
 
 function GuCard({ totalScore, rentScore, infraScore, envScore, safeScore }) {
   return (
@@ -44,6 +46,15 @@ export default function ReviewMain() {
   const [infraScore, setInfraScore] = React.useState(2);
   const [envScore, setEnvScore] = React.useState(2);
   const [safeScore, setSafeScore] = React.useState(2);
+  useEffect(() => {
+    axios.get(`/review/score/강남구`).then(({ data }) => {
+      setTotalScore(data.response.score);
+      setRentScore(data.response.rental);
+      setInfraScore(data.response.infra);
+      setEnvScore(data.response.environment);
+      setSafeScore(data.response.safty);
+    });
+  }, []);
   return (
     <div className="flex flex-col h-full w-4/5 items-center">
       <div className="flex flex-row w-full justify-start">
@@ -53,7 +64,7 @@ export default function ReviewMain() {
       </div>
       <div className="flex flex-row w-full justify-between items-center">
         <p>리뷰 게시판</p>
-        <Link to="/board/review/write">
+        <Link to="/board/review/write" state={{ reviewId: "newReview" }}>
           <Button>글쓰기</Button>
         </Link>
       </div>
