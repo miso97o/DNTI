@@ -19,7 +19,9 @@ public class ReviewResponse {
 
     private String title;
     private String email;
+    private String nickname;
     private String gu;
+    private String dong;
     private String content;
     private Double score;
     private Integer reviewLike;
@@ -30,12 +32,14 @@ public class ReviewResponse {
     private Integer safety;
 
     @Builder
-    private ReviewResponse(String gu,Double score,Integer rental,Integer infra,Integer environment,Integer safety){
+    private ReviewResponse(String gu,String dong,Double score,Integer rental,Integer infra,Integer environment,Integer safety,String nickname){
         this.gu=gu;
+        this.dong=dong;
         this.score=score;
         this.rental=rental;
         this.infra=infra;
         this.environment=environment;
         this.safety=safety;
+        this.nickname = nickname;
     }
 }

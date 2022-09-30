@@ -21,6 +21,8 @@ public interface ReviewRepository extends JpaRepository<Review,Long> {
 
     List<Review>findAllByTitleContainingOrderByCreatedTimeDesc(String title);
     List<Review>findAllByContentContainingOrderByCreatedTimeDesc(String content);
+    List<Review>findAllByDongContainingOrderByCreatedTimeDesc(String content);
+
     @Query("select r from Review r where r.user.email = :email order by r.createdTime Desc")
     List<Review>findAllUserReview(@Param("email") String email);
 
