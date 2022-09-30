@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ReviewService {
 
-    void saveReview(ReviewRequest reviewRequest, String email);
+    void saveReview(ReviewRequest reviewRequest);
 
     void deleteReview(Long id);
 

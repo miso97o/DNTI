@@ -24,7 +24,10 @@ public class DongServiceImpl implements DongService{
         for(Dong dong : dongList) {
             double weight = 2.0;                                //가중치
             double sum = 0;                                     //점수 합
-            for(int p : priorities) {                           //우선순위 순으로 조회
+            if(priorities.isEmpty()) {
+                for(int i=1; i<7; ++i) sum += getScore(i,dong);
+            }
+            else for(int p : priorities) {                           //우선순위 순으로 조회
                 sum += getScore(p,dong)*weight;                 //해당하는 점수에 가중치 곱함
                 weight -= 0.2;                                  //가중치 낮추기
             }

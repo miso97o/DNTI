@@ -25,6 +25,9 @@ public class Review extends BaseEntity{
     @Column(length = 10)
     private String gu;
 
+    @Column(length = 10)
+    private String dong;
+
     @Column(length = 30)
     private String title;
 
@@ -51,9 +54,6 @@ public class Review extends BaseEntity{
 
     @Column(nullable = true)
     private Integer safety;
-
-    
-
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     private List<ReviewLike>reviewLikeList=new ArrayList<>();

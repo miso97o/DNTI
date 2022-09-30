@@ -44,6 +44,9 @@ public class Board extends BaseEntity{
     @OneToMany(mappedBy = "board",cascade = CascadeType.ALL)
     private List<BoardLike>boardLikeList=new ArrayList<>();
 
+    @Column(length = 10)
+    private String dong;
+
 
     public void modify(String title, String contents){
         this.title = title;
