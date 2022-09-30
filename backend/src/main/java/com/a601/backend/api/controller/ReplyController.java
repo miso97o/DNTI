@@ -36,7 +36,7 @@ public class ReplyController {
     // 댓글 수정
     @ApiOperation(value = "댓글 수정", notes = "댓글 내용 수정")
     @PatchMapping("/{replyId}")
-    public ApiResult modifyReply(@PathVariable("replyId") Long replyId, ReplyRequest.Modify request) {
+    public ApiResult modifyReply(@PathVariable("replyId") Long replyId, @RequestBody ReplyRequest.Modify request) {
         replyService.modifyReply(replyId, request);
         return new ApiResult(200, replyId);
     }

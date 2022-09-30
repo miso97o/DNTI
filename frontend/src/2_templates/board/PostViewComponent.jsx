@@ -1,7 +1,8 @@
 import * as React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button, Pagination, TextField, IconButton } from "@mui/material";
 import Reply from "../../1_molecules/post/Reply";
+import { pink } from "@mui/material/colors";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import axios from "axios";
@@ -16,6 +17,7 @@ export default function PostViewComponent() {
   const handleChange = (event) => {
     setValue(event.target.value);
   };
+  const navigate = useNavigate();
   const location = useLocation();
   const boardId = location.state.boardId;
   const user = useSelector((state) => state.user);
@@ -26,6 +28,16 @@ export default function PostViewComponent() {
       console.log(res.data);
       setPostDetail(res.data.response);
     })
+  }
+  function deletePost() {
+    if(window.confirm("게시글을 삭제하시겠습니까?")){
+      axios.delete(`/board/${boardId}`)
+      .then((res) => {
+        console.log(res.data);
+        navigate("/board/post")
+        alert("게시글이 삭제되었습니다!")
+      })
+    }
   }
   function getReply(page) {
     console.log('boardId', boardId)
@@ -43,6 +55,7 @@ export default function PostViewComponent() {
     })
     .then((res) => {
       console.log('write', res.data);
+      setValue("")
       getReply(1);
     })
   }
@@ -66,28 +79,40 @@ export default function PostViewComponent() {
       </div>
       <div className="flex flex-row w-full justify-between m-5">
         <div className="flex flex-row w-1/2">
-          <p className="w-1/4">동</p>
+          <p className="w-1/4">{postDetail.dong}</p>
           <p>{postDetail.title}</p>
         </div>
         <div className="flex flex-row w-1/2 justify-between">
-          <p>{postDetail.email}</p>
+          <p>{postDetail.nickname}</p>
           {
             postDetail.createdTime === undefined ? null : <p>{postDetail.createdTime.substring(0,10)}</p>
           }
-          <p>{postDetail.boardLike}</p>
+          <div className="flex flex-row">
+            <FavoriteIcon sx={{ color: pink[500] }} />
+            <p>{postDetail.boardLike}</p>
+          </div>
         </div>
       </div>
       <div className="flex flex-col h-4/5 w-full m-5">
         <div className="flex h-4/5 m-5">{postDetail.contents}</div>
         <div className="flex flex-row justify-center">
           <IconButton type="button" sx={{ p: "10px" }} aria-label="search" onClick={() => {clickLike()}}>
-            {like ? <FavoriteIcon/> : <FavoriteBorderIcon /> }
+            {like ? <FavoriteIcon sx={{color: pink[500]}}/> : <FavoriteBorderIcon /> }
           </IconButton>
         </div>
         <div className="flex flex-row justify-center items-center m-5">
-          <Link to="/board/postwrite">
-            <Button>수정</Button>
-          </Link>
+          {
+          user.userId === postDetail.email && 
+            <Link to="/board/postwrite" state={{boardId: boardId}}>
+              <Button>수정</Button>
+            </Link>
+          }
+          {
+          user.userId === postDetail.email && 
+            <Link>
+              <Button style={{color: 'red'}} onClick={() => deletePost()}>삭제</Button>
+            </Link>
+          }
           <Link to="/board/post">
             <Button>목록</Button>
           </Link>
@@ -117,9 +142,12 @@ export default function PostViewComponent() {
           {replies && replies.map((x => {
               return (
                 <Reply
-                  nickname={x.email}
+                  Id={x.replyId}
+                  nickname={x.nickname}
                   datetime={x.createdTime.substring(0,10)}
                   contents={x.contents}
+                  mine={x.email === user.userId}
+                  getReply={getReply}
                 />
               )
             }))}
