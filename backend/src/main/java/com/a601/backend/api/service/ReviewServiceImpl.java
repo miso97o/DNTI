@@ -5,6 +5,8 @@ import com.a601.backend.api.domain.dto.response.ReviewResponse;
 import com.a601.backend.api.domain.entity.Review;
 import com.a601.backend.api.domain.entity.ReviewLike;
 import com.a601.backend.api.domain.entity.User;
+import com.a601.backend.api.domain.enums.ErrorCode;
+import com.a601.backend.api.exception.CustomException;
 import com.a601.backend.api.repository.ReviewLikeRepository;
 import com.a601.backend.api.repository.ReviewRepository;
 import com.a601.backend.api.repository.UserRepository;
@@ -34,13 +36,14 @@ public class ReviewServiceImpl implements ReviewService{
     private ReviewLikeRepository reviewLikeRepository;
 
     @Override
-    public void saveReview(ReviewRequest reviewRequest, String email) {
-        User user=userRepository.findByEmail(email).get();
+    public void saveReview(ReviewRequest reviewRequest) {
+        User user=userRepository.findByEmail(reviewRequest.getEmail()).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
         int total=reviewRequest.getEnvironment()+reviewRequest.getRental()+reviewRequest.getInfra()+reviewRequest.getSafety();
         Review review= Review.builder()
                 .user(user)
                 .title(reviewRequest.getTitle())
                 .gu(user.getGu())
+                .dong(user.getDong())
                 .content(reviewRequest.getContent())
                 .score(total/4.0)
                 .hit(0)
@@ -64,9 +67,11 @@ public class ReviewServiceImpl implements ReviewService{
                 .stream()
                 .map(review -> ReviewResponse.builder()
                         .email(review.getUser().getEmail())
+                        .nickname(review.getUser().getNickname())
                         .id(review.getReviewId())
                         .title(review.getTitle())
                         .gu(review.getGu())
+                        .dong(review.getDong())
                         .content(review.getContent())
                         .score(review.getScore())
                         .hit(review.getHit())
@@ -87,9 +92,11 @@ public class ReviewServiceImpl implements ReviewService{
         review.setHit(cnt+1);
         ReviewResponse reviewResponse=ReviewResponse.builder()
                 .email(review.getUser().getEmail())
+                .nickname(review.getUser().getNickname())
                 .id(review.getReviewId())
                 .title(review.getTitle())
-                .gu(review.getUser().getGu())
+                .gu(review.getGu())
+                .dong(review.getDong())
                 .content(review.getContent())
                 .hit(review.getHit())
                 .score(review.getScore())
@@ -115,8 +122,10 @@ public class ReviewServiceImpl implements ReviewService{
                 .stream()
                 .map(review -> ReviewResponse.builder()
                         .email(review.getUser().getEmail())
+                        .nickname(review.getUser().getNickname())
                         .title(review.getTitle())
                         .gu(review.getGu())
+                        .dong(review.getDong())
                         .content(review.getContent())
                         .score(review.getScore())
                         .hit(review.getHit())
@@ -162,8 +171,10 @@ public class ReviewServiceImpl implements ReviewService{
                     .stream()
                     .map(review -> ReviewResponse.builder()
                             .email(review.getUser().getEmail())
+                            .nickname(review.getUser().getNickname())
                             .title(review.getTitle())
                             .gu(review.getGu())
+                            .dong(review.getDong())
                             .content(review.getContent())
                             .score(review.getScore())
                             .hit(review.getHit())
@@ -180,7 +191,9 @@ public class ReviewServiceImpl implements ReviewService{
                     .map(review -> ReviewResponse.builder()
                             .email(review.getUser().getEmail())
                             .title(review.getTitle())
+                            .nickname(review.getUser().getNickname())
                             .gu(review.getGu())
+                            .dong(review.getDong())
                             .content(review.getContent())
                             .score(review.getScore())
                             .hit(review.getHit())
@@ -200,8 +213,10 @@ public class ReviewServiceImpl implements ReviewService{
                     .stream()
                     .map(review -> ReviewResponse.builder()
                             .email(review.getUser().getEmail())
+                            .nickname(review.getUser().getNickname())
                             .title(review.getTitle())
                             .gu(review.getGu())
+                            .dong(review.getDong())
                             .content(review.getContent())
                             .score(review.getScore())
                             .hit(review.getHit())
@@ -217,8 +232,10 @@ public class ReviewServiceImpl implements ReviewService{
                     .stream()
                     .map(review -> ReviewResponse.builder()
                             .email(review.getUser().getEmail())
+                            .nickname(review.getUser().getNickname())
                             .title(review.getTitle())
                             .gu(review.getGu())
+                            .dong(review.getDong())
                             .content(review.getContent())
                             .score(review.getScore())
                             .hit(review.getHit())
@@ -229,13 +246,34 @@ public class ReviewServiceImpl implements ReviewService{
                             .safety(review.getSafety())
                             .build()).collect(Collectors.toList());
             return reviewList;
-        }else{
+        }else if(search.equals("dong")){
+            List<ReviewResponse>reviewList=reviewRepository.findAllByDongContainingOrderByCreatedTimeDesc(word)
+                    .stream()
+                    .map(review -> ReviewResponse.builder()
+                            .email(review.getUser().getEmail())
+                            .nickname(review.getUser().getNickname())
+                            .title(review.getTitle())
+                            .gu(review.getGu())
+                            .dong(review.getDong())
+                            .content(review.getContent())
+                            .score(review.getScore())
+                            .hit(review.getHit())
+                            .reviewLike(review.getReviewLikeList().size())
+                            .rental(review.getRental())
+                            .environment(review.getEnvironment())
+                            .infra(review.getInfra())
+                            .safety(review.getSafety())
+                            .build()).collect(Collectors.toList());
+            return reviewList;
+        } else{ //id
             List<ReviewResponse>reviewList=reviewRepository.findAllUserReview(word)
                     .stream()
                     .map(review -> ReviewResponse.builder()
                             .email(review.getUser().getEmail())
+                            .nickname(review.getUser().getNickname())
                             .title(review.getTitle())
                             .gu(review.getGu())
+                            .dong(review.getDong())
                             .content(review.getContent())
                             .score(review.getScore())
                             .hit(review.getHit())

@@ -3,6 +3,8 @@ package com.a601.backend.api.controller;
 import com.a601.backend.api.domain.dto.common.ApiResult;
 import com.a601.backend.api.domain.dto.request.ReviewRequest;
 import com.a601.backend.api.domain.dto.response.ReviewResponse;
+import com.a601.backend.api.domain.enums.ErrorCode;
+import com.a601.backend.api.exception.CustomException;
 import com.a601.backend.api.service.ReviewService;
 import com.a601.backend.api.service.ReviewServiceImpl;
 import io.swagger.annotations.Api;
@@ -28,9 +30,7 @@ public class ReviewController {
     @ApiOperation(value = "리뷰 게시글 저장")
     @PostMapping("/save")
     public ApiResult saveReview(@RequestBody ReviewRequest reviewRequest){
-        //유저 로그인 했는지 여부 파악
-        String email="skj@gmail.com";
-        reviewService.saveReview(reviewRequest,email);
+        reviewService.saveReview(reviewRequest);
         return new ApiResult<>(200,"SaveReview");
     }
 
@@ -110,7 +110,4 @@ public class ReviewController {
         reviewService.reviewdeleteLike(id,lid);
         return new ApiResult<>(200,"review_like");
     }
-
-
-
 }
