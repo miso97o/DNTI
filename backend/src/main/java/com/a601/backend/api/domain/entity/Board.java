@@ -45,6 +45,9 @@ public class Board extends BaseEntity{
     private List<BoardLike>boardLikeList=new ArrayList<>();
 
     @Column(length = 10)
+    private String gu;
+
+    @Column(length = 10)
     private String dong;
 
 

@@ -33,7 +33,7 @@ public interface BoardService {
    void updateHit(Long boardId);
 
    // 게시글 키워드로 검색하기
-   Page<BoardResponse> searchBoard(Long category, String keyword, Pageable pageable);
+   Page<BoardResponse> searchBoard(String gu, String dong, Long category, String keyword, Pageable pageable);
 
    // 좋아요 여부
    boolean isBoardLike(Long boardId, String email);

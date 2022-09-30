@@ -51,10 +51,16 @@ public class BoardController {
     }
 
     // 키워드로 게시글 조회
-    @ApiOperation(value = "제목(0), 내용(1), 아이디(2)로 게시글 조회", notes = "검색어를 포함한 제목(0)/내용(1)/아이디(2)을 가진 게시글 조회(최신순)")
+    @ApiOperation(value = "제목(0), 내용(1), 아이디(2)로 게시글 조회 +구, 동 필터", notes = "검색어를 포함한 제목(0)/내용(1)/아이디(2)을 가진 게시글 조회(최신순) +구, 동(검색어 및 구, 동은 보내지 않을 시 자동으로 전체검색)")
     @GetMapping("/search")
-    public ApiResult selectBoardListByKeyword(@RequestParam Long category, @RequestParam String keyword, Pageable pageable) {
-        return new ApiResult(200, boardService.searchBoard(category, keyword, pageable));
+    public ApiResult selectBoardListByKeyword(@RequestParam(required = false) String gu, @RequestParam(required = false) String dong, @RequestParam Long category, @RequestParam(required = false) String keyword, Pageable pageable) {
+        //구, 동 필터(없으면 전체검색)
+        if(gu==null) gu ="";
+        if(dong==null) dong="";
+
+        //키워드 없으면 전체 검색
+        if(keyword==null) keyword="";
+        return new ApiResult(200, boardService.searchBoard(gu, dong, category, keyword, pageable));
     }
 
     // 내가 쓴 게시글 조회
