@@ -96,7 +96,7 @@ public class ReviewController {
     }
 
 
-    @ApiOperation(value = " 구 최신 순(0) 조회수(1)")
+    @ApiOperation(value = " 구 최신 순(0) 조회수(1) ??")
     @GetMapping("/recent")
     public ApiResult<List<ReviewResponse>>reviewRecent(@RequestParam("id") Long id,@RequestParam("gu") String gu){
         List<ReviewResponse>reviewResponseList=reviewService.reviewRecent(id,gu);
@@ -105,22 +105,31 @@ public class ReviewController {
 
     @ApiOperation(value = "리뷰 좋아요 눌렀는지 여부", notes = "해당 아이디가 해당 리뷰 좋아요를 눌렀는지 여부(눌렀으면 true, 아니면 false)")
     @GetMapping("/reviewlike")
-    public ApiResult isReviewLike(@RequestParam Long reviewId, @RequestParam  String email) {
-        return new ApiResult(200, reviewService.isReviewLike(reviewId, email));
+    public ApiResult isReviewLike(@RequestParam  String email, @RequestParam Long reviewId) {
+        return new ApiResult(200, reviewService.isReviewLike(email, reviewId));
     }
 
-    @ApiOperation(value = " 좋아요 추가 기능 ")
+    @ApiOperation(value = " 좋아요 추가 기능", notes = "유저 아이디와 해당 게시물 아이디로 좋아요 추가")
     @GetMapping("/reviewlike/save")
-    public ApiResult<?>reviewsaveLike(@RequestParam("id") Long id){
-        String email="hjw@gmail.com";
-        reviewService.reviewsaveLike(id,email);
+    public ApiResult<?>reviewsaveLike(@RequestParam String email,@RequestParam Long reviewId){
+        //좋아요 이미 했으면 오류
+        if(reviewService.isReviewLike(email,reviewId)){
+            throw new CustomException(ErrorCode.METHOD_NOT_ALLOWED);
+        }
+
+        reviewService.reviewsaveLike(email, reviewId);
         return new ApiResult<>(200,"review_like");
     }
 
-    @ApiOperation(value = " 좋아요 삭제 기능 ")
+    @ApiOperation(value = " 좋아요 삭제 기능 ", notes = "유저 아이디와 해당 게시물 아이디로 찾아서 좋아요 삭제")
     @DeleteMapping("/reviewlike/delete")
-    public ApiResult<?>reviewdeleteLike(@RequestParam("id") Long id,@RequestParam("lid") Long lid){
-        reviewService.reviewdeleteLike(id,lid);
+    public ApiResult<?>reviewdeleteLike(@RequestParam String email,@RequestParam Long reviewId){
+        //좋아요 없으면 오류
+        if(!reviewService.isReviewLike(email,reviewId)){
+            throw new CustomException(ErrorCode.METHOD_NOT_ALLOWED);
+        }
+
+        reviewService.reviewdeleteLike(email,reviewId);
         return new ApiResult<>(200,"review_like");
     }
 }

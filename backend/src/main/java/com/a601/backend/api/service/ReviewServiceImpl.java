@@ -140,6 +140,11 @@ public class ReviewServiceImpl implements ReviewService{
 
     public ReviewResponse reviewScoreGu(String gu){
         List<Review>reviewList=reviewRepository.findAllByGuOrderByCreatedTimeDesc(gu);
+
+        if(reviewList.size()==0){
+            return null;
+        }
+
         int len=reviewList.size();
         int en=0; //환경
         int sa=0; //안전
@@ -270,28 +275,29 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public boolean isReviewLike(Long reviewId, String email) {
-        return reviewLikeRepository.existsByReview_ReviewIdAndUser_Email(reviewId, email);
+    public boolean isReviewLike(String email, Long reviewId) {
+        return reviewLikeRepository.existsByUser_EmailAndReview_ReviewId(email,reviewId);
     }
 
-    public void reviewsaveLike(Long id,String email){
-        Review review=reviewRepository.findById(id).get();
+    public void reviewsaveLike(String email,Long reviewId){
+        Review review=reviewRepository.findById(reviewId).get();
+
         User user=userRepository.findByEmail(email).get();
+
         ReviewLike reviewLike=ReviewLike.builder()
                 .user(user)
                 .review(review)
                 .build();
         reviewLikeRepository.save(reviewLike);
+        
+        //좋아요 개수 업데이트
         review.setReviewLike(review.getReviewLikeList().size());
         reviewRepository.save(review);
     }
 
     @Override
-    public void reviewdeleteLike(Long id,Long lid) {
-        reviewLikeRepository.deleteById(lid);
-//        Review review=reviewRepository.findById(id).get();
-//        review.setReviewLike(review.getReviewLikeList().size());
-//        reviewRepository.save(review);
+    public void reviewdeleteLike(String email,Long reviewId) {
+        reviewLikeRepository.deleteByUser_EmailAndReview_ReviewId(email,reviewId);
     }
 
 }

@@ -29,7 +29,6 @@ public interface ReviewRepository extends JpaRepository<Review,Long> {
     //아이디 검색
     List<Review>findByGuContainingAndDongContainingAndUser_EmailContaining(String gu, String dong,String id);
 
-
     @Query("select r from Review r where r.user.email = :email order by r.createdTime Desc")
     List<Review>findAllUserReview(@Param("email") String email);
 

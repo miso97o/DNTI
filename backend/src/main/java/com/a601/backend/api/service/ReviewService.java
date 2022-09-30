@@ -26,8 +26,8 @@ public interface ReviewService {
     List<ReviewResponse> reviewSearch(String gu, String dong,String search,String word);
 
     //리뷰 좋아요 확인
-    boolean isReviewLike(Long reviewId, String email);
+    boolean isReviewLike(String email, Long reviewId);
 
-    void reviewsaveLike(Long reviewLikeId,String email);
-    void reviewdeleteLike(Long id,Long lid);
+    void reviewsaveLike(String email,Long reviewId);
+    void reviewdeleteLike(String email,Long reviewId);
 }
