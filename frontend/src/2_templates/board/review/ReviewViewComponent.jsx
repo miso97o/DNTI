@@ -10,12 +10,12 @@ import { useSelector } from "react-redux";
 
 export default function ReviewViewComponent() {
   const [reviewContents, setReviewContents] = React.useState("");
+  const [isLike, setIsLike] = React.useState(false);
   const [totalScore, setTotalScore] = React.useState(0);
   const [rentScore, setRentScore] = React.useState(0);
   const [infraScore, setInfraScore] = React.useState(0);
   const [envScore, setEnvScore] = React.useState(0);
   const [safeScore, setSafeScore] = React.useState(0);
-  const [like, setLike] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const user = useSelector((state) => state.user);
@@ -48,14 +48,26 @@ export default function ReviewViewComponent() {
   }
 
   function clickLike() {
-    axios
-      .get(`/review/reviewlike/save`)
-      .then(() => {
-        console.log("좋아요 등록 성공");
-      })
-      .catch(() => {
-        console.log("좋아요 등록 실패");
-      });
+    if (!isLike) {
+      axios
+        .get(`/review/reviewlike/save?id=${location.state.reviewId}`)
+        .then(() => {
+          console.log("좋아요 등록 성공");
+        })
+        .catch(() => {
+          console.log("좋아요 등록 실패");
+        });
+    } else {
+      axios
+        .get(`/review/reviewlike/delete?id=${location.state.reviewId}`)
+        .then(() => {
+          console.log("좋아요 취소 성공");
+        })
+        .catch(() => {
+          console.log("좋아요 취소 실패");
+        });
+    }
+    setIsLike(!isLike);
   }
 
   let reviewControlPanel;
@@ -96,7 +108,7 @@ export default function ReviewViewComponent() {
       <div className="flex flex-col h-full">
         <div className="flex flex-row justify-between">
           <div className="flex flex-row w-1/2">
-            <p className="w-1/4">동</p>
+            <p className="w-1/4">{reviewContents.dong}</p>
             <p className="">{reviewContents.title}</p>
           </div>
           <div className="flex flex-row w-1/2 justify-between">
@@ -143,7 +155,7 @@ export default function ReviewViewComponent() {
               clickLike();
             }}
           >
-            {like ? (
+            {isLike ? (
               <FavoriteIcon sx={{ color: pink[500] }} />
             ) : (
               <FavoriteBorderIcon sx={{ color: pink[500] }} />

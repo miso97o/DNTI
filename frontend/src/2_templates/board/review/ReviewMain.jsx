@@ -3,13 +3,21 @@ import { Outlet, Link } from "react-router-dom";
 import { Button, Rating } from "@mui/material";
 import axios from "axios";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
-function GuCard({ totalScore, rentScore, infraScore, envScore, safeScore }) {
+function GuCard({
+  gu,
+  totalScore,
+  rentScore,
+  infraScore,
+  envScore,
+  safeScore,
+}) {
   return (
     <div className="w-2/5 h-1/2 p-5">
       <div className="flex flex-col h-full">
         <div className="flex flex-row justify-center">
-          <p>강남구</p>
+          <p>{gu}</p>
         </div>
         <div className="flex flex-row h-1/2 justify-center">이미지</div>
         <div className="flex flex-row justify-center">#인프라 #중심지</div>
@@ -41,20 +49,47 @@ function GuCard({ totalScore, rentScore, infraScore, envScore, safeScore }) {
 }
 
 export default function ReviewMain() {
+  const guDong = useSelector((state) => state.guDong);
   const [totalScore, setTotalScore] = React.useState(2);
   const [rentScore, setRentScore] = React.useState(2);
   const [infraScore, setInfraScore] = React.useState(2);
   const [envScore, setEnvScore] = React.useState(2);
   const [safeScore, setSafeScore] = React.useState(2);
+
   useEffect(() => {
-    axios.get(`/review/score/강남구`).then(({ data }) => {
-      setTotalScore(data.response.score);
-      setRentScore(data.response.rental);
-      setInfraScore(data.response.infra);
-      setEnvScore(data.response.environment);
-      setSafeScore(data.response.safty);
-    });
-  }, []);
+    if (guDong.selectedGu !== "전체") {
+      axios.get(`/review/score/${guDong.selectedGu}`).then(({ data }) => {
+        setTotalScore(data.response.score);
+        setRentScore(data.response.rental);
+        setInfraScore(data.response.infra);
+        setEnvScore(data.response.environment);
+        setSafeScore(data.response.safty);
+      });
+    }
+  }, [guDong]);
+
+  let guCard;
+  if (guDong.selectedGu !== "전체") {
+    guCard = (
+      <GuCard
+        gu={guDong.selectedGu}
+        totalScore={totalScore}
+        rentScore={rentScore}
+        infraScore={infraScore}
+        envScore={envScore}
+        safeScore={safeScore}
+      />
+    );
+  } else {
+    guCard = (
+      <div className="w-2/5 h-1/2 p-5">
+        <div className="flex flex-col h-full">
+          <p>구를 선택해주세요!</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col h-full w-4/5 items-center">
       <div className="flex flex-row w-full justify-start">
@@ -69,13 +104,7 @@ export default function ReviewMain() {
         </Link>
       </div>
       <div className="flex flex-row h-full w-full ">
-        <GuCard
-          totalScore={totalScore}
-          rentScore={rentScore}
-          infraScore={infraScore}
-          envScore={envScore}
-          safeScore={safeScore}
-        />
+        {guCard}
         <div className="h-full w-3/5">
           <Outlet />
         </div>
