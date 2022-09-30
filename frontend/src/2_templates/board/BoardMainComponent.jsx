@@ -63,7 +63,7 @@ export default function BoardMainComponent() {
                   <PostRow
                     Id={x.boardId}
                     title={x.title}
-                    writer={x.email}
+                    writer={x.nickname}
                     date={x.createdTime.substring(0,10)}
                     replies={x.commentCount}
                     views={x.hit}
