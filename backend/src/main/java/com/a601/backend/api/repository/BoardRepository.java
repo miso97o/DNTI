@@ -15,7 +15,10 @@ public interface BoardRepository  extends JpaRepository<Board, Long> {
 
     // 게시글 전체 조회
     Page<Board> findAllByOrderByCreatedTimeDesc(Pageable pageable);
-    
+
+    //핫한 게시물 3개 조회+구,필터
+    List<Board> findTop3ByGuContainingAndDongContainingOrderByHitDesc(String gu, String dong);
+
     // 제목으로 찾기
     Page<Board> findByGuContainingAndDongContainingAndTitleContainingOrderByCreatedTimeDesc(String gu, String dong,String keyword, Pageable pageable);
 

@@ -49,6 +49,29 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public List<BoardResponse> getHot3Board(String gu, String dong) {
+        List<BoardResponse>  list = boardRepository.findTop3ByGuContainingAndDongContainingOrderByHitDesc(gu, dong)
+                .stream()
+                .map(board -> BoardResponse.builder()
+                        .boardId(board.getBoardId())
+                        .email(board.getUser().getEmail())
+                        .nickname(board.getUser().getNickname())
+                        .gu(board.getGu())
+                        .dong(board.getDong())
+                        .title(board.getTitle())
+                        .contents(board.getContents())
+                        .hit(board.getHit())
+                        .boardLike(board.getBoardLike())
+                        .commentCount(board.getReplyList().size())
+                        .createdTime(board.getCreatedTime())
+                        .modifiedTime(board.getModifiedTime())
+                        .build()
+                ).collect(Collectors.toList());
+
+        return list;
+    }
+
+    @Override
     public Long writeBoard(BoardRequest request) {
         User user = userRepository.getReferenceById(request.getEmail());
         Board board = Board.builder()

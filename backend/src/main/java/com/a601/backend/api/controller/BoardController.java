@@ -73,7 +73,7 @@ public class BoardController {
         if(gu==null) gu ="";
         if(dong==null) dong="";
 
-        return new ApiResult(200, null);
+        return new ApiResult(200, boardService.getHot3Board(gu, dong));
     }
 
     // 내가 쓴 게시글 조회
