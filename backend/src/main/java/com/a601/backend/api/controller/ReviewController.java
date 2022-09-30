@@ -81,7 +81,7 @@ public class ReviewController {
         return new ApiResult<>(200,reviewResponse);
     }
 
-    @ApiOperation(value = "제목, 내용, 아이디 검색 기능")
+    @ApiOperation(value = "제목(title), 내용(content), 동(dong),아이디(id) 검색 기능")
     @GetMapping("/search")
     public ApiResult<List<ReviewResponse>>reviewSearchTitle(@RequestParam("search") String search ,@RequestParam("word") String word){
         List<ReviewResponse>reviewResponseList=reviewService.reviewSearch(search,word);

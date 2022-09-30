@@ -51,7 +51,7 @@ public class BoardController {
     }
 
     // 키워드로 게시글 조회
-    @ApiOperation(value = "키워드로 게시글 조회", notes = "검색어를 포함한 제목(0)/내용(1)/아이디(2)을 가진 게시글 조회(최신순)")
+    @ApiOperation(value = "제목(0), 내용(1), 아이디(2)로 게시글 조회", notes = "검색어를 포함한 제목(0)/내용(1)/아이디(2)을 가진 게시글 조회(최신순)")
     @GetMapping("/search")
     public ApiResult selectBoardListByKeyword(@RequestParam Long category, @RequestParam String keyword, Pageable pageable) {
         return new ApiResult(200, boardService.searchBoard(category, keyword, pageable));

@@ -20,7 +20,6 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService{
     private final UserRepository repository;
-    private final DntiServiceImpl dntiService;
 
     //회원가입
     @Override
