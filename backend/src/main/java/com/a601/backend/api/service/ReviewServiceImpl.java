@@ -141,31 +141,32 @@ public class ReviewServiceImpl implements ReviewService{
     public ReviewResponse reviewScoreGu(String gu){
         List<Review>reviewList=reviewRepository.findAllByGuOrderByCreatedTimeDesc(gu);
 
+        //데이터가 없으면 null반환
         if(reviewList.size()==0){
             return null;
         }
 
-        int len=reviewList.size();
-        int en=0; //환경
-        int sa=0; //안전
-        int inf=0; //인프라
-        int ren=0; //임대료
-        double total=0;
-        for(Review review:reviewList){
-            en+=review.getEnvironment();
-            sa+=review.getSafety();
-            inf+=review.getInfra();
-            ren=review.getRental();
-            total+=review.getScore();
+        int len = reviewList.size();
+        int en = 0; //환경
+        int sa = 0; //안전
+        int inf = 0; //인프라
+        int ren = 0; //임대료
+        double total = 0;
+        for (Review review : reviewList) {
+            en += review.getEnvironment();
+            sa += review.getSafety();
+            inf += review.getInfra();
+            ren = review.getRental();
+            total += review.getScore();
         }
 
-        ReviewResponse reviewResponse= ReviewResponse.builder()
+        ReviewResponse reviewResponse = ReviewResponse.builder()
                 .gu(gu)
-                .infra(inf/len)
-                .rental(ren/len)
-                .safety(sa/len)
-                .environment(en/len)
-                .score(total/len)
+                .infra(inf / len)
+                .rental(ren / len)
+                .safety(sa / len)
+                .environment(en / len)
+                .score(total / len)
                 .build();
         return reviewResponse;
     }

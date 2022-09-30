@@ -65,6 +65,17 @@ public class BoardController {
         return new ApiResult(200, boardService.searchBoard(gu, dong, category, keyword, pageable));
     }
 
+    //핫한 게시물 3개 조회(구, 동 필터)
+    @ApiOperation(value = "핫한 게시물 3개 조회(구, 동 필터)", notes = "like 많은 순으로 핫한 게시물 최대 3개 조회")
+    @GetMapping("/hot")
+    public ApiResult selectBoardListByKeyword(@RequestParam(required = false) String gu, @RequestParam(required = false) String dong) {
+        //구, 동 필터(없으면 전체검색)
+        if(gu==null) gu ="";
+        if(dong==null) dong="";
+
+        return new ApiResult(200, null);
+    }
+
     // 내가 쓴 게시글 조회
     @ApiOperation(value = "내가 쓴 게시글 3개 조회", notes = "성공하면 게시글 최신 3개 list 리턴")
     @GetMapping("/my-board/{email}")
