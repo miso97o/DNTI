@@ -9,10 +9,12 @@ import { useSelector } from "react-redux";
 export default function PostRow({
   Id,
   title,
-  createdTime,
-  commentCount,
-  hit,
-  boardLike,
+  writer,
+  date,
+  replies,
+  views,
+  likes,
+
 }) {
   const user = useSelector((state) => state.user);
   function increaseHit() {
@@ -34,15 +36,21 @@ export default function PostRow({
             <p>{title}</p>
           </div>
           <div className="flex flex-row justify-between items-center w-2/3">
+          <div className="flex flex-row items-center w-1/3">
+              <PersonIcon />
+
+              <p>{writer}</p>
+            </div>
+
             <div className="flex flex-row w-full justify-between">
-              <p>{createdTime}</p>
+            <p>{date}</p>
               <div className="flex flex-row items-center">
                 <ChatBubbleOutlineOutlinedIcon />
-                <p>{commentCount}</p>
+                <p>{replies}</p>
               </div>
               <div className="flex flex-row items-center">
                 <VisibilityOutlinedIcon />
-                <p>{hit}</p>
+                <p>{views}</p>
               </div>
               <div className="flex flex-row items-center">
                 <FavoriteBorderOutlinedIcon />
