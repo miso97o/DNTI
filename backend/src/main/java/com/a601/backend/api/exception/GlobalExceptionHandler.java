@@ -3,11 +3,10 @@ package com.a601.backend.api.exception;
 import com.a601.backend.api.domain.dto.common.ApiResult;
 import com.a601.backend.api.domain.enums.ErrorCode;
 import com.a601.backend.api.domain.dto.common.ErrorResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import lombok.extern.slf4j.Slf4j;
 
 @RestControllerAdvice
 @Slf4j

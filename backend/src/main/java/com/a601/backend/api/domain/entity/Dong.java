@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Builder
 public class Dong {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer dongId;
 
     @Column(nullable = false)
