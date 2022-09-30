@@ -20,6 +20,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +34,7 @@ public class BoardServiceImpl implements BoardService {
     private final BoardLikeRepository boardLikeRepository;
 
 
+    //게시물 상세조회
     @Override
     public BoardResponse findByBoardId(Long boardId) {
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
@@ -91,8 +93,10 @@ public class BoardServiceImpl implements BoardService {
         // 내용으로 검색
         else if(category ==1){
             return boardRepository.findByContentsContainingOrderByCreatedTimeDesc(keyword, pageable).map(BoardResponse::new);
+        } else if(category ==2){ //아이디로 검색
+            return boardRepository.findByUser_EmailContainingOrderByCreatedTimeDesc(keyword, pageable).map(BoardResponse::new);
         }
-        return null;
+        throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
     }
 
     @Override
@@ -126,20 +130,21 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<BoardResponse> getMyBoard(String email) {
-        List<BoardResponse> myList = boardRepository.findMyBoard(email)
-                .stream()
-                .map(board -> BoardResponse.builder()
-                        .boardId(board.getBoardId())
-                        .email(board.getUser().getEmail())
-                        .title(board.getTitle())
-                        .contents(board.getContents())
-                        .hit(board.getHit())
-                        .boardLike(board.getBoardLike())
-                        .commentCount(board.getReplyList().size())
-                        .createdTime(board.getCreatedTime())
-                        .modifiedTime(board.getModifiedTime())
-                        .build()).collect(Collectors.toList());
-
+        List<BoardResponse> myList = boardRepository.findTop3ByUser_EmailContainingOrderByCreatedTimeDesc(email)
+                    .stream()
+                    .map(board -> BoardResponse.builder()
+                            .boardId(board.getBoardId())
+                            .email(board.getUser().getEmail())
+                            .nickname(board.getUser().getNickname())
+                            .dong(board.getDong())
+                            .title(board.getTitle())
+                            .contents(board.getContents())
+                            .hit(board.getHit())
+                            .boardLike(board.getBoardLike())
+                            .commentCount(board.getReplyList().size())
+                            .createdTime(board.getCreatedTime())
+                            .modifiedTime(board.getModifiedTime())
+                            .build()).collect(Collectors.toList());
         return myList;
     }
 

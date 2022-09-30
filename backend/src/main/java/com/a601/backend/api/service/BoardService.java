@@ -43,6 +43,4 @@ public interface BoardService {
 
    // 내가 쓴 게시글 조회
    List<BoardResponse> getMyBoard(String email);
-
-
 }
