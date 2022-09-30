@@ -73,10 +73,10 @@ public class GoogleController {
 
         if(!user.isPresent()){
 
-            ResponseCookie cookie = ResponseCookie.from("userEmail",email).path("/").domain("localhost").sameSite("None").secure(true).build();
+            ResponseCookie cookie = ResponseCookie.from("userEmail",email).path("/").domain("j7a601.p.ssafy.io").sameSite("None").secure(true).build();
             response.setHeader("Set-Cookie", cookie.toString());
 
-            return "redirect:http://localhost:3000/signup";
+            return "redirect:https://j7a601.p.ssafy.io/signup";
 
         }
         GoogleResponse googleResponse2=GoogleResponse.builder()
@@ -85,11 +85,11 @@ public class GoogleController {
                 .domain("http://localhost:9090/api")
                 .build();
 
-        ResponseCookie cookie = ResponseCookie.from("userEmail",email).path("/").domain("localhost").sameSite("None").secure(true).build();
+        ResponseCookie cookie = ResponseCookie.from("userEmail",email).path("/").domain("j7a601.p.ssafy.io").sameSite("None").secure(true).build();
         response.setHeader("Set-Cookie", cookie.toString());
 
         //여기서 세션에 값 넣으면 될듯?
-        return "redirect:http://localhost:3000/";
+        return "redirect:https://j7a601.p.ssafy.io/";
     }
 
     @PostMapping("/logout")
