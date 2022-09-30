@@ -22,6 +22,7 @@ export default function ReviewViewComponent() {
 
   useEffect(() => {
     getDetail(location.state.reviewId);
+    getReviewLike(location.state.reviewId);
   }, []);
 
   function getDetail(reviewId) {
@@ -36,6 +37,17 @@ export default function ReviewViewComponent() {
       setEnvScore(res.data.response.environment);
       setSafeScore(res.data.response.safety);
     });
+  }
+
+  function getReviewLike(reviewId) {
+    axios
+      .get(`review/reviewlike?reviewId=${reviewId}&email=${user.userId}`)
+      .then(({ data }) => {
+        setIsLike(data.response);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   function deleteReview() {
@@ -68,6 +80,7 @@ export default function ReviewViewComponent() {
         });
     }
     setIsLike(!isLike);
+    getDetail(location.state.reviewId);
   }
 
   let reviewControlPanel;
