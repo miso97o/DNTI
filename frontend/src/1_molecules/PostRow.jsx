@@ -4,8 +4,8 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import PersonIcon from "@mui/icons-material/Person";
 import { pink } from "@mui/material/colors";
 import { Link } from "react-router-dom";
-
-
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 export default function PostRow({
   Id,
@@ -16,11 +16,19 @@ export default function PostRow({
   views,
   likes,
 }) {
-
+  const user = useSelector((state) => state.user);
+  function increaseHit() {
+    axios.patch(`/board/hit/${Id}`)
+    .then((res) => {
+      console.log(res.data);
+      views++;
+    })
+  }
 
   return (
     <Link to="/board/postview"
       state={{boardId: Id}}
+      onClick={() => {increaseHit()}}
     >
       <div className="flex flex-row w-full items-center p-1">
         <div className="flex flex-row w-full items-stretch justify-between">
