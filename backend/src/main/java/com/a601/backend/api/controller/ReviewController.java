@@ -59,7 +59,7 @@ public class ReviewController {
     }
 
     //게시글 상세 조회
-    @ApiOperation(value = "리뷰 게시글 상세 조회")
+    @ApiOperation(value = "리뷰 게시글 상세 조회", notes = "")
     @GetMapping("/detail/{id}")
     public ApiResult<ReviewResponse>detailReview(@PathVariable Long id){
         ReviewResponse reviewResponse=reviewService.detailReview(id);
@@ -81,10 +81,17 @@ public class ReviewController {
         return new ApiResult<>(200,reviewResponse);
     }
 
-    @ApiOperation(value = "제목(title), 내용(content), 동(dong),아이디(id) 검색 기능")
+    @ApiOperation(value = "구, 동 필터/제목(title), 내용(content), 아이디(id) 검색 기능", notes = "구, 동 및 제목, 내용, 아이디 검색")
     @GetMapping("/search")
-    public ApiResult<List<ReviewResponse>>reviewSearchTitle(@RequestParam("search") String search ,@RequestParam("word") String word){
-        List<ReviewResponse>reviewResponseList=reviewService.reviewSearch(search,word);
+    public ApiResult<List<ReviewResponse>>reviewSearchTitle(@RequestParam(required = false) String gu,@RequestParam(required = false) String dong,@RequestParam String search ,@RequestParam(required = false) String word){
+        //구, 동 필터(없으면 전체검색)
+        if(gu==null) gu ="";
+        if(dong==null) dong="";
+
+        //키워드 없으면 전체 검색
+        if(word==null) word="";
+
+        List<ReviewResponse>reviewResponseList=reviewService.reviewSearch(gu, dong,search,word);
         return new ApiResult<>(200,reviewResponseList);
     }
 
