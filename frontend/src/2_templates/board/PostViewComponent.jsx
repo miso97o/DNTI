@@ -59,17 +59,40 @@ export default function PostViewComponent() {
       getReply(1);
     })
   }
+  function checkLike() {
+    axios.get(`/board/like?boardId=${boardId}&email=${user.userId}`)
+    .then((res) => {
+      console.log('like check',res.data);
+      setLike(res.data.response)
+    })
+  }
+
   function clickLike() {
-    setLike(!like);
-    // axios.patch(`/board/increase-like`)
-    // .then((res) => {
-    //   console.log(res.data);
-    // })
+    if(!like) {
+      axios.patch(`/board/increase-like`, {
+        email: user.userId,
+        boardId: boardId
+      })
+      .then((res) => {
+        console.log(res.data);
+        setLike(true);
+      })
+    } else {
+      axios.patch(`/board/decrease-like`, {
+        email: user.userId,
+        boardId: boardId
+      })
+      .then((res) => {
+        console.log('cancel like', res.data);
+        setLike(false);
+      })
+    }
   }
   
   useEffect(() => {
     getDetail();
     getReply(1);
+    checkLike();
   },[])
   
   return (
@@ -88,7 +111,7 @@ export default function PostViewComponent() {
             postDetail.createdTime === undefined ? null : <p>{postDetail.createdTime.substring(0,10)}</p>
           }
           <div className="flex flex-row">
-            <FavoriteIcon sx={{ color: pink[500] }} />
+            <FavoriteBorderIcon />
             <p>{postDetail.boardLike}</p>
           </div>
         </div>
