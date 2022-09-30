@@ -30,7 +30,7 @@ public class UserController {
 
 
     //회원가입(닉네임,생년, 구, 동, 휴대폰번호, 아이디)
-    @ApiOperation(value="회원가입")
+    @ApiOperation(value="회원가입", notes="닉네임,생년, 구, 동, 휴대폰번호, 아이디")
     @PostMapping
     public ApiResult singIn(@RequestBody UserRequest.SingIn singIn, HttpServletResponse response){
         service.singIn(singIn,response);
@@ -67,7 +67,7 @@ public class UserController {
         List<FavoriteResponse> favoriteList = favoriteService.getFavorite(email);
 
         //review
-        List<ReviewResponse> reviewList = reviewService.reviewSearch("id", email);
+        List<ReviewResponse> reviewList = reviewService.reviewSearch("","","id", email);
 
         //board
         List<BoardResponse> boardList = boardService.getMyBoard(email);

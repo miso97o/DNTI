@@ -85,18 +85,24 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Page<BoardResponse> searchBoard(Long category, String keyword, Pageable pageable) {
+    public Page<BoardResponse> searchBoard(String gu, String dong,Long category, String keyword, Pageable pageable) {
         // 제목으로 검색
         if(category== 0){
-            return boardRepository.findByTitleContainingOrderByCreatedTimeDesc(keyword, pageable).map(BoardResponse::new);
+            return boardRepository.findByGuContainingAndDongContainingAndTitleContainingOrderByCreatedTimeDesc(gu, dong,keyword, pageable).map(BoardResponse::new);
         } 
         // 내용으로 검색
         else if(category ==1){
-            return boardRepository.findByContentsContainingOrderByCreatedTimeDesc(keyword, pageable).map(BoardResponse::new);
+            return boardRepository.findGuContainingAndDongContainingAndByContentsContainingOrderByCreatedTimeDesc(gu, dong,keyword, pageable).map(BoardResponse::new);
         } else if(category ==2){ //아이디로 검색
-            return boardRepository.findByUser_EmailContainingOrderByCreatedTimeDesc(keyword, pageable).map(BoardResponse::new);
+            return boardRepository.findGuContainingAndDongContainingAndByUser_EmailContainingOrderByCreatedTimeDesc(gu, dong,keyword, pageable).map(BoardResponse::new);
         }
         throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
+    }
+
+    // 해당 게시물 좋아요 늘렀는지 여부
+    @Override
+    public boolean isBoardLike(Long boardId, String email) {
+        return boardLikeRepository.existsByBoard_BoardIdAndUser_Email(boardId, email);
     }
 
     @Override

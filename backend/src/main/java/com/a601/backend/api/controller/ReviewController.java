@@ -59,7 +59,7 @@ public class ReviewController {
     }
 
     //게시글 상세 조회
-    @ApiOperation(value = "리뷰 게시글 상세 조회")
+    @ApiOperation(value = "리뷰 게시글 상세 조회", notes = "")
     @GetMapping("/detail/{id}")
     public ApiResult<ReviewResponse>detailReview(@PathVariable Long id){
         ReviewResponse reviewResponse=reviewService.detailReview(id);
@@ -81,10 +81,17 @@ public class ReviewController {
         return new ApiResult<>(200,reviewResponse);
     }
 
-    @ApiOperation(value = "제목(title), 내용(content), 동(dong),아이디(id) 검색 기능")
+    @ApiOperation(value = "구, 동 필터/제목(title), 내용(content), 아이디(id) 검색 기능", notes = "구, 동 및 제목, 내용, 아이디 검색")
     @GetMapping("/search")
-    public ApiResult<List<ReviewResponse>>reviewSearchTitle(@RequestParam("search") String search ,@RequestParam("word") String word){
-        List<ReviewResponse>reviewResponseList=reviewService.reviewSearch(search,word);
+    public ApiResult<List<ReviewResponse>>reviewSearchTitle(@RequestParam(required = false) String gu,@RequestParam(required = false) String dong,@RequestParam String search ,@RequestParam(required = false) String word){
+        //구, 동 필터(없으면 전체검색)
+        if(gu==null) gu ="";
+        if(dong==null) dong="";
+
+        //키워드 없으면 전체 검색
+        if(word==null) word="";
+
+        List<ReviewResponse>reviewResponseList=reviewService.reviewSearch(gu, dong,search,word);
         return new ApiResult<>(200,reviewResponseList);
     }
 
@@ -94,6 +101,12 @@ public class ReviewController {
     public ApiResult<List<ReviewResponse>>reviewRecent(@RequestParam("id") Long id,@RequestParam("gu") String gu){
         List<ReviewResponse>reviewResponseList=reviewService.reviewRecent(id,gu);
         return new ApiResult<>(200,reviewResponseList);
+    }
+
+    @ApiOperation(value = "리뷰 좋아요 눌렀는지 여부", notes = "해당 아이디가 해당 리뷰 좋아요를 눌렀는지 여부(눌렀으면 true, 아니면 false)")
+    @GetMapping("/reviewlike")
+    public ApiResult isReviewLike(@RequestParam Long reviewId, @RequestParam  String email) {
+        return new ApiResult(200, reviewService.isReviewLike(reviewId, email));
     }
 
     @ApiOperation(value = " 좋아요 추가 기능 ")
