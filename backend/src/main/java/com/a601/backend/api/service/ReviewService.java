@@ -19,7 +19,7 @@ public interface ReviewService {
     void updateReview(Long id,ReviewRequest reviewRequest);
 
 
-    List<ReviewResponse> reviewTopList();
+    List<ReviewResponse> reviewTopList(String gu, String dong);
     ReviewResponse reviewScoreGu(String gu);
 
     List<ReviewResponse> reviewRecent(Long id,String gu);

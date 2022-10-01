@@ -15,7 +15,7 @@ public interface ReviewRepository extends JpaRepository<Review,Long> {
     List<Review> findAllByOrderByCreatedTimeDesc(Pageable pageable);
 
     //인기글 3개(구, 동 기준)
-    List<Review>findTop3ByOrderByHitDesc();
+    List<Review>findTop3ByGuContainingAndDongContainingOrderByHitDesc(String gu, String dong);
 
     //필요없을듯
     List<Review>findAllByGuOrderByCreatedTimeDesc(String gu);

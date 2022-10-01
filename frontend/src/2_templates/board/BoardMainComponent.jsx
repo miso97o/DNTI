@@ -36,6 +36,22 @@ export default function BoardMainComponent() {
     });
   }
 
+  function searchBoard() {
+    console.log(guDong);
+    axios
+      .get(
+        `/board/search?gu=${
+          guDong.selectedGu === "전체" ? "" : guDong.selectedGu
+        }&dong=${
+          guDong.selectedDong === "전체" ? "" : guDong.selectedDong
+        }&category=0`
+      )
+      .then((res) => {
+        console.log(res);
+        setBoardList(res.data.response.content);
+      });
+  }
+
   async function getReview(page) {
     await axios.get(`/review/list?page=${page - 1}&&size=10`).then((res) => {
       // console.log(res.data);
@@ -62,6 +78,7 @@ export default function BoardMainComponent() {
 
   useEffect(() => {
     getYoutubeItems(guDong.selectedGu);
+    searchBoard();
   }, [guDong]);
 
   return (

@@ -3,7 +3,8 @@ import axios from "axios";
 
 import Choose from "../2_templates/recommendation/Choose";
 import Statistics from "../2_templates/recommendation/Statistics";
-import Map from "../2_templates/recommendation/Map";
+import Map1 from "../2_templates/recommendation/Map";
+import Map2 from "../1_molecules/statistics/Map";
 import styles from "./DnRecommendPage.module.css";
 
 function DnRecommendPage() {
@@ -37,7 +38,11 @@ function DnRecommendPage() {
           
         </div>
         <div className={styles.map}>
-          <Map />
+          {goStatistics ? (
+            <Map2 />
+          ) : (
+            <Map1 />
+          )}
         </div>
       </div>
     </div>

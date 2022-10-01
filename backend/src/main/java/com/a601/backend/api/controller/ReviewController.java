@@ -59,22 +59,26 @@ public class ReviewController {
     }
 
     //게시글 상세 조회
-    @ApiOperation(value = "리뷰 게시글 상세 조회", notes = "")
+    @ApiOperation(value = "리뷰 게시글 상세 조회", notes = "게시글 아이디로 게시글의 데이터 반환")
     @GetMapping("/detail/{id}")
     public ApiResult<ReviewResponse>detailReview(@PathVariable Long id){
         ReviewResponse reviewResponse=reviewService.detailReview(id);
         return new ApiResult<>(200,reviewResponse);
     }
 
-    @ApiOperation(value = "리뷰 게시글 최근 한달 글 중 하트 높은순 3개 조회")
-    @GetMapping("/toplist")
-    public ApiResult<List<ReviewResponse>>reviewTopList(){
-        List<ReviewResponse>reviewResponseTopList=reviewService.reviewTopList();
+    @ApiOperation(value = "최근 한달 글 중 조회수 높은순 3개 조회 +구,동 필터", notes = "구, 동은 필터가 필요할 때만 보내기")
+    @GetMapping("/hot")
+    public ApiResult<List<ReviewResponse>>reviewTopList(@RequestParam(required = false) String gu, @RequestParam(required = false) String dong){
+        //구, 동 필터(없으면 전체검색)
+        if(gu==null) gu ="";
+        if(dong==null) dong="";
+
+        List<ReviewResponse>reviewResponseTopList=reviewService.reviewTopList(gu, dong);
         return new ApiResult<>(200,reviewResponseTopList);
     }
 
 
-    @ApiOperation(value = "각 리뷰 구선택 했을 떄 평균 평점")
+    @ApiOperation(value = "각 리뷰 구선택 했을 떄 평균 평점", notes = "구 평점 데이터가 없으면 null반환")
     @GetMapping("/score/{gu}")
     public ApiResult<ReviewResponse>reviewScoreGu(@PathVariable String gu){
         ReviewResponse reviewResponse=reviewService.reviewScoreGu(gu);

@@ -117,10 +117,11 @@ public class ReviewServiceImpl implements ReviewService{
         reviewRepository.save(review);
     }
 
-    public List<ReviewResponse> reviewTopList(){
-        List<ReviewResponse>reviewTopList=reviewRepository.findTop3ByOrderByHitDesc()
+    public List<ReviewResponse> reviewTopList(String gu, String dong){
+        List<ReviewResponse>reviewTopList=reviewRepository.findTop3ByGuContainingAndDongContainingOrderByHitDesc(gu, dong)
                 .stream()
                 .map(review -> ReviewResponse.builder()
+                        .id(review.getReviewId())
                         .email(review.getUser().getEmail())
                         .nickname(review.getUser().getNickname())
                         .title(review.getTitle())
@@ -141,31 +142,32 @@ public class ReviewServiceImpl implements ReviewService{
     public ReviewResponse reviewScoreGu(String gu){
         List<Review>reviewList=reviewRepository.findAllByGuOrderByCreatedTimeDesc(gu);
 
+        //데이터가 없으면 null반환
         if(reviewList.size()==0){
             return null;
         }
 
-        int len=reviewList.size();
-        int en=0; //환경
-        int sa=0; //안전
-        int inf=0; //인프라
-        int ren=0; //임대료
-        double total=0;
-        for(Review review:reviewList){
-            en+=review.getEnvironment();
-            sa+=review.getSafety();
-            inf+=review.getInfra();
-            ren=review.getRental();
-            total+=review.getScore();
+        int len = reviewList.size();
+        int en = 0; //환경
+        int sa = 0; //안전
+        int inf = 0; //인프라
+        int ren = 0; //임대료
+        double total = 0;
+        for (Review review : reviewList) {
+            en += review.getEnvironment();
+            sa += review.getSafety();
+            inf += review.getInfra();
+            ren = review.getRental();
+            total += review.getScore();
         }
 
-        ReviewResponse reviewResponse= ReviewResponse.builder()
+        ReviewResponse reviewResponse = ReviewResponse.builder()
                 .gu(gu)
-                .infra(inf/len)
-                .rental(ren/len)
-                .safety(sa/len)
-                .environment(en/len)
-                .score(total/len)
+                .infra(inf / len)
+                .rental(ren / len)
+                .safety(sa / len)
+                .environment(en / len)
+                .score(total / len)
                 .build();
         return reviewResponse;
     }
@@ -175,6 +177,7 @@ public class ReviewServiceImpl implements ReviewService{
             List<ReviewResponse>reviewList1=reviewRepository.findAllByGuOrderByCreatedTimeDesc(gu)
                     .stream()
                     .map(review -> ReviewResponse.builder()
+                            .id(review.getReviewId())
                             .email(review.getUser().getEmail())
                             .nickname(review.getUser().getNickname())
                             .title(review.getTitle())
@@ -194,6 +197,7 @@ public class ReviewServiceImpl implements ReviewService{
             List<ReviewResponse>reviewList2=reviewRepository.findAllByGuOrderByHitDesc(gu)
                     .stream()
                     .map(review -> ReviewResponse.builder()
+                            .id(review.getReviewId())
                             .email(review.getUser().getEmail())
                             .title(review.getTitle())
                             .nickname(review.getUser().getNickname())
@@ -217,6 +221,7 @@ public class ReviewServiceImpl implements ReviewService{
             List<ReviewResponse>reviewList=reviewRepository.findByGuContainingAndDongContainingAndTitleContaining(gu, dong, word)
                     .stream()
                     .map(review -> ReviewResponse.builder()
+                            .id(review.getReviewId())
                             .email(review.getUser().getEmail())
                             .nickname(review.getUser().getNickname())
                             .title(review.getTitle())
@@ -236,6 +241,7 @@ public class ReviewServiceImpl implements ReviewService{
             List<ReviewResponse>reviewList=reviewRepository.findByGuContainingAndDongContainingAndContentContaining(gu, dong,word)
                     .stream()
                     .map(review -> ReviewResponse.builder()
+                            .id(review.getReviewId())
                             .email(review.getUser().getEmail())
                             .nickname(review.getUser().getNickname())
                             .title(review.getTitle())
@@ -255,6 +261,7 @@ public class ReviewServiceImpl implements ReviewService{
             List<ReviewResponse>reviewList=reviewRepository.findByGuContainingAndDongContainingAndUser_EmailContaining(gu, dong,word)
                     .stream()
                     .map(review -> ReviewResponse.builder()
+                            .id(review.getReviewId())
                             .email(review.getUser().getEmail())
                             .nickname(review.getUser().getNickname())
                             .title(review.getTitle())
