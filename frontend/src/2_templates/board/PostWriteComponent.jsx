@@ -97,7 +97,7 @@ export default function PostWriteComponent() {
           <Link >
             <Button onClick={() => writePost()}>{boardId ? "수정" : "등록"}</Button>
           </Link>
-          <Link to="/board/postview">
+          <Link to={boardId ? "/board/postview" : "/board/post"}>
             <Button>취소</Button>
           </Link>
         </div>
