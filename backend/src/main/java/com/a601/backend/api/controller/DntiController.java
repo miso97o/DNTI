@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@Api(value = "동네TI")
+@Api(value = "동네TI", tags = "동네TI")
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/dnti")
@@ -34,5 +34,11 @@ public class DntiController {
     @GetMapping("/all")
     public ApiResult getAll() {
         return new ApiResult(200, dntiService.getAllDnti());
+    }
+
+    @ApiOperation(value="dnti 사용자 수 조회", notes = "dnti 설문조사 응답수 반환")
+    @GetMapping("/count")
+    public ApiResult getCount() {
+        return new ApiResult(200, dntiService.getCount());
     }
 }
