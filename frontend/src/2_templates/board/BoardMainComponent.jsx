@@ -87,7 +87,7 @@ export default function BoardMainComponent() {
                         key={x.boardId}
                         Id={x.boardId}
                         title={x.title}
-                        writer={x.email}
+                        writer={x.nickname}
                         date={x.createdTime.substring(2, 10)}
                         replies={x.commentCount}
                         views={x.hit}
