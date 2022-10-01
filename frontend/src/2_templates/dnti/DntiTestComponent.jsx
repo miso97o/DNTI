@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
+import { useState } from "react";
+import DntiResultComponent from "./DntiResultComponent";
+import React from "react";
+import { useEffect } from "react";
 
 function Progressbar() {
   return (
@@ -13,7 +17,6 @@ function Progressbar() {
 
 function TestSelectCard({ imgsrc, description, label }) {
   return (
-    <Link to={`/dnti/result`} style={{ textDecoration: "none" }}>
       <Card variant="outlined" className="m-5">
         <div className="flex flex-col items-center">
           <img src={imgsrc} alt="Not Found" className="image" />
@@ -21,30 +24,86 @@ function TestSelectCard({ imgsrc, description, label }) {
           <p className="font-medium text-xl m-1">{label}</p>
         </div>
       </Card>
-    </Link>
   );
 }
 
-export default function DntiTestComponent() {
+const result={'S':0,'N':0,'P':0,'I':0}
+const sortable = [];
+let arr=[0,0,0,0]
+
+export default function DntiList(){
+  const text=['피톤치드 듬뿍',"동네 경찰 마동석","새벽 3시 조깅 안전","요즘 뜨는 핫플","새벽2시 골목길도 편안함","월세 40",
+    "주변이 푸릇푸릇 공세권","서울 어디든 30분","뻐국이가 직접 모닝콜","월세 아껴서 소고기 가능","5분 거리 식당 20개","혼자 월세 감당 가능 "
+    ]
+  const person=['동네 범죄자 손석구',"일산화탄소 그득그득","주변 1KM 무유흥지대","택배 도난률 80%","월세 70","조금만 어둑해도 수리남",
+    "지하철 역까지 30분 거리","매연 가득 빌딩 숲","월세 내고 라면으로 떄우기","굴삭기가 모닝콜","부모님한테 용돈받아야 생활 가능","1km반경 식당 없어서 요리 필수"
+    ]
+
+  const Type=['N','S','S','I','S','P','N','I','N','P','I','P']
+
+  const [index, setIndex] = useState(1)
+
+  const [gotoresult,setGotoresult]=useState(false)
+
+  const [win,setWin]=useState([])
+  const [lose,setLose]=useState([])
+
+  function handleNext(widx,lidx){
+    setIndex(index+1)
+    const temp=Type[widx]
+    result[`${temp}`]+=1
+    console.log(index+"좌표 값")
+    setWin([...win,Type[widx]])
+    setLose([...lose,Type[lidx]])
+    if(index>5){
+      TypeResult()
+      //TypeCheck()
+      setGotoresult(true)
+    }
+  }
+
+  function TypeResult(){
+    for (const name in result) {
+      sortable.push([name,result[`${name}`]])
+    }
+    sortable.sort(function(a,b){
+      return b[1]-a[1]
+    });
+  }
+
+  const src1="/img/dnti_test/"+index+"-1.png"
+  const src2="/img/dnti_test/"+index+"-2.png"
+
+
   return (
-    <div className="flex flex-col items-center">
+    <div>
+      {gotoresult?(<DntiResultComponent arr={arr} sortable={sortable} win={win} lose={lose}/>
+      ) : (
       <div className="flex flex-col items-center">
-        <p className="font-medium text-5xl m-10">DNTI 검사페이지</p>
-        <Progressbar />
+        <div className="flex flex-col items-center">
+          <p className="font-medium text-5xl m-10">DNTI 검사페이지</p>
+          <Progressbar />
+        </div>
+        <div className="flex flex-row items-center m-10">
+          <div onClick={e => handleNext(index*2 -2,index*2-1)}>
+            <TestSelectCard
+              imgsrc ={src1}
+              description={text[index*2-2]}
+              label={person[index*2-2]}
+            />
+          </div>
+          <p className="font-medium text-5xl m-3">VS</p>
+          <div onClick={e => handleNext(index*2 -1,index*2-2)}>
+          <TestSelectCard
+            imgsrc={src2}
+            description={text[index*2-1]}
+            label={person[index*2-1]}
+          />
+          </div>
+        </div>
       </div>
-      <div className="flex flex-row items-center m-10">
-        <TestSelectCard
-          imgsrc="https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/iz8zxnh4p6l-I225%3A654%3B225%3A649?alt=media&token=e60af54b-75fc-4fca-a1e8-b3acc629cc04"
-          description="나는 자연이 좋다!"
-          label="자연주의자"
-        />
-        <p className="font-medium text-5xl m-3">VS</p>
-        <TestSelectCard
-          imgsrc="https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/iz8zxnh4p6l-I225%3A661%3B225%3A649?alt=media&token=00884af7-801b-4719-921e-bb6f7a0544ed"
-          description="노는게 제일 좋아"
-          label="나는야 문화인"
-        />
-      </div>
+      )}
     </div>
   );
 }
+
