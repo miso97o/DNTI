@@ -4,13 +4,23 @@ import SearchIcon from "@mui/icons-material/Search";
 import ReviewRow from "../../../1_molecules/ReviewRow";
 import { useEffect } from "react";
 import axios from "../../../utils/axios";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function ReviewMainComponent() {
   const [reviews, setReviews] = React.useState();
   const [currentPage, setCurrentPage] = React.useState(0);
+  const guDong = useSelector((state) => state.guDong);
+
   useEffect(() => {
+    console.log(guDong);
     axios
-      .get(`review/list?page=${currentPage}&size=10`)
+      .get(
+        `/review/search?search=title&page=${currentPage}&gu=${
+          guDong.selectedGu !== "전체" ? guDong.selectedGu : ""
+        }&dong=${
+          guDong.selectedDong !== "전체" ? guDong.selectedDong : ""
+        }&size=10`
+      )
       .then(({ data }) => {
         console.log("리뷰 조회 성공!");
         setReviews(data.response);
@@ -19,7 +29,8 @@ export default function ReviewMainComponent() {
       .catch(() => {
         console.log("리뷰 조회에 실패했습니다.");
       });
-  }, [currentPage]);
+  }, [guDong, currentPage]);
+
   return (
     <div className="flex flex-col h-full w-full items-center">
       <div className="flex flex-col h-4/5 w-full p-5">

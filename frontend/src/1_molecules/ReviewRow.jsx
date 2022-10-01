@@ -3,10 +3,6 @@ import { Link } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { pink } from "@mui/material/colors";
 
-function ReviewTag({ tagText }) {
-  return <p className="mx-2">{tagText}</p>;
-}
-
 export default function ReviewRow({ id, title, datetime, score, likes }) {
   return (
     <Link to="/board/review/view" state={{ reviewId: id }}>
