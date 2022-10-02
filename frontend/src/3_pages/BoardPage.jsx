@@ -86,47 +86,51 @@ export default function Boardpage() {
 
   return (
     <div className="flex flex-col w-full h-full items-center p-10">
-      <div className="flex w-4/5 p-5">
-        <Box sx={{ minWidth: 120 }}>
-          <FormControl fullWidth>
-            <InputLabel id="guSelect">구</InputLabel>
-            <Select
-              labelId="guSelect"
-              id="guSelect"
-              value={selectedGu}
-              label="구"
-              onChange={handleGuChange}
-            >
-              {guList.map((gu) => {
-                return (
-                  <MenuItem key={gu} value={gu}>
-                    {gu}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-        </Box>
-        <Box sx={{ minWidth: 120 }}>
-          <FormControl fullWidth>
-            <InputLabel id="dongSelect">동</InputLabel>
-            <Select
-              labelId="dongSelect"
-              id="dongSelect"
-              value={selectedDong}
-              label="동"
-              onChange={handleDongChange}
-            >
-              {dongList.map((dong) => {
-                return (
-                  <MenuItem key={dong} value={dong}>
-                    {dong}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-        </Box>
+      <div className="flex flex-row w-4/5 p-5">
+        <div className="mr-5">
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="guSelect">구</InputLabel>
+              <Select
+                labelId="guSelect"
+                id="guSelect"
+                value={selectedGu}
+                label="구"
+                onChange={handleGuChange}
+              >
+                {guList.map((gu) => {
+                  return (
+                    <MenuItem key={gu} value={gu}>
+                      {gu}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </Box>
+        </div>
+        <div className="">
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="dongSelect">동</InputLabel>
+              <Select
+                labelId="dongSelect"
+                id="dongSelect"
+                value={selectedDong}
+                label="동"
+                onChange={handleDongChange}
+              >
+                {dongList.map((dong) => {
+                  return (
+                    <MenuItem key={dong} value={dong}>
+                      {dong}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </Box>
+        </div>
       </div>
       <Outlet />
     </div>
