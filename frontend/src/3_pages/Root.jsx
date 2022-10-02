@@ -23,11 +23,11 @@ export default function Root() {
         console.log(data.response);
       });
     }
-  });
+  }, [email]);
   console.log("after reduce : user-------------------------");
   console.log(user);
   return (
-    <div class="h-screen">
+    <div className="h-screen font-dnti">
       <Navbar />
       <Outlet />
       <Footer />

@@ -23,7 +23,7 @@ export default function ReviewViewComponent() {
   useEffect(() => {
     getDetail(location.state.reviewId);
     getReviewLike(location.state.reviewId);
-  }, []);
+  }, [user, isLike]);
 
   function getDetail(reviewId) {
     console.log("reviewId =====================");
@@ -43,6 +43,7 @@ export default function ReviewViewComponent() {
     axios
       .get(`review/reviewlike?reviewId=${reviewId}&email=${user.userId}`)
       .then(({ data }) => {
+        console.log(`isLike = ${data.response}`);
         setIsLike(data.response);
       })
       .catch((e) => {
@@ -62,7 +63,9 @@ export default function ReviewViewComponent() {
   function clickLike() {
     if (!isLike) {
       axios
-        .get(`/review/reviewlike/save?id=${location.state.reviewId}`)
+        .get(
+          `/review/reviewlike/save?email=${user.userId}&reviewId=${location.state.reviewId}`
+        )
         .then(() => {
           console.log("좋아요 등록 성공");
         })
@@ -71,7 +74,9 @@ export default function ReviewViewComponent() {
         });
     } else {
       axios
-        .get(`/review/reviewlike/delete?id=${location.state.reviewId}`)
+        .delete(
+          `/review/reviewlike/delete?email=${user.userId}&reviewId=${location.state.reviewId}`
+        )
         .then(() => {
           console.log("좋아요 취소 성공");
         })
@@ -80,7 +85,6 @@ export default function ReviewViewComponent() {
         });
     }
     setIsLike(!isLike);
-    getDetail(location.state.reviewId);
   }
 
   let reviewControlPanel;
@@ -102,12 +106,6 @@ export default function ReviewViewComponent() {
   } else {
     reviewControlPanel = (
       <div className="flex flex-row w-full justify-center mt-10">
-        <Link
-          to="/board/review/write"
-          state={{ reviewId: location.state.reviewId }}
-        >
-          <Button>수정</Button>
-        </Link>
         <Link to="/board/review">
           <Button>목록</Button>
         </Link>

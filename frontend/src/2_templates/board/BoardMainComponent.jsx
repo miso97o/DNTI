@@ -52,11 +52,17 @@ export default function BoardMainComponent() {
       });
   }
 
-  async function getReview(page) {
-    await axios.get(`/review/list?page=${page - 1}&&size=10`).then((res) => {
-      // console.log(res.data);
-      setReviewList(res.data.response);
-    });
+  async function getReview() {
+    await axios
+      .get(
+        `/review/search?search=title&page=0&gu=${
+          guDong.selectedGu !== "전체" ? guDong.selectedGu : ""
+        }&dong=${guDong.selectedDong !== "전체" ? guDong.selectedDong : ""}`
+      )
+      .then((res) => {
+        // console.log(res.data);
+        setReviewList(res.data.response);
+      });
   }
 
   async function getYoutubeItems(gu) {
@@ -79,6 +85,7 @@ export default function BoardMainComponent() {
   useEffect(() => {
     getYoutubeItems(guDong.selectedGu);
     searchBoard();
+    getReview();
   }, [guDong]);
 
   return (
@@ -117,27 +124,29 @@ export default function BoardMainComponent() {
           <div className="flex flex-col w-1/2 h-full">
             <div className="flex flex-col h-full px-3">
               <div className="flex flex-row justify-between items-center p-5">
-                <p className="font-medium text-2xl">리뷰 게시판</p>
+                <p className="font-medium text-2xl">리뷰게시판</p>
                 <Link to="review">
                   <p>더보기...</p>
                 </Link>
               </div>
 
               <div className="flex flex-col h-1/2 justify-between items-center px-5">
-                <div className="flex flex-col h-full w-full">
-                  {reviewList &&
-                    reviewList.map((x) => {
-                      return (
-                        <ReviewRow
-                          key={x.id}
-                          id={x.id}
-                          title={x.title}
-                          likes={x.reviewLike}
-                          tags={["tag1", "tag2"]}
-                          score={x.score}
-                        />
-                      );
-                    })}
+                <div className="w-full dnticard">
+                  <div className="flex flex-col h-full w-full">
+                    {reviewList &&
+                      reviewList.map((x) => {
+                        return (
+                          <ReviewRow
+                            key={x.id}
+                            id={x.id}
+                            title={x.title}
+                            likes={x.reviewLike}
+                            tags={["tag1", "tag2"]}
+                            score={x.score}
+                          />
+                        );
+                      })}
+                  </div>
                 </div>
               </div>
               <div className="flex flex-col h-1/2 items-center p-5">

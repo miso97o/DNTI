@@ -10,6 +10,20 @@
   font-style: normal;
 }
 
+@layer components {
+  .dnticard {
+    border: solid 2px #d9d9d9;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 1em;
+  }
+  ,
+  .linehover {
+    background-color: #2200f4;
+    color: #ffffff;
+  }
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
