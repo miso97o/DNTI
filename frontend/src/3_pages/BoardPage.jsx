@@ -85,8 +85,8 @@ export default function Boardpage() {
   };
 
   return (
-    <div className="flex flex-col w-full h-full items-center p-10">
-      <div className="flex flex-row w-4/5 p-5">
+    <div className="flex flex-col w-full h-full items-center p-5">
+      <div className="flex flex-row w-4/5 p-3">
         <div className="mr-5">
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
@@ -97,6 +97,7 @@ export default function Boardpage() {
                 value={selectedGu}
                 label="구"
                 onChange={handleGuChange}
+                size="small"
               >
                 {guList.map((gu) => {
                   return (
@@ -119,6 +120,7 @@ export default function Boardpage() {
                 value={selectedDong}
                 label="동"
                 onChange={handleDongChange}
+                size="small"
               >
                 {dongList.map((dong) => {
                   return (

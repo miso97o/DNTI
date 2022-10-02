@@ -11,6 +11,7 @@ import moment from "moment";
 import "moment/locale/ko";
 import axios from "../utils/axios";
 import { useNavigate } from "react-router-dom";
+import DntiBtn from "../0_atoms/DntiBtn";
 
 export default function SignUpPage() {
   const [cookies, setCookie] = useCookies(["userEmail"]);
@@ -23,6 +24,7 @@ export default function SignUpPage() {
   const [gu, setGu] = React.useState("");
   const [dong, setDong] = React.useState("");
   const [birthDate, setBirthDate] = React.useState("");
+  const [isValidNickName, setIsValidNickName] = React.useState(false);
   console.log(nickName);
 
   let userInfo = {
@@ -48,6 +50,8 @@ export default function SignUpPage() {
     } else if (userInfo.email === "") {
       alert("잘못된 접근입니다.");
       return;
+    } else if (!isValidNickName) {
+      alert("닉네임 중복 확인을 해주세요.");
     }
 
     axios.post("/users", userInfo).then((data) => {
@@ -90,59 +94,92 @@ export default function SignUpPage() {
     setNickName(event.target.value);
     console.log(nickName);
   };
+  const checkIfDuplicated = () => {
+    axios.get(`/users/nickname?nickname=${nickName}`).then(({ data }) => {
+      if (!data.response) {
+        alert("사용할 수 있는 닉네임입니다.");
+        setIsValidNickName(true);
+      } else {
+        alert("중복된 닉네임이 존재합니다. 다른 닉네임을 입력해주세요.");
+        setIsValidNickName(false);
+      }
+    });
+  };
 
   return (
     <div className="container mx-auto h-4/5 w-screen flex flex-col justify-content-center place-items-center">
-      <p className="text-6xl m-10">회원가입</p>
-      <div className="flex flex-col items-center">
-        <div className="flex flex-col">
-          <div className="flex flex-col">
-            <div className="flex flex-row">
+      <p className="text-3xl m-10">회원가입</p>
+      <div className="flex flex-col h-1/2 w-1/3 justify-center items-center dnticard">
+        <div className="flex flex-col mb-5">
+          <div className="flex flex-col items-center">
+            <div className="flex flex-row items-center">
               <div className="">
-                <TextField
-                  label="닉네임"
-                  color="primary"
-                  value={nickName}
-                  onChange={handleNickNameChange}
-                />
+                {isValidNickName ? (
+                  <TextField
+                    label="닉네임"
+                    color="primary"
+                    value={nickName}
+                    onChange={handleNickNameChange}
+                    size="small"
+                  />
+                ) : (
+                  <TextField
+                    label="닉네임"
+                    color="primary"
+                    value={nickName}
+                    onChange={handleNickNameChange}
+                    size="small"
+                    error
+                  />
+                )}
               </div>
-              <div className="">
-                <Button>중복 확인</Button>
+              <div className="ml-3" onClick={checkIfDuplicated}>
+                <DntiBtn text="중복 확인" type="black" />
               </div>
             </div>
-            <p className="txt-893">사용할 수 있는 닉네임입니다.</p>
+            {isValidNickName ? (
+              <p className="text-blue-700">사용할 수 있는 닉네임입니다.</p>
+            ) : (
+              <p className="text-red-600">다른 닉네임을 입력해주세요.</p>
+            )}
           </div>
-          <LocalizationProvider dateAdapter={AdapterMoment}>
-            <DesktopDatePicker
-              label="생년월일"
-              inputFormat="YYYY/MM/DD"
-              value={birthDate}
-              onChange={handleBirthDateChange}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </LocalizationProvider>
-          <div className="flex flex-row">
-            <div className="signupinputzipcodebtn flex-col-hcenter-vcenter">
-              <Button onClick={handleClick}>주소 찾기</Button>
+          <div className="flex flex-col w-full items-center border-b-2 border-b-slate-200 py-8">
+            <div className="w-full">
+              <TextField
+                label="주소"
+                color="primary"
+                value={mainAddr}
+                fullWidth
+                required
+                size="small"
+                disabled
+              />
+            </div>
+            <div className="pt-3" onClick={handleClick}>
+              <DntiBtn text="주소 찾기" type="white" />
             </div>
           </div>
-          <div className="">
-            <TextField
-              label="주소"
-              color="primary"
-              value={mainAddr}
-              fullWidth
-              disabled
-            />
-          </div>
+          {/* <div className="flex flex-row w-full justify-center py-3">
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <DesktopDatePicker
+                label="생년월일"
+                inputFormat="YYYY/MM/DD"
+                value={birthDate}
+                onChange={handleBirthDateChange}
+                renderInput={(params) => <TextField {...params} />}
+                size="small"
+              />
+            </LocalizationProvider>
+          </div> */}
         </div>
-        <Button
+        <div
+          className="pt-2"
           onClick={(e) => {
             signUp(userInfo, e);
           }}
         >
-          회원가입
-        </Button>
+          <DntiBtn text="회원가입" type="blue" />
+        </div>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { pink } from "@mui/material/colors";
 import { useSelector } from "react-redux";
+import DntiBtn from "../../../0_atoms/DntiBtn";
 
 export default function ReviewViewComponent() {
   const [reviewContents, setReviewContents] = React.useState("");
@@ -91,89 +92,98 @@ export default function ReviewViewComponent() {
   if (user.userId === reviewContents.email) {
     reviewControlPanel = (
       <div className="flex flex-row w-full justify-center mt-10">
-        <Link
-          to="/board/review/write"
-          state={{ reviewId: location.state.reviewId }}
-        >
-          <Button>수정</Button>
-        </Link>
-        <Link to="/board/review">
-          <Button>목록</Button>
-        </Link>
-        <Button onClick={deleteReview}>삭제</Button>
+        <div className="flex flex-row w-1/2 justify-between">
+          <Link
+            to="/board/review/write"
+            state={{ reviewId: location.state.reviewId }}
+          >
+            <DntiBtn text="수정" type="yellow" />
+          </Link>
+          <Link to="/board/review">
+            <DntiBtn text="목록" type="white" />
+          </Link>
+          <DntiBtn text="삭제" type="black" onClick={deleteReview} />
+        </div>
       </div>
     );
   } else {
     reviewControlPanel = (
       <div className="flex flex-row w-full justify-center mt-10">
         <Link to="/board/review">
-          <Button>목록</Button>
+          <DntiBtn text="목록" type="white" />
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col h-full">
-      <p className="">리뷰 보기</p>
-      <div className="flex flex-col h-full">
-        <div className="flex flex-row justify-between">
-          <div className="flex flex-row w-1/2">
-            <p className="w-1/4">{reviewContents.dong}</p>
-            <p className="">{reviewContents.title}</p>
-          </div>
-          <div className="flex flex-row w-1/2 justify-between">
-            <p className="">{reviewContents.email}</p>
-            <div className="flex flex-row">
-              <div className="px-1">
-                <FavoriteIcon sx={{ color: pink[500] }} />
+    <div className="flex flex-col h-full mx-3">
+      <div className="h-full w-full dnticard">
+        <div className="flex flex-col h-full">
+          <div className="flex flex-row h-8 justify-between border-b-2 border-b-slate-200">
+            <div className="flex flex-row w-1/2">
+              <p className="w-1/4">{reviewContents.dong}</p>
+              <p className="">{reviewContents.title}</p>
+            </div>
+            <div className="flex flex-row w-1/2 justify-end">
+              <p className="">{reviewContents.nickname}</p>
+              <div className="flex flex-row ml-3">
+                <div className="px-1">
+                  <FavoriteIcon sx={{ color: pink[500] }} />
+                </div>
+                <p className="">{reviewContents.reviewLike}</p>
               </div>
-              <p className="">{reviewContents.reviewLike}</p>
             </div>
           </div>
+          <div className="flex h-80 p-2 my-5 border-b-2 border-b-slate-200">
+            <p>{reviewContents.content}</p>
+          </div>
+          <div className="flex flex-col items-center my-5">
+            <div className="flex flex-row  w-1/3 justify-between mb-3">
+              <p className="text-lg">총점</p>
+              <Rating
+                name="total"
+                value={totalScore}
+                precision={0.25}
+                size="large"
+                readOnly
+              />
+            </div>
+            <div className="flex flex-row w-1/3 justify-between">
+              <p>임대료</p>
+              <Rating name="total" value={rentScore} readOnly />
+            </div>
+            <div className="flex flex-row w-1/3 justify-between">
+              <p>인프라</p>
+              <Rating name="total" value={infraScore} readOnly />
+            </div>
+            <div className="flex flex-row w-1/3 justify-between">
+              <p>환경</p>
+              <Rating name="total" value={envScore} readOnly />
+            </div>
+            <div className="flex flex-row w-1/3 justify-between">
+              <p>안전</p>
+              <Rating name="total" value={safeScore} readOnly />
+            </div>
+          </div>
+          <div className="flex w-full justify-center mt-5">
+            <IconButton
+              type="button"
+              sx={{ p: "10px" }}
+              aria-label="search"
+              onClick={() => {
+                clickLike();
+              }}
+            >
+              {isLike ? (
+                <FavoriteIcon sx={{ color: pink[500] }} />
+              ) : (
+                <FavoriteBorderIcon sx={{ color: pink[500] }} />
+              )}
+            </IconButton>
+          </div>
+          {reviewControlPanel}
         </div>
-        <div className="flex h-80 p-5">
-          <p>{reviewContents.content}</p>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="flex flex-row">
-            <p>총점</p>
-            <Rating name="total" value={totalScore} precision={0.25} readOnly />
-          </div>
-          <div className="flex flex-row">
-            <p>임대료</p>
-            <Rating name="total" value={rentScore} readOnly />
-          </div>
-          <div className="flex flex-row">
-            <p>인프라</p>
-            <Rating name="total" value={infraScore} readOnly />
-          </div>
-          <div className="flex flex-row">
-            <p>환경</p>
-            <Rating name="total" value={envScore} readOnly />
-          </div>
-          <div className="flex flex-row">
-            <p>안전</p>
-            <Rating name="total" value={safeScore} readOnly />
-          </div>
-        </div>
-        <div className="flex w-full justify-center mt-10">
-          <IconButton
-            type="button"
-            sx={{ p: "10px" }}
-            aria-label="search"
-            onClick={() => {
-              clickLike();
-            }}
-          >
-            {isLike ? (
-              <FavoriteIcon sx={{ color: pink[500] }} />
-            ) : (
-              <FavoriteBorderIcon sx={{ color: pink[500] }} />
-            )}
-          </IconButton>
-        </div>
-        {reviewControlPanel}
       </div>
     </div>
   );

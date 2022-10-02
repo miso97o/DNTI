@@ -11,7 +11,7 @@ import { Paper, Button } from "@mui/material";
 function Item({ url, thumbnail, title }) {
   return (
     <div
-      className="cursor-pointer"
+      className=" cursor-pointer"
       onClick={() => {
         window.open(url);
       }}
@@ -58,13 +58,15 @@ export default function BoardMainComponent() {
   async function getReview() {
     await axios
       .get(
-        `/review/search?search=title&page=0&gu=${
+        `/review/search?search=title&gu=${
           guDong.selectedGu !== "전체" ? guDong.selectedGu : ""
-        }&dong=${guDong.selectedDong !== "전체" ? guDong.selectedDong : ""}`
+        }&dong=${
+          guDong.selectedDong !== "전체" ? guDong.selectedDong : ""
+        }&page=0&size=9`
       )
       .then((res) => {
-        // console.log(res.data);
-        setReviewList(res.data.response);
+        console.log(res.data);
+        setReviewList(res.data.response.content);
       });
   }
 
@@ -110,22 +112,24 @@ export default function BoardMainComponent() {
             </div>
 
             <div className="flex flex-col h-full items-center justify-between px-5">
-              <div className="flex flex-col h-full w-full">
-                {boardList &&
-                  boardList.map((x) => {
-                    return (
-                      <PostRow
-                        key={x.boardId}
-                        Id={x.boardId}
-                        title={x.title}
-                        writer={x.nickname}
-                        date={x.createdTime.substring(2, 10)}
-                        replies={x.commentCount}
-                        views={x.hit}
-                        likes={x.boardLike}
-                      />
-                    );
-                  })}
+              <div className="h-full w-full dnticard">
+                <div className="flex flex-col h-full w-full">
+                  {boardList &&
+                    boardList.map((x) => {
+                      return (
+                        <PostRow
+                          key={x.boardId}
+                          Id={x.boardId}
+                          title={x.title}
+                          writer={x.nickname}
+                          date={x.createdTime.substring(2, 10)}
+                          replies={x.commentCount}
+                          views={x.hit}
+                          likes={x.boardLike}
+                        />
+                      );
+                    })}
+                </div>
               </div>
             </div>
           </div>
@@ -137,39 +141,41 @@ export default function BoardMainComponent() {
                   <p>더보기...</p>
                 </Link>
               </div>
-
-              <div className="flex flex-col h-1/2 justify-between items-center px-5">
-                <div className="w-full dnticard">
-                  <div className="flex flex-col h-full w-full">
-                    {reviewList &&
-                      reviewList.map((x) => {
-                        return (
-                          <ReviewRow
-                            key={x.id}
-                            id={x.id}
-                            title={x.title}
-                            likes={x.reviewLike}
-                            tags={["tag1", "tag2"]}
-                            score={x.score}
-                          />
-                        );
-                      })}
+              <div className="flex flex-col h-full w-full justify-between">
+                <div className="flex flex-col h-1/2 items-center px-5">
+                  <div className="h-full w-full dnticard">
+                    <div className="flex flex-col h-full w-full">
+                      {reviewList &&
+                        reviewList.map((x) => {
+                          return (
+                            <ReviewRow
+                              key={x.id}
+                              id={x.id}
+                              title={x.title}
+                              likes={x.reviewLike}
+                              score={x.score}
+                            />
+                          );
+                        })}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="flex flex-col h-1/2 items-center p-5">
-                <div className="flex flex-col h-full w-full justify-start">
-                  <p className="font-medium text-2xl">관련 영상</p>
-                  <Carousel navButtonsAlwaysVisible="true">
-                    {youtubeItems.map((item) => (
-                      <Item
-                        key={item.youtubeId}
-                        url={item.url}
-                        thumbnail={item.thumbnail}
-                        title={item.title}
-                      />
-                    ))}
-                  </Carousel>
+                <div className="flex flex-col h-1/2 items-center p-5">
+                  <div className="flex flex-col h-full w-full justify-start">
+                    <p className="font-medium text-2xl mb-5">관련 영상</p>
+                    <div className="h-full w-full dnticard">
+                      <Carousel className="h-54" navButtonsAlwaysVisible="true">
+                        {youtubeItems.map((item) => (
+                          <Item
+                            key={item.youtubeId}
+                            url={item.url}
+                            thumbnail={item.thumbnail}
+                            title={item.title}
+                          />
+                        ))}
+                      </Carousel>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
