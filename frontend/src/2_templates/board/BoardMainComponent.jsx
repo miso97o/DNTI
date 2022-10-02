@@ -78,11 +78,15 @@ export default function BoardMainComponent() {
   const [reviewList, setReviewList] = React.useState([]);
 
   useEffect(() => {
-    getBoard(1);
+    console.log("BoardMainComponent useEffect([])");
+
+    searchBoard();
     getReview(1);
   }, []);
 
   useEffect(() => {
+    console.log("BoardMainComponent useEffect(guDong)");
+
     getYoutubeItems(guDong.selectedGu);
     searchBoard();
     getReview();

@@ -24,12 +24,12 @@ export default function Boardpage() {
   const email = cookies["userEmail"];
 
   useEffect(() => {
-    axios.get(`address/gu`).then(({ data }) => {
-      setGuList(["전체", ...data.response]);
-    });
+    console.log("BoardPage useEffect([])");
+    setGuDongList();
   }, []);
 
   useEffect(() => {
+    console.log("BoardPage useEffect(email)");
     if (email === "undefined" || email === undefined) {
       alert("로그인이 필요합니다.");
       navigate("/login", { replace: true });
@@ -37,18 +37,29 @@ export default function Boardpage() {
   }, [email]);
 
   useEffect(() => {
+    console.log("BoardPage useEffect(user)");
     console.log(user.gu);
     if (user.gu !== null) {
-      dispatch(selectGu(user.gu));
       setSelectedGu(user.gu);
+      dispatch(selectGu(user.gu));
     }
   }, [user]);
 
   useEffect(() => {
+    console.log("BoardPage useEffect(selectedGu)");
     axios.get(`address/dong/${selectedGu}`).then(({ data }) => {
       setDongList(["전체", ...data.response]);
     });
   }, [selectedGu]);
+
+  async function setGuDongList() {
+    await axios.get(`address/gu`).then(({ data }) => {
+      setGuList(["전체", ...data.response]);
+    });
+    await axios.get(`address/dong/${selectedGu}`).then(({ data }) => {
+      setDongList(["전체", ...data.response]);
+    });
+  }
 
   const handleGuChange = (event) => {
     dispatch(selectGu(event.target.value));
