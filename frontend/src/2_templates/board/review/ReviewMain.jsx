@@ -4,6 +4,8 @@ import { Button, Rating } from "@mui/material";
 import axios from "axios";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import DntiBtn from "../../../0_atoms/DntiBtn";
+import CreateIcon from "@mui/icons-material/Create";
 
 function GuCard({
   gu,
@@ -17,23 +19,23 @@ function GuCard({
   if (totalScore !== 0) {
     guRatings = (
       <div className="flex flex-col items-center">
-        <div className="flex flex-row">
-          <p>총점</p>
-          <Rating name="total" value={totalScore} readOnly />
+        <div className="flex flex-row w-1/2 justify-between my-5">
+          <p className="text-lg">총점</p>
+          <Rating name="total" value={totalScore} size="large" readOnly />
         </div>
-        <div className="flex flex-row">
+        <div className="flex flex-row w-1/2 justify-between">
           <p>임대료</p>
           <Rating name="total" value={rentScore} readOnly />
         </div>
-        <div className="flex flex-row">
+        <div className="flex flex-row w-1/2 justify-between">
           <p>인프라</p>
           <Rating name="total" value={infraScore} readOnly />
         </div>
-        <div className="flex flex-row">
+        <div className="flex flex-row w-1/2 justify-between">
           <p>환경</p>
           <Rating name="total" value={envScore} readOnly />
         </div>
-        <div className="flex flex-row">
+        <div className="flex flex-row w-1/2 justify-between">
           <p>안전</p>
           <Rating name="total" value={safeScore} readOnly />
         </div>
@@ -47,10 +49,10 @@ function GuCard({
     );
   }
   return (
-    <div className="w-2/5 h-1/2 p-5 dnticard">
+    <div className="w-full h-2/3 p-5 dnticard">
       <div className="flex flex-col h-full">
         <div className="flex flex-row justify-center">
-          <p>{gu}</p>
+          <p className="text-2xl">{gu}</p>
         </div>
         <div className="flex flex-row h-1/2 justify-center">
           <img
@@ -110,8 +112,8 @@ export default function ReviewMain() {
     );
   } else {
     guCard = (
-      <div className="w-2/5 h-1/2 p-5">
-        <div className="flex flex-col h-full">
+      <div className="w-full h-2/3 p-5 dnticard">
+        <div className="flex flex-row h-full justify-center items-center">
           <p>구를 선택해주세요!</p>
         </div>
       </div>
@@ -122,17 +124,17 @@ export default function ReviewMain() {
     <div className="flex flex-col h-full w-4/5 items-center">
       <div className="flex flex-row w-full justify-start">
         <Link to="/board">
-          <Button>뒤로</Button>
+          <DntiBtn text={"< 뒤로"} type={"black"} />
         </Link>
       </div>
-      <div className="flex flex-row w-full justify-between items-center">
-        <p>리뷰 게시판</p>
+      <div className="flex flex-row h-16 w-full justify-between items-center">
+        <p className="text-2xl">리뷰 게시판</p>
         <Link to="/board/review/write" state={{ reviewId: "newReview" }}>
-          <Button>글쓰기</Button>
+          <DntiBtn text={"글쓰기"} type={"square"} icon={"edit"} />
         </Link>
       </div>
       <div className="flex flex-row h-full w-full ">
-        {guCard}
+        <div className="h-full w-2/5 mx-3">{guCard}</div>
         <div className="h-full w-3/5">
           <Outlet />
         </div>

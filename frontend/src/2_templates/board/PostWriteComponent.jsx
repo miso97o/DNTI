@@ -4,6 +4,7 @@ import { Button, TextField } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "axios";
+import DntiBtn from "../../0_atoms/DntiBtn";
 
 export default function PostWriteComponent() {
   const [postContents, setPostContents] = React.useState("");
@@ -27,79 +28,88 @@ export default function PostWriteComponent() {
   });
 
   useEffect(() => {
-    if(boardId) {
-      axios.get(`/board/${boardId}`)
-      .then((res) => {
+    if (boardId) {
+      axios.get(`/board/${boardId}`).then((res) => {
         console.log(res.data);
-        setPostContents(res.data.response.contents)
-        setPostTitle(res.data.response.title)
-      })
+        setPostContents(res.data.response.contents);
+        setPostTitle(res.data.response.title);
+      });
     }
-  },[])
+  }, []);
 
-  function writePost() {    //수정으로 들어가면 수정, 아니면 작성
-    if(boardId) 
-    axios.patch(`/board/${boardId}`, {
-      email: user.userId,
-      title: postTitle,
-      contents: postContents
-    })
-    .then((res) => {
-      console.log('update', res.data);
-      navigate('/board/postview', {state: {boardId: boardId}})
-      alert("게시글이 수정되었습니다!")
-    })
+  function writePost() {
+    //수정으로 들어가면 수정, 아니면 작성
+    if (boardId)
+      axios
+        .patch(`/board/${boardId}`, {
+          email: user.userId,
+          title: postTitle,
+          contents: postContents,
+        })
+        .then((res) => {
+          console.log("update", res.data);
+          navigate("/board/postview", { state: { boardId: boardId } });
+          alert("게시글이 수정되었습니다!");
+        });
     else {
-      axios.post(`/board`,{
-        email: user.userId,
-        title: postTitle,
-        contents: postContents
-      })
-      .then((res) => {
-        console.log(res.data);
-        navigate("/board/postview", {state: {boardId: res.data.response}})
-        alert("게시글이 작성되었습니다!!")
-      })
+      axios
+        .post(`/board`, {
+          email: user.userId,
+          title: postTitle,
+          contents: postContents,
+        })
+        .then((res) => {
+          console.log(res.data);
+          navigate("/board/postview", {
+            state: { boardId: res.data.response },
+          });
+          alert("게시글이 작성되었습니다!!");
+        });
     }
   }
 
   return (
-    <div className="flex flex-col w-4/5 h-full items-center m-5">
-      <div className="flex flex-row w-full m-5">
+    <div className="flex flex-col w-4/5 h-full items-center p-3">
+      <div className="flex flex-row w-full p-3">
         <p className="font-medium text-2xl">게시판 글 작성</p>
       </div>
-      <div className="flex flex-row w-full justify-between m-5">
-        <div className="flex flex-row w-1/2">
-          <p className="w-1/4">{user.dong}</p>
+      <div className="h-full w-full dnticard">
+        <div className="flex flex-col w-full justify-between  p-3 ">
+          <div className="flex flex-row w-full justify-between items-center">
+            <p className="w-24">{user.dong}</p>
+            <p className="">{user.nickname}</p>
+          </div>
           <TextField
             value={postTitle}
             onChange={handleChangeTitle}
             placeholder="제목을 입력하세요"
-          />
-        </div>
-        <div className="flex flex-row w-1/2 justify-between">
-          <p>{user.nickname}</p>
-        </div>
-      </div>
-      <div className="flex flex-col h-4/5 w-full m-5">
-        <div className="flex h-4/5 m-5">
-          <TextField
-            multiline
+            variant="standard"
             fullWidth
-            minRows={20}
-            value={postContents}
-            onChange={handleChangeContents}
-            placeholder="내용을 입력하세요"
           />
         </div>
-        <div className="flex flex-row justify-center"></div>
-        <div className="flex flex-row justify-center items-center m-5">
-          <Link >
-            <Button onClick={() => writePost()}>{boardId ? "수정" : "등록"}</Button>
-          </Link>
-          <Link to={boardId ? "/board/postview" : "/board/post"}>
-            <Button>취소</Button>
-          </Link>
+        <div className="flex flex-col h-full w-full px-3">
+          <div className="flex h-4/5 p-3">
+            <TextField
+              multiline
+              fullWidth
+              minRows={20}
+              value={postContents}
+              onChange={handleChangeContents}
+              placeholder="내용을 입력하세요"
+            />
+          </div>
+          <div className="flex flex-row w-full justify-center items-center p-3">
+            <div className="flex flex-row w-1/5 justify-between">
+              <Link>
+                <div onClick={() => writePost()}>
+                  <DntiBtn text={boardId ? "수정" : "등록"} type="yellow" />
+                </div>
+              </Link>
+              <Link to={boardId ? "/board/postview" : "/board/post"}>
+                <DntiBtn text="취소" type="white" />
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>

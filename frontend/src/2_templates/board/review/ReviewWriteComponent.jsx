@@ -4,6 +4,7 @@ import { Button, Rating, TextField } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "../../../utils/axios";
+import DntiBtn from "../../../0_atoms/DntiBtn";
 
 export default function ReviewWriteComponent() {
   const navigate = useNavigate();
@@ -102,34 +103,36 @@ export default function ReviewWriteComponent() {
   if (location.state.reviewId !== "newReview") {
     controlPanel = (
       <div className="flex flex-row w-full justify-center mt-10">
-        <Button
+        <DntiBtn
+          text="등록"
+          type="yellow"
           onClick={(e) => {
             submitReview(payload, e);
           }}
-        >
-          등록
-        </Button>
+        />
         <Link
           to="/board/review/view"
           state={{ reviewId: location.state.reviewId }}
         >
-          <Button>취소</Button>
+          <DntiBtn text="취소" type="white" />
         </Link>
       </div>
     );
   } else {
     controlPanel = (
       <div className="flex flex-row w-full justify-center mt-10">
-        <Button
-          onClick={(e) => {
-            submitReview(payload, e);
-          }}
-        >
-          등록
-        </Button>
-        <Link to="/board/review">
-          <Button>취소</Button>
-        </Link>
+        <div className="flex flex-row w-1/3 justify-between">
+          <DntiBtn
+            text="등록"
+            type="yellow"
+            onClick={(e) => {
+              submitReview(payload, e);
+            }}
+          />
+          <Link to="/board/review">
+            <DntiBtn text="취소" type="white" />
+          </Link>
+        </div>
       </div>
     );
   }
@@ -137,9 +140,8 @@ export default function ReviewWriteComponent() {
   return (
     <div className="">
       <div className="">
-        <div className="">
-          <p className="mb-5">리뷰 글 작성</p>
-          <div className="">
+        <div className="mx-3">
+          <div className="dnticard">
             <div className="flex flex-row justify-between items-center">
               <p className="">{user.dong}</p>
               <p className="">{user.nickname}</p>
@@ -165,17 +167,18 @@ export default function ReviewWriteComponent() {
                 onChange={handleReviewContentsChange}
               />
             </div>
-            <div className="flex flex-col items-center">
-              <div className="flex flex-row">
-                <p>총점</p>
+            <div className="flex flex-col items-center  my-5">
+              <div className="flex flex-row w-1/3 justify-between mb-3">
+                <p className="text-lg">총점</p>
                 <Rating
                   name="total"
                   value={totalScore}
                   precision={0.25}
+                  size="large"
                   readOnly
                 />
               </div>
-              <div className="flex flex-row">
+              <div className="flex flex-row w-1/3 justify-between">
                 <p>임대료</p>
                 <Rating
                   name="total"
@@ -186,7 +189,7 @@ export default function ReviewWriteComponent() {
                   }}
                 />
               </div>
-              <div className="flex flex-row">
+              <div className="flex flex-row w-1/3 justify-between">
                 <p>인프라</p>
                 <Rating
                   name="total"
@@ -197,7 +200,7 @@ export default function ReviewWriteComponent() {
                   }}
                 />
               </div>
-              <div className="flex flex-row">
+              <div className="flex flex-row w-1/3 justify-between">
                 <p>환경</p>
                 <Rating
                   name="total"
@@ -208,7 +211,7 @@ export default function ReviewWriteComponent() {
                   }}
                 />
               </div>
-              <div className="flex flex-row">
+              <div className="flex flex-row w-1/3 justify-between">
                 <p>안전</p>
                 <Rating
                   name="total"
