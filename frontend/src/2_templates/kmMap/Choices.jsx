@@ -85,7 +85,7 @@ function Choices(props) {
           </div>
         </div>
         <div className={styles.favorites}>
-          <Favorites />
+          {/* <Favorites /> */}
         </div>
         
       </div>

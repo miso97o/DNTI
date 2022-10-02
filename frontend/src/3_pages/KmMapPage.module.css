@@ -167,7 +167,10 @@ CORE STYLES
 
 
 
-
+.favListColumn {
+  display: flex;
+  justify-content: space-between;
+}
 
 .kakaoMap {
   height: 800px;

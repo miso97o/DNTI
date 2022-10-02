@@ -12,13 +12,14 @@ import MartLogo from "../../0_atoms/Icon/MartLogo.png";
 import CVSLogo from "../../0_atoms/Icon/CVSLogo.png";
 import ParkLogo from "../../0_atoms/Icon/ParkLogo.png";
 import GymLogo from "../../0_atoms/Icon/GymLogo.png";
+import RestaurantLogo from "../../0_atoms/Icon/RestaurantLogo.png";
 
 
 
 
 const options = [
   {
-    value: "bus_station",
+    value: "bus",
     label: 
     // <div>
     //   <img src={BusLogo} alt="BusLogo" className={styles.BusLogo}/>
@@ -27,7 +28,7 @@ const options = [
     <p className={styles.labelTxt}>버스정류장</p>,
     image:
     <img src={BusLogo} alt="BusLogo" className={styles.BusLogo}/>,
-    key: "bus_station",
+    key: "bus",
     checked : false
   },
   {
@@ -100,6 +101,19 @@ const options = [
     image:
     <img src={GymLogo} alt="GymLogo" className={styles.GymLogo}/>,
     key: "gym",
+    checked : false
+  },
+  {
+    value: "restaurant",
+    label: 
+    // <div>
+    //   <img src={BusLogo} alt="BusLogo" className={styles.BusLogo}/>
+    //   <p className={styles.labelTxt}>버스정류장</p>
+    // </div>
+    <p className={styles.labelTxt}>식당</p>,
+    image:
+    <img src={RestaurantLogo} alt="RestaurantLogo" className={styles.RestaurantLogo}/>,
+    key: "restaurant",
     checked : false
   },
 ];
