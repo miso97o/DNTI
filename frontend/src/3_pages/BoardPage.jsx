@@ -24,10 +24,21 @@ export default function Boardpage() {
   const email = cookies["userEmail"];
 
   useEffect(() => {
+    console.log('boardPage initialize')
     axios.get(`address/gu`).then(({ data }) => {
       setGuList(["전체", ...data.response]);
     });
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (user.gu !== null) {
+        console.log('cleanUp')
+        dispatch(selectGu(user.gu));
+        setSelectedGu(user.gu);
+      }
+    }
+  }, [])
 
   useEffect(() => {
     if (email === "undefined" || email === undefined) {
@@ -37,7 +48,7 @@ export default function Boardpage() {
   }, [email]);
 
   useEffect(() => {
-    console.log(user.gu);
+    console.log('userGu', user.gu);
     if (user.gu !== null) {
       dispatch(selectGu(user.gu));
       setSelectedGu(user.gu);
@@ -45,6 +56,7 @@ export default function Boardpage() {
   }, [user]);
 
   useEffect(() => {
+    console.log('gu changed')
     axios.get(`address/dong/${selectedGu}`).then(({ data }) => {
       setDongList(["전체", ...data.response]);
     });

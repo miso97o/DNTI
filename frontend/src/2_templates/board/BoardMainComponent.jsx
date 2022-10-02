@@ -28,6 +28,9 @@ function Item({ url, thumbnail, title }) {
 
 export default function BoardMainComponent() {
   const [youtubeItems, setYoutubeItems] = React.useState([]);
+  const guDong = useSelector((state) => state.guDong);
+  const [boardList, setBoardList] = React.useState([]);
+  const [reviewList, setReviewList] = React.useState([]);
 
   async function getBoard(page) {
     await axios.get(`/board?page=${page - 1}`).then((res) => {
@@ -36,9 +39,9 @@ export default function BoardMainComponent() {
     });
   }
 
-  function searchBoard() {
+  async function searchBoard() {
     console.log(guDong);
-    axios
+    await axios
       .get(
         `/board/search?gu=${
           guDong.selectedGu === "전체" ? "" : guDong.selectedGu
@@ -72,20 +75,24 @@ export default function BoardMainComponent() {
     });
   }
 
-  const guDong = useSelector((state) => state.guDong);
-
-  const [boardList, setBoardList] = React.useState([]);
-  const [reviewList, setReviewList] = React.useState([]);
 
   useEffect(() => {
-    getBoard(1);
+    console.log('boardMain initialize')
+    searchBoard();
     getReview(1);
   }, []);
 
+  const mounted = React.useRef(false);
   useEffect(() => {
-    getYoutubeItems(guDong.selectedGu);
-    searchBoard();
-    getReview();
+    if(!mounted.current) mounted.current = true;
+    else {
+      console.log('guDong changed')
+      setTimeout(() => {
+        getYoutubeItems(guDong.selectedGu);
+        searchBoard();
+        getReview();  
+      }, 0);
+    }
   }, [guDong]);
 
   return (
