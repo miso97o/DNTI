@@ -80,6 +80,12 @@ INSERT INTO `dnti`.`dnti` (`dnti_id`, `count`, `keyword`, `hashtag1`, `hashtag2`
 INSERT INTO `dnti`.`dnti` (`dnti_id`, `count`, `keyword`, `hashtag1`, `hashtag2`) VALUES ('NOTN', '1','우유부단한 현대인', '우유부단','현대인');
 INSERT INTO `dnti`.`dnti` (`dnti_id`, `count`, `keyword`, `hashtag1`, `hashtag2`) VALUES ('NOTS', '1','우유부단한 대장부', '우유부단','용감');
 
+INSERT INTO `dnti`.`dnti` (`dnti_id`, `count`, `hashtag1`, `hashtag2`, `keyword`) VALUES ('TOPI', '1', '편리미엄', '현대인', '뽀로로 그잡채');
+INSERT INTO `dnti`.`dnti` (`dnti_id`, `count`, `hashtag1`, `hashtag2`, `keyword`) VALUES ('TOPP', '1', '알뜰살뜰', '검소', '구두쇠 그잡채');
+INSERT INTO `dnti`.`dnti` (`dnti_id`, `count`, `hashtag1`, `hashtag2`, `keyword`) VALUES ('TOPN', '1', '자연인', '푸릇푸릇', '자연인 그잡채');
+INSERT INTO `dnti`.`dnti` (`dnti_id`, `count`, `hashtag1`, `hashtag2`, `keyword`) VALUES ('TOPS', '1', '안전제일', '조심조심', '쫄보 그잡채');
+
+
 
 --더미 보드 데이터
 INSERT INTO `board` VALUES (1,'2022-07-21 09:30:22.232051',NULL,0,'피카츄는 꼬리가 길어','역삼동','강남구',0,'피카츄는전기쥐','yth@gmail.com'),(2,'2022-07-20 09:30:22.232051',NULL,0,'피카츄빵은 맛 없음','신사동','관악구',0,'가라 피카츄!','yth@gmail.com'),(3,'2022-07-23 09:30:22.232051',NULL,0,'파이리는 피카츄를 싫어해','신림동','관악구',0,'피카츄라이츄','yth@gmail.com'),(4,'2022-07-16 09:30:22.232051',NULL,0,'잠만보는잠자','역삼동','강남구',0,'파이리와파이참','yth@gmail.com'),(5,'2022-07-18 09:30:22.232051',NULL,0,'신림동꼬렛','신림동','관악구',0,'깨비드릴조','yth@gmail.com'),(6,'2022-07-25 09:30:22.232051',NULL,0,'사내 식당 밥 맛있어용','신대방동','동작구',0,'멀티캠퍼스시','skj@gmail.com'),(7,'2022-07-25 10:30:22.232051',NULL,0,'사내 식당 밥 맛없는데요?','청운동','종로구',0,'패스트캠퍼스','skj@gmail.com'),(8,'2022-07-25 12:30:22.232051',NULL,0,'밥 먹고 싶어','신교동','종로구',0,'호랑이선생님','skj@gmail.com');

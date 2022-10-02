@@ -25,11 +25,22 @@ export default function Boardpage() {
 
   useEffect(() => {
     console.log("BoardPage useEffect([])");
+    console.log("boardPage initialize");
+
     setGuDongList();
   }, []);
 
   useEffect(() => {
-    console.log("BoardPage useEffect(email)");
+    return () => {
+      if (user.gu !== null) {
+        console.log("cleanUp");
+        dispatch(selectGu(user.gu));
+        setSelectedGu(user.gu);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     if (email === "undefined" || email === undefined) {
       alert("로그인이 필요합니다.");
       navigate("/login", { replace: true });
@@ -39,6 +50,7 @@ export default function Boardpage() {
   useEffect(() => {
     console.log("BoardPage useEffect(user)");
     console.log(user.gu);
+    console.log("userGu", user.gu);
     if (user.gu !== null) {
       setSelectedGu(user.gu);
       dispatch(selectGu(user.gu));
@@ -47,6 +59,7 @@ export default function Boardpage() {
 
   useEffect(() => {
     console.log("BoardPage useEffect(selectedGu)");
+    console.log("gu changed");
     axios.get(`address/dong/${selectedGu}`).then(({ data }) => {
       setDongList(["전체", ...data.response]);
     });

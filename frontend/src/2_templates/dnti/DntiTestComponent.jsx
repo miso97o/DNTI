@@ -4,14 +4,38 @@ import { useState } from "react";
 import DntiResultComponent from "./DntiResultComponent";
 import React from "react";
 import { useEffect } from "react";
+import PropTypes from 'prop-types';
+import LinearProgress from '@mui/material/LinearProgress';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
-function Progressbar() {
+
+function LinearProgressWithLabel(props) {
   return (
-    <img
-      src="https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/iz8zxnh4p6l-225%3A703?alt=media&token=8ac25855-a56f-471e-9aa5-5eeb9de7c66e"
-      alt="Not Found"
-      className="progressbar"
-    />
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ width: '100%', mr: 1 }}>
+        <LinearProgress variant="determinate" {...props} />
+      </Box>
+      <Box sx={{ minWidth: 35 }}>
+        <Typography variant="body2" color="text.secondary">{`${Math.round(
+          props.value,
+        )}%`}</Typography>
+      </Box>
+    </Box>
+  );
+}
+
+LinearProgressWithLabel.propTypes = {
+  value: PropTypes.number.isRequired,
+};
+
+
+function LinearWithValueLabel({progress}) {
+  //const [progress, setProgress] =useState(0);
+  return (
+    <Box sx={{ width: '100%' }}>
+      <LinearProgressWithLabel value={progress} />
+    </Box>
   );
 }
 
@@ -32,6 +56,15 @@ const sortable = [];
 let arr=[0,0,0,0]
 
 export default function DntiList(){
+
+  function LinearWithValueLabel() {
+    return (
+      <Box sx={{ width: '100%' }}>
+        <LinearProgressWithLabel value={progress} />
+      </Box>
+    );
+  }
+
   const text=['피톤치드 듬뿍',"동네 경찰 마동석","새벽 3시 조깅 안전","요즘 뜨는 핫플","새벽2시 골목길도 편안함","월세 40",
     "주변이 푸릇푸릇 공세권","서울 어디든 30분","뻐국이가 직접 모닝콜","월세 아껴서 소고기 가능","5분 거리 식당 20개","혼자 월세 감당 가능 "
     ]
@@ -45,19 +78,20 @@ export default function DntiList(){
 
   const [gotoresult,setGotoresult]=useState(false)
 
+  const [progress, setProgress] =useState(0);
+
   const [win,setWin]=useState([])
   const [lose,setLose]=useState([])
 
   function handleNext(widx,lidx){
     setIndex(index+1)
+    setProgress(progress+16)
     const temp=Type[widx]
     result[`${temp}`]+=1
-    console.log(index+"좌표 값")
     setWin([...win,Type[widx]])
     setLose([...lose,Type[lidx]])
     if(index>5){
       TypeResult()
-      //TypeCheck()
       setGotoresult(true)
     }
   }
@@ -74,7 +108,6 @@ export default function DntiList(){
   const src1="/img/dnti_test/"+index+"-1.png"
   const src2="/img/dnti_test/"+index+"-2.png"
 
-
   return (
     <div>
       {gotoresult?(<DntiResultComponent arr={arr} sortable={sortable} win={win} lose={lose}/>
@@ -82,7 +115,7 @@ export default function DntiList(){
       <div className="flex flex-col items-center">
         <div className="flex flex-col items-center">
           <p className="font-medium text-5xl m-10">DNTI 검사페이지</p>
-          <Progressbar />
+          <LinearWithValueLabel progress={progress} />
         </div>
         <div className="flex flex-row items-center m-10">
           <div onClick={e => handleNext(index*2 -2,index*2-1)}>

@@ -28,29 +28,10 @@ function Choices(props) {
   //   console.log('더해요',selectedList)
   // }, [selectedList]);
 
-  const [myRegions, setMyRegions] = useState()
 
-  async function getMyRegion() {
-    await axios(`http://j7a601.p.ssafy.io:9090/api/users/list`, {
-      method: "GET",
-      headers: {
-        // Authorization: jwt,
-        "Content-Type": "application/string",
-      },
-    })
-      .then(res => {
-        setMyRegions(res.data.response);
-        console.log(res.data.response, '!!!!!!!!!!즐겨찾기!@');
-      })
-      .catch(error => {
-        console.error("실패:", error);
-      });
-  }
+
   console.log(styles.color+`${selectedList[0]}`)
 
-  useEffect(() => {
-    getMyRegion();
-  }, []);
   
   const number1 = "selectedOptArea1 color"+selectedList[0]
   const number2 = "selectedOptArea2 color"+selectedList[1]
