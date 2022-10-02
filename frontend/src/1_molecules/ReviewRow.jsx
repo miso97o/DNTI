@@ -1,7 +1,6 @@
 import { Rating } from "@mui/material";
 import { Link } from "react-router-dom";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import { pink } from "@mui/material/colors";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 
 export default function ReviewRow({ id, title, datetime, score, likes }) {
   return (
@@ -15,10 +14,8 @@ export default function ReviewRow({ id, title, datetime, score, likes }) {
           <p>{datetime}</p>
 
           <div className="flex flex-row items-center ml-3">
-            <div className="px-1">
-              <FavoriteIcon sx={{ color: pink[500] }} />
-            </div>
-
+            <div className="px-1"></div>
+            <FavoriteBorderOutlinedIcon />
             <p>{likes}</p>
           </div>
         </div>

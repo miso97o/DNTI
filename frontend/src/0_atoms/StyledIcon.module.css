@@ -1,6 +1,5 @@
 .click {
   padding: 0px 19px;
-
 }
 
 .container {
@@ -12,7 +11,7 @@
 }
 
 .logoImg {
-  width: 80px;
+  width: 180px;
   height: 67px;
 }
 
@@ -24,4 +23,3 @@
   word-wrap: break-word;
   margin: 0 0 0 6px;
 }
-

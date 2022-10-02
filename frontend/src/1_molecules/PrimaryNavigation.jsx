@@ -1,11 +1,12 @@
 import * as React from "react";
-import { Menu, MenuItem } from "@mui/material";
+import { IconButton, Menu, MenuItem } from "@mui/material";
 import { Link, redirect } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import styles from "./PrimaryNavigation.module.css";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { resetUser } from "../features/user/userSlice";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 
 function PrimaryNavigation() {
   const dispatch = useDispatch();
@@ -30,7 +31,6 @@ function PrimaryNavigation() {
     handleClose(dest);
     navigate("/", { replace: true });
   };
-
 
   let logInButton;
   if (user.userId != null) {
@@ -76,11 +76,14 @@ function PrimaryNavigation() {
             <p>게시판</p>
           </Link>
         </div>
-        <img
-          src="https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/m3va4v13wz-I22%3A104%3B22%3A44?alt=media&token=1f92b154-97c5-41c3-829c-1cdd04119c37"
-          alt="Not Found"
+        <IconButton
+          type="button"
+          sx={{ p: "10px" }}
+          aria-label="search"
           onClick={handleClick}
-        />
+        >
+          <PersonOutlineOutlinedIcon fontSize="large" className="text-black" />
+        </IconButton>
         <Menu
           id="basic-menu"
           anchorEl={anchorEl}

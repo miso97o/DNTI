@@ -75,22 +75,23 @@ export default function BoardMainComponent() {
     });
   }
 
-
   useEffect(() => {
-    console.log('boardMain initialize')
+    console.log("BoardMainComponent useEffect([])");
+    console.log("boardMain initialize");
     searchBoard();
     getReview(1);
   }, []);
 
   const mounted = React.useRef(false);
   useEffect(() => {
-    if(!mounted.current) mounted.current = true;
+    console.log("BoardMainComponent useEffect(guDong)");
+    if (!mounted.current) mounted.current = true;
     else {
-      console.log('guDong changed')
+      console.log("guDong changed");
       setTimeout(() => {
         getYoutubeItems(guDong.selectedGu);
         searchBoard();
-        getReview();  
+        getReview();
       }, 0);
     }
   }, [guDong]);

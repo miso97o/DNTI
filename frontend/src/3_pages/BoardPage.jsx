@@ -24,21 +24,21 @@ export default function Boardpage() {
   const email = cookies["userEmail"];
 
   useEffect(() => {
-    console.log('boardPage initialize')
-    axios.get(`address/gu`).then(({ data }) => {
-      setGuList(["전체", ...data.response]);
-    });
+    console.log("BoardPage useEffect([])");
+    console.log("boardPage initialize");
+
+    setGuDongList();
   }, []);
 
   useEffect(() => {
     return () => {
       if (user.gu !== null) {
-        console.log('cleanUp')
+        console.log("cleanUp");
         dispatch(selectGu(user.gu));
         setSelectedGu(user.gu);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   useEffect(() => {
     if (email === "undefined" || email === undefined) {
@@ -48,19 +48,31 @@ export default function Boardpage() {
   }, [email]);
 
   useEffect(() => {
-    console.log('userGu', user.gu);
+    console.log("BoardPage useEffect(user)");
+    console.log(user.gu);
+    console.log("userGu", user.gu);
     if (user.gu !== null) {
-      dispatch(selectGu(user.gu));
       setSelectedGu(user.gu);
+      dispatch(selectGu(user.gu));
     }
   }, [user]);
 
   useEffect(() => {
-    console.log('gu changed')
+    console.log("BoardPage useEffect(selectedGu)");
+    console.log("gu changed");
     axios.get(`address/dong/${selectedGu}`).then(({ data }) => {
       setDongList(["전체", ...data.response]);
     });
   }, [selectedGu]);
+
+  async function setGuDongList() {
+    await axios.get(`address/gu`).then(({ data }) => {
+      setGuList(["전체", ...data.response]);
+    });
+    await axios.get(`address/dong/${selectedGu}`).then(({ data }) => {
+      setDongList(["전체", ...data.response]);
+    });
+  }
 
   const handleGuChange = (event) => {
     dispatch(selectGu(event.target.value));
@@ -74,47 +86,51 @@ export default function Boardpage() {
 
   return (
     <div className="flex flex-col w-full h-full items-center p-10">
-      <div className="flex w-4/5 p-5">
-        <Box sx={{ minWidth: 120 }}>
-          <FormControl fullWidth>
-            <InputLabel id="guSelect">구</InputLabel>
-            <Select
-              labelId="guSelect"
-              id="guSelect"
-              value={selectedGu}
-              label="구"
-              onChange={handleGuChange}
-            >
-              {guList.map((gu) => {
-                return (
-                  <MenuItem key={gu} value={gu}>
-                    {gu}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-        </Box>
-        <Box sx={{ minWidth: 120 }}>
-          <FormControl fullWidth>
-            <InputLabel id="dongSelect">동</InputLabel>
-            <Select
-              labelId="dongSelect"
-              id="dongSelect"
-              value={selectedDong}
-              label="동"
-              onChange={handleDongChange}
-            >
-              {dongList.map((dong) => {
-                return (
-                  <MenuItem key={dong} value={dong}>
-                    {dong}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-        </Box>
+      <div className="flex flex-row w-4/5 p-5">
+        <div className="mr-5">
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="guSelect">구</InputLabel>
+              <Select
+                labelId="guSelect"
+                id="guSelect"
+                value={selectedGu}
+                label="구"
+                onChange={handleGuChange}
+              >
+                {guList.map((gu) => {
+                  return (
+                    <MenuItem key={gu} value={gu}>
+                      {gu}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </Box>
+        </div>
+        <div className="">
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="dongSelect">동</InputLabel>
+              <Select
+                labelId="dongSelect"
+                id="dongSelect"
+                value={selectedDong}
+                label="동"
+                onChange={handleDongChange}
+              >
+                {dongList.map((dong) => {
+                  return (
+                    <MenuItem key={dong} value={dong}>
+                      {dong}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </Box>
+        </div>
       </div>
       <Outlet />
     </div>
