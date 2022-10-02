@@ -1,4 +1,4 @@
-import { Avatar, Button, IconButton } from '@mui/material';
+import { Avatar, Button, IconButton, Dialog, DialogContent,InputLabel, Input, } from '@mui/material';
 import * as React from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -8,11 +8,14 @@ import ReviewRow from '../1_molecules/ReviewRow';
 import PostRow from '../1_molecules/PostRow';
 import Tooltip from '@mui/material/Tooltip';
 import st from './MyPage.module.css';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useState,useEffect} from 'react';
 import axios from 'axios';
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { useCookies } from "react-cookie";
+import DisabledByDefaultOutlinedIcon from '@mui/icons-material/DisabledByDefaultOutlined';
+import { useNavigate } from 'react-router-dom';
+import { resetUser } from "../features/user/userSlice";
 
 
 
@@ -79,13 +82,75 @@ export default function MyPage() {
 }
 
 const ProfileCard = (props) => {
+  const [cookies, removeCookie] = useCookies(["userEmail"]);
+  const [editMode, setEditMode] = useState(false);
+  const [nickname, setNickname] = useState(props.info.nickname)
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+
+  const handleDeleteUser = (id) => {
+    axios.delete(`/users/${id}`).then((data) =>{
+      removeCookie("userEmail");
+      dispatch(resetUser());
+      alert("탈퇴 되었습니다.")
+      window.location.replace("/")
+    })
+  }
+
+  const toggleEdit = () => {
+    editMode ? setEditMode(false) : setEditMode(true);
+  }
+
+  const nicknameChange = (event) => {
+    setNickname(event.target.value)
+  }
+
+  let account ={
+    userId : props.info.userId,
+    dong : props.info.dong,
+    gu : props.info.gu,
+    birthYear: props.info.birthYear,
+    nickname: nickname
+  }
+
+  const changeNickname = () =>{
+      axios.patch("/users", account).then((data) => {
+        toggleEdit()
+      })
+  }
+
+
   return (
     <div className={st.profileContainer}>
       <Avatar src="" sx={{width:"10rem", height:"10rem", margin: '10px' }} />
       <div className={st.colContainer}>
 
         <div className={st.ProfileRowContainer}>
-          <p style={{fontSize: "24px", fontWeight: "bold", marginLeft: "20px" ,marginRight: "20px"}}>{props.info.nickname}</p>
+          {editMode ? 
+          <>
+                <Input
+                  id='new-nickname'
+                  type='text'
+                  aria-describedby='text-helper-text'
+                  value={nickname}
+                  onChange={nicknameChange}
+                />
+                <Button style={{marginLeft: "5px", marginRight: "20px"}} onClick={changeNickname}>닉네임 변경하기</Button>
+          </> 
+          : 
+          <>
+            <p style={{fontSize: "24px", fontWeight: "bold", marginLeft: "20px"}}>{nickname}</p> 
+            <Tooltip title="닉네임 변경" style={{marginRight: "20px"}}>
+              <IconButton onClick={toggleEdit}>
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+          </>}
+          
           <p style={{color:"gray"}}>{props.info.userId}</p>
         </div>
         <div style={{borderBottom: "0.1rem dashed", width: "60%"}}></div>
@@ -97,20 +162,44 @@ const ProfileCard = (props) => {
       </div>
       <div className={st.profileColContainer}>
         <div style={{margin : "20px auto"}}>
-          <Tooltip title="정보 수정">
-            <IconButton>
-              <EditIcon />
-            </IconButton>
-          </Tooltip>
+          
           <Tooltip title="회원 탈퇴">
-            <IconButton>
+            <IconButton onClick={() => setShowDeleteModal(true)}>
               <LogoutIcon />
             </IconButton>
           </Tooltip>
+          <Dialog open={showDeleteModal}>
+            <DialogContent style={{ position: 'relative' }}>
+              <IconButton
+                style={{ position: 'absolute', top: '0', right: '0' }}
+                onClick={() => setShowDeleteModal(false)}>
+                <DisabledByDefaultOutlinedIcon />
+              </IconButton>
+              <div>
+                <div className={st.modalTitle}> 정말 탈퇴하시겠습니까 ?</div>
+                <div className={st.modalButton}>
+                  <Button
+                    variant='outlined'
+                    color='error'
+                    onClick={() => handleDeleteUser(props.info.userId)}>
+                    예
+                  </Button>
+                  <Button
+                    variant='outlined'
+                    color='primary'
+                    onClick={() => {
+                      setShowDeleteModal(false);
+                    }}>
+                    아니오
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
         <div>
           <Link to="/dnti">
-            <Button>DNTI 다시 검사하기</Button>
+            <Button>DNTI 검사하기</Button>
           </Link>
         </div>
       </div>
@@ -120,7 +209,7 @@ const ProfileCard = (props) => {
 
 // 즐겨찾기
 const FrequentRow = (props) => {
-
+  
   // 삭제버튼 클릭시
   const deleteFavorite = (id) => {
     axios.delete(`/favorite/${id}`).then((data)=>{

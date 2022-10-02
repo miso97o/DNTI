@@ -11,7 +11,7 @@
   display: grid;
   grid-template-columns: 10% 60% 30%;
   align-items: center;
-  width: 70%;
+  width: 80%;
   
 
 }
@@ -94,4 +94,20 @@
   height: 100%;
 
 }
+
+
+  
+.modalTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 2rem 0;
+}
+
+.modalButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
 
