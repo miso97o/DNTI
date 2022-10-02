@@ -100,7 +100,7 @@ public class UserController {
 
     //회원탈퇴
     @ApiOperation(value = "회원탈퇴", notes="탈퇴 후 해당 아이디 반환")
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/{email}")
     public ApiResult signOut(@PathVariable String email) {
         service.singOut(email);
         return new ApiResult(200, email);
