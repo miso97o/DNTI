@@ -1,53 +1,74 @@
+import * as React from "react";
 import PostRow from "../../1_molecules/PostRow";
 import ReviewRow from "../../1_molecules/ReviewRow";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import * as React from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Carousel from "react-material-ui-carousel";
 import { Paper, Button } from "@mui/material";
 
-function Item(props) {
+function Item({ url, thumbnail, title }) {
   return (
-    <Paper>
-      <h2>{props.item.name}</h2>
-      <div className="h-36">
-        <p>{props.item.description}</p>
-      </div>
-    </Paper>
+    <div
+      className="cursor-pointer"
+      onClick={() => {
+        window.open(url);
+      }}
+    >
+      <Paper>
+        <div className="h-36">
+          <img src={thumbnail} alt="유튜브 썸네일" />
+        </div>
+        <h2>{title}</h2>
+      </Paper>
+    </div>
   );
 }
 
 export default function BoardMainComponent() {
-  const youtubeItems = [
-    { id: 1, name: "item1", description: "자취남 영상" },
-    { id: 2, name: "item2", description: "자취남 영상" },
-    { id: 3, name: "item3", description: "자취남 영상" },
-    { id: 4, name: "item4", description: "자취남 영상" },
-    { id: 5, name: "item5", description: "자취남 영상" },
-  ];
+  const [youtubeItems, setYoutubeItems] = React.useState([]);
 
   async function getBoard(page) {
     await axios.get(`/board?page=${page - 1}`).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       setBoardList(res.data.response.content);
     });
   }
 
   function searchBoard() {
-    console.log(guDong)
-    axios.get(`/board/search?gu=${guDong.selectedGu==='전체' ? '' : guDong.selectedGu}&dong=${guDong.selectedDong==='전체' ? '' : guDong.selectedDong}&category=0`)
-    .then((res) => {
-      console.log(res);
-      setBoardList(res.data.response.content);
-    })
+    console.log(guDong);
+    axios
+      .get(
+        `/board/search?gu=${
+          guDong.selectedGu === "전체" ? "" : guDong.selectedGu
+        }&dong=${
+          guDong.selectedDong === "전체" ? "" : guDong.selectedDong
+        }&category=0`
+      )
+      .then((res) => {
+        console.log(res);
+        setBoardList(res.data.response.content);
+      });
   }
 
-  async function getReview(page) {
-    await axios.get(`/review/list?page=${page - 1}&&size=10`).then((res) => {
-      console.log(res.data);
-      setReviewList(res.data.response);
+  async function getReview() {
+    await axios
+      .get(
+        `/review/search?search=title&page=0&gu=${
+          guDong.selectedGu !== "전체" ? guDong.selectedGu : ""
+        }&dong=${guDong.selectedDong !== "전체" ? guDong.selectedDong : ""}`
+      )
+      .then((res) => {
+        // console.log(res.data);
+        setReviewList(res.data.response);
+      });
+  }
+
+  async function getYoutubeItems(gu) {
+    await axios.get(`/youtube/${gu}`).then(({ data }) => {
+      console.log(data.response);
+      setYoutubeItems(data.response);
     });
   }
 
@@ -62,8 +83,10 @@ export default function BoardMainComponent() {
   }, []);
 
   useEffect(() => {
+    getYoutubeItems(guDong.selectedGu);
     searchBoard();
-  }, [guDong])
+    getReview();
+  }, [guDong]);
 
   return (
     <div className="flex flex-col h-full w-4/5 items-center">
@@ -101,35 +124,42 @@ export default function BoardMainComponent() {
           <div className="flex flex-col w-1/2 h-full">
             <div className="flex flex-col h-full px-3">
               <div className="flex flex-row justify-between items-center p-5">
-                <p className="font-medium text-2xl">리뷰 게시판</p>
+                <p className="font-medium text-2xl">리뷰게시판</p>
                 <Link to="review">
                   <p>더보기...</p>
                 </Link>
               </div>
 
-              <div className="flex flex-col h-2/3 justify-between items-center px-5">
-                <div className="flex flex-col h-full w-full">
-                  {reviewList &&
-                    reviewList.map((x) => {
-                      return (
-                        <ReviewRow
-                          key={x.id}
-                          id={x.id}
-                          title={x.title}
-                          likes={x.reviewLike}
-                          tags={["tag1", "tag2"]}
-                          score={x.score}
-                        />
-                      );
-                    })}
+              <div className="flex flex-col h-1/2 justify-between items-center px-5">
+                <div className="w-full dnticard">
+                  <div className="flex flex-col h-full w-full">
+                    {reviewList &&
+                      reviewList.map((x) => {
+                        return (
+                          <ReviewRow
+                            key={x.id}
+                            id={x.id}
+                            title={x.title}
+                            likes={x.reviewLike}
+                            tags={["tag1", "tag2"]}
+                            score={x.score}
+                          />
+                        );
+                      })}
+                  </div>
                 </div>
               </div>
-              <div className="flex flex-col h-1/3 items-center p-5">
+              <div className="flex flex-col h-1/2 items-center p-5">
                 <div className="flex flex-col h-full w-full justify-start">
                   <p className="font-medium text-2xl">관련 영상</p>
-                  <Carousel>
-                    {youtubeItems.map((item, i) => (
-                      <Item key={i} item={item} />
+                  <Carousel navButtonsAlwaysVisible="true">
+                    {youtubeItems.map((item) => (
+                      <Item
+                        key={item.youtubeId}
+                        url={item.url}
+                        thumbnail={item.thumbnail}
+                        title={item.title}
+                      />
                     ))}
                   </Carousel>
                 </div>

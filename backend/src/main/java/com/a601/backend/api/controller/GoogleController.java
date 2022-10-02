@@ -73,7 +73,7 @@ public class GoogleController {
 
         if(!user.isPresent()){
 
-            ResponseCookie cookie = ResponseCookie.from("userEmail",email).path("/").domain("j7a601.p.ssafy.io").sameSite("None").secure(true).build();
+            ResponseCookie cookie = ResponseCookie.from("userEmail",email).path("/").domain("localhost").sameSite("None").secure(true).build();
             response.setHeader("Set-Cookie", cookie.toString());
 
             return "redirect:https://j7a601.p.ssafy.io/signup";

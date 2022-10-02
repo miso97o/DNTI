@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, Navigate, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -8,27 +8,51 @@ import FormControl from "@mui/material/FormControl";
 import { useSelector, useDispatch } from "react-redux";
 import { selectGu, selectDong } from "../features/dong/guDongSlice";
 import axios from "../utils/axios";
+import { useEffect } from "react";
+import { useCookies } from "react-cookie";
 
 export default function Boardpage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
   const guDong = useSelector((state) => state.guDong);
   const [selectedGu, setSelectedGu] = React.useState("전체");
   const [selectedDong, setSelectedDong] = React.useState("전체");
   const [guList, setGuList] = React.useState(["전체"]);
   const [dongList, setDongList] = React.useState(["전체"]);
+  const [cookies, removeCookie] = useCookies(["userEmail"]);
+  const email = cookies["userEmail"];
 
-  React.useEffect(() => {
+  useEffect(() => {
     axios.get(`address/gu`).then(({ data }) => {
       setGuList(["전체", ...data.response]);
     });
   }, []);
 
+  useEffect(() => {
+    if (email === "undefined" || email === undefined) {
+      alert("로그인이 필요합니다.");
+      navigate("/login", { replace: true });
+    }
+  }, [email]);
+
+  useEffect(() => {
+    console.log(user.gu);
+    if (user.gu !== null) {
+      dispatch(selectGu(user.gu));
+      setSelectedGu(user.gu);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    axios.get(`address/dong/${selectedGu}`).then(({ data }) => {
+      setDongList(["전체", ...data.response]);
+    });
+  }, [selectedGu]);
+
   const handleGuChange = (event) => {
     dispatch(selectGu(event.target.value));
     setSelectedGu(event.target.value);
-    axios.get(`address/dong/${event.target.value}`).then(({ data }) => {
-      setDongList(["전체", ...data.response]);
-    });
   };
 
   const handleDongChange = (event) => {
@@ -50,7 +74,11 @@ export default function Boardpage() {
               onChange={handleGuChange}
             >
               {guList.map((gu) => {
-                return <MenuItem value={gu}>{gu}</MenuItem>;
+                return (
+                  <MenuItem key={gu} value={gu}>
+                    {gu}
+                  </MenuItem>
+                );
               })}
             </Select>
           </FormControl>
@@ -66,7 +94,11 @@ export default function Boardpage() {
               onChange={handleDongChange}
             >
               {dongList.map((dong) => {
-                return <MenuItem value={dong}>{dong}</MenuItem>;
+                return (
+                  <MenuItem key={dong} value={dong}>
+                    {dong}
+                  </MenuItem>
+                );
               })}
             </Select>
           </FormControl>

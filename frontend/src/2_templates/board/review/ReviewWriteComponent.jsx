@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation, useHistory } from "react-router-dom";
 import { Button, Rating, TextField } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -27,6 +27,7 @@ export default function ReviewWriteComponent() {
 
   useEffect(() => {
     console.log("location state ====================");
+    console.log(location.state.reviewId);
     if (location.state.reviewId !== "newReview") {
       axios
         .get(`/review/detail/${location.state.reviewId}`)
@@ -47,6 +48,7 @@ export default function ReviewWriteComponent() {
   };
 
   let payload = {
+    email: user.userId,
     content: reviewContents,
     environment: envScore,
     infra: infraScore,
@@ -95,6 +97,42 @@ export default function ReviewWriteComponent() {
         });
     }
   };
+
+  let controlPanel = null;
+  if (location.state.reviewId !== "newReview") {
+    controlPanel = (
+      <div className="flex flex-row w-full justify-center mt-10">
+        <Button
+          onClick={(e) => {
+            submitReview(payload, e);
+          }}
+        >
+          등록
+        </Button>
+        <Link
+          to="/board/review/view"
+          state={{ reviewId: location.state.reviewId }}
+        >
+          <Button>취소</Button>
+        </Link>
+      </div>
+    );
+  } else {
+    controlPanel = (
+      <div className="flex flex-row w-full justify-center mt-10">
+        <Button
+          onClick={(e) => {
+            submitReview(payload, e);
+          }}
+        >
+          등록
+        </Button>
+        <Link to="/board/review">
+          <Button>취소</Button>
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="">
@@ -182,19 +220,7 @@ export default function ReviewWriteComponent() {
                 />
               </div>
             </div>
-
-            <div className="flex flex-row w-full justify-center mt-10">
-              <Button
-                onClick={(e) => {
-                  submitReview(payload, e);
-                }}
-              >
-                등록
-              </Button>
-              <Link to="/board/review/view">
-                <Button>취소</Button>
-              </Link>
-            </div>
+            {controlPanel}
           </div>
         </div>
       </div>
