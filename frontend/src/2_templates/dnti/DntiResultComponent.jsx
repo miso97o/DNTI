@@ -27,9 +27,6 @@ function DntiResultCard({ imgsrc, type,content }) {
 const arr=[0,0,0,0]
 
 export default function DntiResultComponent({sortable,win,lose}) {
-  console.log(sortable,"결과값")
-  console.log(win,'승리값')
-  console.log(lose,'패배값')
   if((sortable[0][1]===sortable[1][1])&&(sortable[1][1]===sortable[2][1])){
     arr[0]='N'
     arr[1]='O'
@@ -41,14 +38,8 @@ export default function DntiResultComponent({sortable,win,lose}) {
     arr[2]='P'
     arr[3]=sortable[0][0]
   }else{
-    let temp
     for(let i=0;i<3;i++){
-      console.log(i,"좌표값")
-      console.log(sortable[i][1],sortable[i+1][1],'지정값')
-      console.log(sortable[i][0],sortable[i+1][0],'지정타입')
       if(sortable[i][1]===sortable[i+1][1]){
-        console.log(sortable[i][1],sortable[i+1][1],'지정값')
-        console.log(sortable[i][0],sortable[i+1][0],'지정타입')
         if((sortable[i][0]==='N'&&sortable[i+1][0]==='P')|(sortable[i][0]==='P'&&sortable[i+1][0]==='N')){
           arr[i]=win[4]
           arr[i+1]=lose[4]
