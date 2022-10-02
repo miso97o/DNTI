@@ -111,7 +111,7 @@ export default function BoardMainComponent() {
                         Id={x.boardId}
                         title={x.title}
                         writer={x.nickname}
-                        date={x.createdTime.substring(0, 10)}
+                        date={x.createdTime.substring(2, 10)}
                         replies={x.commentCount}
                         views={x.hit}
                         likes={x.boardLike}

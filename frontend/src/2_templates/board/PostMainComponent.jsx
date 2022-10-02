@@ -57,7 +57,7 @@ export default function FreeMainComponent() {
       <div className="flex flex-col h-4/5 w-full px-6">
         <div className="flex flex-row w-full justify-between items-center">
           <p className="font-medium text-2xl">자유 게시판</p>
-          <Link to="/board/postwrite">
+          <Link to="/board/postwrite" state={{boardId: 0}}>
             <Button>글쓰기</Button>
           </Link>
         </div>

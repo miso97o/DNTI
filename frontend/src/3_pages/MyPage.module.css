@@ -8,12 +8,10 @@
 }
 
 .profileContainer{
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 10% 60% 30%;
   align-items: center;
-  justify-content: space-around;
   width: 80%;
-  margin: 20px;
   
 
 }
@@ -30,7 +28,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-around;
   margin: 30px auto;
  
@@ -86,4 +84,30 @@
   width: 95%;
   justify-content: space-between;
 }
+
+.ProfileRowContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+
+}
+
+
+  
+.modalTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 2rem 0;
+}
+
+.modalButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
 

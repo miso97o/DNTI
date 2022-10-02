@@ -52,4 +52,17 @@ public class DntiServiceImpl implements DntiService{
         }
         return result;
     }
+
+    @Override
+    public Long getCount() {
+        List<Dnti> list = dntiRepository.findAll();
+
+        long result = 0;
+
+        for(Dnti one : list){
+            result += one.getCount();
+        }
+
+        return result;
+    }
 }

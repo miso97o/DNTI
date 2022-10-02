@@ -39,6 +39,7 @@ export default function Boardpage() {
   useEffect(() => {
     console.log(user.gu);
     if (user.gu !== null) {
+      dispatch(selectGu(user.gu));
       setSelectedGu(user.gu);
     }
   }, [user]);
