@@ -29,7 +29,7 @@ public interface BoardService {
    void deleteBoard(Long boardId);
 
    // 게시글 수정
-   void modifyBoard(BoardRequest board, Long boardId);
+   void modifyBoard(BoardRequest.modify board, Long boardId);
 
    // 조회수 증가
    void updateHit(Long boardId);
