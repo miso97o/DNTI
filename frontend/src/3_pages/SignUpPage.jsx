@@ -25,7 +25,7 @@ export default function SignUpPage() {
   const [dong, setDong] = React.useState("");
   const [birthDate, setBirthDate] = React.useState("");
   const [isValidNickName, setIsValidNickName] = React.useState(false);
-  console.log(nickName);
+  // console.log(nickName);
 
   let userInfo = {
     birthYear: moment(birthDate).format("YYYYMMDD") * 1,
@@ -38,16 +38,16 @@ export default function SignUpPage() {
   const signUp = (userInfo, e) => {
     console.log(e.target.value);
     console.log(userInfo);
-    if (userInfo.nickName === "") {
+    if (!userInfo.nickname) {
       alert("닉네임을 입력해주세요.");
       return;
-    } else if (userInfo.birthDate === "Invalid date") {
-      alert("생년월일을 입력해주세요.");
-      return;
+    // } else if (!userInfo.birthYear) {
+    //   alert("생년월일을 입력해주세요.");
+    //   return;
     } else if (!userInfo.gu || !userInfo.dong) {
       alert("주소를 입력해주세요.");
       return;
-    } else if (userInfo.email === "") {
+    } else if (!userInfo.userId) {
       alert("잘못된 접근입니다.");
       return;
     } else if (!isValidNickName) {
@@ -56,6 +56,7 @@ export default function SignUpPage() {
 
     axios.post("/users", userInfo).then((data) => {
       console.log(data);
+      if(data.data.status === 200) alert("회원가입에 성공했습니다! \n다시 로그인 해주세요!")
       navigate("/", { replace: true });
     });
   };
@@ -92,9 +93,14 @@ export default function SignUpPage() {
   };
   const handleNickNameChange = (event) => {
     setNickName(event.target.value);
+    setIsValidNickName(false);
     console.log(nickName);
   };
   const checkIfDuplicated = () => {
+    if (!nickName) {
+      alert("닉네임을 입력해주세요.");
+      return;
+    }
     axios.get(`/users/nickname?nickname=${nickName}`).then(({ data }) => {
       if (!data.response) {
         alert("사용할 수 있는 닉네임입니다.");

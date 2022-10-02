@@ -7,42 +7,42 @@ import { Icon } from "@mui/material";
 export default function DntiBtn({ icon, text, type }) {
   if (type === "square") {
     return (
-      <div className="squarebtn">
+      <div className="squarebtn" style={{cursor: "pointer"}}>
         {icon ? <Icon>{icon}</Icon> : null}
         <p>{text}</p>
       </div>
     );
   } else if (type === "blue") {
     return (
-      <div className="bluebtn">
+      <div className="bluebtn" style={{cursor: "pointer"}} >
         {icon ? <Icon>{icon}</Icon> : null}
         <p>{text}</p>
       </div>
     );
   } else if (type === "black") {
     return (
-      <div className="blackbtn">
+      <div className="blackbtn" style={{cursor: "pointer"}} >
         {icon ? <Icon>{icon}</Icon> : null}
         <p>{text}</p>
       </div>
     );
   } else if (type === "yellow") {
     return (
-      <div className="yellowbtn">
+      <div className="yellowbtn" style={{cursor: "pointer"}}>
         {icon ? <Icon>{icon}</Icon> : null}
         <p>{text}</p>
       </div>
     );
   } else if (type === "gray") {
     return (
-      <div className="graybtn">
+      <div className="graybtn" style={{cursor: "pointer"}}>
         {icon ? <Icon>{icon}</Icon> : null}
         <p>{text}</p>
       </div>
     );
   } else if (type === "white") {
     return (
-      <div className="whitebtn">
+      <div className="whitebtn" style={{cursor: "pointer"}}>
         {icon ? <Icon>{icon}</Icon> : null}
         <p>{text}</p>
       </div>
