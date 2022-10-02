@@ -87,7 +87,7 @@ public class ReviewController {
 
     @ApiOperation(value = "구, 동 필터/제목(title), 내용(content), 아이디(id) 검색 기능", notes = "구, 동 및 제목, 내용, 아이디 검색")
     @GetMapping("/search")
-    public ApiResult<List<ReviewResponse>>reviewSearchTitle(@RequestParam(required = false) String gu,@RequestParam(required = false) String dong,@RequestParam String search ,@RequestParam(required = false) String word){
+    public ApiResult reviewSearchTitle(@RequestParam(required = false) String gu,@RequestParam(required = false) String dong,@RequestParam String search ,@RequestParam(required = false) String word, Pageable pageable){
         //구, 동 필터(없으면 전체검색)
         if(gu==null) gu ="";
         if(dong==null) dong="";
@@ -95,7 +95,7 @@ public class ReviewController {
         //키워드 없으면 전체 검색
         if(word==null) word="";
 
-        List<ReviewResponse>reviewResponseList=reviewService.reviewSearch(gu, dong,search,word);
+        Page<ReviewResponse>reviewResponseList=reviewService.reviewSearch(gu, dong,search,word, pageable);
         return new ApiResult<>(200,reviewResponseList);
     }
 
