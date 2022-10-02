@@ -13,8 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Getter
-@Setter
+@Data
 @DynamicInsert
 public class Board extends BaseEntity{
 
@@ -49,6 +48,9 @@ public class Board extends BaseEntity{
 
     @Column(length = 10)
     private String dong;
+
+    @ColumnDefault("false")
+    private Boolean isCertified;
 
 
     public void modify(String title, String contents){

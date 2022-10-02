@@ -1,24 +1,17 @@
 package com.a601.backend.api.domain.dto.response;
 
-import com.a601.backend.api.domain.entity.ReviewLike;
-import com.a601.backend.api.domain.entity.User;
+import com.a601.backend.api.domain.entity.Review;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReviewResponse {
-
     private Long id;
-
     private String title;
     private String email;
     private String nickname;
@@ -43,5 +36,23 @@ public class ReviewResponse {
         this.environment=environment;
         this.safety=safety;
         this.nickname = nickname;
+    }
+
+
+    public ReviewResponse(Review review) {
+        this.id = review.getReviewId();
+        this.title = review.getTitle();
+        this.email = review.getUser().getEmail();
+        this.nickname = review.getUser().getNickname();
+        this.gu = review.getGu();
+        this.dong = review.getDong();
+        this.content = review.getContent();
+        this.score = review.getScore();
+        this.reviewLike = review.getReviewLike();
+        this.hit = review.getHit();
+        this.rental = review.getRental();
+        this.infra = review.getInfra();
+        this.environment = review.getEnvironment();
+        this.safety = review.getSafety();
     }
 }

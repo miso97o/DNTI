@@ -15,5 +15,15 @@ public class BoardRequest {
     String email;
     String title;
     String contents;
+    String gu;
+    String dong;
 
+    @Getter
+    @Setter
+    @Builder
+    public static class modify{
+        String email;
+        String title;
+        String contents;
+    }
 }

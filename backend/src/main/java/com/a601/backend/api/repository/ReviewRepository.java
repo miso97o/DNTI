@@ -1,6 +1,7 @@
 package com.a601.backend.api.repository;
 
 import com.a601.backend.api.domain.entity.Review;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,19 +18,20 @@ public interface ReviewRepository extends JpaRepository<Review,Long> {
     //인기글 3개(구, 동 기준)
     List<Review>findTop3ByGuContainingAndDongContainingOrderByHitDesc(String gu, String dong);
 
+    //내가 쓴글 3개
+    List<Review> findTop3ByUser_EmailOrderByCreatedTimeDesc(String email);
+
+
+    //제목 검색
+    Page<Review> findByGuContainingAndDongContainingAndTitleContaining(String gu, String dong, String title, Pageable pageable);
+    //내용 검색
+    Page<Review>findByGuContainingAndDongContainingAndContentContaining(String gu, String dong,String content, Pageable pageable);
+    //아이디 검색
+    Page<Review>findByGuContainingAndDongContainingAndUser_EmailContaining(String gu, String dong,String id, Pageable pageable);
+
+
     //필요없을듯
     List<Review>findAllByGuOrderByCreatedTimeDesc(String gu);
     List<Review>findAllByGuOrderByHitDesc(String gu);
     //필요없을듯
-
-    //제목 검색
-    List<Review>findByGuContainingAndDongContainingAndTitleContaining(String gu, String dong,String title);
-    //내용 검색
-    List<Review>findByGuContainingAndDongContainingAndContentContaining(String gu, String dong,String content);
-    //아이디 검색
-    List<Review>findByGuContainingAndDongContainingAndUser_EmailContaining(String gu, String dong,String id);
-
-    @Query("select r from Review r where r.user.email = :email order by r.createdTime Desc")
-    List<Review>findAllUserReview(@Param("email") String email);
-
 }

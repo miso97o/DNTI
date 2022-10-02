@@ -1,6 +1,7 @@
 package com.a601.backend.api.service;
 
 import com.a601.backend.api.domain.dto.request.ReviewRequest;
+import com.a601.backend.api.domain.dto.response.BoardResponse;
 import com.a601.backend.api.domain.dto.response.ReviewResponse;
 import com.a601.backend.api.domain.entity.Review;
 import com.a601.backend.api.domain.entity.ReviewLike;
@@ -11,6 +12,7 @@ import com.a601.backend.api.repository.ReviewLikeRepository;
 import com.a601.backend.api.repository.ReviewRepository;
 import com.a601.backend.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -117,6 +119,29 @@ public class ReviewServiceImpl implements ReviewService{
         reviewRepository.save(review);
     }
 
+    @Override
+    public List<ReviewResponse> reviewTop3Mine(String email) {
+        List<ReviewResponse> list= reviewRepository.findTop3ByUser_EmailOrderByCreatedTimeDesc(email)
+                .stream()
+                .map(review -> ReviewResponse.builder()
+                        .id(review.getReviewId())
+                        .email(review.getUser().getEmail())
+                        .nickname(review.getUser().getNickname())
+                        .title(review.getTitle())
+                        .gu(review.getGu())
+                        .dong(review.getDong())
+                        .content(review.getContent())
+                        .score(review.getScore())
+                        .hit(review.getHit())
+                        .reviewLike(review.getReviewLikeList().size())
+                        .rental(review.getRental())
+                        .environment(review.getEnvironment())
+                        .infra(review.getInfra())
+                        .safety(review.getSafety())
+                        .build()).collect(Collectors.toList());
+        return list;
+    }
+    @Override
     public List<ReviewResponse> reviewTopList(String gu, String dong){
         List<ReviewResponse>reviewTopList=reviewRepository.findTop3ByGuContainingAndDongContainingOrderByHitDesc(gu, dong)
                 .stream()
@@ -138,7 +163,7 @@ public class ReviewServiceImpl implements ReviewService{
                         .build()).collect(Collectors.toList());
         return reviewTopList;
     }
-
+    @Override
     public ReviewResponse reviewScoreGu(String gu){
         List<Review>reviewList=reviewRepository.findAllByGuOrderByCreatedTimeDesc(gu);
 
@@ -171,7 +196,7 @@ public class ReviewServiceImpl implements ReviewService{
                 .build();
         return reviewResponse;
     }
-
+    @Override
     public List<ReviewResponse>reviewRecent(Long id,String gu){
         if(id==0){
             List<ReviewResponse>reviewList1=reviewRepository.findAllByGuOrderByCreatedTimeDesc(gu)
@@ -215,77 +240,23 @@ public class ReviewServiceImpl implements ReviewService{
             return reviewList2;
         }
     }
-
-    public List<ReviewResponse>reviewSearch(String gu, String dong,String search,String word){
+    @Override
+    public Page<ReviewResponse> reviewSearch(String gu, String dong, String search, String word, Pageable pageable){
         if(search.equals("title")){
-            List<ReviewResponse>reviewList=reviewRepository.findByGuContainingAndDongContainingAndTitleContaining(gu, dong, word)
-                    .stream()
-                    .map(review -> ReviewResponse.builder()
-                            .id(review.getReviewId())
-                            .email(review.getUser().getEmail())
-                            .nickname(review.getUser().getNickname())
-                            .title(review.getTitle())
-                            .gu(review.getGu())
-                            .dong(review.getDong())
-                            .content(review.getContent())
-                            .score(review.getScore())
-                            .hit(review.getHit())
-                            .reviewLike(review.getReviewLikeList().size())
-                            .rental(review.getRental())
-                            .environment(review.getEnvironment())
-                            .infra(review.getInfra())
-                            .safety(review.getSafety())
-                            .build()).collect(Collectors.toList());
-            return reviewList;
+            return reviewRepository.findByGuContainingAndDongContainingAndTitleContaining(gu, dong, word, pageable).map(ReviewResponse::new);
         }else if(search.equals("content")){
-            List<ReviewResponse>reviewList=reviewRepository.findByGuContainingAndDongContainingAndContentContaining(gu, dong,word)
-                    .stream()
-                    .map(review -> ReviewResponse.builder()
-                            .id(review.getReviewId())
-                            .email(review.getUser().getEmail())
-                            .nickname(review.getUser().getNickname())
-                            .title(review.getTitle())
-                            .gu(review.getGu())
-                            .dong(review.getDong())
-                            .content(review.getContent())
-                            .score(review.getScore())
-                            .hit(review.getHit())
-                            .reviewLike(review.getReviewLikeList().size())
-                            .rental(review.getRental())
-                            .environment(review.getEnvironment())
-                            .infra(review.getInfra())
-                            .safety(review.getSafety())
-                            .build()).collect(Collectors.toList());
-            return reviewList;
+            return reviewRepository.findByGuContainingAndDongContainingAndContentContaining(gu, dong,word, pageable).map(ReviewResponse::new);
         }else if(search.equals("id")){
-            List<ReviewResponse>reviewList=reviewRepository.findByGuContainingAndDongContainingAndUser_EmailContaining(gu, dong,word)
-                    .stream()
-                    .map(review -> ReviewResponse.builder()
-                            .id(review.getReviewId())
-                            .email(review.getUser().getEmail())
-                            .nickname(review.getUser().getNickname())
-                            .title(review.getTitle())
-                            .gu(review.getGu())
-                            .dong(review.getDong())
-                            .content(review.getContent())
-                            .score(review.getScore())
-                            .hit(review.getHit())
-                            .reviewLike(review.getReviewLikeList().size())
-                            .rental(review.getRental())
-                            .environment(review.getEnvironment())
-                            .infra(review.getInfra())
-                            .safety(review.getSafety())
-                            .build()).collect(Collectors.toList());
-            return reviewList;
+            return reviewRepository.findByGuContainingAndDongContainingAndUser_EmailContaining(gu, dong,word, pageable).map(ReviewResponse::new);
         }
-        return null;
+        throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
     }
 
     @Override
     public boolean isReviewLike(String email, Long reviewId) {
         return reviewLikeRepository.existsByUser_EmailAndReview_ReviewId(email,reviewId);
     }
-
+    @Override
     public void reviewsaveLike(String email,Long reviewId){
         Review review=reviewRepository.findById(reviewId).get();
 

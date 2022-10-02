@@ -67,7 +67,7 @@ public class UserController {
         List<FavoriteResponse> favoriteList = favoriteService.getFavorite(email);
 
         //review
-        List<ReviewResponse> reviewList = reviewService.reviewSearch("","","id", email);
+        List<ReviewResponse> reviewList = reviewService.reviewTop3Mine(email);
 
         //board
         List<BoardResponse> boardList = boardService.getMyBoard(email);
