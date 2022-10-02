@@ -95,7 +95,7 @@ public class BoardController {
     // 게시글 수정
     @ApiOperation(value = "게시글 수정", notes = "성공하면 수정한 게시글 리턴")
     @PatchMapping("/{boardId}")
-    public ApiResult modifyBoard(@RequestBody BoardRequest board, @PathVariable("boardId") Long boardId) {
+    public ApiResult modifyBoard(@RequestBody BoardRequest.modify board, @PathVariable("boardId") Long boardId) {
         boardService.modifyBoard(board, boardId);
         return new ApiResult(200, board);
     }

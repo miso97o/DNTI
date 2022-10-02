@@ -74,8 +74,12 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public Long writeBoard(BoardRequest request) {
         User user = userRepository.getReferenceById(request.getEmail());
+        boolean isCertified = request.getGu().equals(user.getGu()) && request.getDong().equals(user.getDong());
         Board board = Board.builder()
                 .user(user)
+                .gu(request.getGu())
+                .dong(request.getDong())
+                .isCertified(isCertified)
                 .title(request.getTitle())
                 .contents(request.getContents()).build();
         boardRepository.save(board);
@@ -92,7 +96,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
-    public void modifyBoard(BoardRequest request, Long boardId) {
+    public void modifyBoard(BoardRequest.modify request, Long boardId) {
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
         board.modify(request.getTitle(), request.getContents());
     }
