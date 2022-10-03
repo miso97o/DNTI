@@ -11,13 +11,12 @@
 }
 
 .logoImg {
-  width: 180px;
-  height: 67px;
+  width: 122px;
 }
 
 .title {
   font-size: 70px;
-  font-family: Noto Sans KR, sans-serif;
+  font-family: "NanumSquare";
   font-weight: 700;
   color: rgba(0, 0, 0, 1);
   word-wrap: break-word;
