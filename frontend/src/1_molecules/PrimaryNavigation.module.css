@@ -16,8 +16,8 @@
 
 .content p {
   font-size: 24px;
-  font-family: Noto Sans KR, sans-serif;
-  font-weight: 500;
+  font-family: "NanumSquare";
+  font-weight: 600;
   color: rgba(0, 0, 0, 1);
   text-align: center;
   word-wrap: break-word;
@@ -33,5 +33,3 @@
   width: 95px;
   height: 60px;
 }
-
-
