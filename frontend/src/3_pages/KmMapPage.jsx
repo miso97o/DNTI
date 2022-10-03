@@ -2,11 +2,22 @@ import React, { useEffect, useState, setState } from "react";
 import axios from "axios";
 import Choices from "../2_templates/kmMap/Choices";
 import { coffeePositions, bikePositions, cvsPositions } from "../0_atoms/data/MarkerData";
-import BusMarker from "../0_atoms/markers/BusMarker.png";
 import { useSelector } from "react-redux";
+import BusMarker from "../0_atoms/markers/BusMarker.png";
+import SubwayMarker from "../0_atoms/markers/SubwayMarker.png";
 import BikeMarker from "../0_atoms/markers/BikeMarker.png";
+import OyMarker from "../0_atoms/markers/OyMarker.png";
+import DaisoMarker from "../0_atoms/markers/DaisoMarker.png";
+import MartMarker from "../0_atoms/markers/MartMarker.png";
 import CVSMarker from "../0_atoms/markers/CVSMarker.png";
+import ParkMarker from "../0_atoms/markers/ParkMarker.png";
+import GymMarker from "../0_atoms/markers/GymMarker.png";
+import RestaurantMarker from "../0_atoms/markers/RestaurantMarker.png";
+import { checkBus, checkSubway, checkBike, checkOliveyoung, checkDaiso, checkMart, checkCVS, checkPark, checkGym, checkRestaurant } from "../0_atoms/check";
 import styles from "./KmMapPage.module.css";
+
+
+
 
 
 const { kakao } = window;
@@ -15,16 +26,15 @@ function KmMap() {
     // const getChange = [0, 0, 0]
     const [getList, setGetList] = useState()
     const [forCoors, setForCoors] = useState()
-
-
+    const [dbClicked, setDbClicked] = useState(false)
  
 
 
     // 지도 초기설정
     const [options, setOptions] = useState({
-      // center: new kakao.maps.LatLng(37.525078, 126.975702), // 서울중심어딘가
-      center: new kakao.maps.LatLng(37.497486063, 127.027661548),
-      level: 3,
+      center: new kakao.maps.LatLng(37.525078, 126.975702), // 서울중심어딘가
+      // center: new kakao.maps.LatLng(37.497486063, 127.027661548),
+      level: 7,
       isPanto: true,
       disableDoubleClickZoom: true
     });
@@ -65,10 +75,10 @@ function KmMap() {
         console.log(options.center.La)
 
         setOptions({
-          center: new kakao.maps.LatLng(latlng.Ma, latlng.La)
+          center: new kakao.maps.LatLng(latlng.Ma, latlng.La),
+          level: 3,
         })
-        console.log(options.center.La)
-        // alert('double click! ' + latlng.toString().substr(1, latlng.toString().length-2));
+        setDbClicked(true)
       });
   
       // ---------------- 마커 -------------------
@@ -76,39 +86,89 @@ function KmMap() {
       const markerSize = new kakao.maps.Size(30 , 39)  // 가로 세로
       const markerPlace = {offset: new kakao.maps.Point(14, 39)}
 
-      function makeCoffeeMarker() {
-        coffeePositions.forEach((el) => {
-          // 마커를 생성합니다
-          new kakao.maps.Marker({
-            //마커가 표시 될 지도
-            map: map,
-            //마커가 표시 될 위치
-            position: new kakao.maps.LatLng(el.lat, el.lng),
-            // position: new kakao.maps.Latlng(), // 마커를 표시할 위치
-            //마커에 hover시 나타날 title
-            title: el.title,
-            image: new kakao.maps.MarkerImage(BusMarker, markerSize, markerPlace)
-          });
-        });        
-      }
 
 
-      if (forCoors) {
-        const tmp = forCoors.slice(0,20)
-        // console.log(tmp[1].lon)
-        tmp.forEach((el) => {
-          // 마커를 생성합니다
-          new kakao.maps.Marker({
-            map: map,
-            position: new kakao.maps.LatLng(el.lat, el.lon),
-            title: el.title,
-            image: new kakao.maps.MarkerImage(BusMarker, markerSize, markerPlace)
-          });
+
+      if (forCoors && getList.length > 0) {
+        // const tmp = forCoors.slice(0,20)
+        console.log(getList)
+        forCoors.forEach((el) => {
+          if (el.type === "버스" && getList.some(checkBus)) {
+            new kakao.maps.Marker({
+              map: map,
+              position: new kakao.maps.LatLng(el.lat, el.lon),
+              title: el.name,
+              image: new kakao.maps.MarkerImage(BusMarker, markerSize, markerPlace)
+            });
+          } else if (el.type === "지하철" && getList.some(checkSubway)) {
+            new kakao.maps.Marker({
+              map: map,
+              position: new kakao.maps.LatLng(el.lat, el.lon),
+              title: el.name,
+              image: new kakao.maps.MarkerImage(SubwayMarker, markerSize, markerPlace)
+            })
+          } else if (el.type === "따릉이" && getList.some(checkBike)) {
+            new kakao.maps.Marker({
+              map: map,
+              position: new kakao.maps.LatLng(el.lat, el.lon),
+              title: el.name,
+              image: new kakao.maps.MarkerImage(BikeMarker, markerSize, markerPlace)
+            })
+          } else if(el.type === "올리브영" && getList.some(checkOliveyoung)) {
+            new kakao.maps.Marker({
+              map: map,
+              position: new kakao.maps.LatLng(el.lat, el.lon),
+              title: el.name,
+              image: new kakao.maps.MarkerImage(OyMarker, markerSize, markerPlace)
+            });
+          } else if(el.type === "다이소" && getList.some(checkDaiso)) {
+            new kakao.maps.Marker({
+              map: map,
+              position: new kakao.maps.LatLng(el.lat, el.lon),
+              title: el.name,
+              image: new kakao.maps.MarkerImage(DaisoMarker, markerSize, markerPlace)
+            });
+          } else if(el.type === "마트" && getList.some(checkMart)) {
+            new kakao.maps.Marker({
+              map: map,
+              position: new kakao.maps.LatLng(el.lat, el.lon),
+              title: el.name,
+              image: new kakao.maps.MarkerImage(MartMarker, markerSize, markerPlace)
+            });
+          } else if(el.type === "편의점" && getList.some(checkCVS)) {
+            new kakao.maps.Marker({
+              map: map,
+              position: new kakao.maps.LatLng(el.lat, el.lon),
+              title: el.name,
+              image: new kakao.maps.MarkerImage(CVSMarker, markerSize, markerPlace)
+            });
+          } else if(el.type === "공원" && getList.some(checkPark)) {
+            new kakao.maps.Marker({
+              map: map,
+              position: new kakao.maps.LatLng(el.lat, el.lon),
+              title: el.name,
+              image: new kakao.maps.MarkerImage(ParkMarker, markerSize, markerPlace)
+            });
+          } else if(el.type === "헬스장" && getList.some(checkGym)) {
+            new kakao.maps.Marker({
+              map: map,
+              position: new kakao.maps.LatLng(el.lat, el.lon),
+              title: el.name,
+              image: new kakao.maps.MarkerImage(GymMarker, markerSize, markerPlace)
+            });
+          }  else if(el.type === "식당" && getList.some(checkRestaurant)) {
+            new kakao.maps.Marker({
+              map: map,
+              position: new kakao.maps.LatLng(el.lat, el.lon),
+              title: el.name,
+              image: new kakao.maps.MarkerImage(RestaurantMarker, markerSize, markerPlace)
+            });
+          }
         });  
       }   
 
 
-  
+      
       // --------------- 원 ------------------
       const circle = new kakao.maps.Circle({
         center : options.center,  // 원의 중심좌표
@@ -121,7 +181,9 @@ function KmMap() {
         fillOpacity: 0.34  // 채우기 불투명도   
       }); 
       // 지도에 원을 표시
-      circle.setMap(map);
+      if(dbClicked) {
+        circle.setMap(map);
+      }
     };
 
     const geocoder = new kakao.maps.services.Geocoder();
@@ -203,21 +265,21 @@ function KmMap() {
     }, [fav, options])
 
 
-    // 맵 옵션 변경될때마다 로딩
+    // 첫 더블클릭 이후 맵 옵션 변경될때마다 로딩
     useEffect(() => {
-      // mapscript()
-      getMarker()
+      if (dbClicked) {
+        getMarker()
+      }
     }, [options]);
 
 
     useEffect(() => {
       mapscript()
-    }, [forCoors]);
+    }, [forCoors, getList]);
 
   const user = useSelector((state) => state.user);
   const [timesArray, setTimesArray] = useState([])
   const [timeCheck, setTimeCheck] = useState(false)
-  const [favList, setFavList] = useState()
   useEffect(() => {
     if (time) {
       setTimesArray([...timesArray, time.path[0].info.totalTime])
