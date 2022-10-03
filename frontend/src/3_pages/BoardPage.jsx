@@ -85,7 +85,7 @@ export default function Boardpage() {
   };
 
   return (
-    <div className="flex flex-col w-full h-full items-center p-5">
+    <div className="flex flex-col w-full h-full items-center p-5 pb-24">
       <div className="flex flex-row w-4/5 p-3">
         <div className="mr-5">
           <Box sx={{ minWidth: 120 }}>

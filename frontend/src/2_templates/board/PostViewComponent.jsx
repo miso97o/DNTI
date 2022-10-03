@@ -22,6 +22,7 @@ export default function PostViewComponent() {
   const location = useLocation();
   const boardId = location.state.boardId;
   const user = useSelector((state) => state.user);
+  console.log(boardId);
 
   function getDetail() {
     axios.get(`/board/${boardId}`).then((res) => {
@@ -95,7 +96,7 @@ export default function PostViewComponent() {
     getDetail();
     getReply(1);
     checkLike();
-  }, []);
+  }, [like]);
 
   return (
     <div className="flex flex-col w-4/5 h-full items-center p-3">
@@ -105,7 +106,6 @@ export default function PostViewComponent() {
       <div className="h-full w-full dnticard">
         <div className="flex flex-row w-full justify-between px-5 py-2 border-b-2 border-b-slate-200">
           <div className="flex flex-row w-1/2">
-            <p className="w-1/4">{postDetail.dong}</p>
             <p>{postDetail.title}</p>
           </div>
           <div className="flex flex-row w-1/2 justify-end">
@@ -183,7 +183,7 @@ export default function PostViewComponent() {
           </div>
         </div>
         <div className="flex flex-col w-4/5 items-center m-5">
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col max-h-[30rem] w-full overflow-y-auto">
             {replies &&
               replies.map((x) => {
                 return (
@@ -198,14 +198,14 @@ export default function PostViewComponent() {
                 );
               })}
           </div>
-          <div className="mt-3">
+          {/* <div className="mt-3">
             <Pagination
               count={10}
               variant="outlined"
               color="primary"
               onChange={(e) => getReply(e.target.outerText)}
             />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

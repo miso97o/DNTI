@@ -5,7 +5,6 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import DntiBtn from "../../../0_atoms/DntiBtn";
-import CreateIcon from "@mui/icons-material/Create";
 
 function GuCard({
   gu,
@@ -19,7 +18,7 @@ function GuCard({
   if (totalScore !== 0) {
     guRatings = (
       <div className="flex flex-col items-center">
-        <div className="flex flex-row w-1/2 justify-between my-5">
+        <div className="flex flex-row w-3/5 justify-between py-3">
           <p className="text-lg">총점</p>
           <Rating name="total" value={totalScore} size="large" readOnly />
         </div>
@@ -49,7 +48,7 @@ function GuCard({
     );
   }
   return (
-    <div className="w-full h-2/3 p-5 dnticard">
+    <div className="w-[24rem] p-5 dnticard">
       <div className="flex flex-col h-full">
         <div className="flex flex-row justify-center">
           <p className="text-2xl">{gu}</p>
@@ -58,6 +57,7 @@ function GuCard({
           <img
             src={`${process.env.PUBLIC_URL}/img/gu/${gu}.png`}
             alt="구 사진"
+            className="h-64 w-64"
           />
         </div>
         <div className="flex flex-row justify-center">#인프라 #중심지</div>
@@ -133,9 +133,11 @@ export default function ReviewMain() {
           <DntiBtn text={"글쓰기"} type={"square"} icon={"edit"} />
         </Link>
       </div>
-      <div className="flex flex-row h-full w-full ">
-        <div className="h-full w-2/5 mx-3">{guCard}</div>
-        <div className="h-full w-3/5">
+      <div className="flex flex-row h-full w-full justify-center">
+        <div className="flex flex-row justify-end h-[32rem] w-2/5 mx-3">
+          {guCard}
+        </div>
+        <div className="h-full w-3/5 mx-3 pb-10">
           <Outlet />
         </div>
       </div>

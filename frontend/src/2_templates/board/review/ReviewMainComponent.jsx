@@ -11,13 +11,16 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ReviewRow from "../../../1_molecules/ReviewRow";
+import HotReviewRow from "../../../1_molecules/HotReviewRow";
 import { useEffect } from "react";
 import axios from "../../../utils/axios";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function ReviewMainComponent() {
   const [reviews, setReviews] = React.useState();
-  const [currentPage, setCurrentPage] = React.useState(0);
+  const [hotReviews, setHotReviews] = React.useState();
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [totalPage, setTotalPage] = React.useState(10);
   const [selectedCriteria, setSelectedCriteria] = React.useState("제목");
   const [criteriaList, setCriteriaList] = React.useState([
     "제목",
@@ -30,17 +33,36 @@ export default function ReviewMainComponent() {
     setSelectedCriteria(event.target.value);
   };
   useEffect(() => {
-    console.log(guDong);
     axios
       .get(
-        `/review/search?search=title&page=${currentPage}&gu=${
+        `/review/hot?gu=${
+          guDong.selectedGu !== "전체" ? guDong.selectedGu : ""
+        }&dong=${guDong.selectedDong !== "전체" ? guDong.selectedDong : ""}`
+      )
+      .then(({ data }) => {
+        console.log("hotReview ========");
+        console.log(data);
+        setHotReviews(data.response);
+        setCurrentPage(1);
+        console.log(hotReviews);
+      });
+  }, [guDong]);
+
+  useEffect(() => {
+    console.log(guDong);
+
+    axios
+      .get(
+        `/review/search?search=title&page=${currentPage - 1}&gu=${
           guDong.selectedGu !== "전체" ? guDong.selectedGu : ""
         }&dong=${
           guDong.selectedDong !== "전체" ? guDong.selectedDong : ""
-        }&page=0&size=10`
+        }&page=0&size=7`
       )
       .then(({ data }) => {
         console.log("리뷰 조회 성공!");
+        console.log(data);
+        setTotalPage(data.response.totalPages);
         setReviews(data.response.content);
         console.log(reviews);
       })
@@ -63,16 +85,20 @@ export default function ReviewMainComponent() {
           guDong.selectedGu !== "전체" ? guDong.selectedGu : ""
         }&dong=${
           guDong.selectedDong !== "전체" ? guDong.selectedDong : ""
-        }&search=${criteria}&word=${searchWord}`
+        }&search=${criteria}&word=${searchWord}&page=${currentPage - 1}&size=10`
       )
       .then(({ data }) => {
         console.log("리뷰 조회 성공!");
-        setReviews(data.response);
+        console.log(data);
+        setReviews(data.response.content);
         console.log(reviews);
       })
       .catch(() => {
         console.log("리뷰 조회에 실패했습니다.");
       });
+  };
+  const handleCurrentPageChange = (event, value) => {
+    setCurrentPage(value);
   };
 
   const handleSearchWordChange = (event) => {
@@ -81,8 +107,23 @@ export default function ReviewMainComponent() {
 
   return (
     <div className="flex flex-col h-full w-full items-center mx-3">
-      <div className="h-full w-full dnticard">
-        <div className="flex flex-col h-4/5 w-full">
+      <div className="h-[23rem] w-full dnticard">
+        <div className="flex flex-col w-full">
+          {hotReviews &&
+            hotReviews.map((hotReview) => {
+              return (
+                <HotReviewRow
+                  key={hotReview.id + "hot"}
+                  id={hotReview.id}
+                  title={hotReview.title}
+                  writer={hotReview.email}
+                  score={hotReview.score}
+                  likes={hotReview.reviewLike}
+                />
+              );
+            })}
+        </div>
+        <div className="flex flex-col w-full">
           {reviews &&
             reviews.map((review) => {
               return (
@@ -137,7 +178,13 @@ export default function ReviewMainComponent() {
           </IconButton>
         </div>
       </div>
-      <Pagination count={10} variant="outlined" color="primary" />
+      <Pagination
+        count={totalPage}
+        page={currentPage}
+        variant="outlined"
+        color="primary"
+        onChange={handleCurrentPageChange}
+      />
     </div>
   );
 }

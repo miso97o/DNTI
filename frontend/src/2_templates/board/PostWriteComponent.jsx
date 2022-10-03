@@ -16,6 +16,7 @@ export default function PostWriteComponent() {
     setPostTitle(event.target.value);
   };
   const user = useSelector((state) => state.user);
+  const guDong = useSelector((state) => state.guDong);
   const navigate = useNavigate();
   const location = useLocation();
   const boardId = location.state.boardId;
@@ -36,35 +37,29 @@ export default function PostWriteComponent() {
       });
     }
   }, []);
-
+  let payload = {
+    email: user.userId,
+    title: postTitle,
+    contents: postContents,
+    gu: guDong.selectedGu === "전체" ? "" : guDong.selectedGu,
+    dong: guDong.selectedDong === "전체" ? "" : guDong.selectedDong,
+  };
   function writePost() {
     //수정으로 들어가면 수정, 아니면 작성
     if (boardId)
-      axios
-        .patch(`/board/${boardId}`, {
-          email: user.userId,
-          title: postTitle,
-          contents: postContents,
-        })
-        .then((res) => {
-          console.log("update", res.data);
-          navigate("/board/postview", { state: { boardId: boardId } });
-          alert("게시글이 수정되었습니다!");
-        });
+      axios.patch(`/board/${boardId}`, payload).then((res) => {
+        console.log("update", res.data);
+        navigate("/board/postview", { state: { boardId: boardId } });
+        alert("게시글이 수정되었습니다!");
+      });
     else {
-      axios
-        .post(`/board`, {
-          email: user.userId,
-          title: postTitle,
-          contents: postContents,
-        })
-        .then((res) => {
-          console.log(res.data);
-          navigate("/board/postview", {
-            state: { boardId: res.data.response },
-          });
-          alert("게시글이 작성되었습니다!!");
+      axios.post(`/board`, payload).then((res) => {
+        console.log(res.data);
+        navigate("/board/postview", {
+          state: { boardId: res.data.response },
         });
+        alert("게시글이 작성되었습니다!!");
+      });
     }
   }
 
@@ -76,7 +71,7 @@ export default function PostWriteComponent() {
       <div className="h-full w-full dnticard">
         <div className="flex flex-col w-full justify-between  p-3 ">
           <div className="flex flex-row w-full justify-between items-center">
-            <p className="w-24">{user.dong}</p>
+            <p className="w-24">{guDong.selectedGu}</p>
             <p className="">{user.nickname}</p>
           </div>
           <TextField
@@ -100,11 +95,9 @@ export default function PostWriteComponent() {
           </div>
           <div className="flex flex-row w-full justify-center items-center p-3">
             <div className="flex flex-row w-1/5 justify-between">
-              <Link>
-                <div onClick={() => writePost()}>
-                  <DntiBtn text={boardId ? "수정" : "등록"} type="yellow" />
-                </div>
-              </Link>
+              <div onClick={writePost}>
+                <DntiBtn text={boardId ? "수정" : "등록"} type="yellow" />
+              </div>
               <Link to={boardId ? "/board/postview" : "/board/post"}>
                 <DntiBtn text="취소" type="white" />
               </Link>

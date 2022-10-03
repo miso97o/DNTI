@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 import PostRow from "../../1_molecules/PostRow";
+import HotPostRow from "../../1_molecules/HotPostRow";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
@@ -15,10 +16,25 @@ export default function FreeMainComponent() {
   const [boardList, setBoardList] = React.useState([]);
   const [searchKey, setSearchKey] = React.useState("");
   const [searchCat, setSearchCat] = React.useState(0);
+  const [hotBoardList, setHotBoardList] = React.useState([]);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [totalPage, setTotalPage] = React.useState(10);
   const guDong = useSelector((state) => state.guDong);
 
   function handleKeyword(e) {
     setSearchKey(e.target.value);
+  }
+
+  async function getHotBoard() {
+    axios
+      .get(
+        `/board/hot?gu=${
+          guDong.selectedGu === "전체" ? "" : guDong.selectedGu
+        }&dong=${guDong.selectedDong === "전체" ? "" : guDong.selectedDong}`
+      )
+      .then(({ data }) => {
+        setHotBoardList(data.response);
+      });
   }
 
   async function getBoard(page) {
@@ -37,10 +53,13 @@ export default function FreeMainComponent() {
           guDong.selectedGu === "전체" ? "" : guDong.selectedGu
         }&dong=${
           guDong.selectedDong === "전체" ? "" : guDong.selectedDong
-        }&category=${searchCat}&keyword=${searchKey}`
+        }&category=${searchCat}&keyword=${searchKey}&page=${
+          currentPage - 1
+        }&size=10`
       )
       .then((res) => {
         console.log(res);
+        setTotalPage(res.data.response.totalPages);
         setBoardList(res.data.response.content);
       });
   }
@@ -51,8 +70,13 @@ export default function FreeMainComponent() {
   }, []);
 
   useEffect(() => {
-    searchBoard();
+    getHotBoard();
+    setCurrentPage(1);
   }, [guDong]);
+
+  useEffect(() => {
+    searchBoard();
+  }, [guDong, currentPage]);
 
   return (
     <div className="flex flex-col h-full w-4/5 items-center">
@@ -69,20 +93,37 @@ export default function FreeMainComponent() {
           </Link>
         </div>
         <div className="flex flex-col h-full w-full items-center">
-          <div className="flex flex-col h-4/5 w-full dnticard">
-            {boardList.map((x) => {
-              return (
-                <PostRow
-                  Id={x.boardId}
-                  title={x.title}
-                  writer={x.nickname}
-                  date={x.createdTime.substring(2, 10)}
-                  replies={x.commentCount}
-                  views={x.hit}
-                  likes={x.boardLike}
-                />
-              );
-            })}
+          <div className="flex flex-col h-[24rem] w-full dnticard">
+            <div className="flex flex-col w-full">
+              {hotBoardList.map((x) => {
+                return (
+                  <HotPostRow
+                    Id={x.boardId}
+                    title={x.title}
+                    writer={x.nickname}
+                    date={x.createdTime.substring(2, 10)}
+                    replies={x.commentCount}
+                    views={x.hit}
+                    likes={x.boardLike}
+                  />
+                );
+              })}
+            </div>
+            <div className="flex flex-col w-full">
+              {boardList.map((x) => {
+                return (
+                  <PostRow
+                    Id={x.boardId}
+                    title={x.title}
+                    writer={x.nickname}
+                    date={x.createdTime.substring(2, 10)}
+                    replies={x.commentCount}
+                    views={x.hit}
+                    likes={x.boardLike}
+                  />
+                );
+              })}
+            </div>
           </div>
           <div className="flex flex-row justify-center items-center m-10">
             <select
@@ -104,7 +145,8 @@ export default function FreeMainComponent() {
             </IconButton>
           </div>
           <Pagination
-            count={10}
+            count={totalPage}
+            page={currentPage}
             variant="outlined"
             color="primary"
             onChange={(e) => getBoard(e.target.outerText)}
