@@ -1,8 +1,24 @@
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
+import axios from "axios";
+import { useEffect } from "react";
 
-function DntiResultCard({ imgsrc, type,content }) {
+function DntiResultCard({ imgsrc, type, content }) {
+
+    useEffect(e=>{
+        saveDnti()
+      },[])
+
+  function saveDnti() {
+    axios.put(`/users/savednti`,{
+      type:type
+    })
+    .then((res) => {
+      console.log(res.data);
+    })
+  }
+
   return (
     <Card variant="outlined">
       <div className="flex flex-col items-center m-10">
@@ -16,7 +32,7 @@ function DntiResultCard({ imgsrc, type,content }) {
         </div>
         <div className="util-button flex-row-vcenter-hcenter">
           <Link to={`/dnRecommend`} style={{ textDecoration: "none" }}>
-            <Button variant="contained">동네 확인하기</Button>
+            <Button onClick={saveDnti} variant="contained">동네 확인하기</Button>
           </Link>
         </div>
       </div>
@@ -110,6 +126,7 @@ export default function DntiResultComponent({sortable,win,lose}) {
   }
 
   let dntitype=arr.join("")
+
   arr=[0,0,0,0]
   const src="/img/dnti_type/"+dntitype+".png"
   return (

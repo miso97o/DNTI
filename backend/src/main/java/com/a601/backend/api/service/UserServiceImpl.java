@@ -10,6 +10,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.meta.TypeQualifierNickname;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -96,4 +97,13 @@ public class UserServiceImpl implements UserService{
                 .userId(oUser.getEmail()).birthYear(oUser.getBirthYear()).dong(oUser.getDong()).gu(oUser.getGu()).dnti(oUser.getDnti()).nickname(oUser.getNickname()).build();
         return result;
     }
+
+    @Override
+    @Transactional
+    public void saveDnti(String type,String email) throws Exception {
+        User user=repository.findByEmail(email).get();
+        user.setDnti(type);
+        repository.save(user);
+    }
+
 }

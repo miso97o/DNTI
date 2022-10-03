@@ -2,6 +2,7 @@ package com.a601.backend.api.controller;
 
 
 import com.a601.backend.api.domain.dto.common.ApiResult;
+import com.a601.backend.api.domain.dto.request.SavedntiRequest;
 import com.a601.backend.api.domain.dto.request.UserRequest;
 import com.a601.backend.api.domain.dto.response.*;
 import com.a601.backend.api.service.*;
@@ -10,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -105,6 +107,12 @@ public class UserController {
         service.singOut(email);
         return new ApiResult(200, email);
     }
-
-
+    @ApiOperation(value = "회원탈퇴", notes="탈퇴 후 해당 아이디 반환")
+    @PutMapping("/savednti")
+    public ApiResult savednti(@RequestBody SavedntiRequest savedntiRequest, @CookieValue("userEmail") Cookie cookie) throws Exception {
+        String email=cookie.getValue();
+        System.out.println(savedntiRequest.getType()+" "+email+" 해당 값 확인");
+        service.saveDnti(savedntiRequest.getType(),email);
+        return new ApiResult(200,email);
+    }
 }
