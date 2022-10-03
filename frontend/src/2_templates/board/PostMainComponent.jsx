@@ -80,17 +80,9 @@ export default function FreeMainComponent() {
 
   return (
     <div className="flex flex-col h-full w-4/5 items-center">
-      <div className="flex flex-row w-full justify-start">
-        <Link to="/board">
-          <DntiBtn text={"< 뒤로"} type={"black"} />
-        </Link>
-      </div>
       <div className="flex flex-col h-4/5 w-full px-6">
         <div className="flex flex-row w-full justify-between items-center mb-5">
-          <p className="font-medium text-2xl">자유 게시판</p>
-          <Link to="/board/postwrite" state={{ boardId: 0 }}>
-            <DntiBtn text={"글쓰기"} type={"square"} icon={"edit"} />
-          </Link>
+          <p className="font-bold text-3xl">자유 게시판</p>
         </div>
         <div className="flex flex-col h-full w-full items-center">
           <div className="flex flex-col h-[24rem] w-full dnticard">
@@ -125,24 +117,38 @@ export default function FreeMainComponent() {
               })}
             </div>
           </div>
-          <div className="flex flex-row justify-center items-center m-10">
-            <select
-              name="검색 조건"
-              onChange={(e) => setSearchCat(e.target.value)}
-            >
-              <option value="0">제목</option>
-              <option value="1">내용</option>
-              <option value="2">아이디</option>
-            </select>
-            <TextField variant="outlined" onChange={(e) => handleKeyword(e)} />
-            <IconButton
-              type="button"
-              sx={{ p: "10px" }}
-              aria-label="search"
-              onClick={() => searchBoard()}
-            >
-              <SearchIcon />
-            </IconButton>
+          <div className="flex flex-row justify-between items-center m-10 w-full">
+            <div></div>
+            <div>
+              <select
+                name="검색 조건"
+                onChange={(e) => setSearchCat(e.target.value)}
+              >
+                <option value="0">제목</option>
+                <option value="1">내용</option>
+                <option value="2">아이디</option>
+              </select>
+              <TextField
+                variant="outlined"
+                onChange={(e) => handleKeyword(e)}
+              />
+              <IconButton
+                type="button"
+                sx={{ p: "10px" }}
+                aria-label="search"
+                onClick={() => searchBoard()}
+              >
+                <SearchIcon />
+              </IconButton>
+            </div>
+            <div className="flex gap-4">
+              <Link to="/board">
+                <button className="graybtn-s">목록</button>
+              </Link>
+              <Link to="/board/postwrite" state={{ boardId: 0 }}>
+                <button className="bluebtn-s">글쓰기</button>
+              </Link>
+            </div>
           </div>
           <Pagination
             count={totalPage}
