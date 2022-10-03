@@ -12,13 +12,13 @@ export default function LandingPage() {
   }, []);
 
   async function getCount() {
-    await axios.get(`/api/dnti/count`).then((res) => {
+    await axios.get(`/dnti/count`).then((res) => {
       setCount(res.data.response);
     });
   }
 
   async function getDnti() {
-    await axios.get(`/api/dnti/all`).then((res) => {
+    await axios.get(`/dnti/all`).then((res) => {
       setDntiAll(res.data.response);
     });
   }
