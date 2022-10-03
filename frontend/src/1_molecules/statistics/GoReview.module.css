@@ -56,3 +56,7 @@
   display: flex;
   justify-content: space-between;
 }
+
+.heart {
+  margin-right: 5px;
+}

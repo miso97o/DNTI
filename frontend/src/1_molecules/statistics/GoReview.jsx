@@ -2,6 +2,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Rating } from '@mui/material';
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { pink } from "@mui/material/colors";
 import styles from "./GoReview.module.css";
 
 
@@ -21,7 +23,7 @@ function GoReview({dong}) {
     })
       .then(function(res) {
         setReviews(res.data.response);
-        console.log("data", reviews);
+        // console.log("data", reviews);
         
       })
       .catch(error => {
@@ -109,19 +111,28 @@ function GoReview({dong}) {
             {boards[0] && (
               <div className={styles.contentLine}>
                 <div className={styles.contentTitle}>{boards[0].title}</div>
-                <div>{boards[0].boardLike}</div>
+                <div>
+                  <FavoriteIcon sx={{ color: pink[500] }} className={styles.heart} />
+                  {boards[0].boardLike}
+                </div>
               </div>
             )}
             {boards[1] && (
               <div className={styles.contentLine}>
                 <div className={styles.contentTitle}>{boards[1].title}</div>
-                <div>{boards[1].boardLike}</div>
+                <div>
+                  <FavoriteIcon sx={{ color: pink[500] }} className={styles.heart} />
+                  {boards[1].boardLike}
+                </div>
               </div>
             )}
             {boards[2] && (
               <div className={styles.contentLine}>
                 <div className={styles.contentTitle}>{boards[2].title}</div>
-                <div className={styles.contentTitle}>{boards[2].boardLike}</div>
+                <div>
+                  <FavoriteIcon sx={{ color: pink[500] }} className={styles.heart} />
+                  {boards[2].boardLike}
+                </div>
               </div>
             )}
           </div>            
