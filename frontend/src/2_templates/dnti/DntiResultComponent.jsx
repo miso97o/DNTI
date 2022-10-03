@@ -5,6 +5,10 @@ import axios from "axios";
 
 function DntiResultCard({ imgsrc, type, content }) {
 
+    useEffect(e=>{
+        saveDnti()
+      },[])
+
   function saveDnti() {
     axios.put(`/users/savednti`,{
       type:type
