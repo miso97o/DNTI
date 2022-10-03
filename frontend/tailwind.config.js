@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        dntiblue: "#2200f4",
+        dntiblue: "#7a08ff",
         dntidarkgray: "#444444",
         dntilightgray: "#F0F0F0",
         dntiwhite: "fafafa",
@@ -12,7 +12,7 @@ module.exports = {
       },
     },
     fontFamily: {
-      dnti: ["TmoneyRoundWindRegular"],
+      dnti: ["nanumsquare"],
     },
   },
   plugins: [],

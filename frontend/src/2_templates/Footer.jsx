@@ -1,16 +1,63 @@
+import "../4_css/Footer.css";
+import {
+  faFacebookF,
+  faGooglePlusG,
+  faTwitter,
+  faLinkedinIn,
+} from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 export default function Footer() {
   return (
-    <div className="flex flex-row justify-between items-center bg-black h-16">
-      <div className="flex flex-row items-center">
-        <img
-          src="https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/cjztbof8gb9-332%3A538?alt=media&token=5271a2e5-96b4-45f0-999d-caca6bc12259"
-          alt="Not Found"
-        />
-        <p className="text-white">동네TI</p>
+    <footer className=" bg-gray-500">
+      <div className="footer-content">
+        <div className="flex gap-2">
+          <img src="./img/logo-all-white.png" alt="" className="w-28" />
+        </div>
+        <div>
+          <ul className="f-menu flex gap-12">
+            <li>
+              <a href="{() => false}">Home</a>
+            </li>
+            <li>
+              <a href="{() => false}">About</a>
+            </li>
+            <li>
+              <a href="{() => false}">Contact</a>
+            </li>
+            <li>
+              <a href="{() => false}">Blog</a>
+            </li>
+          </ul>
+          <div className="footer-bottom">
+            <p>© 2022 Dnti. All rights reserved.</p>
+          </div>
+        </div>
+        <div className="footer-menu">
+          <ul className="socials">
+            <li>
+              <a href="{() => false}">
+                <FontAwesomeIcon icon={faFacebookF} />
+              </a>
+            </li>
+            <li>
+              <a href="{() => false}">
+                <FontAwesomeIcon icon={faGooglePlusG} />
+              </a>
+            </li>
+            <li>
+              <a href="{() => false}">
+                <FontAwesomeIcon icon={faTwitter} />
+              </a>
+            </li>
+            <li>
+              <a href="{() => false}">
+                <FontAwesomeIcon icon={faLinkedinIn} />
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
-      <p className="text-white">
-        ssafy A601 신규진 김태하 박예진 양택훈 호인영 황준원
-      </p>
-    </div>
+    </footer>
   );
 }
