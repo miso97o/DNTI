@@ -4,12 +4,15 @@ import Chart from "../../1_molecules/statistics/Chart";
 import GoReview from "../../1_molecules/statistics/GoReview";
 import RankImg from "../../0_atoms/Img/Rank.png";
 import styles from "./Statistics.module.css";
+import { useDispatch } from "react-redux";
+import { setRanks } from "../../features/recommend/recommendSlice";
 import "./Statistics.css";
 
 
 function Statistics() {
   const [check, setCheck] = useState(false);
   const [rank, setRank] = useState()
+  const dispatch = useDispatch();
   const temp = localStorage.getItem("priorityStorage")
 
   const priorites = temp.substr(0, temp.length-1)
@@ -29,8 +32,8 @@ function Statistics() {
     })
       .then(function(res) {
         setRank(res.data.response);
-        console.log("data", rank);
-        
+        // console.log("data", res.data.response);
+        dispatch(setRanks(res.data.response));
       })
       .catch(error => {
         console.error("실패:", error);
@@ -127,7 +130,7 @@ function Statistics() {
       </div>
     </div> 
     ) : (
-      <div>loading</div>
+      <div>loading...</div>
     )
     }
     </div>

@@ -16,6 +16,7 @@
   height: 800px;
   min-width: 400px;
   padding: 40px 16px 20px 16px;
+  overflow: auto;
 }
 
 .btnArea {
@@ -35,4 +36,19 @@
 
 .map {
   overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  /* margin-right: 2px; */
+  position: absolute;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #b0b0b0;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 1px solid transparent;
+}
+::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
 }

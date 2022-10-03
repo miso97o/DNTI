@@ -7,10 +7,10 @@ import geojson from "../../0_atoms/data/seoul_geojson";
 // import { selected } from "../../1_molecules/kmMap/Show";
 
 
+  const { kakao } = window;
 
 
 function Map() {
-  const { kakao } = window;
 
   useEffect(() => {
     let data = geojson.features;
@@ -21,14 +21,13 @@ function Map() {
 
     const mapContainer = document.getElementById('kakaoMap'); // 지도를 표시할 div
     const mapOption = {
-      center: new kakao.maps.LatLng(37.525078, 126.975702), // 지도의 중심좌표
+      center: new kakao.maps.LatLng(37.567000, 126.975702), // 지도의 중심좌표
       
-      level: 7, // 지도의 확대 레벨
+      level: 8, // 지도의 확대 레벨
     };
 
     const map = new kakao.maps.Map(mapContainer, mapOption);
     const customOverlay = new kakao.maps.CustomOverlay({});
-    const infowindow = new kakao.maps.InfoWindow({ removable: true });
 
     const displayArea = (coordinates, name) => {
       let path = [];
@@ -67,52 +66,25 @@ function Map() {
         customOverlay.setMap(map);
       });
 
-      // 다각형에 mousemove 이벤트를 등록하고 이벤트가 발생하면 커스텀 오버레이의 위치를 변경합니다
-      // kakao.maps.event.addListener(polygon, 'mousemove', function (mouseEvent) {
-      //   customOverlay.setPosition(mouseEvent.latLng);
-      // });
 
-      // 다각형에 mouseout 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 원래색으로 변경합니다
       // 커스텀 오버레이를 지도에서 제거합니다
       kakao.maps.event.addListener(polygon, 'mouseout', function () {
         polygon.setOptions({ fillColor: '#fff' });
         customOverlay.setMap(null);
       });
 
-      // 다각형에 click 이벤트를 등록하고 이벤트가 발생하면 다각형의 이름과 면적을 인포윈도우에 표시합니다
-      // kakao.maps.event.addListener(polygon, 'click', function (mouseEvent) {
-      //   const content =
-      //     name;
 
-      //   infowindow.setContent(content);
-      //   infowindow.setPosition(mouseEvent.latLng);
-      //   infowindow.setMap(map);
-      // });
     };
+
+
 
     data.forEach((val) => {
       coordinates = val.geometry.coordinates;
-      customOverlay.setContent('<div className={styles.title}>' + name + '</div>');
-
-      customOverlay.setPosition(coordinates);
       name = val.properties.EMD_NM;
-
       displayArea(coordinates, name);
     });
  }, []);
 
-  // const mapscript = () => {
-  //   let container = document.getElementById("kakaoMap");
-  //   let options = {
-  //     // center: new kakao.maps.LatLng(37.525078, 126.975702), // 서울중심어딘가
-  //     center: new kakao.maps.LatLng(37.497486063, 127.027661548),
-  //     level: 4,
-  //   };
-  //   console.log("loading kakaomap")
-
-  //   //map
-  //   const map = new kakao.maps.Map(container, options);
-  // }
   
 
 

@@ -174,11 +174,11 @@ function KmMap() {
         center : options.center,  // 원의 중심좌표
         radius: 500, // 미터 단위의 원의 반지름
         strokeWeight: 2, // 선 두께
-        strokeColor: '#ffffff', // 선 색깔
-        strokeOpacity: 1, // 선의 불투명도 1에서 0 사이의 값 0에 가까울수록 투명
-        strokeStyle: 'dashed', // 선의 스타일
-        fillColor: '#ffffff', // 채우기 색깔
-        fillOpacity: 0.34  // 채우기 불투명도   
+        strokeColor: '#7a08ff', // 선 색깔
+        strokeOpacity: 0.8, // 선의 불투명도 1에서 0 사이의 값 0에 가까울수록 투명
+        strokeStyle: 'solid', // 선의 스타일
+        fillColor: '#7a08ff', // 채우기 색깔
+        fillOpacity: 0.05  // 채우기 불투명도   
       }); 
       // 지도에 원을 표시
       if(dbClicked) {
@@ -212,6 +212,7 @@ function KmMap() {
 
 
     async function getTime(EX,EY, name) {
+      console.log("거리계산시작")
       await axios(`https://api.odsay.com/v1/api/searchPubTransPathT?apiKey=	LgKc2CMw9rNdnycQ1V1H1g&SX=${options.center.La}&SY=${options.center.Ma}&EX=${EX}&EY=${EY}`, {
         method: "GET",
         headers: {
@@ -220,10 +221,10 @@ function KmMap() {
       })
         .then(res => {
           setTime(res.data.result);
+          console.log(res.data)
         })
         .catch(error => {
           console.error("실패:", error);
-          console.error(error.code)
         });
     }
 
@@ -249,6 +250,7 @@ function KmMap() {
       getFavorites()
     }, [])
     useEffect(() => {
+      setTimesArray([])
       if (fav) {
         for (let i = 0; i < fav.length; i ++){
           geocoder.addressSearch(fav[i].address, function(result, status) {
@@ -287,8 +289,6 @@ function KmMap() {
         setTimeCheck(true)
       }
     }
-
-
   }, [time]);
 
 
@@ -336,7 +336,12 @@ function KmMap() {
                         {fav[0].name}               
                       </div>
                       <div className={styles.favTime}>
-                        {timesArray[0]}분 소요
+                        {timesArray[0]? (
+                        <div>{timesArray[0]}분 소요</div>
+                        ) : (
+                          <div>700m 이내입니다</div>
+                        )}
+                        
                       </div>                      
                     </div>
                   ) : (
@@ -348,7 +353,11 @@ function KmMap() {
                         {fav[1].name}               
                       </div>
                       <div className={styles.favTime}>
-                        {timesArray[1]}분 소요
+                        {timesArray[1]? (
+                        <div>{timesArray[1]}분 소요</div>
+                        ) : (
+                          <div>700m 이내입니다</div>
+                        )}
                       </div>                      
                     </div>
                   ) : (
@@ -360,7 +369,11 @@ function KmMap() {
                         {fav[2].name}               
                       </div>
                       <div className={styles.favTime}>
-                        {timesArray[2]}분 소요
+                        {timesArray[2]? (
+                        <div>{timesArray[2]}분 소요</div>
+                        ) : (
+                          <div>700m 이내입니다</div>
+                        )}
                       </div>                      
                     </div>
                   ) : (
