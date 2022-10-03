@@ -32,5 +32,7 @@ public interface UserService {
 
     //회원 정보 조회
     UserRequest.All getInfo(String userId) throws Exception;
+
+    void saveDnti(String type,String email) throws Exception;
 }
 
