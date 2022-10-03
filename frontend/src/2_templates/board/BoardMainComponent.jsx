@@ -5,31 +5,13 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Paper, Button } from "@mui/material";
 import HotReviewRow from "../../1_molecules/HotReviewRow";
 import HotPostRow from "../../1_molecules/HotPostRow";
 import Carousel from "../../1_molecules/Carousel";
 
-function Item({ url, thumbnail, title }) {
-  return (
-    <div
-      className=" cursor-pointer"
-      onClick={() => {
-        window.open(url);
-      }}
-    >
-      <Paper>
-        <div className="h-36">
-          <img src={thumbnail} alt="유튜브 썸네일" />
-        </div>
-        <h2>{title}</h2>
-      </Paper>
-    </div>
-  );
-}
-
 export default function BoardMainComponent() {
   const [youtubeItems, setYoutubeItems] = React.useState([]);
+  const [numOfSlides, setNumOfSlides] = React.useState(1);
   const guDong = useSelector((state) => state.guDong);
   const [boardList, setBoardList] = React.useState([]);
   const [reviewList, setReviewList] = React.useState([]);
@@ -229,17 +211,7 @@ export default function BoardMainComponent() {
                   <div className="flex flex-col h-full w-full justify-start">
                     <p className="font-medium text-2xl mb-5">관련 영상</p>
                     <div className="h-full w-full dnticard">
-                      {/* <Carousel className="h-54" navButtonsAlwaysVisible="true">
-                        {youtubeItems.map((item) => (
-                          <Item
-                            key={item.youtubeId}
-                            url={item.url}
-                            thumbnail={item.thumbnail}
-                            title={item.title}
-                          />
-                        ))}
-                      </Carousel> */}
-                      <Carousel></Carousel>
+                      <Carousel data={youtubeItems} />
                     </div>
                   </div>
                 </div>
