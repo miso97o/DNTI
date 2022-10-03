@@ -7,12 +7,7 @@ body {
   background: #fcfcfc;
 }
 footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
   height: auto;
-
   padding: 40px 65px;
   color: #fff;
 }

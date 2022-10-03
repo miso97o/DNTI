@@ -53,10 +53,13 @@ export default function FreeMainComponent() {
           guDong.selectedGu === "전체" ? "" : guDong.selectedGu
         }&dong=${
           guDong.selectedDong === "전체" ? "" : guDong.selectedDong
-        }&category=${searchCat}&keyword=${searchKey}`
+        }&category=${searchCat}&keyword=${searchKey}&page=${
+          currentPage - 1
+        }&size=10`
       )
       .then((res) => {
         console.log(res);
+        setTotalPage(res.data.response.totalPages);
         setBoardList(res.data.response.content);
       });
   }
@@ -67,9 +70,13 @@ export default function FreeMainComponent() {
   }, []);
 
   useEffect(() => {
-    searchBoard();
     getHotBoard();
+    setCurrentPage(1);
   }, [guDong]);
+
+  useEffect(() => {
+    searchBoard();
+  }, [guDong, currentPage]);
 
   return (
     <div className="flex flex-col h-full w-4/5 items-center">

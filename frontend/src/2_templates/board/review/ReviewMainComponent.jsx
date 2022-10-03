@@ -15,7 +15,6 @@ import HotReviewRow from "../../../1_molecules/HotReviewRow";
 import { useEffect } from "react";
 import axios from "../../../utils/axios";
 import { useSelector, useDispatch } from "react-redux";
-import { Co2Sharp } from "@mui/icons-material";
 
 export default function ReviewMainComponent() {
   const [reviews, setReviews] = React.useState();

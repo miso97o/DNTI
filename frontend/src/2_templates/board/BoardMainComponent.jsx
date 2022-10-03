@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import Carousel from "react-material-ui-carousel";
 import { Paper, Button } from "@mui/material";
 import HotReviewRow from "../../1_molecules/HotReviewRow";
 import HotPostRow from "../../1_molecules/HotPostRow";
+import Carousel from "../../1_molecules/Carousel";
 
 function Item({ url, thumbnail, title }) {
   return (
@@ -150,6 +150,7 @@ export default function BoardMainComponent() {
                   {hotBoardList.map((x) => {
                     return (
                       <HotPostRow
+                        key={x.boardId + "hotpost"}
                         Id={x.boardId}
                         title={x.title}
                         writer={x.nickname}
@@ -167,7 +168,7 @@ export default function BoardMainComponent() {
                     boardList.map((x) => {
                       return (
                         <PostRow
-                          key={x.boardId}
+                          key={x.boardId + "post"}
                           Id={x.boardId}
                           title={x.title}
                           writer={x.nickname}
@@ -198,7 +199,7 @@ export default function BoardMainComponent() {
                         hotReviews.map((hotReview) => {
                           return (
                             <HotReviewRow
-                              key={hotReview.id + "hot"}
+                              key={hotReview.id + "hotReview"}
                               id={hotReview.id}
                               title={hotReview.title}
                               writer={hotReview.email}
@@ -213,7 +214,7 @@ export default function BoardMainComponent() {
                         reviewList.map((x) => {
                           return (
                             <ReviewRow
-                              key={x.id}
+                              key={x.id + "review"}
                               id={x.id}
                               title={x.title}
                               likes={x.reviewLike}
@@ -228,7 +229,7 @@ export default function BoardMainComponent() {
                   <div className="flex flex-col h-full w-full justify-start">
                     <p className="font-medium text-2xl mb-5">관련 영상</p>
                     <div className="h-full w-full dnticard">
-                      <Carousel className="h-54" navButtonsAlwaysVisible="true">
+                      {/* <Carousel className="h-54" navButtonsAlwaysVisible="true">
                         {youtubeItems.map((item) => (
                           <Item
                             key={item.youtubeId}
@@ -237,7 +238,8 @@ export default function BoardMainComponent() {
                             title={item.title}
                           />
                         ))}
-                      </Carousel>
+                      </Carousel> */}
+                      <Carousel></Carousel>
                     </div>
                   </div>
                 </div>

@@ -22,9 +22,7 @@ export default function ReviewWriteComponent() {
   const [infraScore, setInfraScore] = React.useState(0);
   const [envScore, setEnvScore] = React.useState(0);
   const [safeScore, setSafeScore] = React.useState(0);
-  const [totalScore, setTotalScore] = React.useState(
-    (rentScore + infraScore + envScore + safeScore) / 4
-  );
+  const [totalScore, setTotalScore] = React.useState(0);
 
   useEffect(() => {
     console.log("location state ====================");
