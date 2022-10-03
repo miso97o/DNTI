@@ -31,7 +31,7 @@ export default function HotPostRow({
         increaseHit();
       }}
     >
-      <div className="flex flex-row h-8 w-full items-center p-1 border-b-slate-200 border-b-2 box-border bg-purple-200 hover:bg-purple-300">
+      <div className="flex flex-row h-8 w-full items-center p-5  border-b-slate-200 border-b-2 box-border bg-purple-200 hover:bg-purple-300">
         <div className="flex flex-row w-full items-stretch justify-between">
           <div className="flex flex-row items-center w-1/3">
             <p>{title}</p>
@@ -41,13 +41,16 @@ export default function HotPostRow({
               <PersonIcon />
               <p>{writer}</p>
             </div>
-            <p>{date}</p>
+            <p>{date.replaceAll("-", "/")}</p>
             <div className="flex flex-row items-center ml-3">
               <ChatBubbleOutlineOutlinedIcon fontSize="small" />
               <p>{replies}</p>
             </div>
             <div className="flex flex-row items-center ml-3">
-              <VisibilityOutlinedIcon fontSize="small" />
+              <VisibilityOutlinedIcon
+                fontSize="small"
+                className="text-gray-700"
+              />
               <p>{views}</p>
             </div>
             <div className="flex flex-row items-center ml-3">

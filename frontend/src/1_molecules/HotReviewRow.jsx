@@ -5,7 +5,7 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 export default function HotReviewRow({ id, title, datetime, score, likes }) {
   return (
     <Link to="/board/review/view" state={{ reviewId: id }}>
-      <div className="flex flex-row h-8 w-full justify-between items-center px-1 bg-purple-200 hover:bg-purple-300 border-b-slate-200 border-b-2 box-border">
+      <div className="flex flex-row h-8 w-full justify-between items-center p-5 bg-purple-200 hover:bg-purple-300 border-b-slate-200 border-b-2 box-border">
         <div className="flex flex-row w-3/5 items-stretch justify-between">
           <p>{title}</p>
         </div>
