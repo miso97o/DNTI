@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
-
+import { useDispatch } from "react-redux";
+import { setRanks } from "../features/recommend/recommendSlice";
 import Choose from "../2_templates/recommendation/Choose";
 import Statistics from "../2_templates/recommendation/Statistics";
 import Map1 from "../2_templates/recommendation/Map";
@@ -13,8 +14,12 @@ function DnRecommendPage() {
   function Search() {
     if (goStatistics) {
       setGoStatics(false)
+      dispatch(setRanks([]));
+      localStorage.setItem("guStorage", [])
     } else {setGoStatics(true)}
   }
+  const dispatch = useDispatch();
+ 
 
 
 
