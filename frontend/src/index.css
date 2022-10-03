@@ -33,16 +33,13 @@
     border-radius: 4px;
   }
   .bluebtn {
-    display: flex;
-    flex-direction: flex-row;
-    align-items: center;
-    justify-content: center;
-    padding: 5px 8px 5px 8px;
-    border: solid 1px #2200f4;
-    border-radius: 999px;
-    background-color: #2200f4;
+    padding: 13px 32px;
+    border-radius: 19px;
+    background-color: #7a08ff;
     color: #ffffff;
     min-width: 90px;
+    font-size: 1.3em;
+    font-weight: 800;
   }
   .blackbtn {
     display: flex;
