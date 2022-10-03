@@ -17,16 +17,16 @@ export default function Footer() {
         <div>
           <ul className="f-menu flex gap-12">
             <li>
-              <a href="#">Home</a>
+              <a href="{() => false}">Home</a>
             </li>
             <li>
-              <a href="#">About</a>
+              <a href="{() => false}">About</a>
             </li>
             <li>
-              <a href="#">Contact</a>
+              <a href="{() => false}">Contact</a>
             </li>
             <li>
-              <a href="#">Blog</a>
+              <a href="{() => false}">Blog</a>
             </li>
           </ul>
           <div className="footer-bottom">
@@ -36,22 +36,22 @@ export default function Footer() {
         <div className="footer-menu">
           <ul className="socials">
             <li>
-              <a href="#">
+              <a href="{() => false}">
                 <FontAwesomeIcon icon={faFacebookF} />
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="{() => false}">
                 <FontAwesomeIcon icon={faGooglePlusG} />
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="{() => false}">
                 <FontAwesomeIcon icon={faTwitter} />
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="{() => false}">
                 <FontAwesomeIcon icon={faLinkedinIn} />
               </a>
             </li>
