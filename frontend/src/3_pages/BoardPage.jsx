@@ -23,6 +23,7 @@ export default function Boardpage() {
   const [cookies, removeCookie] = useCookies(["userEmail"]);
   const email = cookies["userEmail"];
 
+  const newRank = [1, 2, 3];
   useEffect(() => {
     console.log("BoardPage useEffect([])");
     console.log("boardPage initialize");
