@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import Ranking from "../../1_molecules/statistics/Ranking";
 import Chart from "../../1_molecules/statistics/Chart";
 import GoReview from "../../1_molecules/statistics/GoReview";
 import RankImg from "../../0_atoms/Img/Rank.png";
@@ -54,7 +53,6 @@ function Statistics() {
       }      
       setCheck(true);
       setSelected(rank[0].dongName)
-      // console.log(localStorage.getItem("dongResult")[1])      
     }
   }, [rank])
 

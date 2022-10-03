@@ -2,6 +2,10 @@
     font-family: 'TmoneyRoundWindRegular';
   }
   
+.search {
+  margin-bottom: 40px;
+}
+
 .show {
   gap: 16px 0px;
   display: flex;
@@ -12,6 +16,7 @@
   font-size: 28px;
   margin-left: 5px;
   color: #333333;
+  margin-bottom: 20px;
 }
 
 .selectedContainer {
@@ -20,6 +25,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
+  padding: 0px 12px 0px 12px;
 }
 
 
@@ -32,22 +38,22 @@
 
 
 .selectedOptIcon {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   display: flex;
   justify-content: center;
   /* align-items: flex-end; */
 }
 
 .selectedOptIcon img {
-  width: 45px;
-  height: 45px;
+  width: 35px;
+  height: 35px;
   margin-top: 4px;
 }
 
 .selectedBlank {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 
   border-radius: 50%;
   background-color: #f0f0f0;
@@ -58,6 +64,12 @@
   border: 0;
   height: 1.3px;
   width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.options {
+  padding: 0px 10px 0px 10px;
 }
 
 
