@@ -107,7 +107,7 @@ public class UserController {
         service.singOut(email);
         return new ApiResult(200, email);
     }
-    @ApiOperation(value = "회원탈퇴", notes="탈퇴 후 해당 아이디 반환")
+    @ApiOperation(value = "dnti저장", notes="탈퇴 후 해당 아이디 반환")
     @PutMapping("/savednti")
     public ApiResult savednti(@RequestBody SavedntiRequest savedntiRequest, @CookieValue("userEmail") Cookie cookie) throws Exception {
         String email=cookie.getValue();

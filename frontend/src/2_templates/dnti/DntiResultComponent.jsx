@@ -1,36 +1,119 @@
+import * as React from "react";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import axios from "axios";
 import { useEffect } from "react";
+import { Doughnut } from 'react-chartjs-2';
+import { useSelector } from "react-redux";
 
-function DntiResultCard({ imgsrc, type, content }) {
+function DntiResultCard({ imgsrc, type, content, arr }) {
 
-    useEffect(e=>{
-        saveDnti()
-      },[])
+  const [dntiPer, setDntiPer] = React.useState(0);
+  const [keyword, setKeyword] = React.useState("");
+  const [hash1, setHash1] = React.useState("");
+  const [hash2, setHash2] = React.useState("");
+  const [dongList, setDongList] = React.useState([]);
+  const user = useSelector((state) => state.user);
+
+  useEffect(e=>{
+    if(user.userId) saveDnti()
+    voteDnti()
+    getStat()
+    getAllStat()
+    getDongbyDnti()
+  },[])
 
   function saveDnti() {
     axios.put(`/users/savednti`,{
       type:type
     })
     .then((res) => {
+      console.log(res);
+    })
+  }
+
+  function voteDnti() {
+    axios.patch(`/dnti/count/${type}`)
+    .then((res) => console.log(res.data))
+  }
+
+  function getStat() {
+    axios.get(`/dnti/${type}`)
+    .then((res) => {
+      console.log(res.data)
+      setDntiPer(res.data.response.percent);
+      setKeyword(res.data.response.keyword)
+      setHash1(res.data.response.hashtag1)
+      setHash2(res.data.response.hashtag2)
+    })
+  }
+
+  function getAllStat() {
+    axios.get(`/dnti/all`)
+    .then((res) => {
       console.log(res.data);
     })
   }
 
+  function getDongbyDnti() {
+    axios.get(`/dong/${type}`)
+    .then((res) => {
+      console.log(res.data);
+      setDongList(res.data.response)
+    })
+  }
+
+  const data = {
+    labels: arr.map((x) => x[0]),
+    datasets: [
+      {
+        data: arr.map((x) => x[1]*100/6.00),
+        borderWidth: 1,
+        backgroundColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+        ]
+      }
+    ]
+  }
+
   return (
     <Card variant="outlined">
-      <div className="flex flex-col items-center m-10">
-        <img src={imgsrc} alt="Not Found" className="w-64 p-10" />
-        <div className="flex flex-row items-center m-10">
-          <p className="font-medium text-xl">{type}</p>
-          <p className="font-medium text-xl">이시네요!</p>
+      <div className="flex flex-col m-10">
+        <div className="flex flex-row">
+          <img src={imgsrc} alt="Not Found" className="w-96 h-96 p-10" />
+          <div className="flex flex-col items-center">
+            <div className="flex flex-col m-10">
+              <p className="font-bold text-xl mb-3">나의 동네유형은?</p>
+              <p className="font-black text-6xl">{type}</p>
+              <p className="font-medium text-xl">{keyword}</p>
+              <p className="font-medium text-base">#{hash1} #{hash2}</p>
+              <p className="font-bold text-lg mt-10">{dntiPer}%의 유형입니다.</p>
+            </div>
+          </div>
+          <div className="flex flex-row m-10 w-72 h-72">
+            <Doughnut data={data}/>
+          </div>
         </div>
-        <div className="flex flex-row items-center m-10">
-          <p className="font-medium text-xl">{content}</p>
+        <hr />
+        <div className="flex flex-col m-10">
+          <p className="font-bold text-3xl mb-5">{type}에 맞는 동네 추천</p>
+          {dongList.map((x, idx) => {
+            return (
+              <p className="font-bold">{idx+1}위 {x.dongName}</p>
+            )
+          })}
         </div>
-        <div className="util-button flex-row-vcenter-hcenter">
+        <div className="flex flex-row justify-center items-center">
           <Link to={`/dnRecommend`} style={{ textDecoration: "none" }}>
             <Button onClick={saveDnti} variant="contained">동네 확인하기</Button>
           </Link>
@@ -136,6 +219,7 @@ export default function DntiResultComponent({sortable,win,lose}) {
         imgsrc={src}
         type={dntitype}
         content={info[dntitype]}
+        arr={sortable}
       />
     </div>
   );
