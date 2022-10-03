@@ -182,9 +182,10 @@ public class ReviewServiceImpl implements ReviewService{
             en += review.getEnvironment();
             sa += review.getSafety();
             inf += review.getInfra();
-            ren = review.getRental();
+            ren += review.getRental();
             total += review.getScore();
         }
+        System.out.println(ren+" "+en+" "+sa+" "+inf);
 
         ReviewResponse reviewResponse = ReviewResponse.builder()
                 .gu(gu)
