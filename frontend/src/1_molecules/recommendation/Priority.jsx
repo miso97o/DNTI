@@ -13,7 +13,7 @@ localStorage.setItem("priorityStorage", [])
 
 
 
-function Priority({addSelectedProp}) {
+function Priority({addSelectedProp, selectedList}) {
   const [opt, setOpt] = useState()
   const addSelected =(e)=> {
     addSelectedProp(e)
@@ -21,22 +21,30 @@ function Priority({addSelectedProp}) {
     // console.log(opt)
   }
   const [num, setNum] = useState(0)
-
   function changeChecked(e) {
-    if (e.checked) {
-      e.checked = false
-      console.log('실행안됨')
-    } else {
-      e.checked = true
-      if(num < 6) {
-        setNum(num + 1)
-        addSelected(e)
-        console.log(`${e.value}, ${num}, 실행됨`)
-        const tmp = (localStorage.getItem("priorityStorage") + (e.key + ","))
-        localStorage.setItem("priorityStorage", (tmp))
-        // console.log(localStorage.getItem("priorityStorage").length)
+    console.log(selectedList)
+    for(let el of selectedList) {
+      if(e.key === el) {
+        e.checked = true;
+        alert("이미 추가됨")
+        return;
       }
     }
+    addSelected(e)
+    // if (e.checked) {
+    //   e.checked = false
+    //   console.log('실행안됨')
+    // } else {
+    //   e.checked = true
+    //   if(num < 6) {
+    //     setNum(num + 1)
+    //     addSelected(e)
+    //     console.log(`${e.value}, ${num}, 실행됨`)
+    //     const tmp = (localStorage.getItem("priorityStorage") + (e.key + ","))
+    //     localStorage.setItem("priorityStorage", (tmp))
+    //     // console.log(localStorage.getItem("priorityStorage").length)
+    //   }
+    // }
   }
   
 
@@ -45,7 +53,7 @@ function Priority({addSelectedProp}) {
       <div className={styles.dropdownHeader}>
         {/* {selected.image} */}
       </div>
-      <div className={styles.dropdownOpts}>
+      <div className={styles.dropdownOpts} style={{cursor:"pointer"}}>
         {options.map((option) => (
           <li key={option.value} 
             onClick={(e) => {
