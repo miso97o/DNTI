@@ -102,7 +102,7 @@ export default function ReviewWriteComponent() {
   let controlPanel = null;
   if (location.state.reviewId !== "newReview") {
     controlPanel = (
-      <div className="flex flex-row w-full justify-center mt-10">
+      <div className="flex flex-row w-full justify-center pt-5">
         <DntiBtn
           text="등록"
           type="yellow"
@@ -120,8 +120,8 @@ export default function ReviewWriteComponent() {
     );
   } else {
     controlPanel = (
-      <div className="flex flex-row w-full justify-center mt-10">
-        <div className="flex flex-row w-1/3 justify-between">
+      <div className="flex flex-row w-full justify-center pt-5">
+        <div className="flex flex-row w-[15rem] justify-between">
           <DntiBtn
             text="등록"
             type="yellow"
@@ -138,15 +138,15 @@ export default function ReviewWriteComponent() {
   }
 
   return (
-    <div className="">
-      <div className="">
-        <div className="mx-3">
-          <div className="dnticard">
-            <div className="flex flex-row justify-between items-center">
+    <div className="w-full">
+      <div className="w-full">
+        <div className="w-full">
+          <div className="flex flex-col w-full items-center dnticard">
+            <div className="flex flex-row w-full justify-between items-center">
               <p className="">{user.dong}</p>
               <p className="">{user.nickname}</p>
             </div>
-            <div className="flex flex-col h-4/5 p-5">
+            <div className="flex flex-col w-full h-4/5 p-3">
               <div className="mb-5">
                 <TextField
                   id="standard-basic"
@@ -167,8 +167,8 @@ export default function ReviewWriteComponent() {
                 onChange={handleReviewContentsChange}
               />
             </div>
-            <div className="flex flex-col items-center  my-5">
-              <div className="flex flex-row w-1/3 justify-between mb-3">
+            <div className="flex flex-col w-[45rem] items-center py-2">
+              <div className="flex flex-row w-2/5 justify-between pb-1">
                 <p className="text-lg">총점</p>
                 <Rating
                   name="total"

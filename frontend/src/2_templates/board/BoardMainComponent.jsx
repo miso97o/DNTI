@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Carousel from "react-material-ui-carousel";
 import { Paper, Button } from "@mui/material";
+import HotReviewRow from "../../1_molecules/HotReviewRow";
+import HotPostRow from "../../1_molecules/HotPostRow";
 
 function Item({ url, thumbnail, title }) {
   return (
@@ -31,12 +33,41 @@ export default function BoardMainComponent() {
   const guDong = useSelector((state) => state.guDong);
   const [boardList, setBoardList] = React.useState([]);
   const [reviewList, setReviewList] = React.useState([]);
+  const [hotBoardList, setHotBoardList] = React.useState([]);
+  const [hotReviews, setHotReviews] = React.useState();
 
   async function getBoard(page) {
     await axios.get(`/board?page=${page - 1}`).then((res) => {
       // console.log(res.data);
       setBoardList(res.data.response.content);
     });
+  }
+
+  async function getHotReview() {
+    axios
+      .get(
+        `/review/hot?gu=${
+          guDong.selectedGu !== "전체" ? guDong.selectedGu : ""
+        }&dong=${guDong.selectedDong !== "전체" ? guDong.selectedDong : ""}`
+      )
+      .then(({ data }) => {
+        console.log("hotReview ========");
+        console.log(data);
+        setHotReviews(data.response);
+        console.log(hotReviews);
+      });
+  }
+
+  async function getHotBoard() {
+    axios
+      .get(
+        `/board/hot?gu=${
+          guDong.selectedGu === "전체" ? "" : guDong.selectedGu
+        }&dong=${guDong.selectedDong === "전체" ? "" : guDong.selectedDong}`
+      )
+      .then(({ data }) => {
+        setHotBoardList(data.response);
+      });
   }
 
   async function searchBoard() {
@@ -62,7 +93,7 @@ export default function BoardMainComponent() {
           guDong.selectedGu !== "전체" ? guDong.selectedGu : ""
         }&dong=${
           guDong.selectedDong !== "전체" ? guDong.selectedDong : ""
-        }&page=0&size=9`
+        }&page=0&size=6`
       )
       .then((res) => {
         console.log(res.data);
@@ -94,6 +125,8 @@ export default function BoardMainComponent() {
         getYoutubeItems(guDong.selectedGu);
         searchBoard();
         getReview();
+        getHotReview();
+        getHotBoard();
       }, 0);
     }
   }, [guDong]);
@@ -111,9 +144,25 @@ export default function BoardMainComponent() {
               </Link>
             </div>
 
-            <div className="flex flex-col h-full items-center justify-between px-5">
+            <div className="flex flex-col h-[40rem] items-center justify-between px-5">
               <div className="h-full w-full dnticard">
-                <div className="flex flex-col h-full w-full">
+                <div className="flex flex-col w-full">
+                  {hotBoardList.map((x) => {
+                    return (
+                      <HotPostRow
+                        Id={x.boardId}
+                        title={x.title}
+                        writer={x.nickname}
+                        date={x.createdTime.substring(2, 10)}
+                        replies={x.commentCount}
+                        views={x.hit}
+                        likes={x.boardLike}
+                      />
+                    );
+                  })}
+                </div>
+
+                <div className="flex flex-col w-full">
                   {boardList &&
                     boardList.map((x) => {
                       return (
@@ -143,8 +192,23 @@ export default function BoardMainComponent() {
               </div>
               <div className="flex flex-col h-full w-full justify-between">
                 <div className="flex flex-col h-1/2 items-center px-5">
-                  <div className="h-full w-full dnticard">
-                    <div className="flex flex-col h-full w-full">
+                  <div className="h-[20rem] w-full dnticard">
+                    <div className="flex flex-col w-full">
+                      {hotReviews &&
+                        hotReviews.map((hotReview) => {
+                          return (
+                            <HotReviewRow
+                              key={hotReview.id + "hot"}
+                              id={hotReview.id}
+                              title={hotReview.title}
+                              writer={hotReview.email}
+                              score={hotReview.score}
+                              likes={hotReview.reviewLike}
+                            />
+                          );
+                        })}
+                    </div>
+                    <div className="flex flex-col w-full">
                       {reviewList &&
                         reviewList.map((x) => {
                           return (

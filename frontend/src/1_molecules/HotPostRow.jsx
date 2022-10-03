@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-export default function PostRow({
+export default function HotPostRow({
   Id,
   title,
   writer,
@@ -31,7 +31,7 @@ export default function PostRow({
         increaseHit();
       }}
     >
-      <div className="flex flex-row h-8 w-full items-center p-1 border-b-slate-200 border-b-2 box-border hover:hover:bg-gray-200">
+      <div className="flex flex-row h-8 w-full items-center p-1 border-b-slate-200 border-b-2 box-border bg-purple-200 hover:bg-purple-300">
         <div className="flex flex-row w-full items-stretch justify-between">
           <div className="flex flex-row items-center w-1/3">
             <p>{title}</p>

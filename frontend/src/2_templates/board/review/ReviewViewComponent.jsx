@@ -91,7 +91,7 @@ export default function ReviewViewComponent() {
   let reviewControlPanel;
   if (user.userId === reviewContents.email) {
     reviewControlPanel = (
-      <div className="flex flex-row w-full justify-center mt-10">
+      <div className="flex flex-row w-full justify-center pt-5">
         <div className="flex flex-row w-1/2 justify-between">
           <Link
             to="/board/review/write"
@@ -108,7 +108,7 @@ export default function ReviewViewComponent() {
     );
   } else {
     reviewControlPanel = (
-      <div className="flex flex-row w-full justify-center mt-10">
+      <div className="flex flex-row w-full justify-center pt-5">
         <Link to="/board/review">
           <DntiBtn text="목록" type="white" />
         </Link>
@@ -135,11 +135,11 @@ export default function ReviewViewComponent() {
               </div>
             </div>
           </div>
-          <div className="flex h-80 p-2 my-5 border-b-2 border-b-slate-200">
+          <div className="flex h-[15rem] p-2 py-3 border-b-2 border-b-slate-200">
             <p>{reviewContents.content}</p>
           </div>
-          <div className="flex flex-col items-center my-5">
-            <div className="flex flex-row  w-1/3 justify-between mb-3">
+          <div className="flex flex-col items-center py-3">
+            <div className="flex flex-row  w-1/3 justify-between pb-1">
               <p className="text-lg">총점</p>
               <Rating
                 name="total"

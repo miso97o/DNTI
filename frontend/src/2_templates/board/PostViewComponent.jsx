@@ -183,7 +183,7 @@ export default function PostViewComponent() {
           </div>
         </div>
         <div className="flex flex-col w-4/5 items-center m-5">
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col h-[30rem] w-full overflow-y-auto">
             {replies &&
               replies.map((x) => {
                 return (
@@ -198,14 +198,14 @@ export default function PostViewComponent() {
                 );
               })}
           </div>
-          <div className="mt-3">
+          {/* <div className="mt-3">
             <Pagination
               count={10}
               variant="outlined"
               color="primary"
               onChange={(e) => getReply(e.target.outerText)}
             />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
