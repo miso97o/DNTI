@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import axios from "axios";
+import { useEffect } from "react";
 
 function DntiResultCard({ imgsrc, type, content }) {
 
