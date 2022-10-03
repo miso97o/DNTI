@@ -107,6 +107,8 @@ export default function DntiResultComponent({sortable,win,lose}) {
     }
   }
 
+    let dntitype=arr.join("")
+
   const src="/img/dnti_type/"+dntitype+".png"
   return (
     <div className="flex flex-col items-center">
