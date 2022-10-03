@@ -44,8 +44,8 @@ function District() {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <p>관심 있는 지역(구)을 선택해주세요.</p>
-        <Select options={gulist} placeholder="지역(구)를 선택해주세요" onChange={handleChange} isMulti>
+        {/* <p>관심 있는 지역(구)을 선택해주세요.</p> */}
+        <Select options={gulist} placeholder="관심 있는 지역(구)를 선택해주세요" onChange={handleChange} isMulti>
           {/* {gulist.map((item) => {
             return <options value={item}>{item}</options>;
           })} */}

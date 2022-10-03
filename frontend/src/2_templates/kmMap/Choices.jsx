@@ -9,11 +9,13 @@ function Choices(props) {
   const [selectedList, setSelectedList] = useState([])
   const addSelected = selected => {
     setSelectedList([...selectedList, selected])
-    alert( `${selected.value} added!`)
-    console.log(selectedList, '지금까지 선택된것들')
-    // sendSelected()
   }
-  // console.log(selectedList)
+  const deleteSelected = selected => {
+    const tmpList = selectedList.filter((data) => {
+      return data !== selected
+    })
+    setSelectedList(tmpList)
+  }
 
   function sendSelected() {
     props.setGetList(selectedList)
@@ -22,8 +24,7 @@ function Choices(props) {
 
 
   useEffect(() => {
-    localStorage.setItem("selectedStorage", JSON.stringify(selectedList))
-    console.log('더해요',selectedList)
+
     sendSelected()
   }, [selectedList]);
 
@@ -81,7 +82,7 @@ function Choices(props) {
           <hr className={styles.selectedUnderline} />
           <div className={styles.options}>
             {/* <ShowOptions selectedList={selectedList} setSelectedList={setSelectedList}/> */}
-            <ShowOptions addSelectedProp = {addSelected}/>
+            <ShowOptions addSelectedProp = {addSelected} deleteSelectedProp = {deleteSelected}/>
           </div>
         </div>
         <div className={styles.favorites}>

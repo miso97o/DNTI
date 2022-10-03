@@ -106,10 +106,6 @@ const options = [
   {
     value: "restaurant",
     label: 
-    // <div>
-    //   <img src={BusLogo} alt="BusLogo" className={styles.BusLogo}/>
-    //   <p className={styles.labelTxt}>버스정류장</p>
-    // </div>
     <p className={styles.labelTxt}>식당</p>,
     image:
     <img src={RestaurantLogo} alt="RestaurantLogo" className={styles.RestaurantLogo}/>,
@@ -135,26 +131,27 @@ const options = [
 //   );
 // }
 
-function ShowOptions({addSelectedProp}) {
-  const [opt, setOpt] = useState()
+function ShowOptions({addSelectedProp, deleteSelectedProp}) {
   const addSelected =(e)=> {
     addSelectedProp(e)
-    setOpt(e)
-    console.log(opt)
+  }
+  const deleteSelected =(e) => {
+    deleteSelectedProp(e)
   }
 
   const [num, setNum] = useState(0)
 
   function changeChecked(e) {
+    // 선택된 경우
     if (e.checked) {
+      setNum(num - 1)
       e.checked = false
-      console.log('실행안됨')
+      deleteSelected(e)
     } else {
       e.checked = true
       if(num < 5) {
         setNum(num + 1)
         addSelected(e)
-        console.log(`${e.value}, ${num}, 실행됨`)
       }
     }
   }

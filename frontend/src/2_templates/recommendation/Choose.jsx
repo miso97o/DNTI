@@ -107,7 +107,7 @@ function Choices(props) {
           </div>
           <hr className={styles.selectedUnderline} />
           <div className={styles.options}>
-            <div>우선순위 선택</div>
+            {/* <div>우선순위 선택</div> */}
             <Priority addSelectedProp = {addSelected} selectedList = {selectedList}/>
             
           </div>
