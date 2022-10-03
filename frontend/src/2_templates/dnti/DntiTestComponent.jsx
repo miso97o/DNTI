@@ -51,8 +51,8 @@ function TestSelectCard({ imgsrc, description, label }) {
   );
 }
 
-const result={'S':0,'N':0,'P':0,'I':0}
-const sortable = [];
+var result={'S':0,'N':0,'P':0,'I':0}
+var sortable = [];
 let arr=[0,0,0,0]
 
 export default function DntiList(){
@@ -100,10 +100,20 @@ export default function DntiList(){
     for (const name in result) {
       sortable.push([name,result[`${name}`]])
     }
+    console.log(sortable)
     sortable.sort(function(a,b){
       return b[1]-a[1]
     });
   }
+
+  useEffect(() => {
+    return () => {
+      sortable = [];
+      result={'S':0,'N':0,'P':0,'I':0}
+      console.log('clean up', sortable)
+      console.log('clean up', result)
+    };
+  }, []);
 
   const src1="/img/dnti_test/"+index+"-1.png"
   const src2="/img/dnti_test/"+index+"-2.png"

@@ -24,7 +24,7 @@ function DntiResultCard({ imgsrc, type,content }) {
   );
 }
 
-const arr=[0,0,0,0]
+var arr=[0,0,0,0]
 
 const info={
   "PISN":"#알뜰한 현대인",
@@ -63,6 +63,7 @@ const info={
 
 
 export default function DntiResultComponent({sortable,win,lose}) {
+  console.log(sortable[0][1],sortable[1][1],sortable[2][1],sortable[3][1])
   if((sortable[0][1]===sortable[1][1])&&(sortable[1][1]===sortable[2][1])){
     arr[0]='N'
     arr[1]='O'
@@ -75,6 +76,7 @@ export default function DntiResultComponent({sortable,win,lose}) {
     arr[3]=sortable[0][0]
   }else{
     for(let i=0;i<3;i++){
+      console.log(arr)
       if(sortable[i][1]===sortable[i+1][1]){
         if((sortable[i][0]==='N'&&sortable[i+1][0]==='P')|(sortable[i][0]==='P'&&sortable[i+1][0]==='N')){
           arr[i]=win[4]
@@ -107,8 +109,8 @@ export default function DntiResultComponent({sortable,win,lose}) {
     }
   }
 
-    let dntitype=arr.join("")
-
+  let dntitype=arr.join("")
+  arr=[0,0,0,0]
   const src="/img/dnti_type/"+dntitype+".png"
   return (
     <div className="flex flex-col items-center">
