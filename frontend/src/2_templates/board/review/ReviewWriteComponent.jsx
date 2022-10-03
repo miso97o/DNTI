@@ -101,13 +101,13 @@ export default function ReviewWriteComponent() {
   if (location.state.reviewId !== "newReview") {
     controlPanel = (
       <div className="flex flex-row w-full justify-center pt-5">
-        <DntiBtn
-          text="등록"
-          type="yellow"
+        <div
           onClick={(e) => {
             submitReview(payload, e);
           }}
-        />
+        >
+          <DntiBtn text="등록" type="yellow" />
+        </div>
         <Link
           to="/board/review/view"
           state={{ reviewId: location.state.reviewId }}
