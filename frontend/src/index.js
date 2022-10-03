@@ -27,6 +27,15 @@ import ReviewWriteComponent from "./2_templates/board/review/ReviewWriteComponen
 
 import store from "./app/store";
 import { Provider } from "react-redux";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#7a08ff",
+    },
+  },
+});
 
 const router = createBrowserRouter([
   {
@@ -129,9 +138,11 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <RouterProvider router={router} />
-    </React.StrictMode>
-  </Provider>
+  <ThemeProvider theme={theme}>
+    <Provider store={store}>
+      <React.StrictMode>
+        <RouterProvider router={router} />
+      </React.StrictMode>
+    </Provider>
+  </ThemeProvider>
 );
