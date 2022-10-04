@@ -35,6 +35,10 @@ export default function FreeMainComponent() {
     setSearchKey(e.target.value);
   }
 
+  function handlePage(e, value) {
+    setCurrentPage(value)
+  }
+
   async function getHotBoard() {
     axios
       .get(
@@ -43,6 +47,7 @@ export default function FreeMainComponent() {
         }&dong=${guDong.selectedDong === "전체" ? "" : guDong.selectedDong}`
       )
       .then(({ data }) => {
+        console.log(data);
         setHotBoardList(data.response);
       });
   }
@@ -68,7 +73,7 @@ export default function FreeMainComponent() {
           guDong.selectedDong === "전체" ? "" : guDong.selectedDong
         }&category=${category}&keyword=${searchKey}&page=${
           currentPage - 1
-        }&size=10`
+        }&size=8`
       )
       .then((res) => {
         console.log(res);
@@ -110,6 +115,7 @@ export default function FreeMainComponent() {
                     replies={x.commentCount}
                     views={x.hit}
                     likes={x.boardLike}
+                    isCertified={x.isCertified}
                   />
                 );
               })}
@@ -125,6 +131,7 @@ export default function FreeMainComponent() {
                     replies={x.commentCount}
                     views={x.hit}
                     likes={x.boardLike}
+                    isCertified={x.isCertified}
                   />
                 );
               })}
@@ -186,7 +193,7 @@ export default function FreeMainComponent() {
             page={currentPage}
             variant="outlined"
             color="primary"
-            onChange={(e) => getBoard(e.target.outerText)}
+            onChange={handlePage}
           />
         </div>
       </div>

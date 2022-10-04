@@ -82,6 +82,8 @@ public class ReviewServiceImpl implements ReviewService{
                         .environment(review.getEnvironment())
                         .infra(review.getInfra())
                         .safety(review.getSafety())
+                        .createdTime(review.getCreatedTime())
+                        .modifiedTime(review.getModifiedTime())
                         .build()).collect(Collectors.toList());
 
         return reviewList;
@@ -107,6 +109,8 @@ public class ReviewServiceImpl implements ReviewService{
                 .environment(review.getEnvironment())
                 .infra(review.getInfra())
                 .safety(review.getSafety())
+                .createdTime(review.getCreatedTime())
+                .modifiedTime(review.getModifiedTime())
                 .build();
         return reviewResponse;
     }
@@ -142,6 +146,8 @@ public class ReviewServiceImpl implements ReviewService{
                         .environment(review.getEnvironment())
                         .infra(review.getInfra())
                         .safety(review.getSafety())
+                        .createdTime(review.getCreatedTime())
+                        .modifiedTime(review.getModifiedTime())
                         .build()).collect(Collectors.toList());
         return list;
     }
@@ -164,6 +170,8 @@ public class ReviewServiceImpl implements ReviewService{
                         .environment(review.getEnvironment())
                         .infra(review.getInfra())
                         .safety(review.getSafety())
+                        .createdTime(review.getCreatedTime())
+                        .modifiedTime(review.getModifiedTime())
                         .build()).collect(Collectors.toList());
         return reviewTopList;
     }
@@ -221,6 +229,8 @@ public class ReviewServiceImpl implements ReviewService{
                             .environment(review.getEnvironment())
                             .infra(review.getInfra())
                             .safety(review.getSafety())
+                            .createdTime(review.getCreatedTime())
+                            .modifiedTime(review.getModifiedTime())
                             .build()).collect(Collectors.toList());
             return reviewList1;
         }else{
@@ -241,6 +251,8 @@ public class ReviewServiceImpl implements ReviewService{
                             .environment(review.getEnvironment())
                             .infra(review.getInfra())
                             .safety(review.getSafety())
+                            .createdTime(review.getCreatedTime())
+                            .modifiedTime(review.getModifiedTime())
                             .build()).collect(Collectors.toList());
             return reviewList2;
         }

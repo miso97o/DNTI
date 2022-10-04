@@ -132,7 +132,12 @@ export default function ReviewViewComponent() {
               </p>
             </div>
             <div className="flex flex-row w-1/2 justify-end">
-              <p className="flex items-center">{reviewContents.nickname}</p>
+              <p className="">{reviewContents.nickname}</p>
+              {reviewContents.createdTime === undefined ? null : (
+              <p className="px-5">
+                {reviewContents.createdTime.substring(0, 10).replaceAll("-", ".")}
+              </p>
+            )}
               <div className="flex flex-row ml-3">
                 <div className="px-1 flex items-center">
                   <VisibilityOutlinedIcon />
