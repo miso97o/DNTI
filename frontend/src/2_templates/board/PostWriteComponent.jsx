@@ -96,10 +96,10 @@ export default function PostWriteComponent() {
           <div className="flex flex-row w-full justify-center items-center p-3">
             <div className="flex flex-row w-1/5 justify-between">
               <div onClick={writePost}>
-                <DntiBtn text={boardId ? "수정" : "등록"} type="yellow" />
+                <button className="bluebtn-s" >{boardId ? "수정" : "등록"}</button>
               </div>
-              <Link to={boardId ? "/board/postview" : "/board/post"}>
-                <DntiBtn text="취소" type="white" />
+              <Link to={boardId ? "/board/postview" : "/board/post"} state={{boardId: boardId}}>
+                <button className="squarebtn-s">취소</button>
               </Link>
             </div>
           </div>
