@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { setRanks } from "../../features/recommend/recommendSlice";
 import "./Statistics.css";
 
-function Statistics() {
+function Statistics({dnti}) {
   const [check, setCheck] = useState(false);
   const [rank, setRank] = useState();
   const dispatch = useDispatch();
@@ -45,6 +45,14 @@ function Statistics() {
       .catch((error) => {
         console.error("실패:", error);
       });
+  }
+
+  function getRankbyDnti() {
+    axios.get(`/dong/${dnti}`).then((res) => {
+      console.log(res.data);
+      setRank(res.data.response);
+      dispatch(setRanks(res.data.response));
+    });
   }
 
 
