@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DongScore implements Comparable<DongScore> {
+
+    private String guName;
     private String dongName;
     private double totalScore;
 
