@@ -142,6 +142,7 @@ export default function BoardMainComponent() {
                           replies={x.commentCount}
                           views={x.hit}
                           likes={x.boardLike}
+                          isCertified={x.isCertified}
                         />
                       );
                     })}
@@ -162,6 +163,7 @@ export default function BoardMainComponent() {
                           replies={x.commentCount}
                           views={x.hit}
                           likes={x.boardLike}
+                          isCertified={x.isCertified}
                         />
                       );
                     })}

@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import District from "../../1_molecules/recommendation/District";
 import Priority from "../../1_molecules/recommendation/Priority";
 import {options} from "../../0_atoms/data/RecommendOpts";
+import CancleImg from "../../0_atoms/Img/cancelWhite.png";
 import styles from "./Choose.module.css";
 import "./Choose.css";
 
@@ -10,23 +10,26 @@ function Choices(props) {
   const [selectedList, setSelectedList] = useState([])
   const addSelected = selected => {
     setSelectedList([...selectedList, selected.key])
-    // alert( `${selected.key} added!`)
     console.log(selectedList, '지금까지 선택된것들')
-
   }
-  // console.log(selectedList)
 
   function renderList() {
     selectedList.map((item, index) => 
     <div key={index}>{item}</div>)
   }
 
+  const deleteSelected = selected => {
+    console.log(selected, selectedList)
+    const tmpList = selectedList.filter((data) => {
+      return data !== selected.key
+    })
+    setSelectedList(tmpList)
+  }
 
-
-  // useEffect(() => {
-  //   localStorage.setItem("selectedStorage", JSON.stringify(selectedList))
-  //   console.log('더해요',selectedList)
-  // }, [selectedList]);
+  useEffect(() => {
+    localStorage.setItem("selectedStorage", JSON.stringify(selectedList))
+    console.log('더해요',selectedList)
+  }, [selectedList]);
 
 
 
@@ -61,44 +64,103 @@ function Choices(props) {
             <p>설정된 지표 우선순위</p>
           </div>
           <div className={styles.selectedContainer}>
-            <div className={number1} onClick={() => cancel(0)} style={{cursor:"pointer"}}>
+            <div className={number1}>
               <div className={styles.selectedOptIcon}>
-                {selectedList.length ? options[selectedList[0]-1].image : 
+                {selectedList.length ? 
+                <div>
+                  <div className="rDeleteArea">
+                    <button className="rDeleteBtn" onClick={() => cancel(0)}>
+                      <img src={CancleImg} alt="CancleImg" className={styles.CancleImg} />
+                    </button>
+                  </div>
+                  <div className={styles.selectedImage}>
+                    {options[selectedList[0]-1].image}
+                  </div>
+                </div> : 
                 <div className={styles.color0} />
                 }
               </div>
             </div>
-            <div className={number2} onClick={() => cancel(1)} style={{cursor:"pointer"}}>
+            <div className={number2}>
               <div className={styles.selectedOptIcon}>
-                {selectedList.length > 1 ? options[selectedList[1]-1].image : 
+                {selectedList.length > 1 ?<div>
+                  <div className="rDeleteArea">
+                    <button className="rDeleteBtn" onClick={() => cancel(1)}>
+                      <img src={CancleImg} alt="CancleImg" className={styles.CancleImg} />
+                    </button>
+                  </div>
+                  <div className={styles.selectedImage}>
+                    {options[selectedList[1]-1].image}
+                  </div>
+                </div> : 
                   <div className={styles.selectedBlank} />
                 }
               </div>
             </div>
-            <div className={number3} onClick={() => cancel(2)} style={{cursor:"pointer"}}>
+            <div className={number3}>
               <div className={styles.selectedOptIcon}>
-                {selectedList.length > 2 ? options[selectedList[2]-1].image : 
+                {selectedList.length > 2 ?
+                <div>
+                  <div className="rDeleteArea">
+                    <button className="rDeleteBtn" onClick={() => cancel(2)}>
+                      <img src={CancleImg} alt="CancleImg" className={styles.CancleImg} />
+                    </button>
+                  </div>
+                  <div className={styles.selectedImage}>
+                    {options[selectedList[2]-1].image}
+                  </div>
+                </div> : 
                   <div className={styles.selectedBlank} />
                 }
                 </div>
             </div>
-            <div className={number4} onClick={() => cancel(3)} style={{cursor:"pointer"}}>
+            <div className={number4}>
               <div className={styles.selectedOptIcon}>
-                {selectedList.length > 3 ? options[selectedList[3]-1].image : 
+                {selectedList.length > 3 ?
+                <div>
+                  <div className="rDeleteArea">
+                    <button className="rDeleteBtn" onClick={() => cancel(3)}>
+                      <img src={CancleImg} alt="CancleImg" className={styles.CancleImg} />
+                    </button>
+                  </div>
+                  <div className={styles.selectedImage}>
+                    {options[selectedList[3]-1].image}
+                  </div>
+                </div> : 
                   <div className={styles.selectedBlank} />
                 }
               </div>
             </div>
-            <div className={number5} onClick={() => cancel(4)} style={{cursor:"pointer"}}>
+            <div className={number5}>
               <div className={styles.selectedOptIcon}>
-                {selectedList.length > 4 ? options[selectedList[4]-1].image : 
+                {selectedList.length > 4 ?
+                <div>
+                  <div className="rDeleteArea">
+                    <button className="rDeleteBtn" onClick={() => cancel(4)}>
+                      <img src={CancleImg} alt="CancleImg" className={styles.CancleImg} />
+                    </button>
+                  </div>
+                  <div className={styles.selectedImage}>
+                    {options[selectedList[4]-1].image}
+                  </div>
+                </div> : 
                   <div className={styles.selectedBlank} />
                 }
               </div>
             </div>
-            <div className={number6} onClick={() => cancel(5)} style={{cursor:"pointer"}}>
+            <div className={number6}>
               <div className={styles.selectedOptIcon}>
-                {selectedList.length > 5 ? options[selectedList[5]-1].image : 
+                {selectedList.length > 5 ?
+                <div>
+                  <div className="rDeleteArea">
+                    <button className="rDeleteBtn" onClick={() => cancel(5)}>
+                      <img src={CancleImg} alt="CancleImg" className={styles.CancleImg} />
+                    </button>
+                  </div>
+                  <div className={styles.selectedImage}>
+                    {options[selectedList[5]-1].image}
+                  </div>
+                </div> : 
                   <div className={styles.selectedBlank} />
                 }
               </div>
@@ -107,8 +169,7 @@ function Choices(props) {
           </div>
           <hr className={styles.selectedUnderline} />
           <div className={styles.options}>
-            {/* <div>우선순위 선택</div> */}
-            <Priority addSelectedProp = {addSelected} selectedList = {selectedList}/>
+            <Priority addSelectedProp = {addSelected} selectedList = {selectedList} deleteSelectedProp = {deleteSelected}/>
             
           </div>
         </div>

@@ -3,6 +3,7 @@
   gap: 17px 0px;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  padding: 0px 5px 0px 5px;
 }
 
 
@@ -20,7 +21,7 @@
 }
 
 .eachOpt p {
-  font-size: 21px;
+  font-size: 18px;
   color: #333333;
   margin: 0;
 }
