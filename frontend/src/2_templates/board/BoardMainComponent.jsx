@@ -78,7 +78,7 @@ export default function BoardMainComponent() {
         }&page=0&size=6`
       )
       .then((res) => {
-        console.log(res.data,"리뷰 데이터 확인");
+        console.log(res.data, "리뷰 데이터 확인");
         setReviewList(res.data.response.content);
       });
   }
@@ -128,22 +128,24 @@ export default function BoardMainComponent() {
             <div className="flex flex-col h-[42rem] items-center justify-between">
               <div className="h-full w-full dnticard">
                 <div className="flex flex-col w-full">
-                  {hotBoardList.map((x) => {
-                    return (
-                      <HotPostRow
-                        key={x.boardId + "hotpost"}
-                        Id={x.boardId}
-                        title={x.title}
-                        writer={x.nickname}
-                        date={x.createdTime
-                          .substring(2, 10)
-                          .replaceAll("-", ".")}
-                        replies={x.commentCount}
-                        views={x.hit}
-                        likes={x.boardLike}
-                      />
-                    );
-                  })}
+                  {hotBoardList &&
+                    hotBoardList.map((x) => {
+                      return (
+                        <HotPostRow
+                          key={x.boardId + "hotpost"}
+                          Id={x.boardId}
+                          title={x.title}
+                          writer={x.nickname}
+                          date={x.createdTime
+                            .substring(2, 10)
+                            .replaceAll("-", ".")}
+                          replies={x.commentCount}
+                          views={x.hit}
+                          likes={x.boardLike}
+                          isCertified={x.isCertified}
+                        />
+                      );
+                    })}
                 </div>
 
                 <div className="flex flex-col w-full">
@@ -161,6 +163,7 @@ export default function BoardMainComponent() {
                           replies={x.commentCount}
                           views={x.hit}
                           likes={x.boardLike}
+                          isCertified={x.isCertified}
                         />
                       );
                     })}
@@ -172,8 +175,8 @@ export default function BoardMainComponent() {
             <div className="flex flex-col h-full px-3">
               <div className="flex flex-row justify-between items-center mb-2">
                 <p className="font-bold text-2xl">리뷰게시판</p>
-                <Link to="review">
-                  <p className="mr-2">더보기 &gt;</p>
+                <Link to="review" state={{ isFromMyPage: false }}>
+                  <p>더보기 &gt;</p>
                 </Link>
               </div>
               <div className="flex flex-col h-full w-full justify-between">

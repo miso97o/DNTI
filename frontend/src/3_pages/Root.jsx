@@ -31,8 +31,8 @@ export default function Root() {
   console.log("after reduce : user-------------------------");
   console.log(user);
   return (
-    <div className="min-h-1080px font-dnti">
-      <div className="min-h-1080px pb-24">
+    <div className="h-full font-dnti">
+      <div className="h-full pb-24">
         <Navbar />
         <Outlet />
       </div>

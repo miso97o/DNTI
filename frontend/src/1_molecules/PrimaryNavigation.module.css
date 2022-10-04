@@ -23,6 +23,7 @@
   word-wrap: break-word;
   margin: 0px 25px 0px 25px;
   text-decoration-line: none;
+  cursor: pointer
 }
 
 .content .link {
@@ -32,4 +33,9 @@
 .image {
   width: 95px;
   height: 60px;
+}
+
+.content p:hover{
+  color: #7a08ff;
+  border-bottom: 5px solid #7a08ff;
 }
