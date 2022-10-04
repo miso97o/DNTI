@@ -41,9 +41,6 @@ export default function SignUpPage() {
     if (!userInfo.nickname) {
       alert("닉네임을 입력해주세요.");
       return;
-    // } else if (!userInfo.birthYear) {
-    //   alert("생년월일을 입력해주세요.");
-    //   return;
     } else if (!userInfo.gu || !userInfo.dong) {
       alert("주소를 입력해주세요.");
       return;
@@ -56,7 +53,8 @@ export default function SignUpPage() {
 
     axios.post("/users", userInfo).then((data) => {
       console.log(data);
-      if(data.data.status === 200) alert("회원가입에 성공했습니다! \n다시 로그인 해주세요!")
+      if (data.data.status === 200)
+        alert("회원가입에 성공했습니다! \n다시 로그인 해주세요!");
       navigate("/", { replace: true });
     });
   };
