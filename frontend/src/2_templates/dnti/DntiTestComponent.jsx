@@ -11,7 +11,7 @@ import Box from "@mui/material/Box";
 
 function LinearProgressWithLabel(props) {
   return (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
+    <Box sx={{ display: "flex", alignItems: "center", marginTop: "40px" }}>
       <Box sx={{ width: "100%", mr: 1 }}>
         <LinearProgress variant="determinate" {...props} />
       </Box>
@@ -39,16 +39,14 @@ function LinearWithValueLabel({ progress }) {
 
 function TestSelectCard({ imgsrc, description, label }) {
   return (
-    <Card variant="outlined" className="m-5">
-      <div className="flex flex-col items-center">
-        <img src={imgsrc} alt="Not Found" className="w-1/1" />
-        <p className="font-medium text-center text-xl m-5">
-          {description}
-          <br />
-          {label}
-        </p>
-      </div>
-    </Card>
+    <div className="flex flex-col items-center bg-white rounded-[12px] w-96 overflow-hidden border-4 border-dntiblue border-solid">
+      <img src={imgsrc} alt="Not Found" className="w-full " />
+      <p className="font-medium text-center text-xl p-5">
+        {description}
+        <br />
+        {label}
+      </p>
+    </div>
   );
 }
 
@@ -59,8 +57,14 @@ let arr = [0, 0, 0, 0];
 export default function DntiList() {
   function LinearWithValueLabel() {
     return (
-      <Box sx={{ width: "100%" }}>
-        <LinearProgressWithLabel value={progress} />
+      <Box sx={{ width: "96%" }}>
+        <LinearProgressWithLabel
+          value={progress}
+          sx={{
+            height: 20,
+            borderRadius: "20px",
+          }}
+        />
       </Box>
     );
   }
@@ -150,12 +154,9 @@ export default function DntiList() {
           lose={lose}
         />
       ) : (
-        <div className="flex flex-col items-center">
-          <div className="flex flex-col items-center">
-            <p className="font-bold text-4xl m-10">DNTI 테스트</p>
-            <LinearWithValueLabel progress={progress} />
-          </div>
-          <div className="flex flex-row items-center m-10">
+        <div className="flex flex-col items-center w-full">
+          <p className="font-bold text-4xl m-10">DNTI 테스트</p>
+          <div className="flex flex-row items-center mt-5 ml-10 mr-10">
             <div
               onClick={() => handleNext(index * 2 - 2, index * 2 - 1)}
               className=""
@@ -174,6 +175,9 @@ export default function DntiList() {
                 label={person[index * 2 - 1]}
               />
             </div>
+          </div>
+          <div className="flex flex-col items-center w-full pl-7">
+            <LinearWithValueLabel progress={progress} />
           </div>
         </div>
       )}

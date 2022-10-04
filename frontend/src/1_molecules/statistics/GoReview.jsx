@@ -22,6 +22,7 @@ function GoReview({ dong }) {
     })
     // await http
     //   .get(`/review/hot?dong=${dong}`)
+
       .then(function (res) {
         setReviews(res.data.response);
         // console.log("data", reviews);
@@ -43,6 +44,7 @@ function GoReview({ dong }) {
       .then(function (res) {
         setBoards(res.data.response);
         console.log(res.data.response)
+
       })
       .catch((error) => {
         console.error("실패:", error);
@@ -159,6 +161,7 @@ function GoReview({ dong }) {
                     fontSize="small"
                   />
                   <p>{boards[1].boardLike}</p>
+
                 </div>
               </div>
             )}
@@ -171,6 +174,7 @@ function GoReview({ dong }) {
                     fontSize="small"
                   />
                   <p>{boards[2].boardLike}</p>
+
                 </div>
               </div>
             )}

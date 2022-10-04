@@ -58,7 +58,7 @@ export default function Reply({
                 sx={{ p: "10px" }}
                 aria-label="delete"
                 onClick={() => {
-                  deleteReply();
+                  editable ? setEditable(false) : deleteReply();
                 }}
               >
                 <ClearIcon />
@@ -90,7 +90,7 @@ export default function Reply({
           ) : null}
         </div>
       </div>
-      <div className="">
+      <div className="mt-2">
         {editable ? (
           <TextField
             value={content}
@@ -98,6 +98,8 @@ export default function Reply({
               handleContent(e.target.value);
             }}
             multiline
+            fullWidth
+            size="small"
           />
         ) : (
           contents

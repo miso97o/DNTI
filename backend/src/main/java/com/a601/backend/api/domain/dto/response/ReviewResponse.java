@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Builder
 @Data
 @AllArgsConstructor
@@ -26,8 +28,12 @@ public class ReviewResponse {
     private Integer environment;
     private Integer safety;
 
+    private LocalDateTime createdTime;
+
+    private LocalDateTime modifiedTime;
+
     @Builder
-    private ReviewResponse(String gu,String dong,Double score,Integer rental,Integer infra,Integer environment,Integer safety,String nickname){
+    private ReviewResponse(String gu,String dong,Double score,Integer rental,Integer infra,Integer environment,Integer safety,String nickname,LocalDateTime createdTime,LocalDateTime modifiedTime){
         this.gu=gu;
         this.dong=dong;
         this.score=score;
@@ -36,6 +42,8 @@ public class ReviewResponse {
         this.environment=environment;
         this.safety=safety;
         this.nickname = nickname;
+        this.createdTime=createdTime;
+        this.modifiedTime=modifiedTime;
     }
 
 
@@ -54,5 +62,7 @@ public class ReviewResponse {
         this.infra = review.getInfra();
         this.environment = review.getEnvironment();
         this.safety = review.getSafety();
+        this.createdTime=review.getCreatedTime();
+        this.modifiedTime=review.getModifiedTime();
     }
 }

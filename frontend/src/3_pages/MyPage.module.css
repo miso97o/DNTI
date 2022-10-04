@@ -94,7 +94,11 @@
   height: 100%;
 
 }
-
+.frequentIcon{
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+}
 
   
 .modalTitle {
@@ -110,4 +114,26 @@
 
 }
 
+.listComponent{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 7px;
+}
+
+
+.list{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.postInfo{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
 

@@ -17,20 +17,20 @@
     border: solid 2px #d9d9d9;
     border-radius: 10px;
     box-sizing: border-box;
-    padding: 1em;
   }
+
   .linehover {
     background-color: #2200f4;
     color: #ffffff;
   }
-  .squarebtn {
-    display: flex;
-    flex-direction: flex-row;
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
-    border: solid 1px #666666;
-    border-radius: 4px;
+  .squarebtn-s {
+    padding: 9px 27px;
+    border-radius: 19px;
+    min-width: 90px;
+    font-weight: 700;
+    font-size: 1.2em;
+    color: #5d5d5dd4;
+    border: solid 3px #5d5d5dd4;
   }
   .bluebtn {
     padding: 13px 32px;
@@ -38,21 +38,56 @@
     background-color: #7a08ff;
     color: #ffffff;
     min-width: 90px;
+    font-weight: 700;
     font-size: 1.3em;
     font-weight: 800;
   }
-  .blackbtn {
-    display: flex;
-    flex-direction: flex-row;
-    align-items: center;
-    justify-content: center;
-    padding: 5px 8px 5px 8px;
-    border: solid 1px #000000;
-    border-radius: 999px;
+  .bluebtn-s {
+    padding: 12px 27px;
+    border-radius: 19px;
+    min-width: 90px;
+    font-weight: 700;
+    font-size: 1.1em;
+    background-color: #7a08ff;
+    color: #ffffff;
+  }
+  .blackbtn-s {
+    padding: 12px 27px;
+    border-radius: 19px;
+    min-width: 90px;
+    font-weight: 700;
+    font-size: 1.1em;
     background-color: #000000;
     color: #ffffff;
-    min-width: 90px;
   }
+  .lbluebtn-s {
+    padding: 12px 27px;
+    border-radius: 19px;
+    min-width: 90px;
+    font-weight: 700;
+    font-size: 1.1em;
+    background-color: #7a08ff85;
+    color: #ffffff;
+  }
+  .graybtn-s {
+    padding: 12px 27px;
+    border-radius: 19px;
+    min-width: 90px;
+    font-weight: 700;
+    font-size: 1.1em;
+    background-color: #9f9f9fd4;
+    color: #ffffff;
+  }
+  .redbtn-s {
+    padding: 12px 27px;
+    border-radius: 19px;
+    min-width: 90px;
+    font-weight: 700;
+    font-size: 1.1em;
+    background-color: #fc4343d4;
+    color: #ffffff;
+  }
+
   .yellowbtn {
     display: flex;
     flex-direction: flex-row;

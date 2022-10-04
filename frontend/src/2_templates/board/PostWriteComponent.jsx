@@ -66,28 +66,33 @@ export default function PostWriteComponent() {
   return (
     <div className="flex flex-col w-4/5 h-full items-center p-3">
       <div className="flex flex-row w-full p-3">
-        <p className="font-medium text-2xl">게시판 글 작성</p>
+        <p className="font-bold text-3xl">자유게시판</p>
       </div>
-      <div className="h-full w-full dnticard">
-        <div className="flex flex-col w-full justify-between  p-3 ">
-          <div className="flex flex-row w-full justify-between items-center">
-            <p className="w-24">{guDong.selectedGu}</p>
-            <p className="">{user.nickname}</p>
+
+      <div className="flex flex-col w-full items-center dnticard ">
+        <div className="flex flex-row w-full p-5 gap-5">
+          <div className="flex w-1/12 bg-dntiblue items-center rounded-lg px-2 py-3 text-bold text-white justify-center">
+            {guDong.selectedGu}
           </div>
-          <TextField
-            value={postTitle}
-            onChange={handleChangeTitle}
-            placeholder="제목을 입력하세요"
-            variant="standard"
-            fullWidth
-          />
+          <div className="w-8/12 flex">
+            <TextField
+              id="standard-basic"
+              label="제목"
+              value={postTitle}
+              onChange={handleChangeTitle}
+              placeholder="제목을 입력하세요"
+              variant="standard"
+              fullWidth
+            />
+          </div>
         </div>
+
         <div className="flex flex-col h-full w-full px-3">
           <div className="flex h-4/5 p-3">
             <TextField
               multiline
               fullWidth
-              minRows={20}
+              minRows={10}
               value={postContents}
               onChange={handleChangeContents}
               placeholder="내용을 입력하세요"
@@ -96,10 +101,15 @@ export default function PostWriteComponent() {
           <div className="flex flex-row w-full justify-center items-center p-3">
             <div className="flex flex-row w-1/5 justify-between">
               <div onClick={writePost}>
-                <DntiBtn text={boardId ? "수정" : "등록"} type="yellow" />
+                <button className="bluebtn-s">
+                  {boardId ? "수정" : "등록"}
+                </button>
               </div>
-              <Link to={boardId ? "/board/postview" : "/board/post"}>
-                <DntiBtn text="취소" type="white" />
+              <Link
+                to={boardId ? "/board/postview" : "/board/post"}
+                state={{ boardId: boardId }}
+              >
+                <button className="squarebtn-s">취소</button>
               </Link>
             </div>
           </div>

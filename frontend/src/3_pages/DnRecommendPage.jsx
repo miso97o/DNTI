@@ -7,10 +7,15 @@ import Map1 from "../2_templates/recommendation/Map";
 import backArrow from "../0_atoms/Img/arrowBlack.png";
 import Map2 from "../1_molecules/statistics/Map";
 import styles from "./DnRecommendPage.module.css";
+import { useLocation } from "react-router-dom";
 
 function DnRecommendPage() {
 
   const [goStatistics, setGoStatics] = useState(false)
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const type = 0 || location.state.dnti
+
   function Search() {
     if (goStatistics) {
       setGoStatics(false)
@@ -18,9 +23,10 @@ function DnRecommendPage() {
       localStorage.setItem("guStorage", [])
     } else {setGoStatics(true)}
   }
-  const dispatch = useDispatch();
  
-
+  useEffect(() => {
+    if(type) setGoStatics(true)
+  },[])
 
 
   return (

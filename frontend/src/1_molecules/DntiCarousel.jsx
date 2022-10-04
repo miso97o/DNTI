@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 
-export default function Carousel({ data }) {
+export default function DntiCarousel({ data }) {
   const maxScrollWidth = useRef(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const carousel = useRef(null);
@@ -102,29 +102,27 @@ export default function Carousel({ data }) {
               return (
                 <div
                   key={index}
-                  className="carousel-item text-center relative w-64 h-36 snap-start"
+                  className="carousel-item text-center relative w-40 h-45 snap-start mx-3"
                 >
-                  <a
-                    href={resource.url}
-                    className="h-full w-full aspect-video block bg-origin-padding bg-left-top bg-cover bg-no-repeat z-0"
+                  <div
+                    className="carousel-image h-44 w-44 aspect-square block bg-gray-200 rounded-3xl bg-origin-padding bg-left-top bg-cover bg-no-repeat z-0"
                     style={{
-                      backgroundImage: `url(${resource.thumbnail || ""})`,
+                      backgroundImage: resource.type
+                        ? `url(${process.env.PUBLIC_URL}/img/dnti_type/${resource.type}.png)`
+                        : "",
                     }}
-                  >
-                    <img
-                      src={resource.thumbnail || ""}
-                      alt={resource.title}
-                      className="w-full aspect-video hidden"
-                    />
-                  </a>
-                  <a
-                    href={resource.url}
-                    className="h-full w-full aspect-square block absolute top-0 left-0 transition-opacity duration-300 opacity-0 hover:opacity-100 bg-purple-800/75 z-10"
-                  >
-                    <h3 className="text-white py-6 px-3 mx-auto text-xl">
-                      {resource.title}
-                    </h3>
-                  </a>
+                  ></div>
+                  <div className="ml-2">
+                    <div className="flex flex-row items-end mt-3">
+                      <p className="font-extrabold text-black text-lg text-start">
+                        {index + 1}위 {resource.type}
+                      </p>
+                      <p className="ml-2 text-gray-500">{resource.percent}%</p>
+                    </div>
+                    <p className="font-medium text-start">
+                      #{resource.keyword.replace(" ", "_")}
+                    </p>
+                  </div>
                 </div>
               );
             })}

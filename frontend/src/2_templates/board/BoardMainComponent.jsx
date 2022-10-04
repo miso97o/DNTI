@@ -78,7 +78,7 @@ export default function BoardMainComponent() {
         }&page=0&size=6`
       )
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data, "리뷰 데이터 확인");
         setReviewList(res.data.response.content);
       });
   }
@@ -118,31 +118,34 @@ export default function BoardMainComponent() {
       <div className="flex flex-col h-full w-full items-center">
         <div className="flex flex-row w-full justify-center h-full">
           <div className="flex flex-col w-1/2 h-full px-3">
-            <div className="flex flex-row justify-between items-center p-5">
-              <p className="font-medium text-2xl">자유게시판</p>
-
+            <div className="flex flex-row justify-between items-center mb-2">
+              <p className="font-bold text-2xl">자유게시판</p>
               <Link to="post">
-                <p>더보기...</p>
+                <p className="mr-2">더보기 &gt;</p>
               </Link>
             </div>
 
-            <div className="flex flex-col h-[40rem] items-center justify-between px-5">
+            <div className="flex flex-col h-[42rem] items-center justify-between">
               <div className="h-full w-full dnticard">
                 <div className="flex flex-col w-full">
-                  {hotBoardList.map((x) => {
-                    return (
-                      <HotPostRow
-                        key={x.boardId + "hotpost"}
-                        Id={x.boardId}
-                        title={x.title}
-                        writer={x.nickname}
-                        date={x.createdTime.substring(2, 10)}
-                        replies={x.commentCount}
-                        views={x.hit}
-                        likes={x.boardLike}
-                      />
-                    );
-                  })}
+                  {hotBoardList &&
+                    hotBoardList.map((x) => {
+                      return (
+                        <HotPostRow
+                          key={x.boardId + "hotpost"}
+                          Id={x.boardId}
+                          title={x.title}
+                          writer={x.nickname}
+                          date={x.createdTime
+                            .substring(2, 10)
+                            .replaceAll("-", ".")}
+                          replies={x.commentCount}
+                          views={x.hit}
+                          likes={x.boardLike}
+                          isCertified={x.isCertified}
+                        />
+                      );
+                    })}
                 </div>
 
                 <div className="flex flex-col w-full">
@@ -154,10 +157,13 @@ export default function BoardMainComponent() {
                           Id={x.boardId}
                           title={x.title}
                           writer={x.nickname}
-                          date={x.createdTime.substring(2, 10)}
+                          date={x.createdTime
+                            .substring(2, 10)
+                            .replaceAll("-", ".")}
                           replies={x.commentCount}
                           views={x.hit}
                           likes={x.boardLike}
+                          isCertified={x.isCertified}
                         />
                       );
                     })}
@@ -167,15 +173,15 @@ export default function BoardMainComponent() {
           </div>
           <div className="flex flex-col w-1/2 h-full">
             <div className="flex flex-col h-full px-3">
-              <div className="flex flex-row justify-between items-center p-5">
-                <p className="font-medium text-2xl">리뷰게시판</p>
-                <Link to="review">
+              <div className="flex flex-row justify-between items-center mb-2">
+                <p className="font-bold text-2xl">리뷰게시판</p>
+                <Link to="review" state={{ isFromMyPage: false }}>
                   <p>더보기 &gt;</p>
                 </Link>
               </div>
               <div className="flex flex-col h-full w-full justify-between">
-                <div className="flex flex-col h-1/2 items-center px-5">
-                  <div className="h-[20rem] w-full dnticard">
+                <div className="flex flex-col h-1/2 items-center">
+                  <div className="h-[27rem] w-full dnticard">
                     <div className="flex flex-col w-full">
                       {hotReviews &&
                         hotReviews.map((hotReview) => {
@@ -185,8 +191,13 @@ export default function BoardMainComponent() {
                               id={hotReview.id}
                               title={hotReview.title}
                               writer={hotReview.email}
+                              datetime={hotReview.createdTime
+                                .substring(2, 10)
+                                .replaceAll("-", ".")}
                               score={hotReview.score}
                               likes={hotReview.reviewLike}
+                              hit={hotReview.hit}
+                              nickname={hotReview.nickname}
                             />
                           );
                         })}
@@ -199,8 +210,13 @@ export default function BoardMainComponent() {
                               key={x.id + "review"}
                               id={x.id}
                               title={x.title}
+                              datetime={x.createdTime
+                                .substring(2, 10)
+                                .replaceAll("-", ".")}
                               likes={x.reviewLike}
                               score={x.score}
+                              hit={x.hit}
+                              nickname={x.nickname}
                             />
                           );
                         })}
@@ -209,7 +225,7 @@ export default function BoardMainComponent() {
                 </div>
                 <div className="flex flex-col h-1/2 items-center p-5">
                   <div className="flex flex-col h-full w-full justify-start">
-                    <p className="font-medium text-2xl mb-5">관련 영상</p>
+                    <p className="font-bold text-2xl mb-2 mt-8">관련 영상</p>
                     <div className="h-full w-full dnticard">
                       <Carousel data={youtubeItems} />
                     </div>

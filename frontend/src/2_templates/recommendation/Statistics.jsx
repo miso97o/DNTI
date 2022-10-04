@@ -22,6 +22,7 @@ function Statistics() {
   
   console.log("==========================",priorities, arr, arr2)
  
+
   let gus = localStorage.getItem("guStorage");
   if (gus && gus.length > 0) {
     gus = "&gu=" + gus;
@@ -68,7 +69,8 @@ function Statistics() {
   }, [rank]);
 
   useEffect(() => {
-    getRank();
+    if(dnti) getRankbyDnti()
+    else getRank();
   }, []);
   const [selected, setSelected] = useState();
 
