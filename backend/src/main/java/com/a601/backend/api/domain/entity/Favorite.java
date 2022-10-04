@@ -22,7 +22,7 @@ public class Favorite {
     @Column(length = 10)
     private String name;
 
-    @Column(length = 30)
+    @Column(length = 200)
     private String address;
 
     @Builder
