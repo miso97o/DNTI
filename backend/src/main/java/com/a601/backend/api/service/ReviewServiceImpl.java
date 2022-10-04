@@ -116,6 +116,10 @@ public class ReviewServiceImpl implements ReviewService{
         Review review=reviewRepository.findById(id).get();
         review.setContent(reviewRequest.getContent());
         review.setTitle(reviewRequest.getTitle());
+        review.setInfra(review.getInfra());
+        review.setEnvironment(review.getEnvironment());
+        review.setRental(review.getRental());
+        review.setSafety(review.getSafety());
         reviewRepository.save(review);
     }
 
