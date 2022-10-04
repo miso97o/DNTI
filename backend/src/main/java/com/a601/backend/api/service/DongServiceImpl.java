@@ -31,7 +31,7 @@ public class DongServiceImpl implements DongService{
                 sum += getScore(p,dong)*weight;                 //해당하는 점수에 가중치 곱함
                 weight -= 0.2;                                  //가중치 낮추기
             }
-            DongScore tmp = new DongScore(dong.getDong(),sum);
+            DongScore tmp = new DongScore(dong.getGu().getGuName(),dong.getDong(),sum);
             if(guList != null){
                 for(String gu : guList) if(dong.getGu().getGuName().equals(gu)) {
                     rankList.add(tmp);
@@ -65,7 +65,7 @@ public class DongServiceImpl implements DongService{
                 else if(cur == 'N') sum += getScore(6,dong)*weight;
                 weight -= 0.5;
             }
-            DongScore tmp = new DongScore(dong.getDong(), sum);
+            DongScore tmp = new DongScore(dong.getGu().getGuName(),dong.getDong(), sum);
             rankList.add(tmp);
         }
         rankList.sort(Collections.reverseOrder());              //점수 내림차순으로 정렬 후 반환
