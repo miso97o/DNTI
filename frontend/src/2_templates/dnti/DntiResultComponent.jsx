@@ -116,7 +116,7 @@ function DntiResultCard({ imgsrc, type, content, arr }) {
           })}
         </div>
         <div className="flex flex-row justify-center items-center">
-          <Link to={`/dnRecommend`} style={{ textDecoration: "none" }}>
+          <Link to={`/dnRecommend`} style={{ textDecoration: "none" }} state={{dnti: type}}>
             <Button onClick={saveDnti} variant="contained">
               동네 확인하기
             </Button>
