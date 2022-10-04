@@ -1,0 +1,89 @@
+.title {
+  font-size: 22px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.goEdit, .goTime {
+  border: solid 2px #7A08FF;
+  font-size: 16px;
+  text-align: center;
+  color: #7A08FF;
+  width: 60px;
+  height: 26px;
+  border-radius: 100px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+.pencilPurple {
+  width: 14px;
+}
+.timePurple {
+  height: 15px;
+  margin-left: 3px;
+}
+
+.editBtn, .deleteBtn {
+  border: solid 1px #7A08FF;
+  font-size: 18px;
+  color: #fff;
+  width: 24px;
+  height: 24px;
+  border-radius: 100px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+.editBtn .pencilPurple {
+  width: 12px;
+}
+.deleteBtn {
+  margin-left: 5px;
+}
+.deletePurple {
+  height: 16px;
+}
+
+.addBtn {
+  font-size: 18px;
+  background-color: #7A08FF;
+  width: 27px;
+  height: 27px;
+  border-radius: 100px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+}
+.plusWhite {
+  width: 15px;
+}
+
+
+.favListColumn {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  align-items: center;
+  margin-bottom: 8px;
+  height: 30px;
+}
+
+.twoBtns {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.favName {
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.favTime {
+  font-size: 14px;
+  text-align: right;
+}

@@ -4,6 +4,7 @@
 
 .search {
   margin-bottom: 40px;
+  margin-top: 20px;
 }
 
 .show {
@@ -13,7 +14,7 @@
 }
 
 .title {
-  font-size: 28px;
+  font-size: 22px;
   margin-left: 5px;
   color: #333333;
   margin-bottom: 20px;
@@ -42,7 +43,7 @@
   /* align-items: flex-end; */
 }
 
-.selectedOptIcon img {
+.selectedImage {
   width: 35px;
   height: 35px;
   margin-top: 4px;
@@ -68,3 +69,17 @@
 .options {
   padding: 0px 10px 0px 10px;
 }
+
+.selectedOptIcon {
+  position: relative;
+  width: 100%;
+}
+
+.CancleImg {
+  height: 12px;
+}
+
+
+
+
+

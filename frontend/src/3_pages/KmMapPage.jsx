@@ -2,11 +2,9 @@ import React, { useEffect, useState, setState } from "react";
 import http from "../utils/axios";
 import axios from "axios";
 import Choices from "../2_templates/kmMap/Choices";
-import {
-  coffeePositions,
-  bikePositions,
-  cvsPositions,
-} from "../0_atoms/data/MarkerData";
+import Favorites from "../1_molecules/kmMap/Favorites";
+// import Loading from "../1_molecules/kmMap/Loading";
+import MoonLoader from "react-spinners/MoonLoader"
 import { useSelector } from "react-redux";
 import BusMarker from "../0_atoms/markers/BusMarker.png";
 import SubwayMarker from "../0_atoms/markers/SubwayMarker.png";
@@ -16,7 +14,7 @@ import DaisoMarker from "../0_atoms/markers/DaisoMarker.png";
 import MartMarker from "../0_atoms/markers/MartMarker.png";
 import CVSMarker from "../0_atoms/markers/CVSMarker.png";
 import ParkMarker from "../0_atoms/markers/ParkMarker.png";
-import GymMarker from "../0_atoms/markers/GymMarker.png";
+import KaraokeMarker from "../0_atoms/markers/KaraokeMarker.png";
 import RestaurantMarker from "../0_atoms/markers/RestaurantMarker.png";
 import {
   checkBus,
@@ -27,7 +25,7 @@ import {
   checkMart,
   checkCVS,
   checkPark,
-  checkGym,
+  checkKaraoke,
   checkRestaurant,
 } from "../0_atoms/check";
 import styles from "./KmMapPage.module.css";
@@ -35,10 +33,16 @@ import styles from "./KmMapPage.module.css";
 const { kakao } = window;
 
 function KmMap() {
-  // const getChange = [0, 0, 0]
   const [getList, setGetList] = useState();
   const [forCoors, setForCoors] = useState();
   const [dbClicked, setDbClicked] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const forKeyEnter = (e) => {
+    if (e.key ==='Enter') {
+      SearchMap()
+    }
+  }
 
   // 지도 초기설정
   const [options, setOptions] = useState({
@@ -99,6 +103,7 @@ function KmMap() {
 
     if (forCoors && getList.length > 0) {
       // const tmp = forCoors.slice(0,20)
+      setLoading(false)
       console.log(getList);
       forCoors.forEach((el) => {
         if (el.type === "버스" && getList.some(checkBus)) {
@@ -189,13 +194,13 @@ function KmMap() {
               markerPlace
             ),
           });
-        } else if (el.type === "헬스장" && getList.some(checkGym)) {
+        } else if (el.type === "노래방" && getList.some(checkKaraoke)) {
           new kakao.maps.Marker({
             map: map,
             position: new kakao.maps.LatLng(el.lat, el.lon),
             title: el.name,
             image: new kakao.maps.MarkerImage(
-              GymMarker,
+              KaraokeMarker,
               markerSize,
               markerPlace
             ),
@@ -215,6 +220,7 @@ function KmMap() {
       });
     }
 
+      
     // --------------- 원 ------------------
     const circle = new kakao.maps.Circle({
       center: options.center, // 원의 중심좌표
@@ -232,91 +238,33 @@ function KmMap() {
     }
   };
 
-  const geocoder = new kakao.maps.services.Geocoder();
   useEffect(() => {
     mapscript();
-  }, [forCoors]);
+    if (forCoors) {
+      setLoading(false)
+    }
+  }, [forCoors, getList]);
 
   async function getMarker() {
-    // await axios(`http://j7a601.p.ssafy.io:9090/api/km?lat=${options.center.Ma}&lon=${options.center.La}`, {
-    //   method: "GET",
-    //   headers: {
-    //     // Authorization: jwt,
-    //     "Content-Type": "application/string",
-    //   },
-    // })
-    await http
-      .get(`km?lat=${options.center.Ma}&lon=${options.center.La}`)
+    setLoading(true)
+    await axios(`http://j7a601.p.ssafy.io:9090/api/km?lat=${options.center.Ma}&lon=${options.center.La}`, {
+      method: "GET",
+      headers: {
+        // Authorization: jwt,
+        "Content-Type": "application/string",
+      },
+    })
+    // await http
+    //   .get(`km?lat=${options.center.Ma}&lon=${options.center.La}`)
       .then((res) => {
         setForCoors(res.data.response);
-        console.log("datadatadatadatadatadatadatadata", res.data);
-      })
-      .catch((error) => {
-        console.error("실패:", error);
-      });
-  }
-  const [time, setTime] = useState();
-
-  async function getTime(EX, EY, name) {
-    console.log("거리계산시작");
-    // await axios(
-    //   `https://api.odsay.com/v1/api/searchPubTransPathT?apiKey=	LgKc2CMw9rNdnycQ1V1H1g&SX=${options.center.La}&SY=${options.center.Ma}&EX=${EX}&EY=${EY}`,
-    //   {
-    //     method: "GET",
-    //     headers: {
-    //       "Content-Type": "application/string",
-    //     },
-    //   }
-    // )
-    await axios(
-      `https://api.odsay.com/v1/api/searchPubTransPathT?apiKey=LgKc2CMw9rNdnycQ1V1H1g&SX=${options.center.La}&SY=${options.center.Ma}&EX=${EX}&EY=${EY}`
-    )
-      .then((res) => {
-        setTime(res.data.result);
-        console.log(res.data);
       })
       .catch((error) => {
         console.error("실패:", error);
       });
   }
 
-  // 즐겨찾기: 페이지 처음에 한번 랜더
-  const [fav, setFav] = useState();
-  async function getFavorites() {
-    // await axios(`http://j7a601.p.ssafy.io:9090/api/favorite/hiy%40gmail.com`, {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/string",
-    //   },
-    // })
-    await http
-      .get(`/favorite/kth1324006%40gmail.com`)
-      .then((res) => {
-        setFav(res.data.response);
-      })
-      .catch((error) => {
-        console.error("실패:", error);
-      });
-  }
-  const [countNum, setCountNum] = useState(0);
-  useEffect(() => {
-    getFavorites();
-  }, []);
-  useEffect(() => {
-    setTimesArray([]);
-    if (fav) {
-      for (let i = 0; i < fav.length; i++) {
-        geocoder.addressSearch(fav[i].address, function (result, status) {
-          if (status === kakao.maps.services.Status.OK) {
-            setCountNum(countNum + 1);
-            const EX = result[0].x;
-            const EY = result[0].y;
-            getTime(EX, EY, fav[i].address);
-          }
-        });
-      }
-    }
-  }, [fav, options]);
+
 
   // 첫 더블클릭 이후 맵 옵션 변경될때마다 로딩
   useEffect(() => {
@@ -325,21 +273,7 @@ function KmMap() {
     }
   }, [options]);
 
-  useEffect(() => {
-    mapscript();
-  }, [forCoors, getList]);
 
-  const user = useSelector((state) => state.user);
-  const [timesArray, setTimesArray] = useState([]);
-  const [timeCheck, setTimeCheck] = useState(false);
-  useEffect(() => {
-    if (time) {
-      setTimesArray([...timesArray, time.path[0].info.totalTime]);
-      if (timesArray.length === fav.length * 2 - 1) {
-        setTimeCheck(true);
-      }
-    }
-  }, [time]);
 
   return (
     <div className={styles.page}>
@@ -349,10 +283,11 @@ function KmMap() {
             <input
               className={styles.searchInput}
               onChange={handleSearchAddress}
+              onKeyPress={forKeyEnter}
               placeholder="원하는 지점을 검색해주세요"
             />
-            <span className={styles.field__labelwrap} aria-hidden="true">
-              <span className={styles.field__label}>주소 검색</span>
+            <span className={styles.fieldLabelWrap} aria-hidden="true">
+              <span className={styles.fieldLabel}>주소 검색</span>
             </span>
             <button className={styles.searchBtn} onClick={SearchMap}>
               검색
@@ -360,106 +295,29 @@ function KmMap() {
           </div>
 
           <Choices setGetList={setGetList}></Choices>
-          {user.userId ? (
-            <div>
-              즐겨찾기
-              {timeCheck ? (
-                <div>
-                  {fav[0] ? (
-                    <div className={styles.favListColumn}>
-                      <div className={styles.favName}>{fav[0].address}</div>
-                      <div className={styles.favTime}>
-                        {timesArray[0] ? (
-                          <div>{timesArray[0]}분 소요</div>
-                        ) : (
-                          <div>700m 이내입니다</div>
-                        )}
-                      </div>
-                    </div>
-                  ) : (
-                    <div>즐겨찾기를 추가해 주세요</div>
-                  )}
-                  {fav[1] ? (
-                    <div className={styles.favListColumn}>
-                      <div className={styles.favName}>{fav[1].address}</div>
-                      <div className={styles.favTime}>
-                        {timesArray[1] ? (
-                          <div>{timesArray[1]}분 소요</div>
-                        ) : (
-                          <div>700m 이내입니다</div>
-                        )}
-                      </div>
-                    </div>
-                  ) : null}
-                  {fav[2] ? (
-                    <div className={styles.favListColumn}>
-                      <div className={styles.favName}>{fav[2].address}</div>
-                      <div className={styles.favTime}>
-                        {timesArray[2] ? (
-                          <div>{timesArray[2]}분 소요</div>
-                        ) : (
-                          <div>700m 이내입니다</div>
-                        )}
-                      </div>
-                    </div>
-                  ) : null}
-                </div>
-              ) : (
-                <div>즐겨찾기 가져오는중...</div>
-              )}
-            </div>
-          ) : (
-            <div>
-              미로그인상태
-              {timeCheck ? (
-                <div>
-                  {fav[0] ? (
-                    <div className={styles.favListColumn}>
-                      <div className={styles.favName}>{fav[0].name}</div>
-                      <div className={styles.favTime}>
-                        {timesArray[0] ? (
-                          <div>{timesArray[0]}분 소요</div>
-                        ) : (
-                          <div>700m 이내입니다</div>
-                        )}
-                      </div>
-                    </div>
-                  ) : (
-                    <div>즐겨찾기를 추가해 주세요</div>
-                  )}
-                  {fav[1] ? (
-                    <div className={styles.favListColumn}>
-                      <div className={styles.favName}>{fav[1].name}</div>
-                      <div className={styles.favTime}>
-                        {timesArray[1] ? (
-                          <div>{timesArray[1]}분 소요</div>
-                        ) : (
-                          <div>700m 이내입니다</div>
-                        )}
-                      </div>
-                    </div>
-                  ) : null}
-                  {fav[2] ? (
-                    <div className={styles.favListColumn}>
-                      <div className={styles.favName}>{fav[2].name}</div>
-                      <div className={styles.favTime}>
-                        {timesArray[2] ? (
-                          <div>{timesArray[2]}분 소요</div>
-                        ) : (
-                          <div>700m 이내입니다</div>
-                        )}
-                      </div>
-                    </div>
-                  ) : null}
-                </div>
-              ) : (
-                <div>즐겨찾기 가져오는중</div>
-              )}
-            </div>
-          )}
+          <Favorites options={options} />
+          
         </div>
         <div className={styles.map}>
-          <div className={styles.kakaoMap} id="kakaoMap"></div>
+          {loading && 
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+            }}
+            className={styles.loading}
+          >
+            <MoonLoader
+              color="#7a08ff"
+              size={150}
+              speedMultiplier={0.5}
+            />
+          </div>}
+          <div className={styles.kakaoMap} id="kakaoMap">
+          </div>
+          <div className={styles.text}>찾고자 하는 지점을 더블클릭 해주세요</div>
         </div>
       </div>
     </div>

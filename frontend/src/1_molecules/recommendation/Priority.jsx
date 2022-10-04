@@ -13,38 +13,31 @@ localStorage.setItem("priorityStorage", [])
 
 
 
-function Priority({addSelectedProp, selectedList}) {
+function Priority({addSelectedProp, selectedList, deleteSelectedProp}) {
   const [opt, setOpt] = useState()
   const addSelected =(e)=> {
     addSelectedProp(e)
     setOpt(e)
     // console.log(opt)
   }
+  const deleteSelected =(e) => {
+    deleteSelectedProp(e)
+  }
   const [num, setNum] = useState(0)
   function changeChecked(e) {
     console.log(selectedList)
-    for(let el of selectedList) {
-      if(e.key === el) {
-        e.checked = true;
-        alert("이미 추가됨")
-        return;
+    if (e.checked) {
+      setNum(num - 1)
+      e.checked = false
+      deleteSelected(e)
+    } else {
+      e.checked = true
+      if(num < 6) {
+        setNum(num + 1)
+        addSelected(e)
+      } else {
       }
     }
-    addSelected(e)
-    // if (e.checked) {
-    //   e.checked = false
-    //   console.log('실행안됨')
-    // } else {
-    //   e.checked = true
-    //   if(num < 6) {
-    //     setNum(num + 1)
-    //     addSelected(e)
-    //     console.log(`${e.value}, ${num}, 실행됨`)
-    //     const tmp = (localStorage.getItem("priorityStorage") + (e.key + ","))
-    //     localStorage.setItem("priorityStorage", (tmp))
-    //     // console.log(localStorage.getItem("priorityStorage").length)
-    //   }
-    // }
   }
   
 

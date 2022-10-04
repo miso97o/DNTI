@@ -1,5 +1,4 @@
 /* global kakao */
-import axios from "axios";
 import React from "react";
 import { useState, useEffect } from "react";
 // import cn from "classnames";
@@ -64,7 +63,7 @@ function Map() {
       // 다각형에 mouseover 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 변경합니다
       // 지역명을 표시하는 커스텀오버레이를 지도위에 표시합니다
       kakao.maps.event.addListener(polygon, 'mouseover', function (mouseEvent) {
-        polygon.setOptions({ fillColor: '#09f' });
+        polygon.setOptions({ fillColor: '#7a08ff' });
       });
 
       kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
@@ -107,10 +106,10 @@ function Map() {
               map: map,
               path: path, // 그려질 다각형의 좌표 배열입니다
               strokeWeight: 1, // 선의 두께입니다
-              strokeColor: '#999999', // 선의 색깔입니다
-              strokeOpacity: 0.7, // 선의 불투명도
+              strokeColor: 'black', // 선의 색깔입니다
+              strokeOpacity: 0.8, // 선의 불투명도
               strokeStyle: 'solid', // 선의 스타일입니다
-              fillColor: "#333333", // 채우기 색깔입니다
+              fillColor: "red", // 채우기 색깔입니다
               fillOpacity: 0.4, // 채우기 불투명도 입니다
             });
             polygons.push(polygon);

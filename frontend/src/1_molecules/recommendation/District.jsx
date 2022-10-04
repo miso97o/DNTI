@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import styles from "./District.module.css";
 import {Multiselect} from "multiselect-react-dropdown"
-import Select from "react-select";
+import Select, {StyleConfig} from "react-select";
 localStorage.setItem("guStorage", [])
 
 function District() {
@@ -40,16 +40,32 @@ function District() {
     localStorage.setItem("guStorage", (Array.isArray(event)?event.map(x=>x.label):[]))
     console.log(select," selected:")
   };
+  const selectStyles = {
+    control: (base, state) => ({
+      ...base,
+      background: "#fff",
+      border: state.isFocused ? "2px solid #7a08ff" : "2px solid #D9D9D9",
+      // Removes weird border around container
+      boxShadow: state.isFocused ? null : null,
+      // cursor: "pointer",
+      ":hover": {
+        // Overwrittes the different states of border
+        borderColor: state.isFocused ? "#7a08ff" : "#7a08ff"
+      }
+    }),
+    option: (base, state) => ({
+      ...base,
+      background: state.isFocused ? "rgba(122, 8, 255, 0.07)" : "#fff",
+      ":active": {
+        background: "rgba(122, 8, 255, 0.2)"
+      }
+    })
+  };
 
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        {/* <p>관심 있는 지역(구)을 선택해주세요.</p> */}
-        <Select options={gulist} placeholder="관심 있는 지역(구)를 선택해주세요" onChange={handleChange} isMulti>
-          {/* {gulist.map((item) => {
-            return <options value={item}>{item}</options>;
-          })} */}
-        </Select>
+        <Select options={gulist} placeholder="관심 있는 지역(구)를 선택해주세요" onChange={handleChange} styles={selectStyles} isMulti />
       </div>
     </div>
   );

@@ -38,8 +38,8 @@ function checkPark(el) {
     return true
   }
 }
-function checkGym(el) {
-  if(el.value === 'gym') {
+function checkKaraoke(el) {
+  if(el.value === 'karaoke') {
     return true
   }
 }
@@ -50,4 +50,4 @@ function checkRestaurant(el) {
 }
 
 
-export { checkBus, checkSubway, checkBike, checkOliveyoung, checkDaiso, checkMart, checkCVS, checkPark, checkGym, checkRestaurant }
+export { checkBus, checkSubway, checkBike, checkOliveyoung, checkDaiso, checkMart, checkCVS, checkPark, checkKaraoke, checkRestaurant }

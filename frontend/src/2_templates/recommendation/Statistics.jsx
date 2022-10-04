@@ -9,31 +9,34 @@ import { useDispatch } from "react-redux";
 import { setRanks } from "../../features/recommend/recommendSlice";
 import "./Statistics.css";
 
-function Statistics({dnti}) {
+function Statistics() {
   const [check, setCheck] = useState(false);
   const [rank, setRank] = useState();
   const dispatch = useDispatch();
-  const temp = localStorage.getItem("priorityStorage");
+  const temp = localStorage.getItem("selectedStorage");
+  // let filtered = temp.filter((element) => element ==="1" || element === "2" || element === "3" || element === "4" || element === "5" || element === "6");
+  const priorities = temp.substring(1, temp.length-1)
+  // const priorities = temp
+  const arr = priorities.split(',')
+  const arr2 = arr.map(x => x.charAt(1))
+  
+  console.log("==========================",priorities, arr, arr2)
+ 
 
-  const priorites = temp.substr(0, temp.length - 1);
-  // console.log(priorites)
   let gus = localStorage.getItem("guStorage");
   if (gus && gus.length > 0) {
     gus = "&gu=" + gus;
   }
 
   async function getRank() {
-    // await axios(
-    //   `http://j7a601.p.ssafy.io:9090/api/dong/rank?priorities=${priorites}${gus}`,
-    //   {
-    //     method: "GET",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // )
-    await http
-      .get(`/dong/rank?priorities=${priorites}${gus}`)
+    await axios(
+      `http://j7a601.p.ssafy.io:9090/api/dong/rank?priorities=${arr2}${gus}`,
+      {
+        method: "GET",
+      }
+    )
+    // await http
+    //   .get(`/dong/rank?priorities=${priorites}${gus}`)
       .then(function (res) {
         setRank(res.data.response);
         // console.log("data", res.data.response);
@@ -43,19 +46,7 @@ function Statistics({dnti}) {
         console.error("실패:", error);
       });
   }
-  // function changeCheck() {
-  //   if(rank) {
-  //     setCheck(true);
-  //   }
-  // }
 
-  function getRankbyDnti() {
-    axios.get(`/dong/${dnti}`).then((res) => {
-      console.log(res.data);
-      setRank(res.data.response);
-      dispatch(setRanks(res.data.response));
-    });
-  }
 
   let [selectedClass, setSelectedClass] = useState([
     "ranking yesss",

@@ -14,14 +14,15 @@ function GoReview({ dong }) {
   const [bCheck, setBCheck] = useState(false);
 
   async function getReview() {
-    // await axios(`http://j7a601.p.ssafy.io:9090/api/review/hot?dong=${dong}`, {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // })
-    await http
-      .get(`/review/hot?dong=${dong}`)
+    await axios(`http://j7a601.p.ssafy.io:9090/api/review/hot?dong=${dong}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    // await http
+    //   .get(`/review/hot?dong=${dong}`)
+
       .then(function (res) {
         setReviews(res.data.response);
         // console.log("data", reviews);
@@ -32,16 +33,18 @@ function GoReview({ dong }) {
   }
 
   async function getBoard() {
-    // await axios(`http://j7a601.p.ssafy.io:9090/api/board/hot?dong=${dong}`, {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // })
-    await http
-      .get(`/board/hot?dong=${dong}`)
+    await axios(`http://j7a601.p.ssafy.io:9090/api/board/hot?dong=${dong}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    // await http
+    //   .get(`/board/hot?dong=${dong}`)
       .then(function (res) {
         setBoards(res.data.response);
+        console.log(res.data.response)
+
       })
       .catch((error) => {
         console.error("실패:", error);
@@ -71,22 +74,27 @@ function GoReview({ dong }) {
         <div className={styles.review}>
           <div className={styles.titleArea}>
             <div className={styles.title}>{dong} 리뷰</div>
-            <Link to={`../board/post`}>
-              <button className={styles.moreBtn}>MORE</button>
-            </Link>
+            {rCheck && reviews[0]? (
+              <Link to={`../board/post`} state={{ gu: `${reviews[0].gu}`, dong:`${reviews[0].dong}`, fromRecommend:true }}>
+                <button className={styles.moreBtn}>MORE</button>
+              </Link>              
+            ) : (<div></div>)}
           </div>
           {rCheck ? (
             <div className={styles.contentArea}>
-              {reviews[0] && (
+              {reviews[0]? (
                 <div className={styles.contentLine}>
                   <div className={styles.contentTitle}>{reviews[0].title}</div>
                   <Rating
                     name="half-rating-read"
                     defaultValue={reviews[0].score}
                     precision={0.5}
+                    size="small"
                     readOnly
                   />
                 </div>
+              ) : (
+                <p className={styles.contentLine}>리뷰가 없습니다</p>
               )}
               {reviews[1] && (
                 <div className={styles.contentLine}>
@@ -95,6 +103,7 @@ function GoReview({ dong }) {
                     name="half-rating-read"
                     defaultValue={reviews[1].score}
                     precision={0.5}
+                    size="small"
                     readOnly
                   />
                 </div>
@@ -106,6 +115,7 @@ function GoReview({ dong }) {
                     name="half-rating-read"
                     defaultValue={reviews[2].score}
                     precision={0.5}
+                    size="small"
                     readOnly
                   />
                 </div>
@@ -118,45 +128,53 @@ function GoReview({ dong }) {
 
         <div className={styles.titleArea}>
           <div className={styles.title}>{dong} 게시글</div>
-          <Link to={`../board/review`}>
-            <button className={styles.moreBtn}>MORE</button>
-          </Link>
+            {bCheck && boards[0]? (
+              <Link to={`../board/review`} state={{ gu: `${boards[0].gu}`, dong:`${boards[0].dong}`, fromRecommend:true }}>
+                <button className={styles.moreBtn}>MORE</button>
+              </Link>              
+            ) : (
+              <div></div>
+            )}
         </div>
         {bCheck ? (
           <div className={styles.contentArea}>
-            {boards[0] && (
+            {boards[0] ? (
               <div className={styles.contentLine}>
                 <div className={styles.contentTitle}>{boards[0].title}</div>
-                <div>
+                <div className={styles.heart}>
                   <FavoriteIcon
                     sx={{ color: pink[500] }}
-                    className={styles.heart}
+                    fontSize="small"
                   />
-                  {boards[0].boardLike}
+                  <p>{boards[0].boardLike}</p>
                 </div>
               </div>
+            ) : (
+              <p className={styles.contentLine}>게시물이 없습니다</p>
             )}
             {boards[1] && (
               <div className={styles.contentLine}>
                 <div className={styles.contentTitle}>{boards[1].title}</div>
-                <div>
+                <div className={styles.heart}>
                   <FavoriteIcon
                     sx={{ color: pink[500] }}
-                    className={styles.heart}
+                    fontSize="small"
                   />
-                  {boards[1].boardLike}
+                  <p>{boards[1].boardLike}</p>
+
                 </div>
               </div>
             )}
             {boards[2] && (
               <div className={styles.contentLine}>
                 <div className={styles.contentTitle}>{boards[2].title}</div>
-                <div>
+                <div className={styles.heart}>
                   <FavoriteIcon
                     sx={{ color: pink[500] }}
-                    className={styles.heart}
+                    fontSize="small"
                   />
-                  {boards[2].boardLike}
+                  <p>{boards[2].boardLike}</p>
+
                 </div>
               </div>
             )}
