@@ -119,6 +119,8 @@ export default function ReviewMainComponent() {
                   writer={hotReview.email}
                   score={hotReview.score}
                   likes={hotReview.reviewLike}
+                  hit={hotReview.hit}
+                  nickname={hotReview.nickname}
                 />
               );
             })}
@@ -134,6 +136,8 @@ export default function ReviewMainComponent() {
                   writer={review.email}
                   score={review.score}
                   likes={review.reviewLike}
+                  hit={review.hit}
+                  nickname={review.nickname}
                 />
               );
             })}

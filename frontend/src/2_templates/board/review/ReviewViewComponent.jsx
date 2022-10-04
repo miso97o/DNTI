@@ -7,7 +7,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { pink } from "@mui/material/colors";
 import { useSelector } from "react-redux";
-import DntiBtn from "../../../0_atoms/DntiBtn";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
 export default function ReviewViewComponent() {
   const [reviewContents, setReviewContents] = React.useState("");
@@ -97,12 +97,14 @@ export default function ReviewViewComponent() {
             to="/board/review/write"
             state={{ reviewId: location.state.reviewId }}
           >
-            <DntiBtn text="수정" type="yellow" />
+            <button className="bluebtn-s">수정</button>
           </Link>
           <Link to="/board/review">
-            <DntiBtn text="목록" type="white" />
+            <button className="graybtn-s">목록</button>
           </Link>
-          <DntiBtn text="삭제" type="black" onClick={deleteReview} />
+          <button className="redbtn-s" onClick={deleteReview}>
+            삭제
+          </button>
         </div>
       </div>
     );
@@ -110,7 +112,7 @@ export default function ReviewViewComponent() {
     reviewControlPanel = (
       <div className="flex flex-row w-full justify-center pt-5">
         <Link to="/board/review">
-          <DntiBtn text="목록" type="white" />
+          <button className="graybtn-s">목록</button>
         </Link>
       </div>
     );
@@ -129,7 +131,17 @@ export default function ReviewViewComponent() {
               <p className="">{reviewContents.nickname}</p>
               <div className="flex flex-row ml-3">
                 <div className="px-1">
-                  <FavoriteIcon sx={{ color: pink[500] }} />
+                  <VisibilityOutlinedIcon />
+                </div>
+                <p className="">{reviewContents.hit}</p>
+              </div>
+              <div className="flex flex-row ml-3">
+                <div className="px-1">
+                  {isLike ? (
+                    <FavoriteIcon sx={{ color: pink[500] }} />
+                  ) : (
+                    <FavoriteBorderIcon sx={{ color: pink[500] }} />
+                  )}
                 </div>
                 <p className="">{reviewContents.reviewLike}</p>
               </div>
@@ -139,7 +151,7 @@ export default function ReviewViewComponent() {
             <p>{reviewContents.content}</p>
           </div>
           <div className="flex flex-col items-center py-3">
-            <div className="flex flex-row  w-1/3 justify-between pb-1">
+            <div className="flex flex-row  w-2/5 justify-between pb-1">
               <p className="text-lg">총점</p>
               <Rating
                 name="total"

@@ -124,13 +124,13 @@ export default function ReviewMain() {
     <div className="flex flex-col h-full w-4/5 items-center">
       <div className="flex flex-row w-full justify-start">
         <Link to="/board">
-          <DntiBtn text={"< 뒤로"} type={"black"} />
+          <button className="squarebtn-s">뒤로</button>
         </Link>
       </div>
       <div className="flex flex-row h-16 w-full justify-between items-center">
         <p className="text-2xl">리뷰 게시판</p>
         <Link to="/board/review/write" state={{ reviewId: "newReview" }}>
-          <DntiBtn text={"글쓰기"} type={"square"} icon={"edit"} />
+          <button className="bluebtn-s">글쓰기</button>
         </Link>
       </div>
       <div className="flex flex-row h-full w-full justify-center">

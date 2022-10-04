@@ -4,7 +4,6 @@ import { Button, Rating, TextField } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "../../../utils/axios";
-import DntiBtn from "../../../0_atoms/DntiBtn";
 
 export default function ReviewWriteComponent() {
   const navigate = useNavigate();
@@ -23,6 +22,11 @@ export default function ReviewWriteComponent() {
   const [envScore, setEnvScore] = React.useState(0);
   const [safeScore, setSafeScore] = React.useState(0);
   const [totalScore, setTotalScore] = React.useState(0);
+  const [payload, setPayload] = React.useState({
+    email: user.userId,
+    content: reviewContents,
+    title: reviewTitle,
+  });
 
   useEffect(() => {
     console.log("location state ====================");
@@ -41,22 +45,28 @@ export default function ReviewWriteComponent() {
         });
     }
   }, []);
+
+  useEffect(() => {
+    updateTotalScore();
+    setPayload({
+      email: user.userId,
+      content: reviewContents,
+      environment: envScore,
+      infra: infraScore,
+      rental: rentScore,
+      safety: safeScore,
+      title: reviewTitle,
+    });
+  }, [rentScore, infraScore, envScore, safeScore]);
+
+  console.log(payload);
+
   const updateTotalScore = () => {
     setTotalScore((rentScore + infraScore + envScore + safeScore) / 4);
     console.log(`totalScore : ${totalScore}`);
   };
 
-  let payload = {
-    email: user.userId,
-    content: reviewContents,
-    environment: envScore,
-    infra: infraScore,
-    rental: rentScore,
-    safety: safeScore,
-    title: reviewTitle,
-  };
-
-  const submitReview = (payload) => {
+  const submitReview = () => {
     if (user.userId == null) {
       alert("로그인이 필요합니다.");
       // 로그인되어있지 않은 경우, 로그인 화면으로 redirect
@@ -74,7 +84,7 @@ export default function ReviewWriteComponent() {
     if (location.state.reviewId === "newReview") {
       axios
         .post("/review/save", payload)
-        .then((data) => {
+        .then(() => {
           alert("리뷰가 작성되었습니다.");
           navigate("/board/review", { replace: true });
         })
@@ -101,18 +111,14 @@ export default function ReviewWriteComponent() {
   if (location.state.reviewId !== "newReview") {
     controlPanel = (
       <div className="flex flex-row w-full justify-center pt-5">
-        <div
-          onClick={(e) => {
-            submitReview(payload, e);
-          }}
-        >
-          <DntiBtn text="등록" type="yellow" />
-        </div>
+        <button className="bluebtn-s" onClick={submitReview}>
+          글쓰기
+        </button>
         <Link
           to="/board/review/view"
           state={{ reviewId: location.state.reviewId }}
         >
-          <DntiBtn text="취소" type="white" />
+          <button className="graybtn-s">취소</button>
         </Link>
       </div>
     );
@@ -120,15 +126,16 @@ export default function ReviewWriteComponent() {
     controlPanel = (
       <div className="flex flex-row w-full justify-center pt-5">
         <div className="flex flex-row w-[15rem] justify-between">
-          <DntiBtn
-            text="등록"
-            type="yellow"
+          <button
             onClick={(e) => {
               submitReview(payload, e);
             }}
-          />
+            className="bluebtn-s"
+          >
+            수정
+          </button>
           <Link to="/board/review">
-            <DntiBtn text="취소" type="white" />
+            <button className="graybtn-s">취소</button>
           </Link>
         </div>
       </div>
@@ -183,7 +190,6 @@ export default function ReviewWriteComponent() {
                   value={rentScore}
                   onChange={(event, newValue) => {
                     setRentScore(newValue);
-                    updateTotalScore();
                   }}
                 />
               </div>
@@ -194,7 +200,6 @@ export default function ReviewWriteComponent() {
                   value={infraScore}
                   onChange={(event, newValue) => {
                     setInfraScore(newValue);
-                    updateTotalScore();
                   }}
                 />
               </div>
@@ -205,7 +210,6 @@ export default function ReviewWriteComponent() {
                   value={envScore}
                   onChange={(event, newValue) => {
                     setEnvScore(newValue);
-                    updateTotalScore();
                   }}
                 />
               </div>
@@ -216,7 +220,6 @@ export default function ReviewWriteComponent() {
                   value={safeScore}
                   onChange={(event, newValue) => {
                     setSafeScore(newValue);
-                    updateTotalScore();
                   }}
                 />
               </div>

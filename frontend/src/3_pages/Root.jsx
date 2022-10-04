@@ -27,6 +27,7 @@ export default function Root() {
       });
     }
   }, [email]);
+
   console.log("after reduce : user-------------------------");
   console.log(user);
   return (
