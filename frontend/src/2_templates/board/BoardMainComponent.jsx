@@ -190,6 +190,8 @@ export default function BoardMainComponent() {
                               writer={hotReview.email}
                               score={hotReview.score}
                               likes={hotReview.reviewLike}
+                              hit={hotReview.hit}
+                              nickname={hotReview.nickname}
                             />
                           );
                         })}
@@ -204,6 +206,8 @@ export default function BoardMainComponent() {
                               title={x.title}
                               likes={x.reviewLike}
                               score={x.score}
+                              hit={x.hit}
+                              nickname={x.nickname}
                             />
                           );
                         })}

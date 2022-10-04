@@ -62,7 +62,7 @@ function PrimaryNavigation() {
           </Link>
         </div>
         <div className={styles.content}>
-          <Link to={`dnrecommend`} className={styles.link}>
+          <Link to={`dnrecommend`} className={styles.link} state={{dnti: ""}}>
             <p>동네추천</p>
           </Link>
         </div>

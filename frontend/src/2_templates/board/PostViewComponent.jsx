@@ -4,6 +4,7 @@ import { Button, Pagination, TextField, IconButton } from "@mui/material";
 import Reply from "../../1_molecules/post/Reply";
 import { pink } from "@mui/material/colors";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import axios from "axios";
 import { useEffect } from "react";
@@ -109,13 +110,17 @@ export default function PostViewComponent() {
             <p>{postDetail.title}</p>
           </div>
           <div className="flex flex-row w-1/2 justify-end">
-            <p className="px-5">{postDetail.nickname}</p>
+            <p className="px-3">{postDetail.nickname}</p>
             {postDetail.createdTime === undefined ? null : (
               <p className="px-5">
                 {postDetail.createdTime.substring(0, 10).replaceAll("-", ".")}
               </p>
             )}
-            <div className="flex flex-row">
+            <div className="flex flex-row px-3">
+              <VisibilityOutlinedIcon />
+              <p>{postDetail.hit}</p>
+            </div>
+            <div className="flex flex-row px-3">
               <FavoriteBorderIcon />
               <p>{postDetail.boardLike}</p>
             </div>
@@ -142,23 +147,24 @@ export default function PostViewComponent() {
           <div className="flex flex-row justify-center items-center m-5">
             {user.userId === postDetail.email && (
               <Link to="/board/postwrite" state={{ boardId: boardId }}>
-                <DntiBtn text="수정" type="yellow" />
+                <button className="lbluebtn-s">수정</button>
               </Link>
             )}
             {user.userId === postDetail.email && (
-              <Link>
-                <DntiBtn text="삭제" type="black" onClick={deletePost} />
-              </Link>
+              // <Link state={{boardId: boardId}} oncli>
+              <button className="redbtn-s" onClick={deletePost}>삭제</button>
+                // <DntiBtn text="삭제" type="black" onClick={deletePost} />
+              // </Link>
             )}
             <Link to="/board/post">
-              <DntiBtn text="목록" type="white" />
+              <button className="graybtn-s">목록</button>
             </Link>
           </div>
         </div>
       </div>
       <div className="flex flex-col items-center w-full m-5 dnticard">
         <div className="flex flex-row w-full m-3">
-          <p>댓글</p>
+          <p className="ml-5 font-bold text-2xl">댓글</p>
         </div>
         <div className="flex flex-col w-4/5">
           <div className="flex p-3">{user.nickname}</div>
@@ -179,7 +185,7 @@ export default function PostViewComponent() {
                   writeReply();
                 }}
               >
-                <DntiBtn text="입력" type="square" icon="edit" />
+                <button className="bluebtn-s">입력</button>
               </div>
             </div>
           </div>

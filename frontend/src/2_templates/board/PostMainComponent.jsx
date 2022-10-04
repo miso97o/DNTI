@@ -20,10 +20,15 @@ import { useEffect } from "react";
 export default function FreeMainComponent() {
   const [boardList, setBoardList] = React.useState([]);
   const [searchKey, setSearchKey] = React.useState("");
-  const [searchCat, setSearchCat] = React.useState(0);
+  const [searchCat, setSearchCat] = React.useState("제목");
   const [hotBoardList, setHotBoardList] = React.useState([]);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [totalPage, setTotalPage] = React.useState(10);
+  const [criteriaList, setCriteriaList] = React.useState([
+    "제목",
+    "내용",
+    "아이디",
+  ]);
   const guDong = useSelector((state) => state.guDong);
 
   function handleKeyword(e) {
@@ -50,6 +55,9 @@ export default function FreeMainComponent() {
   }
 
   function searchBoard() {
+    let category = 0;
+    if(searchCat === "내용") category = 1;
+    else if(searchCat === "아이디") category = 2;
     console.log(searchCat);
     console.log(guDong);
     axios
@@ -58,7 +66,7 @@ export default function FreeMainComponent() {
           guDong.selectedGu === "전체" ? "" : guDong.selectedGu
         }&dong=${
           guDong.selectedDong === "전체" ? "" : guDong.selectedDong
-        }&category=${searchCat}&keyword=${searchKey}&page=${
+        }&category=${category}&keyword=${searchKey}&page=${
           currentPage - 1
         }&size=10`
       )
@@ -107,7 +115,7 @@ export default function FreeMainComponent() {
               })}
             </div>
             <div className="flex flex-col w-full">
-              {boardList.map((x) => {
+              {boardList && boardList.map((x) => {
                 return (
                   <PostRow
                     Id={x.boardId}
