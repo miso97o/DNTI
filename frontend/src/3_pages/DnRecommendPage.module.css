@@ -1,5 +1,5 @@
 .page {
-  font-family: 'TmoneyRoundWindRegular';
+  /* font-family: 'TmoneyRoundWindRegular'; */
   padding: 50px 100px 0px 100px;
 }
 
@@ -27,7 +27,7 @@
 
 .searchBtn {
   color: white;
-  background-color: #2200F4;
+  background-color: #2200f4;
   width: 150px;
   height: 40px;
   font-size: 22px;

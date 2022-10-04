@@ -1,5 +1,5 @@
 .page {
-  font-family: 'TmoneyRoundWindRegular';
+  /* font-family: 'TmoneyRoundWindRegular'; */
   padding: 50px 100px 0px 100px;
 }
 
@@ -19,34 +19,31 @@
   box-sizing: border-box;
 }
 
-
-
 /*
 =====
 RESET STYLES
 =====
 */
 
-.search{
+.search {
   --uiFieldBorderWidth: var(--fieldBorderWidth, 2px);
   --uiFieldPaddingRight: var(--fieldPaddingRight, 1rem);
-  --uiFieldPaddingLeft: var(--fieldPaddingLeft, 1rem);   
+  --uiFieldPaddingLeft: var(--fieldPaddingLeft, 1rem);
   --uiFieldBorderColorActive: var(--fieldBorderColorActive);
 
   display: var(--fieldDisplay, inline-flex);
   position: relative;
   font-size: var(--fieldFontSize, 20px);
-  --fieldBorderColor: #D9D9D9;
-  --fieldBorderColorActive: #2200F4;
+  --fieldBorderColor: #d9d9d9;
+  --fieldBorderColorActive: #2200f4;
   width: 100%;
-  border: var(--uiFieldBorderWidth) solid var(--fieldBorderColor);  
+  border: var(--uiFieldBorderWidth) solid var(--fieldBorderColor);
   margin-bottom: 40px;
 }
 
-
-.searchInput{ 
+.searchInput {
   --uiFieldPlaceholderColor: var(--fieldPlaceholderColor, #767676);
-  
+
   background-color: transparent;
   border-radius: 0;
   border: none;
@@ -58,11 +55,11 @@ RESET STYLES
   font-size: inherit;
 }
 
-.searchInput:focus::-webkit-input-placeholder{
+.searchInput:focus::-webkit-input-placeholder {
   color: var(--uiFieldPlaceholderColor);
 }
 
-.searchInput:focus::-moz-placeholder{
+.searchInput:focus::-moz-placeholder {
   color: var(--uiFieldPlaceholderColor);
 }
 
@@ -72,42 +69,39 @@ CORE STYLES
 =====
 */
 
-
-.search .field__labelwrap::after{
+.search .field__labelwrap::after {
   border-bottom: var(--uiFieldBorderWidth) solid var(--uiFieldBorderColorActive);
-  transition: opacity .2s ease-out;
+  transition: opacity 0.2s ease-out;
   will-change: opacity;
 }
 
-.search:focus{
+.search:focus {
   outline: solid;
 }
 
-.searchInput{
+.searchInput {
   box-sizing: border-box;
   width: var(--fieldWidth, 100%);
   height: var(--fieldHeight, 3rem);
-  padding: var(--fieldPaddingTop, 1.25rem) var(--uiFieldPaddingRight) var(--fieldPaddingBottom, .5rem) var(--uiFieldPaddingLeft);
-
+  padding: var(--fieldPaddingTop, 1.25rem) var(--uiFieldPaddingRight)
+    var(--fieldPaddingBottom, 0.5rem) var(--uiFieldPaddingLeft);
 }
 
-.searchInput:focus{
+.searchInput:focus {
   outline: none;
 }
 
-.searchInput::-webkit-input-placeholder{
+.searchInput::-webkit-input-placeholder {
   opacity: 0;
-  transition: opacity .2s ease-out;
+  transition: opacity 0.2s ease-out;
 }
 
-
-.searchInput:focus::-webkit-input-placeholder{
+.searchInput:focus::-webkit-input-placeholder {
   opacity: 1;
-  transition-delay: .2s;
+  transition-delay: 0.2s;
 }
 
-
-.field__labelwrap{
+.field__labelwrap {
   box-sizing: border-box;
   pointer-events: none;
   cursor: text;
@@ -119,7 +113,7 @@ CORE STYLES
   left: 0;
 }
 
-.field__labelwrap::after{
+.field__labelwrap::after {
   content: "";
   box-sizing: border-box;
   width: 100%;
@@ -131,42 +125,37 @@ CORE STYLES
   left: 0;
 }
 
-.searchInput:focus ~ .field__labelwrap::after{
+.searchInput:focus ~ .field__labelwrap::after {
   opacity: 1;
 }
 
-.field__label{
+.field__label {
   position: absolute;
   left: var(--uiFieldPaddingLeft);
-  top: calc(50% - .5em);
+  top: calc(50% - 0.5em);
 
   line-height: 1;
   font-size: var(--fieldHintFontSize, inherit);
 
-  transition: top .2s cubic-bezier(0.9, -0.15, 0.1, 1.15), opacity .2s ease-out, font-size .2s ease-out;
+  transition: top 0.2s cubic-bezier(0.9, -0.15, 0.1, 1.15),
+    opacity 0.2s ease-out, font-size 0.2s ease-out;
   will-change: bottom, opacity, font-size;
 }
 
 .searchInput:focus ~ .field__labelwrap .field__label,
-.searchInput:not(:placeholder-shown) ~ .field__labelwrap .field__label{
-  --fieldHintFontSize: var(--fieldHintFontSizeFocused, .3px);
+.searchInput:not(:placeholder-shown) ~ .field__labelwrap .field__label {
+  --fieldHintFontSize: var(--fieldHintFontSizeFocused, 0.3px);
 
   top: var(--fieldHintTopHover, 0px);
 }
 
 .search::after {
-  outline: solid 8px #2200F4;
+  outline: solid 8px #2200f4;
 }
 
 .searchBtn {
   width: 100px;
 }
-
-
-
-
-
-
 
 .favListColumn {
   display: flex;

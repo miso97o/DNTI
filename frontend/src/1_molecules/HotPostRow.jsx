@@ -37,26 +37,27 @@ export default function HotPostRow({
             <p className="text-ellipsis overflow-hidden">{title}</p>
           </div>
           <div className="flex flex-row justify-end items-center w-2/3 text-sm">
-            <div className="flex flex-row items-center w-1/3">
+            <div className="flex flex-row items-center mr-5">
               <PersonIcon />
               <p>{writer}</p>
             </div>
-            <p>{date.replaceAll("-", "/")}</p>
-            <div className="flex flex-row items-center ml-3">
+
+            <div className="flex flex-row items-center ml-1">
               <ChatBubbleOutlineOutlinedIcon fontSize="small" />
               <p>{replies}</p>
             </div>
-            <div className="flex flex-row items-center ml-3">
+            <div className="flex flex-row items-center ml-1">
               <VisibilityOutlinedIcon
                 fontSize="small"
                 className="text-gray-700"
               />
               <p>{views}</p>
             </div>
-            <div className="flex flex-row items-center ml-3">
+            <div className="flex flex-row items-center ml-1">
               <FavoriteBorderOutlinedIcon fontSize="small" />
               <p>{likes}</p>
             </div>
+            <p className="ml-4">{date.replaceAll("-", "/")}</p>
           </div>
         </div>
       </div>
