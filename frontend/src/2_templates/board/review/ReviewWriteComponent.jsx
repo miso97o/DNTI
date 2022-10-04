@@ -8,6 +8,7 @@ import axios from "../../../utils/axios";
 export default function ReviewWriteComponent() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const guDong = useSelector((state) => state.guDong);
   const location = useLocation();
   const [reviewTitle, setReviewTitle] = React.useState("");
   const handleReviewTitleChange = (event) => {
@@ -31,6 +32,11 @@ export default function ReviewWriteComponent() {
   useEffect(() => {
     console.log("location state ====================");
     console.log(location.state.reviewId);
+    if (guDong.selectedGu !== user.gu) {
+      alert("이 지역 분이 아니신가봐요!");
+      navigate(`/board/review`, true);
+      return;
+    }
     if (location.state.reviewId !== "newReview") {
       axios
         .get(`/review/detail/${location.state.reviewId}`)
