@@ -1,21 +1,23 @@
-import { Avatar, Button, IconButton, Dialog, DialogContent,InputLabel, Input, } from '@mui/material';
+import { Avatar, Button, IconButton, Dialog, DialogContent, Tooltip, Input, Rating} from '@mui/material';
 import * as React from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import EditIcon from '@mui/icons-material/Edit';
 import ClearIcon from '@mui/icons-material/Clear';
-import ReviewRow from '../1_molecules/ReviewRow';
-import PostRow from '../1_molecules/PostRow';
-import Tooltip from '@mui/material/Tooltip';
+import DisabledByDefaultOutlinedIcon from '@mui/icons-material/DisabledByDefaultOutlined';
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import PersonIcon from "@mui/icons-material/Person";
 import st from './MyPage.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {useState,useEffect} from 'react';
 import axios from 'axios';
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { useCookies } from "react-cookie";
-import DisabledByDefaultOutlinedIcon from '@mui/icons-material/DisabledByDefaultOutlined';
-import { useNavigate } from 'react-router-dom';
-import { resetUser } from "../features/user/userSlice";
+import { setUser, resetUser } from "../features/user/userSlice";
+import { selectGu } from "../features/dong/guDongSlice";
+
 
 
 
@@ -45,15 +47,17 @@ export default function MyPage() {
 
 
   useEffect(()=>{
-    if(user !== null){
+    if(user.userId !== null){
       axios.get(`/users/mypage/${user.userId}`).then(({data})=>{
         setMyInfo(data.response);
         setMyFavorite(data.response.favoriteList)
         setDong(data.response.user.dong);
         setGu(data.response.user.gu);
       })
+    } else {
+      
     }
-  },[])
+  },[user])
 
   return (
     <>
@@ -85,8 +89,6 @@ const ProfileCard = (props) => {
   const [cookies, removeCookie] = useCookies(["userEmail"]);
   const [editMode, setEditMode] = useState(false);
   const [nickname, setNickname] = useState(props.info.nickname)
-  const [valid,setValid]=useState("닉네임 변경하기")
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isValidNickName, setIsValidNickName] = React.useState(false);
   const [nick,setNick]=useState(nickname)
@@ -109,12 +111,9 @@ const ProfileCard = (props) => {
 
   const checkIfDuplicated = () => {
     axios.get(`/users/nickname?nickname=${nickname}`).then(({ data }) => {
-      console.log(data.response)
-      if (!data.response|nick===nickname) {
-        setValid("사용할 수 있는 닉네임입니다.")
+      if (nickname !== "" &&!data.response) {
         setIsValidNickName(true);
       }else {
-        setValid("중복된 닉네임이 존재합니다.")
         setIsValidNickName(false);
       }
     });
@@ -125,9 +124,7 @@ const ProfileCard = (props) => {
   },[nickname])
 
   const nicknameChange = (event) => {
-    if(isValidNickName){
       setNickname(event.target.value)
-    }
   }
 
   let account ={
@@ -141,15 +138,23 @@ const ProfileCard = (props) => {
   const changeNickname = () =>{
     if(isValidNickName){
       axios.patch("/users", account).then((data) => {
+        axios.get(`/users/${account.userId}`).then((data) =>{
+          dispatch(setUser(data.data.response));
+          dispatch(selectGu(data.data.response.gu));
+        })
         toggleEdit()
       })
     }
+  }
+  const cancelChangeNickname = () => {
+    setNickname(props.info.nickname)
+    toggleEdit()
   }
 
 
   return (
     <div className={st.profileContainer}>
-      <Avatar src="" sx={{width:"10rem", height:"10rem", margin: '10px' }} />
+      <Avatar src={`${process.env.PUBLIC_URL}/img/dnti_type/${props.info.dnti}.png`} sx={{width:"10rem", height:"10rem", margin: '10px' }} />
       <div className={st.colContainer}>
 
         <div className={st.ProfileRowContainer}>
@@ -162,7 +167,14 @@ const ProfileCard = (props) => {
                   value={nickname}
                   onChange={nicknameChange}
                 />
-                <Button style={{marginLeft: "5px", marginRight: "20px"}} onClick={changeNickname}>{valid}</Button>
+                {isValidNickName ? 
+                <Button style={{marginLeft: "5px", marginRight: "5px"}} onClick={changeNickname} disabled={!isValidNickName}>변경</Button> 
+                :
+                <p style={{fontSize: "12px", color:"red", fontWeight: "bold", marginRight: "20px"}}>사용할 수 없는 닉네임입니다.</p>
+                }
+                
+                <Button style={{marginRight:"10px"}} onClick={cancelChangeNickname}>취소</Button>
+
           </>
           :
           <>
@@ -243,8 +255,8 @@ const FrequentRow = (props) => {
   return (
       <div className={st.frequentRowContainer}>
         <p style={{fontSize: "18px", fontWeight: "bold"}}>{props.address}</p>
-        <IconButton>
-          <ClearIcon onClick={() => deleteFavorite(props.favoriteId)}/>
+        <IconButton onClick={() => deleteFavorite(props.favoriteId)}>
+          <ClearIcon />
         </IconButton>
       </div>
   );
@@ -265,8 +277,6 @@ function FrequentPlace(props) {
 
   const handleComplete = (data) => {
     let fullAddress = data.address;
-    let sigungu = data.sigungu;
-    let dong = data.bname;
     let extraAddress = "";
 
     if (data.addressType === "R") {
@@ -283,7 +293,6 @@ function FrequentPlace(props) {
     favoritePlace.address = fullAddress
     props.addFavorite(favoritePlace);
     axios.post("/favorite",favoritePlace).then((data) =>{
-      // console.log(data);
     })
   };
 
@@ -380,7 +389,6 @@ function MyRegion(props) {
     currentPlace.gu = sigungu
     props.changePlace(sigungu, dong);
     axios.patch("/users",currentPlace).then((data) =>{
-      // console.log(data);
     })
   };
 
@@ -416,9 +424,21 @@ function MyReview(props) {
       <div className={st.bodyColContainer}>
       {props.info.length !== 0 ? props.info.map((review,index)=> {
             return(
-            <div key={index}>
-              <ReviewRow gu={review.gu} title={review.title} score={review.score} />
-            </div>)
+              <div key={index} className={st.list}>
+              <div>
+                <p style={{fontWeight: "bold"}}>{review.title}</p>
+              </div>
+              <div className={st.postInfo}>
+                <div className={st.listComponent}>
+                  <Rating value={review.score} size="small" readOnly />
+                </div>
+                <div className={st.listComponent}>
+                  <FavoriteBorderOutlinedIcon fontSize="small" />
+                  <p>{review.reviewLike}</p>
+                </div>
+              </div>
+            </div>
+            )
 
         }) : <p>등록한 리뷰가 없습니다.</p>}
       </div>
@@ -438,9 +458,33 @@ function MyPosts(props) {
       <div className={st.bodyColContainer}>
       {props.info.length !== 0 ? props.info.map((post,index)=> {
             return(
-            <div key={index} className={st.bodyColContainer}>
-              <PostRow title={post.title} boardLike={post.boardLike} hit={post.hit} commentCount={post.commentCount}/>
-            </div>)
+            <div key={index} className={st.list}>
+              <div>
+                <p style={{fontWeight: "bold"}}>{post.title}</p>
+              </div>
+              <div className={st.postInfo}>
+                <div className={st.listComponent}>
+                  <PersonIcon />
+                  <p>{post.nickname}</p>
+                </div>
+                <div className={st.listComponent}>
+                  <ChatBubbleOutlineOutlinedIcon fontSize="small" />
+                  <p>{post.commentCount}</p>
+                </div>
+                
+                <div className={st.listComponent}>
+                  <VisibilityOutlinedIcon fontSize="small" />
+                  <p>{post.hit}</p>
+                </div>
+                
+                <div className={st.listComponent}>
+                  <FavoriteBorderOutlinedIcon fontSize="small" />
+                  <p>{post.boardLike}</p>
+                </div>
+                
+              </div>
+            </div>
+            )
 
         }) : <p>등록한 게시글이 없습니다.</p>}
       </div>
