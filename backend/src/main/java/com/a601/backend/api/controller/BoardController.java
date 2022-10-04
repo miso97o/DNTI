@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -48,7 +49,7 @@ public class BoardController {
     // 게시글 여러 개 조회
     @ApiOperation(value = "게시글 전체 조회", notes = "0번페이지부터 시작, 가장 최근에 작성된 글이 먼저 나옴")
     @GetMapping
-    public ApiResult selectBoardList(Pageable pageable) {
+    public ApiResult selectBoardList(@PageableDefault(size=8) Pageable pageable) {
         return new ApiResult(200, boardService.findAllByOrderByCreatedTime(pageable));
     }
 
