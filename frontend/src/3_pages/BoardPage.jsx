@@ -87,10 +87,10 @@ export default function Boardpage() {
 
   return (
     <div className="flex flex-col w-full h-full items-center p-5 pb-24">
-      <div className="flex flex-row w-4/5 p-3">
+      <div className="flex flex-row justify-start w-4/5 pl-4 pt-10 pb-8">
         <div className="mr-5">
           <Box sx={{ minWidth: 120 }}>
-            <FormControl fullWidth>
+            <FormControl fullWidth variant="standard">
               <InputLabel id="guSelect">구</InputLabel>
               <Select
                 labelId="guSelect"
@@ -113,7 +113,7 @@ export default function Boardpage() {
         </div>
         <div className="">
           <Box sx={{ minWidth: 120 }}>
-            <FormControl fullWidth>
+            <FormControl fullWidth variant="standard">
               <InputLabel id="dongSelect">동</InputLabel>
               <Select
                 labelId="dongSelect"

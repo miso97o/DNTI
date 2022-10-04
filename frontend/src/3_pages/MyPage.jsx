@@ -39,11 +39,11 @@ export default function MyPage() {
   const changePlace = (sigungu, dong) => {
     setGu(sigungu);
     setDong(dong);
-    
+
   }
-  
-  
-  
+
+
+
   useEffect(()=>{
     if(user !== null){
       axios.get(`/users/mypage/${user.userId}`).then(({data})=>{
@@ -57,7 +57,7 @@ export default function MyPage() {
 
   return (
     <>
-    {myInfo.length !== 0  ? 
+    {myInfo.length !== 0  ?
     <div className={st.mainContainer}>
       <ProfileCard info={myInfo.user} dnti={myInfo.dnti} />
       <div className={st.rowContainer}>
@@ -68,7 +68,7 @@ export default function MyPage() {
         </div>
 
         <div style={{borderLeft: "0.2rem solid", height: "90%"}}></div>
-        
+
         <div className={st.middleColContainer}>
           <MyRegion dong={dong} gu={gu} info={myInfo.user} changePlace={changePlace} />
           <MyReview info={myInfo.reviewList}/>
@@ -85,9 +85,11 @@ const ProfileCard = (props) => {
   const [cookies, removeCookie] = useCookies(["userEmail"]);
   const [editMode, setEditMode] = useState(false);
   const [nickname, setNickname] = useState(props.info.nickname)
+  const [valid,setValid]=useState("닉네임 변경하기")
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [isValidNickName, setIsValidNickName] = React.useState(false);
+  const [nick,setNick]=useState(nickname)
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -105,8 +107,27 @@ const ProfileCard = (props) => {
     editMode ? setEditMode(false) : setEditMode(true);
   }
 
+  const checkIfDuplicated = () => {
+    axios.get(`/users/nickname?nickname=${nickname}`).then(({ data }) => {
+      console.log(data.response)
+      if (!data.response|nick===nickname) {
+        setValid("사용할 수 있는 닉네임입니다.")
+        setIsValidNickName(true);
+      }else {
+        setValid("중복된 닉네임이 존재합니다.")
+        setIsValidNickName(false);
+      }
+    });
+  };
+
+  useEffect(()=>{
+    checkIfDuplicated()
+  },[nickname])
+
   const nicknameChange = (event) => {
-    setNickname(event.target.value)
+    if(isValidNickName){
+      setNickname(event.target.value)
+    }
   }
 
   let account ={
@@ -118,9 +139,11 @@ const ProfileCard = (props) => {
   }
 
   const changeNickname = () =>{
+    if(isValidNickName){
       axios.patch("/users", account).then((data) => {
         toggleEdit()
       })
+    }
   }
 
 
@@ -130,7 +153,7 @@ const ProfileCard = (props) => {
       <div className={st.colContainer}>
 
         <div className={st.ProfileRowContainer}>
-          {editMode ? 
+          {editMode ?
           <>
                 <Input
                   id='new-nickname'
@@ -139,18 +162,18 @@ const ProfileCard = (props) => {
                   value={nickname}
                   onChange={nicknameChange}
                 />
-                <Button style={{marginLeft: "5px", marginRight: "20px"}} onClick={changeNickname}>닉네임 변경하기</Button>
-          </> 
-          : 
+                <Button style={{marginLeft: "5px", marginRight: "20px"}} onClick={changeNickname}>{valid}</Button>
+          </>
+          :
           <>
-            <p style={{fontSize: "24px", fontWeight: "bold", marginLeft: "20px"}}>{nickname}</p> 
+            <p style={{fontSize: "24px", fontWeight: "bold", marginLeft: "20px"}}>{nickname}</p>
             <Tooltip title="닉네임 변경" style={{marginRight: "20px"}}>
               <IconButton onClick={toggleEdit}>
                 <EditIcon />
               </IconButton>
             </Tooltip>
           </>}
-          
+
           <p style={{color:"gray"}}>{props.info.userId}</p>
         </div>
         <div style={{borderBottom: "0.1rem dashed", width: "60%"}}></div>
@@ -162,7 +185,7 @@ const ProfileCard = (props) => {
       </div>
       <div className={st.profileColContainer}>
         <div style={{margin : "20px auto"}}>
-          
+
           <Tooltip title="회원 탈퇴">
             <IconButton onClick={() => setShowDeleteModal(true)}>
               <LogoutIcon />
@@ -209,7 +232,7 @@ const ProfileCard = (props) => {
 
 // 즐겨찾기
 const FrequentRow = (props) => {
-  
+
   // 삭제버튼 클릭시
   const deleteFavorite = (id) => {
     axios.delete(`/favorite/${id}`).then((data)=>{
@@ -285,7 +308,7 @@ function FrequentPlace(props) {
             <div key={index} style={{width:"100%"}}>
               <FrequentRow favoriteId={place.favoriteId} name={place.name} address={place.address} addFavorite={props.addFavorite} deleteFavorite={props.deleteFavorite} />
             </div>)
-          
+
         }) : <p>자주 가는 지역을 추가해주세요!</p>}
       </div>
     </div>
@@ -310,14 +333,14 @@ function RecommendedRegion(props) {
     <div className={st.colContainer}>
       <div className={st.headRowContainer}>
         <p style={{fontSize: "24px", fontWeight: "bold", marginRight: "20px"}}>나와 어울리는 지역</p>
-        </div>      
+        </div>
       <div className={st.bodyColContainer}>
       {props.info !== null && props.info.length !== 0  ? props.info.map((region, index)=> {
             return(
             <div key={index} style={{width:"100%"}}>
               <RecommendRow dong={region.dongName} />
             </div>)
-          
+
         }) : <p>DNTI 검사를 실시해주세요!</p>}
       </div>
     </div>
@@ -396,7 +419,7 @@ function MyReview(props) {
             <div key={index}>
               <ReviewRow gu={review.gu} title={review.title} score={review.score} />
             </div>)
-          
+
         }) : <p>등록한 리뷰가 없습니다.</p>}
       </div>
       </div>
@@ -418,11 +441,9 @@ function MyPosts(props) {
             <div key={index} className={st.bodyColContainer}>
               <PostRow title={post.title} boardLike={post.boardLike} hit={post.hit} commentCount={post.commentCount}/>
             </div>)
-          
+
         }) : <p>등록한 게시글이 없습니다.</p>}
       </div>
     </div>
   );
 }
-
-

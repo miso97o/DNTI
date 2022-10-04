@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setRanks } from "../features/recommend/recommendSlice";
@@ -7,10 +7,15 @@ import Statistics from "../2_templates/recommendation/Statistics";
 import Map1 from "../2_templates/recommendation/Map";
 import Map2 from "../1_molecules/statistics/Map";
 import styles from "./DnRecommendPage.module.css";
+import { useLocation } from "react-router-dom";
 
 function DnRecommendPage() {
 
   const [goStatistics, setGoStatics] = useState(false)
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const type = 0 || location.state.dnti
+
   function Search() {
     if (goStatistics) {
       setGoStatics(false)
@@ -18,9 +23,10 @@ function DnRecommendPage() {
       localStorage.setItem("guStorage", [])
     } else {setGoStatics(true)}
   }
-  const dispatch = useDispatch();
  
-
+  useEffect(() => {
+    if(type) setGoStatics(true)
+  },[])
 
 
   return (
@@ -30,7 +36,7 @@ function DnRecommendPage() {
           {goStatistics ? (
             <div className={styles.inChoose}>
               <button className={styles.backBtn} onClick={Search}>←</button>
-              <Statistics />
+              <Statistics dnti={type}/>
             </div>
           ) : (
           <div className={styles.inChoose}>

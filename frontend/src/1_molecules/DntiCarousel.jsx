@@ -47,12 +47,12 @@ export default function DntiCarousel({ data }) {
   }, [data]);
 
   return (
-    <div className="carousel my-12 mx-auto">
+    <div className="carousel mx-auto">
       <div className="relative overflow-hidden">
         <div className="flex justify-between absolute top left w-full h-full">
           <button
             onClick={movePrev}
-            className="hover:bg-purple-900/75 text-white w-10 h-full text-center opacity-75 hover:opacity-100 disabled:opacity-25 disabled:cursor-not-allowed z-10 p-0 m-0 transition-all ease-in-out duration-300"
+            className="hover:text-dntiblue text-white w-10 h-full text-center opacity-75 hover:opacity-100 disabled:opacity-25 disabled:cursor-not-allowed z-10 p-0 m-0 transition-all ease-in-out duration-300"
             disabled={isDisabled("prev")}
           >
             <svg
@@ -73,7 +73,7 @@ export default function DntiCarousel({ data }) {
           </button>
           <button
             onClick={moveNext}
-            className="hover:bg-purple-900/75 text-white w-10 h-full text-center opacity-75 hover:opacity-100 disabled:opacity-25 disabled:cursor-not-allowed z-10 p-0 m-0 transition-all ease-in-out duration-300"
+            className="hover:text-dntiblue text-white w-10 h-full text-center opacity-75 hover:opacity-100 disabled:opacity-25 disabled:cursor-not-allowed z-10 p-0 m-0 transition-all ease-in-out duration-300"
             disabled={isDisabled("next")}
           >
             <svg
@@ -105,20 +105,24 @@ export default function DntiCarousel({ data }) {
                   className="carousel-item text-center relative w-40 h-45 snap-start mx-3"
                 >
                   <div
-                    className="carousel-image h-40 w-40 aspect-square block bg-gray-200 rounded-3xl bg-origin-padding bg-left-top bg-cover bg-no-repeat z-0"
+                    className="carousel-image h-44 w-44 aspect-square block bg-gray-200 rounded-3xl bg-origin-padding bg-left-top bg-cover bg-no-repeat z-0"
                     style={{
                       backgroundImage: resource.type
                         ? `url(${process.env.PUBLIC_URL}/img/dnti_type/${resource.type}.png)`
                         : "",
                     }}
                   ></div>
-                  <div className="flex flex-row items-end ml-3 mt-3">
-                    <p className="font-bold text-black text-lg">
-                      {index + 1}위 : {resource.type}
+                  <div className="ml-2">
+                    <div className="flex flex-row items-end mt-3">
+                      <p className="font-extrabold text-black text-lg text-start">
+                        {index + 1}위 {resource.type}
+                      </p>
+                      <p className="ml-2 text-gray-500">{resource.percent}%</p>
+                    </div>
+                    <p className="font-medium text-start">
+                      #{resource.keyword.replace(" ", "_")}
                     </p>
-                    <p className="ml-3">{resource.percent}%</p>
                   </div>
-                  <p>#{resource.keyword}</p>
                 </div>
               );
             })}
