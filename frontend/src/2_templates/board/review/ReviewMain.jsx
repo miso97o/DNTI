@@ -124,9 +124,6 @@ export default function ReviewMain() {
     <div className="flex flex-col h-full w-4/5 items-center">
       <div className="flex flex-row h-16 w-full justify-between items-center">
         <p className="text-3xl font-bold">리뷰 게시판</p>
-        <Link to="/board/review/write" state={{ reviewId: "newReview" }}>
-          <button className="bluebtn-s">글쓰기</button>
-        </Link>
       </div>
       <div className="flex flex-row h-full w-full justify-start">
         <div className="flex flex-row h-[32rem] w-[25rem]">{guCard}</div>

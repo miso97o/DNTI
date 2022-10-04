@@ -9,6 +9,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import ReviewRow from "../../../1_molecules/ReviewRow";
 import HotReviewRow from "../../../1_molecules/HotReviewRow";
@@ -149,45 +150,57 @@ export default function ReviewMainComponent() {
             })}
         </div>
       </div>
-      <div className="flex flex-row justify-center items-start py-10">
-        <Box sx={{ minWidth: 120 }}>
-          <FormControl fullWidth>
-            <InputLabel id="criteria">카테고리</InputLabel>
-            <Select
-              labelId="criteria"
-              id="criteriaSelect"
-              value={selectedCriteria}
-              label="검색"
-              onChange={handleCriteriaChange}
+      <div className="flex flex-row justify-between items-start py-10 w-full">
+        <div className="w-1/5"></div>
+        <div className="flex flex-row justify-center items-start">
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="criteria">카테고리</InputLabel>
+              <Select
+                labelId="criteria"
+                id="criteriaSelect"
+                value={selectedCriteria}
+                label="검색"
+                onChange={handleCriteriaChange}
+                size="small"
+              >
+                {criteriaList.map((criteria) => {
+                  return (
+                    <MenuItem key={criteria} value={criteria}>
+                      {criteria}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </Box>
+          <div className="ml-3">
+            <TextField
+              variant="outlined"
+              value={searchWord}
+              onChange={handleSearchWordChange}
               size="small"
+            />
+            <IconButton
+              type="button"
+              sx={{ p: "10px" }}
+              aria-label="search"
+              onClick={searchReview}
             >
-              {criteriaList.map((criteria) => {
-                return (
-                  <MenuItem key={criteria} value={criteria}>
-                    {criteria}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-        </Box>
-        <div className="ml-3">
-          <TextField
-            variant="outlined"
-            value={searchWord}
-            onChange={handleSearchWordChange}
-            size="small"
-          />
-          <IconButton
-            type="button"
-            sx={{ p: "10px" }}
-            aria-label="search"
-            onClick={searchReview}
-          >
-            <SearchIcon />
-          </IconButton>
+              <SearchIcon />
+            </IconButton>
+          </div>
+        </div>
+        <div className="flex gap-3">
+          <Link to="/board">
+            <button className="graybtn-s">목록</button>
+          </Link>
+          <Link to="/board/review/write" state={{ reviewId: "newReview" }}>
+            <button className="bluebtn-s">글쓰기</button>
+          </Link>
         </div>
       </div>
+
       <Pagination
         count={totalPage}
         page={currentPage}
