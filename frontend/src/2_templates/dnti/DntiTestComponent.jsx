@@ -156,10 +156,10 @@ export default function DntiList() {
       ) : (
         <div className="flex flex-col items-center w-full">
           <p className="font-bold text-4xl m-10">DNTI 테스트</p>
-          <div className="flex flex-row items-center mt-5 ml-10 mr-10">
+          <div className="flex flex-row items-center mt-5 ml-10 mr-10 ">
             <div
               onClick={() => handleNext(index * 2 - 2, index * 2 - 1)}
-              className=""
+              className="cursor-pointer"
             >
               <TestSelectCard
                 imgsrc={src1}
@@ -168,7 +168,10 @@ export default function DntiList() {
               />
             </div>
             <p className="font-extrabold text-5xl m-3 text-dntiblue">VS</p>
-            <div onClick={() => handleNext(index * 2 - 1, index * 2 - 2)}>
+            <div
+              onClick={() => handleNext(index * 2 - 1, index * 2 - 2)}
+              className="cursor-pointer"
+            >
               <TestSelectCard
                 imgsrc={src2}
                 description={text[index * 2 - 1]}
