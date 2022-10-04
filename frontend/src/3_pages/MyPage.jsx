@@ -90,7 +90,7 @@ export default function MyPage() {
   return (
     <>
     {myInfo.length !== 0  ?
-    <div className={st.mainContainer}>
+    (<div className={st.mainContainer}>
       <ProfileCard info={myInfo.user} dnti={myInfo.dnti} />
       <div className={st.rowContainer}>
 
