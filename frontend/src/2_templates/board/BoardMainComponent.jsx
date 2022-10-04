@@ -172,7 +172,7 @@ export default function BoardMainComponent() {
             <div className="flex flex-col h-full px-3">
               <div className="flex flex-row justify-between items-center mb-2">
                 <p className="font-bold text-2xl">리뷰게시판</p>
-                <Link to="review">
+                <Link to="review" state={{ isFromMyPage: false }}>
                   <p>더보기 &gt;</p>
                 </Link>
               </div>
