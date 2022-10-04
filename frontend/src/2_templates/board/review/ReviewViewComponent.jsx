@@ -92,7 +92,7 @@ export default function ReviewViewComponent() {
   if (user.userId === reviewContents.email) {
     reviewControlPanel = (
       <div className="flex flex-row w-full justify-center pt-5">
-        <div className="flex flex-row w-1/2 justify-between">
+        <div className="flex flex-row w-1/2 gap-5 ml-32">
           <Link
             to="/board/review/write"
             state={{ reviewId: location.state.reviewId }}
@@ -119,13 +119,17 @@ export default function ReviewViewComponent() {
   }
 
   return (
-    <div className="flex flex-col h-full mx-3">
+    <div className="flex flex-col h-full ">
       <div className="h-full w-full dnticard">
         <div className="flex flex-col h-full">
-          <div className="flex flex-row h-8 justify-between border-b-2 border-b-slate-200">
+          <div className="flex flex-row py-2 px-4 justify-between border-b-2 border-b-slate-200 align-middle">
             <div className="flex flex-row w-1/2">
-              <p className="w-1/4">{reviewContents.dong}</p>
-              <p className="">{reviewContents.title}</p>
+              <div className="bg-dntiblue rounded-lg py-1 px-4 text-bold text-center text-white justify-center">
+                {reviewContents.dong}
+              </div>
+              <p className="flex items-center ml-5 font-bold text-lg">
+                {reviewContents.title}
+              </p>
             </div>
             <div className="flex flex-row w-1/2 justify-end">
               <p className="">{reviewContents.nickname}</p>
@@ -135,29 +139,29 @@ export default function ReviewViewComponent() {
               </p>
             )}
               <div className="flex flex-row ml-3">
-                <div className="px-1">
+                <div className="px-1 flex items-center">
                   <VisibilityOutlinedIcon />
                 </div>
-                <p className="">{reviewContents.hit}</p>
+                <p className="flex items-center">{reviewContents.hit}</p>
               </div>
-              <div className="flex flex-row ml-3">
-                <div className="px-1">
+              <div className="flex items-center flex-row ml-3">
+                <div className="px-1 flex items-center">
                   {isLike ? (
                     <FavoriteIcon sx={{ color: pink[500] }} />
                   ) : (
                     <FavoriteBorderIcon sx={{ color: pink[500] }} />
                   )}
                 </div>
-                <p className="">{reviewContents.reviewLike}</p>
+                <p className="flex items-center">{reviewContents.reviewLike}</p>
               </div>
             </div>
           </div>
-          <div className="flex h-[15rem] p-2 py-3 border-b-2 border-b-slate-200">
+          <div className="flex h-[14rem] p-10 border-b-2 border-b-slate-200">
             <p>{reviewContents.content}</p>
           </div>
           <div className="flex flex-col items-center py-3">
-            <div className="flex flex-row  w-2/5 justify-between pb-1">
-              <p className="text-lg">총점</p>
+            <div className="flex flex-row  w-2/5 justify-between pb-1 mt-5">
+              <p className="text-lg font-bold">총점</p>
               <Rating
                 name="total"
                 value={totalScore}
@@ -167,23 +171,23 @@ export default function ReviewViewComponent() {
               />
             </div>
             <div className="flex flex-row w-1/3 justify-between">
-              <p>임대료</p>
+              <p className="font-bold">임대료</p>
               <Rating name="total" value={rentScore} readOnly />
             </div>
             <div className="flex flex-row w-1/3 justify-between">
-              <p>인프라</p>
+              <p className="font-bold">인프라</p>
               <Rating name="total" value={infraScore} readOnly />
             </div>
             <div className="flex flex-row w-1/3 justify-between">
-              <p>환경</p>
+              <p className="font-bold">환경</p>
               <Rating name="total" value={envScore} readOnly />
             </div>
             <div className="flex flex-row w-1/3 justify-between">
-              <p>안전</p>
+              <p className="font-bold">안전</p>
               <Rating name="total" value={safeScore} readOnly />
             </div>
           </div>
-          <div className="flex w-full justify-center mt-5">
+          <div className="flex w-full justify-center mb-5">
             <IconButton
               type="button"
               sx={{ p: "10px" }}
@@ -199,9 +203,9 @@ export default function ReviewViewComponent() {
               )}
             </IconButton>
           </div>
-          {reviewControlPanel}
         </div>
       </div>
+      {reviewControlPanel}
     </div>
   );
 }

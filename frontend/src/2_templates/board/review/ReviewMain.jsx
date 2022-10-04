@@ -130,7 +130,7 @@ export default function ReviewMain() {
       </div>
       <div className="flex flex-row h-full w-full justify-start">
         <div className="flex flex-row h-[32rem] w-[25rem]">{guCard}</div>
-        <div className="h-full w-4/5 mx-3 pb-10">
+        <div className="h-full w-4/5 pb-10 ml-7">
           <Outlet />
         </div>
       </div>
