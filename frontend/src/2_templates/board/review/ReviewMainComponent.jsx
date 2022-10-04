@@ -107,7 +107,7 @@ export default function ReviewMainComponent() {
 
   return (
     <div className="flex flex-col h-full w-full items-center mx-3">
-      <div className="h-[23rem] w-full dnticard">
+      <div className="h-[27rem] w-full dnticard">
         <div className="flex flex-col w-full">
           {hotReviews &&
             hotReviews.map((hotReview) => {
@@ -142,7 +142,7 @@ export default function ReviewMainComponent() {
       <div className="flex flex-row justify-center items-start py-10">
         <Box sx={{ minWidth: 120 }}>
           <FormControl fullWidth>
-            <InputLabel id="criteria">검색</InputLabel>
+            <InputLabel id="criteria">카테고리</InputLabel>
             <Select
               labelId="criteria"
               id="criteriaSelect"

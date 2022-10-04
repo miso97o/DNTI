@@ -1,16 +1,21 @@
 import { Link } from "react-router-dom";
-import { Button } from "@mui/material";
-import Pagination from "@mui/material/Pagination";
+import {
+  Pagination,
+  TextField,
+  IconButton,
+  Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import PostRow from "../../1_molecules/PostRow";
 import HotPostRow from "../../1_molecules/HotPostRow";
-import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import * as React from "react";
 import { useEffect } from "react";
-import DntiBtn from "../../0_atoms/DntiBtn";
 
 export default function FreeMainComponent() {
   const [boardList, setBoardList] = React.useState([]);
@@ -85,7 +90,7 @@ export default function FreeMainComponent() {
           <p className="font-bold text-3xl">자유 게시판</p>
         </div>
         <div className="flex flex-col h-full w-full items-center">
-          <div className="flex flex-col h-[24rem] w-full dnticard">
+          <div className="flex flex-col h-[29rem] w-full dnticard">
             <div className="flex flex-col w-full">
               {hotBoardList.map((x) => {
                 return (
@@ -93,7 +98,7 @@ export default function FreeMainComponent() {
                     Id={x.boardId}
                     title={x.title}
                     writer={x.nickname}
-                    date={x.createdTime.substring(2, 10)}
+                    date={x.createdTime.substring(2, 10).replaceAll("-", ".")}
                     replies={x.commentCount}
                     views={x.hit}
                     likes={x.boardLike}
@@ -108,7 +113,7 @@ export default function FreeMainComponent() {
                     Id={x.boardId}
                     title={x.title}
                     writer={x.nickname}
-                    date={x.createdTime.substring(2, 10)}
+                    date={x.createdTime.substring(2, 10).replaceAll("-", ".")}
                     replies={x.commentCount}
                     views={x.hit}
                     likes={x.boardLike}
@@ -117,29 +122,47 @@ export default function FreeMainComponent() {
               })}
             </div>
           </div>
-          <div className="flex flex-row justify-between items-center m-10 w-full">
+          <div className="flex flex-row justify-between items-center m-5 w-full">
             <div></div>
-            <div>
-              <select
-                name="검색 조건"
-                onChange={(e) => setSearchCat(e.target.value)}
-              >
-                <option value="0">제목</option>
-                <option value="1">내용</option>
-                <option value="2">아이디</option>
-              </select>
-              <TextField
-                variant="outlined"
-                onChange={(e) => handleKeyword(e)}
-              />
-              <IconButton
-                type="button"
-                sx={{ p: "10px" }}
-                aria-label="search"
-                onClick={() => searchBoard()}
-              >
-                <SearchIcon />
-              </IconButton>
+            <div className="flex flex-row justify-center items-start py-10">
+              <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="criteria">카테고리</InputLabel>
+                  <Select
+                    labelId="criteria"
+                    id="criteriaSelect"
+                    value={"title"}
+                    label="카테고리"
+                    onChange={(e) => setSearchCat(e.target.value)}
+                    size="small"
+                  >
+                    <MenuItem key={"title"} value={"title"}>
+                      제목
+                    </MenuItem>
+                    <MenuItem key={"content"} value={"content"}>
+                      내용
+                    </MenuItem>
+                    <MenuItem key={"id"} value={"id"}>
+                      아이디
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+              <div className="ml-3">
+                <TextField
+                  variant="outlined"
+                  onChange={(e) => handleKeyword(e)}
+                  size="small"
+                />
+                <IconButton
+                  type="button"
+                  sx={{ p: "10px" }}
+                  aria-label="search"
+                  onClick={() => searchBoard()}
+                >
+                  <SearchIcon />
+                </IconButton>
+              </div>
             </div>
             <div className="flex gap-4">
               <Link to="/board">
