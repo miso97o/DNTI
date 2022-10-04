@@ -120,7 +120,7 @@ export default function BoardMainComponent() {
           <div className="flex flex-col w-1/2 h-full px-3">
             <div className="flex flex-row justify-between items-center mb-2">
               <p className="font-bold text-2xl">자유게시판</p>
-              <Link to="post">
+              <Link to="post" state={{ isFromMyPage: false }}>
                 <p className="mr-2">더보기 &gt;</p>
               </Link>
             </div>

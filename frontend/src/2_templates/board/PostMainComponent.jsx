@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import {
   Pagination,
   TextField,
@@ -13,6 +12,8 @@ import PostRow from "../../1_molecules/PostRow";
 import HotPostRow from "../../1_molecules/HotPostRow";
 import SearchIcon from "@mui/icons-material/Search";
 import { useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import axios from "axios";
 import * as React from "react";
 import { useEffect } from "react";
@@ -24,19 +25,21 @@ export default function FreeMainComponent() {
   const [hotBoardList, setHotBoardList] = React.useState([]);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [totalPage, setTotalPage] = React.useState(10);
+  const [fromMyPage, setFromMyPage] = React.useState(false);
   const [criteriaList, setCriteriaList] = React.useState([
     "제목",
     "내용",
     "아이디",
   ]);
   const guDong = useSelector((state) => state.guDong);
+  const location = useLocation();
 
   function handleKeyword(e) {
     setSearchKey(e.target.value);
   }
 
   function handlePage(e, value) {
-    setCurrentPage(value)
+    setCurrentPage(value);
   }
 
   async function getHotBoard() {
@@ -61,8 +64,8 @@ export default function FreeMainComponent() {
 
   function searchBoard() {
     let category = 0;
-    if(searchCat === "내용") category = 1;
-    else if(searchCat === "아이디") category = 2;
+    if (searchCat === "내용") category = 1;
+    else if (searchCat === "아이디") category = 2;
     console.log(searchCat);
     console.log(guDong);
     axios
@@ -79,13 +82,27 @@ export default function FreeMainComponent() {
         console.log(res);
         setTotalPage(res.data.response.totalPages);
         setBoardList(res.data.response.content);
+        if (location.state.isFromMyPage) {
+          location.state.isFromMyPage = false;
+        }
       });
   }
 
   useEffect(() => {
     // getBoard(1)
-    searchBoard();
+    if (location.state.isFromMyPage) {
+      console.log("location userId", location.state);
+      setSearchKey(location.state.userId);
+      setSearchCat(2);
+      setFromMyPage(true);
+    } else {
+      searchBoard();
+    }
   }, []);
+
+  useEffect(() => {
+    searchBoard();
+  }, [fromMyPage]);
 
   useEffect(() => {
     getHotBoard();
@@ -121,20 +138,21 @@ export default function FreeMainComponent() {
               })}
             </div>
             <div className="flex flex-col w-full">
-              {boardList && boardList.map((x) => {
-                return (
-                  <PostRow
-                    Id={x.boardId}
-                    title={x.title}
-                    writer={x.nickname}
-                    date={x.createdTime.substring(2, 10).replaceAll("-", ".")}
-                    replies={x.commentCount}
-                    views={x.hit}
-                    likes={x.boardLike}
-                    isCertified={x.isCertified}
-                  />
-                );
-              })}
+              {boardList &&
+                boardList.map((x) => {
+                  return (
+                    <PostRow
+                      Id={x.boardId}
+                      title={x.title}
+                      writer={x.nickname}
+                      date={x.createdTime.substring(2, 10).replaceAll("-", ".")}
+                      replies={x.commentCount}
+                      views={x.hit}
+                      likes={x.boardLike}
+                      isCertified={x.isCertified}
+                    />
+                  );
+                })}
             </div>
           </div>
           <div className="flex flex-row justify-between items-center m-5 w-full">

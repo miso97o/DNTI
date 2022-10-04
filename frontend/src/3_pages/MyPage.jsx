@@ -38,37 +38,39 @@ export default function MyPage() {
   const [lastFavIdx, setLastFavIdx] = useState(-1);
 
   const addFavorite = (favorite) => {
-      axios.post("/favorite", favorite).then((data) => {
-        axios.get(`/users/mypage/${user.userId}`).then(({data})=>{
-          setMyFavorite(data.response.favoriteList)
-        })
-        
-
-    }) 
-  }
+    axios.post("/favorite", favorite).then((data) => {
+      axios.get(`/users/mypage/${user.userId}`).then(({ data }) => {
+        setMyFavorite(data.response.favoriteList);
+      });
+    });
+  };
 
   const editFavorite = (favorite) => {
-    let copiedFavorite = [...myFavorite]
-    const targetIdx = copiedFavorite.findIndex((fav) => fav.favoriteId === favorite.favoriteId)
-    if(targetIdx !== -1){
-      copiedFavorite[targetIdx] = {...copiedFavorite[targetIdx], address: favorite.address};
-      setMyFavorite(copiedFavorite)
-      favorite.userId = user.userId
-      console.log("변경할 값")
-      console.log(favorite)
-      axios.patch(`/favorite`, favorite).then((data) => {
-        
-      })
+    let copiedFavorite = [...myFavorite];
+    const targetIdx = copiedFavorite.findIndex(
+      (fav) => fav.favoriteId === favorite.favoriteId
+    );
+    if (targetIdx !== -1) {
+      copiedFavorite[targetIdx] = {
+        ...copiedFavorite[targetIdx],
+        address: favorite.address,
+      };
+      setMyFavorite(copiedFavorite);
+      favorite.userId = user.userId;
+      console.log("변경할 값");
+      console.log(favorite);
+      axios.patch(`/favorite`, favorite).then((data) => {});
     }
   };
 
   const deleteFavorite = (targetId) => {
-      console.log(`삭제할 id: ${targetId}`)
-      axios.delete(`/favorite/${targetId}`).then((data)=>{
-      setMyFavorite(myFavorite.filter((place) => place.favoriteId !== targetId))
-    })
-    
-  }
+    console.log(`삭제할 id: ${targetId}`);
+    axios.delete(`/favorite/${targetId}`).then((data) => {
+      setMyFavorite(
+        myFavorite.filter((place) => place.favoriteId !== targetId)
+      );
+    });
+  };
 
   const changePlace = (sigungu, dong) => {
     setGu(sigungu);
@@ -89,17 +91,21 @@ export default function MyPage() {
 
   return (
     <>
-    {myInfo.length !== 0  ?
-    (<div className={st.mainContainer}>
-      <ProfileCard info={myInfo.user} dnti={myInfo.dnti} />
-      <div className={st.rowContainer}>
+      {myInfo.length !== 0 ? (
+        <div className={st.mainContainer}>
+          <ProfileCard info={myInfo.user} dnti={myInfo.dnti} />
+          <div className={st.rowContainer}>
+            <div className={st.middleColContainer}>
+              <FrequentPlace
+                myPlace={myFavorite}
+                addFavorite={addFavorite}
+                deleteFavorite={deleteFavorite}
+                editFavorite={editFavorite}
+              />
+              <RecommendedRegion info={myInfo.dongList} dnti={myInfo.dnti} />
+            </div>
 
-        <div className={st.middleColContainer}>
-            <FrequentPlace myPlace={myFavorite} addFavorite={addFavorite} deleteFavorite={deleteFavorite} editFavorite={editFavorite}/>
-            <RecommendedRegion info={myInfo.dongList} dnti={myInfo.dnti}/>
-        </div>
-
-        <div style={{borderLeft: "0.2rem solid", height: "90%"}}></div>
+            <div style={{ borderLeft: "0.2rem solid", height: "90%" }}></div>
 
             <div style={{ borderLeft: "0.2rem solid", height: "90%" }}></div>
 
@@ -110,8 +116,8 @@ export default function MyPage() {
                 info={myInfo.user}
                 changePlace={changePlace}
               />
-              <MyReview info={myInfo.reviewList} />
-              <MyPosts info={myInfo.boardList} />
+              <MyReview info={myInfo.reviewList} email={myInfo.user.userId} />
+              <MyPosts info={myInfo.boardList} email={myInfo.user.userId} />
             </div>
           </div>
         </div>
@@ -158,7 +164,6 @@ const ProfileCard = (props) => {
   useEffect(() => {
     checkIfDuplicated();
   }, [nickname]);
-
 
   const nicknameChange = (event) => {
     setNickname(event.target.value);
@@ -359,8 +364,7 @@ const FrequentRow = (props) => {
     setMainAddr(fullAddress);
     favoritePlace.address = fullAddress;
     props.editFavorite(favoritePlace);
-
-  }
+  };
 
   const openEditFavorite = () => {
     open({ onComplete: handleComplete });
@@ -427,7 +431,7 @@ function FrequentPlace(props) {
     } else {
       open({ onComplete: handleComplete });
     }
-  }
+  };
 
   return (
     <div className={st.colContainer}>
@@ -495,13 +499,19 @@ function RecommendRow(props) {
 }
 
 function RecommendedRegion(props) {
-  console.log(props)
+  console.log(props);
   return (
     <div className={st.colContainer}>
       <div className={st.RecommendHeadRowContainer}>
-        <p style={{fontSize: "24px", fontWeight: "bold", marginRight: "20px"}}>나와 어울리는 지역</p>
-        <Link to="/dnRecommend" state={{dnti: props.dnti.type}}>
-        <p style={{color: "#7a08ff85", fontWeight: "bold"}}>동네추천 페이지로 이동</p>
+        <p
+          style={{ fontSize: "24px", fontWeight: "bold", marginRight: "20px" }}
+        >
+          나와 어울리는 지역
+        </p>
+        <Link to="/dnRecommend" state={{ dnti: props.dnti.type }}>
+          <p style={{ color: "#7a08ff85", fontWeight: "bold" }}>
+            동네추천 페이지로 이동
+          </p>
         </Link>
       </div>
       <div className={st.bodyColContainer}>
@@ -587,7 +597,6 @@ function MyRegion(props) {
 }
 
 function MyReview(props) {
-  const user = useSelector((state) => state.userId);
   return (
     <div className={st.colContainer}>
       <div className={st.headRowContainer}>
@@ -598,7 +607,7 @@ function MyReview(props) {
         </p>
         <Link
           to="/board/review"
-          state={{ isFromMyPage: true, userId: user ? user.userId : "" }}
+          state={{ isFromMyPage: true, userId: props.email }}
         >
           <p
             style={{
@@ -654,7 +663,10 @@ function MyPosts(props) {
         >
           작성한 글
         </p>
-        <Link to="/board/post" state={{ fromMypage: true }}>
+        <Link
+          to="/board/post"
+          state={{ isFromMyPage: true, userId: props.email }}
+        >
           <p
             style={{
               fontSize: "14px",
