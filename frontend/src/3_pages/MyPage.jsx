@@ -29,24 +29,38 @@ export default function MyPage() {
   const [myFavorite, setMyFavorite] = useState([]);
   const [dong, setDong] = useState("");
   const [gu, setGu] = useState("");
+  const [lastFavIdx, setLastFavIdx] = useState(-1);
 
   const addFavorite = (favorite) => {
-    setMyFavorite([...myFavorite, favorite])
+      axios.post("/favorite", favorite).then((data) => {
+        axios.get(`/users/mypage/${user.userId}`).then(({data})=>{
+          setMyFavorite(data.response.favoriteList)
+        })
+        
+
+    }) 
   }
 
   const editFavorite = (favorite) => {
-    for(let curr of myFavorite){
-      if(curr.favoriteId === favorite.favoriteId){
-        curr.address = favorite.address;
-        break;
-      }
+    let copiedFavorite = [...myFavorite]
+    const targetIdx = copiedFavorite.findIndex((fav) => fav.favoriteId === favorite.favoriteId)
+    if(targetIdx !== -1){
+      copiedFavorite[targetIdx] = {...copiedFavorite[targetIdx], address: favorite.address};
+      setMyFavorite(copiedFavorite)
+      favorite.userId = user.userId
+      console.log("변경할 값")
+      console.log(favorite)
+      axios.patch(`/favorite`, favorite).then((data) => {
+        
+      })
     }
 
   }
 
   const deleteFavorite = (targetId) => {
-    axios.delete(`/favorite/${targetId}`).then((data)=>{
-     setMyFavorite(myFavorite.filter((place) => place.favoriteId !== targetId))
+      console.log(`삭제할 id: ${targetId}`)
+      axios.delete(`/favorite/${targetId}`).then((data)=>{
+      setMyFavorite(myFavorite.filter((place) => place.favoriteId !== targetId))
     })
     
   }
@@ -80,7 +94,7 @@ export default function MyPage() {
 
         <div className={st.middleColContainer}>
             <FrequentPlace myPlace={myFavorite} addFavorite={addFavorite} deleteFavorite={deleteFavorite} editFavorite={editFavorite}/>
-            <RecommendedRegion info={myInfo.dongList}/>
+            <RecommendedRegion info={myInfo.dongList} dnti={myInfo.dnti}/>
         </div>
 
         <div style={{borderLeft: "0.2rem solid", height: "90%"}}></div>
@@ -134,6 +148,7 @@ const ProfileCard = (props) => {
   useEffect(()=>{
     checkIfDuplicated()
   },[nickname])
+
 
   const nicknameChange = (event) => {
       setNickname(event.target.value)
@@ -286,9 +301,8 @@ const FrequentRow = (props) => {
 
     setMainAddr(fullAddress);
     favoritePlace.address = fullAddress;
-    axios.patch(`/favorite`, favoritePlace).then((data) =>{
-      props.editFavorite(favoritePlace);
-    })
+    props.editFavorite(favoritePlace);
+
   }
 
   const openEditFavorite = () =>{
@@ -348,8 +362,6 @@ function FrequentPlace(props) {
 
     favoritePlace.address = fullAddress
     props.addFavorite(favoritePlace);
-    axios.post("/favorite",favoritePlace).then((data) =>{
-    })
   };
 
   const addFrequentPlace = () => {
@@ -359,6 +371,7 @@ function FrequentPlace(props) {
       open({ onComplete: handleComplete });
     }
   }
+
   return (
     
     <div className={st.colContainer}>
@@ -390,19 +403,20 @@ function RecommendRow(props) {
       <div>
         <p style={{fontSize: "18px", fontWeight: "bold", marginRight: "20px"}}>{props.dong}</p>
       </div>
-      <Link to="/dnRecommend">
-        <Button>보러 가기</Button>
-      </Link>
     </div>
   );
 }
 
 function RecommendedRegion(props) {
+  console.log(props)
   return (
     <div className={st.colContainer}>
-      <div className={st.headRowContainer}>
+      <div className={st.RecommendHeadRowContainer}>
         <p style={{fontSize: "24px", fontWeight: "bold", marginRight: "20px"}}>나와 어울리는 지역</p>
-        </div>
+        <Link to="/dnRecommend" state={{dnti: props.dnti.type}}>
+        <p style={{color: "#7a08ff85", fontWeight: "bold"}}>동네추천 페이지로 이동</p>
+        </Link>
+      </div>
       <div className={st.bodyColContainer}>
       {props.info !== null && props.info.length !== 0  ? props.info.map((region, index)=> {
             return(

@@ -19,9 +19,10 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
   width: 100%;
   height: 100%;
+  padding: 0 100px 0 100px;
 }
 
 .colContainer {
@@ -135,5 +136,16 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+}
+
+.RecommendHeadRowContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 10px;
+  border-bottom: 2px solid;
 }
 
