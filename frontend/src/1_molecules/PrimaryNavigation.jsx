@@ -28,11 +28,20 @@ function PrimaryNavigation() {
   };
   const handleClose = (dest) => {
     // console.log(dest);
+    setOne(false)
+    setTwo(false)
+    setThree(false)
+    setFour(false)
     setAnchorEl(null);
     return redirect(`/${dest}`);
   };
 
   const logOut = (dest) => {
+    setOne(false)
+    setTwo(false)
+    setThree(false)
+    setFour(false)
+    setAnchorEl(null);
     removeCookie("userEmail");
     dispatch(resetUser());
     handleClose(dest);
