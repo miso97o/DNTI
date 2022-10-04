@@ -9,7 +9,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import axios from "axios";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import DntiBtn from "../../0_atoms/DntiBtn";
+import CertifiedMark from "../../0_atoms/Icon/CertifiedMark.png"
 
 export default function PostViewComponent() {
   const [value, setValue] = React.useState("");
@@ -107,6 +107,7 @@ export default function PostViewComponent() {
       <div className="h-full w-full dnticard">
         <div className="flex flex-row w-full justify-between px-5 py-2 border-b-2 border-b-slate-200">
           <div className="flex flex-row w-1/2">
+            {postDetail.isCertified && <img src={CertifiedMark} alt="인증 마크" className="w-6 mr-2"/>}
             <p>{postDetail.title}</p>
           </div>
           <div className="flex flex-row w-1/2 justify-end">
