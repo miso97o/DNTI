@@ -18,12 +18,38 @@ export default function Boardpage() {
   const guDong = useSelector((state) => state.guDong);
   const [selectedGu, setSelectedGu] = React.useState("전체");
   const [selectedDong, setSelectedDong] = React.useState("전체");
-  const [guList, setGuList] = React.useState(["전체"]);
+  const [guList, setGuList] = React.useState([
+    "전체",
+    "강남구",
+    "강동구",
+    "강북구",
+    "강서구",
+    "관악구",
+    "광진구",
+    "구로구",
+    "금천구",
+    "노원구",
+    "도봉구",
+    "동대문구",
+    "동작구",
+    "마포구",
+    "서대문구",
+    "서초구",
+    "성동구",
+    "성북구",
+    "송파구",
+    "양천구",
+    "영등포구",
+    "용산구",
+    "은평구",
+    "종로구",
+    "중구",
+    "중랑구",
+  ]);
   const [dongList, setDongList] = React.useState(["전체"]);
   const [cookies, removeCookie] = useCookies(["userEmail"]);
   const email = cookies["userEmail"];
 
-  const newRank = [1, 2, 3];
   useEffect(() => {
     console.log("BoardPage useEffect([])");
     console.log("boardPage initialize");
@@ -67,9 +93,10 @@ export default function Boardpage() {
   }, [selectedGu]);
 
   async function setGuDongList() {
-    await axios.get(`address/gu`).then(({ data }) => {
-      setGuList(["전체", ...data.response]);
-    });
+    console.log("setGuDongList");
+    // await axios.get(`address/gu`).then(({ data }) => {
+    //   setGuList(["전체", ...data.response]);
+    // });
     await axios.get(`address/dong/${selectedGu}`).then(({ data }) => {
       setDongList(["전체", ...data.response]);
     });

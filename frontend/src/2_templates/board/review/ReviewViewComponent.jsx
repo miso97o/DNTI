@@ -99,7 +99,7 @@ export default function ReviewViewComponent() {
           >
             <button className="bluebtn-s">수정</button>
           </Link>
-          <Link to="/board/review">
+          <Link to="/board/review" state={{ isFromMyPage: false }}>
             <button className="graybtn-s">목록</button>
           </Link>
           <button className="redbtn-s" onClick={deleteReview}>
@@ -111,7 +111,7 @@ export default function ReviewViewComponent() {
   } else {
     reviewControlPanel = (
       <div className="flex flex-row w-full justify-center pt-5">
-        <Link to="/board/review">
+        <Link to="/board/review" state={{ isFromMyPage: false }}>
           <button className="graybtn-s">목록</button>
         </Link>
       </div>
@@ -134,10 +134,12 @@ export default function ReviewViewComponent() {
             <div className="flex flex-row w-1/2 justify-end">
               <p className="">{reviewContents.nickname}</p>
               {reviewContents.createdTime === undefined ? null : (
-              <p className="px-5">
-                {reviewContents.createdTime.substring(0, 10).replaceAll("-", ".")}
-              </p>
-            )}
+                <p className="px-5">
+                  {reviewContents.createdTime
+                    .substring(0, 10)
+                    .replaceAll("-", ".")}
+                </p>
+              )}
               <div className="flex flex-row ml-3">
                 <div className="px-1 flex items-center">
                   <VisibilityOutlinedIcon />
