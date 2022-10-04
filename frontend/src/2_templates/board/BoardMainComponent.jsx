@@ -121,11 +121,11 @@ export default function BoardMainComponent() {
             <div className="flex flex-row justify-between items-center mb-2">
               <p className="font-bold text-2xl">자유게시판</p>
               <Link to="post">
-                <p>더보기 &gt;</p>
+                <p className="mr-2">더보기 &gt;</p>
               </Link>
             </div>
 
-            <div className="flex flex-col h-[40rem] items-center justify-between">
+            <div className="flex flex-col h-[42rem] items-center justify-between">
               <div className="h-full w-full dnticard">
                 <div className="flex flex-col w-full">
                   {hotBoardList.map((x) => {
@@ -137,7 +137,7 @@ export default function BoardMainComponent() {
                         writer={x.nickname}
                         date={x.createdTime
                           .substring(2, 10)
-                          .replaceAll("-", "/")}
+                          .replaceAll("-", ".")}
                         replies={x.commentCount}
                         views={x.hit}
                         likes={x.boardLike}
@@ -157,7 +157,7 @@ export default function BoardMainComponent() {
                           writer={x.nickname}
                           date={x.createdTime
                             .substring(2, 10)
-                            .replaceAll("-", "/")}
+                            .replaceAll("-", ".")}
                           replies={x.commentCount}
                           views={x.hit}
                           likes={x.boardLike}
@@ -173,12 +173,12 @@ export default function BoardMainComponent() {
               <div className="flex flex-row justify-between items-center mb-2">
                 <p className="font-bold text-2xl">리뷰게시판</p>
                 <Link to="review">
-                  <p>더보기 &gt;</p>
+                  <p className="mr-2">더보기 &gt;</p>
                 </Link>
               </div>
               <div className="flex flex-col h-full w-full justify-between">
                 <div className="flex flex-col h-1/2 items-center">
-                  <div className="h-[25rem] w-full dnticard">
+                  <div className="h-[27rem] w-full dnticard">
                     <div className="flex flex-col w-full">
                       {hotReviews &&
                         hotReviews.map((hotReview) => {
@@ -216,7 +216,7 @@ export default function BoardMainComponent() {
                 </div>
                 <div className="flex flex-col h-1/2 items-center p-5">
                   <div className="flex flex-col h-full w-full justify-start">
-                    <p className="font-bold text-2xl mb-2 mt-6">관련 영상</p>
+                    <p className="font-bold text-2xl mb-2 mt-8">관련 영상</p>
                     <div className="h-full w-full dnticard">
                       <Carousel data={youtubeItems} />
                     </div>

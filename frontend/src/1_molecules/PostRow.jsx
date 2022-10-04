@@ -34,7 +34,7 @@ export default function PostRow({
       <div className="flex flex-row h-8 w-full items-center p-5 border-b-slate-200 border-b-2 box-border hover:hover:bg-gray-200">
         <div className="flex flex-row w-full items-stretch justify-between">
           <div className="flex flex-row items-center w-1/3">
-            <p>{title}</p>
+            <p className="text-ellipsis overflow-hidden">{title}</p>
           </div>
           <div className="flex flex-row justify-end items-center w-2/3 text-sm">
             <div className="flex flex-row items-center w-1/3">

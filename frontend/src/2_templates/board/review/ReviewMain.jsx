@@ -17,7 +17,7 @@ function GuCard({
   let guRatings = null;
   if (totalScore !== 0) {
     guRatings = (
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center mt-5">
         <div className="flex flex-row w-3/5 justify-between py-3">
           <p className="text-lg">총점</p>
           <Rating name="total" value={totalScore} size="large" readOnly />
@@ -43,15 +43,16 @@ function GuCard({
   } else {
     guRatings = (
       <div className="flex flex-col items-center">
-        <p>자료가 부족합니다</p>
+        <p>자료가 부족합니다!</p>
       </div>
     );
   }
   return (
-    <div className="w-[24rem] p-5 dnticard">
+    <div className="w-[25rem] p-5 dnticard">
       <div className="flex flex-col h-full">
         <div className="flex flex-row justify-center">
-          <p className="text-2xl">{gu}</p>
+          <p className="text-2xl font-bold m-3">[{gu}]</p>
+          <p></p>
         </div>
         <div className="flex flex-row h-1/2 justify-center">
           <img
@@ -60,7 +61,6 @@ function GuCard({
             className="h-64 w-64"
           />
         </div>
-        <div className="flex flex-row justify-center">#인프라 #중심지</div>
         {guRatings}
       </div>
     </div>
@@ -112,9 +112,9 @@ export default function ReviewMain() {
     );
   } else {
     guCard = (
-      <div className="w-full h-2/3 p-5 dnticard">
-        <div className="flex flex-row h-full justify-center items-center">
-          <p>구를 선택해주세요!</p>
+      <div className="w-[25rem] h-[32rem] p-5 dnticard">
+        <div className="flex flex-row h-full justify-content items-center text-xl">
+          <p className="text-center">구를 선택해주세요!</p>
         </div>
       </div>
     );
@@ -122,22 +122,15 @@ export default function ReviewMain() {
 
   return (
     <div className="flex flex-col h-full w-4/5 items-center">
-      <div className="flex flex-row w-full justify-start">
-        <Link to="/board">
-          <button className="squarebtn-s">뒤로</button>
-        </Link>
-      </div>
       <div className="flex flex-row h-16 w-full justify-between items-center">
-        <p className="text-2xl">리뷰 게시판</p>
+        <p className="text-3xl font-bold">리뷰 게시판</p>
         <Link to="/board/review/write" state={{ reviewId: "newReview" }}>
           <button className="bluebtn-s">글쓰기</button>
         </Link>
       </div>
-      <div className="flex flex-row h-full w-full justify-center">
-        <div className="flex flex-row justify-end h-[32rem] w-2/5 mx-3">
-          {guCard}
-        </div>
-        <div className="h-full w-3/5 mx-3 pb-10">
+      <div className="flex flex-row h-full w-full justify-start">
+        <div className="flex flex-row h-[32rem] w-[25rem]">{guCard}</div>
+        <div className="h-full w-4/5 mx-3 pb-10">
           <Outlet />
         </div>
       </div>

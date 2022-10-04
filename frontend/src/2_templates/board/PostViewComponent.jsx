@@ -112,7 +112,9 @@ export default function PostViewComponent() {
           <div className="flex flex-row w-1/2 justify-end">
             <p className="px-3">{postDetail.nickname}</p>
             {postDetail.createdTime === undefined ? null : (
-              <p className="px-3">{postDetail.createdTime.substring(0, 10)}</p>
+              <p className="px-5">
+                {postDetail.createdTime.substring(0, 10).replaceAll("-", ".")}
+              </p>
             )}
             <div className="flex flex-row px-3">
               <VisibilityOutlinedIcon />
@@ -196,7 +198,9 @@ export default function PostViewComponent() {
                   <Reply
                     Id={x.replyId}
                     nickname={x.nickname}
-                    datetime={x.createdTime.substring(0, 10)}
+                    datetime={x.createdTime
+                      .substring(0, 10)
+                      .replaceAll("-", ".")}
                     contents={x.contents}
                     mine={x.email === user.userId}
                     getReply={getReply}
