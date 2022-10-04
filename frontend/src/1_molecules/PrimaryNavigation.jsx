@@ -6,10 +6,11 @@ import styles from "./PrimaryNavigation.module.css";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { resetUser } from "../features/user/userSlice";
+import { useEffect } from "react";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { color } from "@mui/system";
 
-function PrimaryNavigation() {
+function PrimaryNavigation({makeBlack, setmakeBlack}) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
@@ -47,24 +48,36 @@ function PrimaryNavigation() {
     handleClose(dest);
     navigate("/", { replace: true });
   };
+  useEffect(() => {
+    if (makeBlack) {
+      setOne(false)
+      setTwo(false)
+      setThree(false)
+      setFour(false)
+    }
+  }, [makeBlack])
 
   const change=(index) =>{
     if(index===1){
+      setmakeBlack(false)
       setOne(true)
       setTwo(false)
       setThree(false)
       setFour(false)
     }else if(index===2){
+      setmakeBlack(false)
       setOne(false)
       setTwo(true)
       setThree(false)
       setFour(false)
     }else if(index===3){
+      setmakeBlack(false)
       setOne(false)
       setTwo(false)
       setThree(true)
       setFour(false)
     }else{
+      setmakeBlack(false)
       setOne(false)
       setTwo(false)
       setThree(false)
