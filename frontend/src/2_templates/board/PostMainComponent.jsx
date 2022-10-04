@@ -1,16 +1,21 @@
 import { Link } from "react-router-dom";
-import { Box, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
-import Pagination from "@mui/material/Pagination";
+import {
+  Pagination,
+  TextField,
+  IconButton,
+  Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import PostRow from "../../1_molecules/PostRow";
 import HotPostRow from "../../1_molecules/HotPostRow";
-import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import * as React from "react";
 import { useEffect } from "react";
-import DntiBtn from "../../0_atoms/DntiBtn";
 
 export default function FreeMainComponent() {
   const [boardList, setBoardList] = React.useState([]);
@@ -30,6 +35,10 @@ export default function FreeMainComponent() {
     setSearchKey(e.target.value);
   }
 
+  function handlePage(e, value) {
+    setCurrentPage(value)
+  }
+
   async function getHotBoard() {
     axios
       .get(
@@ -38,6 +47,7 @@ export default function FreeMainComponent() {
         }&dong=${guDong.selectedDong === "전체" ? "" : guDong.selectedDong}`
       )
       .then(({ data }) => {
+        console.log(data);
         setHotBoardList(data.response);
       });
   }
@@ -63,7 +73,7 @@ export default function FreeMainComponent() {
           guDong.selectedDong === "전체" ? "" : guDong.selectedDong
         }&category=${category}&keyword=${searchKey}&page=${
           currentPage - 1
-        }&size=10`
+        }&size=8`
       )
       .then((res) => {
         console.log(res);
@@ -93,7 +103,7 @@ export default function FreeMainComponent() {
           <p className="font-bold text-3xl">자유 게시판</p>
         </div>
         <div className="flex flex-col h-full w-full items-center">
-          <div className="flex flex-col h-[24rem] w-full dnticard">
+          <div className="flex flex-col h-[29rem] w-full dnticard">
             <div className="flex flex-col w-full">
               {hotBoardList.map((x) => {
                 return (
@@ -101,10 +111,11 @@ export default function FreeMainComponent() {
                     Id={x.boardId}
                     title={x.title}
                     writer={x.nickname}
-                    date={x.createdTime.substring(2, 10)}
+                    date={x.createdTime.substring(2, 10).replaceAll("-", ".")}
                     replies={x.commentCount}
                     views={x.hit}
                     likes={x.boardLike}
+                    isCertified={x.isCertified}
                   />
                 );
               })}
@@ -116,29 +127,39 @@ export default function FreeMainComponent() {
                     Id={x.boardId}
                     title={x.title}
                     writer={x.nickname}
-                    date={x.createdTime.substring(2, 10)}
+                    date={x.createdTime.substring(2, 10).replaceAll("-", ".")}
                     replies={x.commentCount}
                     views={x.hit}
                     likes={x.boardLike}
+                    isCertified={x.isCertified}
                   />
                 );
               })}
             </div>
           </div>
-          <div className="flex flex-row justify-between items-start m-10 w-full">
+          <div className="flex flex-row justify-between items-center m-5 w-full">
             <div></div>
-            <div className="flex flex-row">
-              <Box sx={{minWidth: 120}}>
+            <div className="flex flex-row justify-center items-start py-10">
+              <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
-                  <InputLabel>검색</InputLabel>
-                  <Select value={searchCat} label="검색" onChange={(e) => {setSearchCat(e.target.value)}} size="small">
-                    {criteriaList.map((criteria) => {
-                      return (
-                        <MenuItem key={criteria} value={criteria}>
-                          {criteria}
-                        </MenuItem>
-                      );
-                    })}
+                  <InputLabel id="criteria">카테고리</InputLabel>
+                  <Select
+                    labelId="criteria"
+                    id="criteriaSelect"
+                    value={"title"}
+                    label="카테고리"
+                    onChange={(e) => setSearchCat(e.target.value)}
+                    size="small"
+                  >
+                    <MenuItem key={"title"} value={"title"}>
+                      제목
+                    </MenuItem>
+                    <MenuItem key={"content"} value={"content"}>
+                      내용
+                    </MenuItem>
+                    <MenuItem key={"id"} value={"id"}>
+                      아이디
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -148,15 +169,15 @@ export default function FreeMainComponent() {
                   onChange={(e) => handleKeyword(e)}
                   size="small"
                 />
+                <IconButton
+                  type="button"
+                  sx={{ p: "10px" }}
+                  aria-label="search"
+                  onClick={() => searchBoard()}
+                >
+                  <SearchIcon />
+                </IconButton>
               </div>
-              <IconButton
-                type="button"
-                sx={{ p: "10px" }}
-                aria-label="search"
-                onClick={() => searchBoard()}
-              >
-                <SearchIcon />
-              </IconButton>
             </div>
             <div className="flex gap-4">
               <Link to="/board">
@@ -172,7 +193,7 @@ export default function FreeMainComponent() {
             page={currentPage}
             variant="outlined"
             color="primary"
-            onChange={(e) => getBoard(e.target.outerText)}
+            onChange={handlePage}
           />
         </div>
       </div>

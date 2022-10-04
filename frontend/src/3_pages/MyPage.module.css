@@ -94,7 +94,11 @@
   height: 100%;
 
 }
-
+.frequentIcon{
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+}
 
   
 .modalTitle {

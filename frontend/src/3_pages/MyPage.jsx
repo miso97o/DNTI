@@ -18,6 +18,7 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import PersonIcon from "@mui/icons-material/Person";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import st from "./MyPage.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
@@ -26,6 +27,7 @@ import { useDaumPostcodePopup } from "react-daum-postcode";
 import { useCookies } from "react-cookie";
 import { setUser, resetUser } from "../features/user/userSlice";
 import { selectGu } from "../features/dong/guDongSlice";
+import { padding } from "@mui/system";
 
 export default function MyPage() {
   const user = useSelector((state) => state.user);
@@ -38,8 +40,21 @@ export default function MyPage() {
     setMyFavorite([...myFavorite, favorite]);
   };
 
-  const deleteFavorite = (id) => {
-    setMyFavorite(myFavorite.filter((place) => place.favoriteId !== id));
+  const editFavorite = (favorite) => {
+    for (let curr of myFavorite) {
+      if (curr.favoriteId === favorite.favoriteId) {
+        curr.address = favorite.address;
+        break;
+      }
+    }
+  };
+
+  const deleteFavorite = (targetId) => {
+    axios.delete(`/favorite/${targetId}`).then((data) => {
+      setMyFavorite(
+        myFavorite.filter((place) => place.favoriteId !== targetId)
+      );
+    });
   };
 
   const changePlace = (sigungu, dong) => {
@@ -178,13 +193,14 @@ const ProfileCard = (props) => {
                 onChange={nicknameChange}
               />
               {isValidNickName ? (
-                <Button
+                <button
+                  className="bluebtn-s"
                   style={{ marginLeft: "5px", marginRight: "5px" }}
                   onClick={changeNickname}
                   disabled={!isValidNickName}
                 >
                   변경
-                </Button>
+                </button>
               ) : (
                 <p
                   style={{
@@ -197,6 +213,18 @@ const ProfileCard = (props) => {
                   사용할 수 없는 닉네임입니다.
                 </p>
               )}
+
+              <button
+                className="squarebtn-s"
+                style={{
+                  marginRight: "10px",
+                  minWidth: "90px",
+                  fontSize: "1em",
+                }}
+                onClick={cancelChangeNickname}
+              >
+                취소
+              </button>
 
               <Button
                 style={{ marginRight: "10px" }}
@@ -263,22 +291,20 @@ const ProfileCard = (props) => {
               <div>
                 <div className={st.modalTitle}> 정말 탈퇴하시겠습니까 ?</div>
                 <div className={st.modalButton}>
-                  <Button
-                    variant="outlined"
-                    color="error"
+                  <button
+                    className="redbtn-s"
                     onClick={() => handleDeleteUser(props.info.userId)}
                   >
                     예
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    color="primary"
+                  </button>
+                  <button
+                    className="bluebtn-s"
                     onClick={() => {
                       setShowDeleteModal(false);
                     }}
                   >
                     아니오
-                  </Button>
+                  </button>
                 </div>
               </div>
             </DialogContent>
@@ -286,7 +312,7 @@ const ProfileCard = (props) => {
         </div>
         <div>
           <Link to="/dnti">
-            <Button>DNTI 검사하기</Button>
+            <button className="lbluebtn-s">DNTI 검사하기</button>
           </Link>
         </div>
       </div>
@@ -296,19 +322,64 @@ const ProfileCard = (props) => {
 
 // 즐겨찾기
 const FrequentRow = (props) => {
-  // 삭제버튼 클릭시
-  const deleteFavorite = (id) => {
-    axios.delete(`/favorite/${id}`).then((data) => {
-      props.deleteFavorite(id);
-      alert("삭제되었습니다.");
+  const [mainAddr, setMainAddr] = React.useState(props.address);
+  const [cookies, setCookie] = useCookies(["userEmail"]);
+  const email = cookies["userEmail"];
+
+  let favoritePlace = {
+    name: "default",
+    userId: email,
+    address: mainAddr,
+    favoriteId: props.favoriteId,
+  };
+
+  const open = useDaumPostcodePopup();
+
+  const handleComplete = (data) => {
+    let fullAddress = data.address;
+    let extraAddress = "";
+
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddress +=
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+    }
+
+    setMainAddr(fullAddress);
+    favoritePlace.address = fullAddress;
+    axios.patch(`/favorite`, favoritePlace).then((data) => {
+      props.editFavorite(favoritePlace);
     });
   };
+
+  const openEditFavorite = () => {
+    open({ onComplete: handleComplete });
+  };
+
   return (
     <div className={st.frequentRowContainer}>
       <p style={{ fontSize: "18px", fontWeight: "bold" }}>{props.address}</p>
-      <IconButton onClick={() => deleteFavorite(props.favoriteId)}>
-        <ClearIcon />
-      </IconButton>
+      <div className={st.frequentIcon}>
+        <div>
+          <Tooltip title="수정하기">
+            <IconButton onClick={openEditFavorite}>
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
+        </div>
+        <div>
+          <Tooltip title="삭제하기">
+            <IconButton onClick={() => props.deleteFavorite(props.favoriteId)}>
+              <ClearIcon />
+            </IconButton>
+          </Tooltip>
+        </div>
+      </div>
     </div>
   );
 };
@@ -319,7 +390,7 @@ function FrequentPlace(props) {
   const email = cookies["userEmail"];
 
   let favoritePlace = {
-    name: "일단 고정값",
+    name: "default",
     userId: email,
     address: mainAddr,
   };
@@ -353,18 +424,22 @@ function FrequentPlace(props) {
       open({ onComplete: handleComplete });
     }
   };
-
   return (
     <div className={st.colContainer}>
       <div className={st.headRowContainer}>
         <p
-          style={{ fontSize: "24px", fontWeight: "bold", marginRight: "20px" }}
+          style={{ fontSize: "24px", fontWeight: "bold", marginRight: "10px" }}
         >
           자주 가는 곳
         </p>
-        <Button style={{ margin: "auto 20px" }} onClick={addFrequentPlace}>
-          추가
-        </Button>
+        <Tooltip title="자주 가는 곳 추가하기">
+          <IconButton
+            onClick={addFrequentPlace}
+            style={{ marginRight: "20px" }}
+          >
+            <AddCircleIcon fontSize="large" />
+          </IconButton>
+        </Tooltip>
         <p
           style={{
             fontSize: "12px",
@@ -387,6 +462,7 @@ function FrequentPlace(props) {
                   address={place.address}
                   addFavorite={props.addFavorite}
                   deleteFavorite={props.deleteFavorite}
+                  editFavorite={props.editFavorite}
                 />
               </div>
             );
@@ -488,7 +564,11 @@ function MyRegion(props) {
         >
           나의 지역
         </p>
-        <Button onClick={changeCurrentPlace}>바꾸기</Button>
+        <Tooltip title="지역 변경">
+          <IconButton onClick={changeCurrentPlace}>
+            <EditIcon />
+          </IconButton>
+        </Tooltip>
       </div>
       <div style={{ border: "1px solid", width: "100%", margin: "0px" }}>
         <p
@@ -514,10 +594,7 @@ function MyReview(props) {
         >
           나의 리뷰
         </p>
-        <Link
-          to="/board/review"
-          state={{ isFromMyPage: true, userId: user.userId }}
-        >
+        <Link to="/board/review" state={{ fromMypage: true }}>
           <p
             style={{
               fontSize: "14px",
@@ -535,7 +612,9 @@ function MyReview(props) {
             return (
               <div key={index} className={st.list}>
                 <div>
-                  <p style={{ fontWeight: "bold" }}>{review.title}</p>
+                  <Link to="/board/review/view" state={{ reviewId: review.id }}>
+                    <p style={{ fontWeight: "bold" }}>{review.title}</p>
+                  </Link>
                 </div>
                 <div className={st.postInfo}>
                   <div className={st.listComponent}>
@@ -558,6 +637,10 @@ function MyReview(props) {
 }
 
 function MyPosts(props) {
+  const increaseHit = (id) => {
+    axios.patch(`/board/hit/${id}`).then((res) => {});
+  };
+
   return (
     <div className={st.colContainer}>
       <div className={st.headRowContainer}>
@@ -566,7 +649,7 @@ function MyPosts(props) {
         >
           작성한 글
         </p>
-        <Link to="/board/post">
+        <Link to="/board/post" state={{ fromMypage: true }}>
           <p
             style={{
               fontSize: "14px",
@@ -584,7 +667,13 @@ function MyPosts(props) {
             return (
               <div key={index} className={st.list}>
                 <div>
-                  <p style={{ fontWeight: "bold" }}>{post.title}</p>
+                  <Link
+                    to="/board/postview"
+                    state={{ boardId: post.boardId }}
+                    onClick={() => increaseHit(post.boardId)}
+                  >
+                    <p style={{ fontWeight: "bold" }}>{post.title}</p>
+                  </Link>
                 </div>
                 <div className={st.postInfo}>
                   <div className={st.listComponent}>

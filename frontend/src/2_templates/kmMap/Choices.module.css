@@ -1,5 +1,5 @@
 .page {
-  font-family: 'TmoneyRoundWindRegular';
+  /* font-family: 'TmoneyRoundWindRegular'; */
   margin-bottom: 40px;
 }
 
@@ -21,8 +21,6 @@
   flex-direction: row;
   justify-content: space-between;
 }
-
-
 
 .selectedOptArea {
   width: 60px;
@@ -49,5 +47,3 @@
   height: 1.3px;
   width: 100%;
 }
-
-

@@ -65,6 +65,7 @@ public class BoardServiceImpl implements BoardService {
                         .commentCount(board.getReplyList().size())
                         .createdTime(board.getCreatedTime())
                         .modifiedTime(board.getModifiedTime())
+                        .isCertified(board.getIsCertified())
                         .build()
                 ).collect(Collectors.toList());
 
