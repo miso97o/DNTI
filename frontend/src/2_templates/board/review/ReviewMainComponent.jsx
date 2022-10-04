@@ -38,7 +38,7 @@ export default function ReviewMainComponent() {
   };
 
   useEffect(() => {
-    if (location.state.isFromMyPage) {
+    if (location.state.fromMyPage) {
       setSearchWord(location.state.userId);
       setSelectedCriteria("아이디");
       setFromMyPage(true);
