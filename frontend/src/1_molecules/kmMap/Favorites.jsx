@@ -38,13 +38,13 @@ function Favorites({options}) {
     )
       .then((res) => {
         console.log(res.data)
-        if (n === 0 && typeof time0 == "undefined") {
+        if (n === 0 && typeof time0 === "undefined") {
           setTime0(res.data.result);
           console.log(n, res.data.result.path[0])
-        } else if (n === 1 && typeof time1 == "undefined") {
+        } else if (n === 1 && typeof time1 === "undefined") {
           setTime1(res.data.result);
           console.log(n, res.data.result.path[0])
-        } else if(n == 2 && typeof time0 == "undefined") {
+        } else if(n === 2 && typeof time0 === "undefined") {
           console.log(n, res.data.result.path[0])
           setTime2(res.data.result);
         }
