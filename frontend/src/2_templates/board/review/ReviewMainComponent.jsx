@@ -116,6 +116,9 @@ export default function ReviewMainComponent() {
                   key={hotReview.id + "hot"}
                   id={hotReview.id}
                   title={hotReview.title}
+                  datetime={hotReview.createdTime
+                    .substring(2, 10)
+                    .replaceAll("-", ".")}
                   writer={hotReview.email}
                   score={hotReview.score}
                   likes={hotReview.reviewLike}
@@ -133,6 +136,9 @@ export default function ReviewMainComponent() {
                   key={review.id}
                   id={review.id}
                   title={review.title}
+                  datetime={review.createdTime
+                    .substring(2, 10)
+                    .replaceAll("-", ".")}
                   writer={review.email}
                   score={review.score}
                   likes={review.reviewLike}

@@ -62,5 +62,7 @@ public class ReviewResponse {
         this.infra = review.getInfra();
         this.environment = review.getEnvironment();
         this.safety = review.getSafety();
+        this.createdTime=review.getCreatedTime();
+        this.modifiedTime=review.getModifiedTime();
     }
 }

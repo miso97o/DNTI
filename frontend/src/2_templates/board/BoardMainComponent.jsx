@@ -78,7 +78,7 @@ export default function BoardMainComponent() {
         }&page=0&size=6`
       )
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data,"리뷰 데이터 확인");
         setReviewList(res.data.response.content);
       });
   }
@@ -188,6 +188,9 @@ export default function BoardMainComponent() {
                               id={hotReview.id}
                               title={hotReview.title}
                               writer={hotReview.email}
+                              datetime={hotReview.createdTime
+                                .substring(2, 10)
+                                .replaceAll("-", ".")}
                               score={hotReview.score}
                               likes={hotReview.reviewLike}
                               hit={hotReview.hit}
@@ -204,6 +207,9 @@ export default function BoardMainComponent() {
                               key={x.id + "review"}
                               id={x.id}
                               title={x.title}
+                              datetime={x.createdTime
+                                .substring(2, 10)
+                                .replaceAll("-", ".")}
                               likes={x.reviewLike}
                               score={x.score}
                               hit={x.hit}
