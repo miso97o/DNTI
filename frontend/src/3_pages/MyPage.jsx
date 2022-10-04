@@ -85,6 +85,7 @@ export default function MyPage() {
                 myPlace={myFavorite}
                 addFavorite={addFavorite}
                 deleteFavorite={deleteFavorite}
+                editFavorite={editFavorite}
               />
               <RecommendedRegion info={myInfo.dongList} />
             </div>
@@ -225,13 +226,6 @@ const ProfileCard = (props) => {
               >
                 취소
               </button>
-
-              <Button
-                style={{ marginRight: "10px" }}
-                onClick={cancelChangeNickname}
-              >
-                취소
-              </Button>
             </>
           ) : (
             <>
@@ -585,7 +579,7 @@ function MyRegion(props) {
 }
 
 function MyReview(props) {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.userId);
   return (
     <div className={st.colContainer}>
       <div className={st.headRowContainer}>
@@ -594,7 +588,10 @@ function MyReview(props) {
         >
           나의 리뷰
         </p>
-        <Link to="/board/review" state={{ fromMypage: true }}>
+        <Link
+          to="/board/review"
+          state={{ isFromMyPage: true, userId: user.userId }}
+        >
           <p
             style={{
               fontSize: "14px",

@@ -151,7 +151,7 @@ export default function ReviewWriteComponent() {
           >
             수정
           </button>
-          <Link to="/board/review">
+          <Link to="/board/review" state={{ isFromMyPage: false }}>
             <button className="graybtn-s">취소</button>
           </Link>
         </div>

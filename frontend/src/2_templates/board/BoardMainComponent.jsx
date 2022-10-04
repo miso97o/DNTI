@@ -128,22 +128,23 @@ export default function BoardMainComponent() {
             <div className="flex flex-col h-[42rem] items-center justify-between">
               <div className="h-full w-full dnticard">
                 <div className="flex flex-col w-full">
-                  {hotBoardList.map((x) => {
-                    return (
-                      <HotPostRow
-                        key={x.boardId + "hotpost"}
-                        Id={x.boardId}
-                        title={x.title}
-                        writer={x.nickname}
-                        date={x.createdTime
-                          .substring(2, 10)
-                          .replaceAll("-", ".")}
-                        replies={x.commentCount}
-                        views={x.hit}
-                        likes={x.boardLike}
-                      />
-                    );
-                  })}
+                  {hotBoardList &&
+                    hotBoardList.map((x) => {
+                      return (
+                        <HotPostRow
+                          key={x.boardId + "hotpost"}
+                          Id={x.boardId}
+                          title={x.title}
+                          writer={x.nickname}
+                          date={x.createdTime
+                            .substring(2, 10)
+                            .replaceAll("-", ".")}
+                          replies={x.commentCount}
+                          views={x.hit}
+                          likes={x.boardLike}
+                        />
+                      );
+                    })}
                 </div>
 
                 <div className="flex flex-col w-full">

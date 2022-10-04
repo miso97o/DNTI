@@ -50,7 +50,6 @@ export default function Boardpage() {
   const [cookies, removeCookie] = useCookies(["userEmail"]);
   const email = cookies["userEmail"];
 
-  const newRank = [1, 2, 3];
   useEffect(() => {
     console.log("BoardPage useEffect([])");
     console.log("boardPage initialize");
@@ -94,9 +93,10 @@ export default function Boardpage() {
   }, [selectedGu]);
 
   async function setGuDongList() {
-    await axios.get(`address/gu`).then(({ data }) => {
-      setGuList(["전체", ...data.response]);
-    });
+    console.log("setGuDongList");
+    // await axios.get(`address/gu`).then(({ data }) => {
+    //   setGuList(["전체", ...data.response]);
+    // });
     await axios.get(`address/dong/${selectedGu}`).then(({ data }) => {
       setDongList(["전체", ...data.response]);
     });
