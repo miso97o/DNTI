@@ -590,7 +590,7 @@ function MyReview(props) {
         </p>
         <Link
           to="/board/review"
-          state={{ isFromMyPage: true, userId: user.userId }}
+          state={{ isFromMyPage: true, userId: user ? user.userId : "" }}
         >
           <p
             style={{
