@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setRanks } from "../features/recommend/recommendSlice";
 import Choose from "../2_templates/recommendation/Choose";
@@ -39,7 +39,7 @@ function DnRecommendPage() {
                 <img src={backArrow} alt="backArrow" className={styles.backArrow}/>
                 BACK
               </button>
-              <Statistics />
+              <Statistics dnti={type} />
             </div>
           ) : (
           <div className={styles.inChoose}>
