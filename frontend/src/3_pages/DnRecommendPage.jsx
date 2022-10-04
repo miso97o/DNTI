@@ -1,10 +1,10 @@
 import { useState } from "react";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setRanks } from "../features/recommend/recommendSlice";
 import Choose from "../2_templates/recommendation/Choose";
 import Statistics from "../2_templates/recommendation/Statistics";
 import Map1 from "../2_templates/recommendation/Map";
+import backArrow from "../0_atoms/Img/arrowBlack.png";
 import Map2 from "../1_molecules/statistics/Map";
 import styles from "./DnRecommendPage.module.css";
 
@@ -29,7 +29,10 @@ function DnRecommendPage() {
         <div className={styles.choose}>
           {goStatistics ? (
             <div className={styles.inChoose}>
-              <button className={styles.backBtn} onClick={Search}>←</button>
+              <button className={styles.backBtn} onClick={Search}>
+                <img src={backArrow} alt="backArrow" className={styles.backArrow}/>
+                BACK
+              </button>
               <Statistics />
             </div>
           ) : (

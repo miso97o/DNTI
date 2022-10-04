@@ -11,7 +11,7 @@ import DaisoLogo from "../../0_atoms/Icon/DaisoLogo.png";
 import MartLogo from "../../0_atoms/Icon/MartLogo.png";
 import CVSLogo from "../../0_atoms/Icon/CVSLogo.png";
 import ParkLogo from "../../0_atoms/Icon/ParkLogo.png";
-import GymLogo from "../../0_atoms/Icon/GymLogo.png";
+import KaraokeLogo from "../../0_atoms/Icon/KaraokeLogo.png";
 import RestaurantLogo from "../../0_atoms/Icon/RestaurantLogo.png";
 
 
@@ -70,7 +70,7 @@ const options = [
   {
     value: "mart",
     label: 
-    <p className={styles.labelTxt}>마트</p>,
+    <p className={styles.labelTxt}>대형마트</p>,
     image:
     <img src={MartLogo} alt="MartLogo" className={styles.MartLogo}/>,
     key: "mart",
@@ -95,12 +95,12 @@ const options = [
     checked : false
   },
   {
-    value: "gym",
+    value: "karaoke",
     label: 
-    <p className={styles.labelTxt}>체육시설</p>,
+    <p className={styles.labelTxt}>노래방</p>,
     image:
-    <img src={GymLogo} alt="GymLogo" className={styles.GymLogo}/>,
-    key: "gym",
+    <img src={KaraokeLogo} alt="KaraokeLogo" className={styles.KaraokeLogo}/>,
+    key: "karaoke",
     checked : false
   },
   {
@@ -114,22 +114,7 @@ const options = [
   },
 ];
 
-// const options = ['bus', 'train', 'daiso']
 
-// const Opts = (props) => {
-//   return (
-// 		<select>
-// 			{props.options.map((option) => (
-// 				<option
-// 					key={option.value}
-// 					value={option.value}
-// 				>
-// 					{option.label}
-// 				</option>
-// 			))}
-// 		</select>
-//   );
-// }
 
 function ShowOptions({addSelectedProp, deleteSelectedProp}) {
   const addSelected =(e)=> {
@@ -142,7 +127,6 @@ function ShowOptions({addSelectedProp, deleteSelectedProp}) {
   const [num, setNum] = useState(0)
 
   function changeChecked(e) {
-    // 선택된 경우
     if (e.checked) {
       setNum(num - 1)
       e.checked = false
@@ -161,14 +145,10 @@ function ShowOptions({addSelectedProp, deleteSelectedProp}) {
 
   return (
     <div>
-      <div className={styles.dropdownHeader}>
-        {/* {selected.image} */}
-      </div>
       <div className={styles.dropdownOpts}>
         {options.map((option) => (
           <li key={option.value} 
             onClick={(e) => {
-              // addSelected(option)
               changeChecked(option)
             }}
             className={styles.eachOpt}>

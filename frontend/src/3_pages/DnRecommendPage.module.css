@@ -15,8 +15,29 @@
   border: solid 2px #d9d9d9;
   height: 800px;
   min-width: 400px;
-  padding: 40px 16px 20px 16px;
+  padding: 20px 16px 20px 16px;
   overflow: auto;
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 30px;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 15px;
+  color: #333333;
+  border: 2px solid #666666;
+  margin: 8px 10px 15px 0px;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.backArrow {
+  height: 14px;
+  margin-right: 1px;
 }
 
 .btnArea {
@@ -27,7 +48,7 @@
 
 .searchBtn {
   color: white;
-  background-color: #2200F4;
+  background-color: #7a08ff;
   width: 150px;
   height: 40px;
   font-size: 22px;
