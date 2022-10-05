@@ -94,7 +94,7 @@ export default function ReviewWriteComponent() {
         .post("/review/save", payload)
         .then(() => {
           alert("리뷰가 작성되었습니다.");
-          navigate("/board/review", { replace: true });
+          navigate("/board/review", { replace: true, state: {isFromMyPage: false} });
         })
         .catch(() => {
           console.log("review post error");
