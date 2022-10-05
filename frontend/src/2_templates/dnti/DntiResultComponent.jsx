@@ -175,7 +175,7 @@ function DntiResultCard({ imgsrc, type, content, arr }) {
             에게 어울리는 동네는?
           </p>
           <div className="flex gap-10 w-4/5">
-            <div className="w-4/12 flex flex-col gap-2 min-w-min">
+            <div className="w-5/12 flex flex-col gap-2 min-w-min">
               {dongList.map((x, idx) => {
                 const src = "/img/rank/" + (idx + 1) + ".png";
                 return (
@@ -189,7 +189,7 @@ function DntiResultCard({ imgsrc, type, content, arr }) {
               })}
               
             </div>
-            <div className="w-8/12 h-full flex items-center	mt-2">
+            <div className="w-7/12 h-full flex items-center	mt-2">
               {selected && <Chart rank={dongList} num={num} />} 
             </div>
                       
