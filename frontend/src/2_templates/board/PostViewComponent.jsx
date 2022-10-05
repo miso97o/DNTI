@@ -148,17 +148,17 @@ export default function PostViewComponent() {
           <div className="flex flex-row justify-center items-center m-5">
             {user.userId === postDetail.email && (
               <Link to="/board/postwrite" state={{ boardId: boardId }}>
-                <button className="lbluebtn-s">수정</button>
+                <button className="lbluebtn-s m-3">수정</button>
               </Link>
             )}
             {user.userId === postDetail.email && (
               // <Link state={{boardId: boardId}} oncli>
-              <button className="redbtn-s" onClick={deletePost}>삭제</button>
+              <button className="redbtn-s m-3" onClick={deletePost}>삭제</button>
                 // <DntiBtn text="삭제" type="black" onClick={deletePost} />
               // </Link>
             )}
             <Link to="/board/post">
-              <button className="graybtn-s">목록</button>
+              <button className="graybtn-s m-3">목록</button>
             </Link>
           </div>
         </div>

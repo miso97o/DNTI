@@ -6,14 +6,17 @@ import axios from "axios";
 import { useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { useSelector } from "react-redux";
+import DntiCarousel from "../../1_molecules/DntiCarousel";
 
 function DntiResultCard({ imgsrc, type, content, arr }) {
+  const [count, setCount] = React.useState(0);
   const [dntiPer, setDntiPer] = React.useState(0);
   const [keyword, setKeyword] = React.useState("");
   const [hash1, setHash1] = React.useState("");
   const [hash2, setHash2] = React.useState("");
   const [dongList, setDongList] = React.useState([]);
   const user = useSelector((state) => state.user);
+  const [dntiAll, setDntiAll] = React.useState([]);
 
   useEffect((e) => {
     if (user.userId) saveDnti();
@@ -21,7 +24,21 @@ function DntiResultCard({ imgsrc, type, content, arr }) {
     getStat();
     getAllStat();
     getDongbyDnti();
+    getDnti();
+    getCount();
   }, []);
+
+  async function getCount() {
+    await axios.get(`/dnti/count`).then((res) => {
+      setCount(res.data.response);
+    });
+  }
+
+  async function getDnti() {
+    await axios.get(`/dnti/all`).then((res) => {
+      setDntiAll(res.data.response);
+    });
+  }
 
   function saveDnti() {
     axios
@@ -61,22 +78,30 @@ function DntiResultCard({ imgsrc, type, content, arr }) {
   }
 
   const data = {
-    labels: arr.map((x) => x[0]),
+    labels: arr.map((x) =>
+      x[0] === "S"
+        ? "S(안전)"
+        : x[0] === "P"
+        ? "P(가격)"
+        : x[0] === "N"
+        ? "N(자연)"
+        : "I(인프라)"
+    ),
     datasets: [
       {
         data: arr.map((x) => (x[1] * 100) / 6.0),
         borderWidth: 1,
         backgroundColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
+          "rgba(244, 118, 130, 1)",
+          "rgba(61, 164, 234, 1)",
+          "rgba(187, 237, 56, 1)",
+          "rgba(255, 218, 3, 1)",
         ],
         borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
+          "rgba(244, 118, 130, 1)",
+          "rgba(61, 164, 234, 1)",
+          "rgba(187, 237, 56, 1)",
+          "rgba(255, 218, 3, 1)",
         ],
       },
     ],
@@ -85,42 +110,75 @@ function DntiResultCard({ imgsrc, type, content, arr }) {
   return (
     <Card variant="outlined">
       <div className="flex flex-col m-10">
+        <p className="text-center font-extrabold text-2xl mb-5">
+          📋테스트 결과
+        </p>
         <div className="flex flex-row">
-          <img src={imgsrc} alt="Not Found" className="w-80 h-80" />
+          <div className=" rounded-3xl">
+            <img src={imgsrc} alt="dnti_img" className="w-72 h-72" />
+          </div>
           <div className="flex flex-col items-center">
             <div className="flex flex-col m-10">
-              <p className="font-bold text-xl mb-3">나의 동네유형은?</p>
-              <p className="font-black text-6xl">{type}</p>
-              <p className="font-medium text-xl">{keyword}</p>
-              <p className="font-medium text-base">
+              <p className="font-bold text-xl mb-2">나의 DNTI는</p>
+              <p className="font-black text-6xl mb-2">[{type}]</p>
+              <p className="font-bold text-xl mb-1">"{keyword}" 유형</p>
+              <p className="font-bold text-base text-blue-500">
                 #{hash1} #{hash2}
               </p>
-              <p className="font-bold text-lg mt-10">
-                {dntiPer}%의 유형입니다.
-              </p>
+              <p className="text-sm mt-8">{dntiPer}%의 유형</p>
             </div>
           </div>
-          <div className="flex flex-row m-10 w-72 h-72">
+          <div className="flex flex-row m-10 w-60 h-60">
             <Doughnut data={data} />
           </div>
         </div>
         <hr />
-        <div className="flex flex-col m-10">
-          <p className="font-bold text-3xl mb-5">{type}에 어울리는 동네는?</p>
-          {dongList.map((x, idx) => {
-            return (
-              <p className="font-bold">
-                {idx + 1}위 {x.dongName}
-              </p>
-            );
-          })}
+        <div className="flex flex-col m-12 items-center">
+          <p className="text-center font-bold text-2xl mb-5">
+            🏡
+            <span className="font-extrabold font-dnti items-center">
+              {type}
+            </span>
+            에게 어울리는 동네는?
+          </p>
+          <div className="w-4/12 flex flex-col gap-2">
+            {dongList.map((x, idx) => {
+              const src = "/img/rank/" + (idx + 1) + ".png";
+              return (
+                <div className="flex items-center">
+                  <img src={src} alt="" className="w-8 h-8" />
+                  <p className="font-bold text-start text-xl">
+                    위. {x.guName} {x.dongName}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+          <div className="flex flex-col justify-center items-center pt-10">
+            <p className="text-sm mb-3">더 자세한 동네추천을 원한다면?</p>
+            <Link
+              to={`/dnRecommend`}
+              style={{ textDecoration: "none" }}
+              state={{ dnti: type }}
+            >
+              <Button onClick={saveDnti} variant="contained">
+                <span className="font-bold">동네추천 보러가기</span>
+              </Button>
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-row justify-center items-center">
-          <Link to={`/dnRecommend`} style={{ textDecoration: "none" }} state={{dnti: type}}>
-            <Button onClick={saveDnti} variant="contained">
-              동네 확인하기
-            </Button>
-          </Link>
+
+        <hr />
+        <div className="flex flex-col m-10">
+          <p className="text-center font-bold text-2xl mb-5">
+            📊DNTI 유형 랭킹
+          </p>
+          <p className="text-center text-gray-600 mb-2">
+            {count}명의 DNTI유형 랭킹
+          </p>
+          <div className="w-[52rem] p-10">
+            <DntiCarousel data={dntiAll} />
+          </div>
         </div>
       </div>
     </Card>
@@ -238,7 +296,7 @@ export default function DntiResultComponent({ sortable, win, lose }) {
   const src = "/img/dnti_type/" + dntitype + ".png";
   return (
     <div className="flex flex-col items-center">
-      <p className="font-bold text-4xl m-10">DNTI 결과</p>
+      <p className="font-bold text-4xl m-10">DNTI 테스트</p>
       <DntiResultCard
         imgsrc={src}
         type={dntitype}

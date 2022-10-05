@@ -499,7 +499,6 @@ function RecommendRow(props) {
 }
 
 function RecommendedRegion(props) {
-  console.log(props);
   return (
     <div className={st.colContainer}>
       <div className={st.RecommendHeadRowContainer}>
@@ -508,11 +507,15 @@ function RecommendedRegion(props) {
         >
           나와 어울리는 지역
         </p>
-        <Link to="/dnRecommend" state={{ dnti: props.dnti.type }}>
-          <p style={{ color: "#7a08ff85", fontWeight: "bold" }}>
-            동네추천 페이지로 이동
-          </p>
-        </Link>
+        {props.dnti ? (
+          <Link to="/dnRecommend" state={{ dnti: props.dnti.type }}>
+            <p style={{ color: "#7a08ff85", fontWeight: "bold" }}>
+              동네추천 페이지로 이동
+            </p>
+          </Link>
+        ) : (
+          ""
+        )}
       </div>
       <div className={st.bodyColContainer}>
         {props.info !== null && props.info.length !== 0 ? (
