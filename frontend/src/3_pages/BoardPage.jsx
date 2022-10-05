@@ -126,6 +126,7 @@ export default function Boardpage() {
       setSelectedDong("전체");
       dispatch(selectDong("전체"));
     }
+    location.state.from = 0;
   }, [dongList]);
 
   const handleGuChange = (event) => {

@@ -56,7 +56,7 @@ export default function ReviewViewComponent() {
     if (window.confirm("리뷰를 삭제하시겠습니까?")) {
       axios.delete(`/review/delete/${location.state.reviewId}`).then(() => {
         console.log("리뷰 삭제 완료!");
-        navigate("/board/review", true);
+        navigate("/board/review", { state: { from: 0 }, replace: true });
       });
     }
   }

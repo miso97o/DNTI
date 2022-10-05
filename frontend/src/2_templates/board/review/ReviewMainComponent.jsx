@@ -29,27 +29,12 @@ export default function ReviewMainComponent() {
     "아이디",
   ]);
   const [searchWord, setSearchWord] = React.useState("");
-  const [fromOtherPage, setFromOtherPage] = React.useState(false);
   const location = useLocation();
   const user = useSelector((state) => state.userId);
   const guDong = useSelector((state) => state.guDong);
   const handleCriteriaChange = (event) => {
     setSelectedCriteria(event.target.value);
   };
-
-  useEffect(() => {
-    if (location.state.from === 1) {
-      console.log("location userId", location.state);
-      setSearchWord(location.state.userId);
-      setSelectedCriteria("아이디");
-      setFromOtherPage(true);
-    }
-  }, []);
-
-  // fromMyPage가 스위치 역할을 한다.
-  useEffect(() => {
-    searchReview();
-  }, [fromOtherPage]);
 
   // 인기 리뷰 초기 세팅
   useEffect(() => {
@@ -70,27 +55,12 @@ export default function ReviewMainComponent() {
 
   // 초기 접속, 지역 변경, 페이지 변경 시 리뷰 조회
   useEffect(() => {
-    axios
-      .get(
-        `/review/search?gu=${
-          guDong.selectedGu !== "전체" ? guDong.selectedGu : ""
-        }&dong=${
-          guDong.selectedDong !== "전체" ? guDong.selectedDong : ""
-        }&search=title&page=${currentPage - 1}&size=5`
-      )
-      .then(({ data }) => {
-        console.log("리뷰 조회 성공!");
-        console.log(data);
-        setTotalPage(data.response.totalPages);
-        setReviews(data.response.content);
-        console.log(reviews);
-        if (location.state.from) {
-          location.state.from = false;
-        }
-      })
-      .catch(() => {
-        console.log("리뷰 조회에 실패했습니다.");
-      });
+    if (location.state.from === 1) {
+      console.log("location userId", location.state);
+      setSearchWord(location.state.userId);
+      setSelectedCriteria("아이디");
+    }
+    searchReview();
   }, [guDong, currentPage]);
 
   const searchReview = () => {
@@ -218,7 +188,7 @@ export default function ReviewMainComponent() {
           </div>
         </div>
         <div className="flex gap-3">
-          <Link to="/board">
+          <Link to="/board" state={{ from: 0 }}>
             <button className="graybtn-s">목록</button>
           </Link>
           <Link to="/board/review/write" state={{ reviewId: "newReview" }}>
