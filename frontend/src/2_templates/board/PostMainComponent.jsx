@@ -95,6 +95,7 @@ export default function FreeMainComponent() {
       setSearchKey(location.state.userId);
       setSearchCat("아이디");
       setFromOtherPage(true);
+      location.state.from = 0;
     }
   }, []);
 
@@ -198,7 +199,7 @@ export default function FreeMainComponent() {
               </div>
             </div>
             <div className="flex gap-4">
-              <Link to="/board">
+              <Link to="/board" state={{ from: 0 }}>
                 <button className="graybtn-s">목록</button>
               </Link>
               <Link to="/board/postwrite" state={{ boardId: 0 }}>

@@ -116,8 +116,8 @@ export default function MyPage() {
                 info={myInfo.user}
                 changePlace={changePlace}
               />
-              <MyReview info={myInfo.reviewList} />
-              <MyPosts info={myInfo.boardList} />
+              <MyReview info={myInfo.reviewList} email={myInfo.user.userId} />
+              <MyPosts info={myInfo.boardList} email={myInfo.user.userId} />
             </div>
           </div>
         </div>
@@ -614,7 +614,6 @@ function MyRegion(props) {
 }
 
 function MyReview(props) {
-  const user = useSelector((state) => state.userId);
   return (
     <div className={st.colContainer}>
       <div className={st.headRowContainer}>
@@ -626,8 +625,7 @@ function MyReview(props) {
         <Link
           to="/board/review"
           state={{
-            isFromMyPage: true,
-            userId: user ? user.userId : "",
+            userId: props.email,
             from: 1,
           }}
         >
@@ -694,7 +692,7 @@ function MyPosts(props) {
         >
           작성한 글
         </p>
-        <Link to="/board/post" state={{ fromMypage: true, from: 1 }}>
+        <Link to="/board/post" state={{ from: 1, userId: props.email }}>
           <p
             style={{
               fontSize: "14px",

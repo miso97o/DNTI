@@ -68,7 +68,7 @@ export default function ReviewWriteComponent() {
       safety: safeScore,
       title: reviewTitle,
     });
-  }, [rentScore, infraScore, envScore, safeScore]);
+  }, [rentScore, infraScore, envScore, safeScore, reviewTitle, reviewContents]);
 
   console.log(payload);
 
