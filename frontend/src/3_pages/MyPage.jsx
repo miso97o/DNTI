@@ -38,39 +38,37 @@ export default function MyPage() {
   const [lastFavIdx, setLastFavIdx] = useState(-1);
 
   const addFavorite = (favorite) => {
-    axios.post("/favorite", favorite).then((data) => {
-      axios.get(`/users/mypage/${user.userId}`).then(({ data }) => {
-        setMyFavorite(data.response.favoriteList);
-      });
-    });
-  };
+      axios.post("/favorite", favorite).then((data) => {
+        axios.get(`/users/mypage/${user.userId}`).then(({data})=>{
+          setMyFavorite(data.response.favoriteList)
+        })
+        
+
+    }) 
+  }
 
   const editFavorite = (favorite) => {
-    let copiedFavorite = [...myFavorite];
-    const targetIdx = copiedFavorite.findIndex(
-      (fav) => fav.favoriteId === favorite.favoriteId
-    );
-    if (targetIdx !== -1) {
-      copiedFavorite[targetIdx] = {
-        ...copiedFavorite[targetIdx],
-        address: favorite.address,
-      };
-      setMyFavorite(copiedFavorite);
-      favorite.userId = user.userId;
-      console.log("변경할 값");
-      console.log(favorite);
-      axios.patch(`/favorite`, favorite).then((data) => {});
+    let copiedFavorite = [...myFavorite]
+    const targetIdx = copiedFavorite.findIndex((fav) => fav.favoriteId === favorite.favoriteId)
+    if(targetIdx !== -1){
+      copiedFavorite[targetIdx] = {...copiedFavorite[targetIdx], address: favorite.address};
+      setMyFavorite(copiedFavorite)
+      favorite.userId = user.userId
+      console.log("변경할 값")
+      console.log(favorite)
+      axios.patch(`/favorite`, favorite).then((data) => {
+        
+      })
     }
   };
 
   const deleteFavorite = (targetId) => {
-    console.log(`삭제할 id: ${targetId}`);
-    axios.delete(`/favorite/${targetId}`).then((data) => {
-      setMyFavorite(
-        myFavorite.filter((place) => place.favoriteId !== targetId)
-      );
-    });
-  };
+      console.log(`삭제할 id: ${targetId}`)
+      axios.delete(`/favorite/${targetId}`).then((data)=>{
+      setMyFavorite(myFavorite.filter((place) => place.favoriteId !== targetId))
+    })
+    
+  }
 
   const changePlace = (sigungu, dong) => {
     setGu(sigungu);
@@ -91,21 +89,17 @@ export default function MyPage() {
 
   return (
     <>
-      {myInfo.length !== 0 ? (
-        <div className={st.mainContainer}>
-          <ProfileCard info={myInfo.user} dnti={myInfo.dnti} />
-          <div className={st.rowContainer}>
-            <div className={st.middleColContainer}>
-              <FrequentPlace
-                myPlace={myFavorite}
-                addFavorite={addFavorite}
-                deleteFavorite={deleteFavorite}
-                editFavorite={editFavorite}
-              />
-              <RecommendedRegion info={myInfo.dongList} dnti={myInfo.dnti} />
-            </div>
+    {myInfo.length !== 0  ?
+    (<div className={st.mainContainer}>
+      <ProfileCard info={myInfo.user} dnti={myInfo.dnti} />
+      <div className={st.rowContainer}>
 
-            <div style={{ borderLeft: "0.2rem solid", height: "90%" }}></div>
+        <div className={st.middleColContainer}>
+            <FrequentPlace myPlace={myFavorite} addFavorite={addFavorite} deleteFavorite={deleteFavorite} editFavorite={editFavorite}/>
+            <RecommendedRegion info={myInfo.dongList} dnti={myInfo.dnti}/>
+        </div>
+
+        <div style={{borderLeft: "0.2rem solid", height: "90%"}}></div>
 
             <div style={{ borderLeft: "0.2rem solid", height: "90%" }}></div>
 
@@ -165,6 +159,7 @@ const ProfileCard = (props) => {
     checkIfDuplicated();
   }, [nickname]);
 
+
   const nicknameChange = (event) => {
     setNickname(event.target.value);
   };
@@ -194,10 +189,7 @@ const ProfileCard = (props) => {
   };
 
   return (
-    <div
-      className={st.profileContainer}
-      style={{ width: "50%", margin: "40px" }}
-    >
+    <div className={st.profileContainer}>
       <Avatar
         src={`${process.env.PUBLIC_URL}/img/dnti_type/${props.info.dnti}.png`}
         sx={{ width: "10rem", height: "10rem", margin: "10px" }}
@@ -253,6 +245,7 @@ const ProfileCard = (props) => {
                 style={{
                   fontSize: "24px",
                   fontWeight: "bold",
+                  marginLeft: "20px",
                 }}
               >
                 {nickname}
@@ -267,11 +260,13 @@ const ProfileCard = (props) => {
 
           <p style={{ color: "gray" }}>{props.info.userId}</p>
         </div>
+        <div style={{ borderBottom: "0.1rem dashed", width: "60%" }}></div>
         <div className={st.ProfileRowContainer}>
           <p
             style={{
-              fontSize: "30px",
-              fontWeight: "900",
+              fontSize: "20px",
+              fontWeight: "bold",
+              marginLeft: "20px",
               marginRight: "50px",
             }}
           >
@@ -364,7 +359,8 @@ const FrequentRow = (props) => {
     setMainAddr(fullAddress);
     favoritePlace.address = fullAddress;
     props.editFavorite(favoritePlace);
-  };
+
+  }
 
   const openEditFavorite = () => {
     open({ onComplete: handleComplete });
@@ -431,38 +427,34 @@ function FrequentPlace(props) {
     } else {
       open({ onComplete: handleComplete });
     }
-  };
+  }
 
   return (
     <div className={st.colContainer}>
       <div className={st.headRowContainer}>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <p
-            style={{
-              fontSize: "24px",
-              fontWeight: "bold",
-              marginRight: "10px",
-            }}
+        <p
+          style={{ fontSize: "24px", fontWeight: "bold", marginRight: "10px" }}
+        >
+          자주 가는 곳
+        </p>
+        <Tooltip title="자주 가는 곳 추가하기">
+          <IconButton
+            onClick={addFrequentPlace}
+            style={{ marginRight: "20px" }}
           >
-            📍 자주 가는 장소
-          </p>
-          <Tooltip title="자주 가는 장소 추가하기">
-            <IconButton onClick={addFrequentPlace}>
-              <AddCircleIcon fontSize="large" />
-            </IconButton>
-          </Tooltip>
-        </div>
-        <div>
-          <p
-            style={{
-              fontSize: "12px",
-              color: "red",
-              fontWeight: "bold",
-            }}
-          >
-            최대 3곳까지 등록 가능합니다.
-          </p>
-        </div>
+            <AddCircleIcon fontSize="large" />
+          </IconButton>
+        </Tooltip>
+        <p
+          style={{
+            fontSize: "12px",
+            color: "red",
+            fontWeight: "bold",
+            marginRight: "20px",
+          }}
+        >
+          최대 3곳까지 등록 가능합니다.
+        </p>
       </div>
       <div className={st.bodyColContainer}>
         {props.myPlace.length !== 0 ? (
@@ -492,17 +484,11 @@ function RecommendRow(props) {
   return (
     <div className={st.RecommendRowContainer}>
       <div>
-        <div
-          className="flex"
-          style={{
-            fontSize: "18px",
-            marginRight: "20px",
-            marginBottom: "5px",
-          }}
+        <p
+          style={{ fontSize: "18px", fontWeight: "bold", marginRight: "20px" }}
         >
-          <span className="font-bold"> {props.rank + 1}위 </span>
-          &nbsp;&nbsp;&nbsp; {props.gu} {props.dong}
-        </div>
+          {props.dong}
+        </p>
       </div>
     </div>
   );
@@ -512,31 +498,17 @@ function RecommendedRegion(props) {
   return (
     <div className={st.colContainer}>
       <div className={st.RecommendHeadRowContainer}>
-        <p
-          style={{ fontSize: "24px", fontWeight: "bold", marginRight: "20px" }}
-        >
-          ✨ 나와 어울리는 지역
-        </p>
-        {props.dnti ? (
-          <Link to="/dnRecommend" state={{ dnti: props.dnti.type }}>
-            <p style={{ color: "#7a08ff85", fontWeight: "bold" }}>
-              동네추천 페이지로 이동
-            </p>
-          </Link>
-        ) : (
-          ""
-        )}
+        <p style={{fontSize: "24px", fontWeight: "bold", marginRight: "20px"}}>나와 어울리는 지역</p>
+        {props.dnti ? <Link to="/dnRecommend" state={{dnti: props.dnti.type}}>
+          <p style={{color: "#7a08ff85", fontWeight: "bold"}}>동네추천 페이지로 이동</p>
+        </Link> : ""}
       </div>
       <div className={st.bodyColContainer}>
         {props.info !== null && props.info.length !== 0 ? (
           props.info.map((region, index) => {
             return (
               <div key={index} style={{ width: "100%" }}>
-                <RecommendRow
-                  rank={index}
-                  gu={region.guName}
-                  dong={region.dongName}
-                />
+                <RecommendRow dong={region.dongName} />
               </div>
             );
           })
@@ -629,9 +601,8 @@ function MyReview(props) {
               fontWeight: "bold",
               marginRight: "20px",
             }}
-            className="hover:text-dntiblue"
           >
-            더보기
+            더보기 &gt;
           </p>
         </Link>
       </div>
@@ -640,17 +611,9 @@ function MyReview(props) {
           props.info.map((review, index) => {
             return (
               <div key={index} className={st.list}>
-                <div style={{ width: "50%" }}>
+                <div>
                   <Link to="/board/review/view" state={{ reviewId: review.id }}>
-                    <p
-                      style={{
-                        fontWeight: "bold",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      {review.title}
-                    </p>
+                    <p style={{ fontWeight: "bold" }}>{review.title}</p>
                   </Link>
                 </div>
                 <div className={st.postInfo}>
@@ -693,9 +656,8 @@ function MyPosts(props) {
               fontWeight: "bold",
               marginRight: "20px",
             }}
-            className="hover:text-dntiblue"
           >
-            더보기
+            더보기 &gt;
           </p>
         </Link>
       </div>
@@ -704,21 +666,13 @@ function MyPosts(props) {
           props.info.map((post, index) => {
             return (
               <div key={index} className={st.list}>
-                <div style={{ width: "40%" }}>
+                <div>
                   <Link
                     to="/board/postview"
                     state={{ boardId: post.boardId }}
                     onClick={() => increaseHit(post.boardId)}
                   >
-                    <p
-                      style={{
-                        fontWeight: "bold",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      {post.title}
-                    </p>
+                    <p style={{ fontWeight: "bold" }}>{post.title}</p>
                   </Link>
                 </div>
                 <div className={st.postInfo}>
