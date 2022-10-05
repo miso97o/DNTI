@@ -65,7 +65,8 @@ function District() {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <Select options={gulist} placeholder="관심 있는 지역(구)를 선택해주세요" onChange={handleChange} styles={selectStyles} isMulti />
+        <div className={styles.title}>관심 있는 지역(구)를 선택해주세요</div>
+        <Select options={gulist} placeholder="전체" onChange={handleChange} styles={selectStyles} isMulti />
       </div>
     </div>
   );
