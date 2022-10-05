@@ -14,14 +14,14 @@ function GoReview({ dong }) {
   const [bCheck, setBCheck] = useState(false);
 
   async function getReview() {
-    await axios(`http://j7a601.p.ssafy.io:9090/api/review/hot?dong=${dong}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    // await http
-    //   .get(`/review/hot?dong=${dong}`)
+    // await axios(`http://j7a601.p.ssafy.io:9090/api/review/hot?dong=${dong}`, {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    await http
+      .get(`/review/hot?dong=${dong}`)
 
       .then(function (res) {
         setReviews(res.data.response);
@@ -33,14 +33,14 @@ function GoReview({ dong }) {
   }
 
   async function getBoard() {
-    await axios(`http://j7a601.p.ssafy.io:9090/api/board/hot?dong=${dong}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    // await http
-    //   .get(`/board/hot?dong=${dong}`)
+    // await axios(`http://j7a601.p.ssafy.io:9090/api/board/hot?dong=${dong}`, {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    await http
+      .get(`/board/hot?dong=${dong}`)
       .then(function (res) {
         setBoards(res.data.response);
         console.log(res.data.response)

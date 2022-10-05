@@ -247,10 +247,15 @@ function KmMap() {
 
   async function getMarker() {
     setLoading(true)
-    await axios(`http://j7a601.p.ssafy.io:9090/api/km?lat=${options.center.Ma}&lon=${options.center.La}`, {
+    // await axios(`http://j7a601.p.ssafy.io:9090/api/km?lat=${options.center.Ma}&lon=${options.center.La}`, {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-Type": "application/string",
+    //   },
+    // })
+    await axios(`/km?lat=${options.center.Ma}&lon=${options.center.La}`, {
       method: "GET",
       headers: {
-        // Authorization: jwt,
         "Content-Type": "application/string",
       },
     })
