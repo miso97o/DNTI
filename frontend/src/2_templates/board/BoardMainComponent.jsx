@@ -121,7 +121,7 @@ export default function BoardMainComponent() {
             <div className="flex flex-row justify-between items-center mb-2">
               <p className="font-bold text-2xl">자유게시판</p>
               <Link to="post">
-                <p className="mr-2">더보기 &gt;</p>
+                <p className="mr-2 hover:text-dntiblue">더보기 &gt;</p>
               </Link>
             </div>
 
@@ -176,7 +176,7 @@ export default function BoardMainComponent() {
               <div className="flex flex-row justify-between items-center mb-2">
                 <p className="font-bold text-2xl">리뷰게시판</p>
                 <Link to="review" state={{ isFromMyPage: false }}>
-                  <p>더보기 &gt;</p>
+                  <p className="mr-2 hover:text-dntiblue">더보기 &gt;</p>
                 </Link>
               </div>
               <div className="flex flex-col h-full w-full justify-between">
