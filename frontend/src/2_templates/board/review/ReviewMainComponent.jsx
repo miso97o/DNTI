@@ -29,7 +29,7 @@ export default function ReviewMainComponent() {
     "아이디",
   ]);
   const [searchWord, setSearchWord] = React.useState("");
-  const [fromMyPage, setFromMyPage] = React.useState(false);
+  const [fromOtherPage, setFromOtherPage] = React.useState(false);
   const location = useLocation();
   const user = useSelector((state) => state.userId);
   const guDong = useSelector((state) => state.guDong);
@@ -38,17 +38,18 @@ export default function ReviewMainComponent() {
   };
 
   useEffect(() => {
-    if (location.state.isFromMyPage) {
+    if (location.state.from === 1) {
+      console.log("location userId", location.state);
       setSearchWord(location.state.userId);
       setSelectedCriteria("아이디");
-      setFromMyPage(true);
+      setFromOtherPage(true);
     }
   }, []);
 
   // fromMyPage가 스위치 역할을 한다.
   useEffect(() => {
     searchReview();
-  }, [fromMyPage]);
+  }, [fromOtherPage]);
 
   // 인기 리뷰 초기 세팅
   useEffect(() => {
@@ -83,8 +84,8 @@ export default function ReviewMainComponent() {
         setTotalPage(data.response.totalPages);
         setReviews(data.response.content);
         console.log(reviews);
-        if (location.state.isFromMyPage) {
-          location.state.isFromMyPage = false;
+        if (location.state.from) {
+          location.state.from = false;
         }
       })
       .catch(() => {
@@ -115,8 +116,8 @@ export default function ReviewMainComponent() {
         setTotalPage(data.response.totalPages);
         setReviews(data.response.content);
         console.log(reviews);
-        if (location.state.isFromMyPage) {
-          location.state.isFromMyPage = false;
+        if (location.state.from !== 0) {
+          location.state.from = 0;
         }
       })
       .catch(() => {

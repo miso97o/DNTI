@@ -152,11 +152,11 @@ function PrimaryNavigation({ makeBlack, setmakeBlack }) {
         </div>
         <div className={styles.content} onClick={(e) => change(4)}>
           {four === true ? (
-            <Link to={`board`} className={styles.link}>
+            <Link to={`board`} className={styles.link} state={{ from: 0 }}>
               <p style={{ borderBottom: "5px solid #7a08ff" }}>게시판</p>
             </Link>
           ) : (
-            <Link to={`board`} className={styles.link}>
+            <Link to={`board`} className={styles.link} state={{ from: 0 }}>
               <p>게시판</p>
             </Link>
           )}

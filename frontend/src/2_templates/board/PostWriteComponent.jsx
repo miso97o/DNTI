@@ -107,7 +107,7 @@ export default function PostWriteComponent() {
               </div>
               <Link
                 to={boardId ? "/board/postview" : "/board/post"}
-                state={{ boardId: boardId }}
+                state={{ boardId: boardId, from: 0 }}
               >
                 <button className="squarebtn-s">취소</button>
               </Link>

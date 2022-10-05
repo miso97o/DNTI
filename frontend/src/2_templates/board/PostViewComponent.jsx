@@ -9,7 +9,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import axios from "axios";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import CertifiedMark from "../../0_atoms/Icon/CertifiedMark.png"
+import CertifiedMark from "../../0_atoms/Icon/CertifiedMark.png";
 
 export default function PostViewComponent() {
   const [value, setValue] = React.useState("");
@@ -107,7 +107,9 @@ export default function PostViewComponent() {
       <div className="h-full w-full dnticard">
         <div className="flex flex-row w-full justify-between px-5 py-2 border-b-2 border-b-slate-200">
           <div className="flex flex-row w-1/2">
-            {postDetail.isCertified && <img src={CertifiedMark} alt="인증 마크" className="w-6 mr-2"/>}
+            {postDetail.isCertified && (
+              <img src={CertifiedMark} alt="인증 마크" className="w-6 mr-2" />
+            )}
             <p>{postDetail.title}</p>
           </div>
           <div className="flex flex-row w-1/2 justify-end">
@@ -153,11 +155,13 @@ export default function PostViewComponent() {
             )}
             {user.userId === postDetail.email && (
               // <Link state={{boardId: boardId}} oncli>
-              <button className="redbtn-s m-3" onClick={deletePost}>삭제</button>
-                // <DntiBtn text="삭제" type="black" onClick={deletePost} />
+              <button className="redbtn-s m-3" onClick={deletePost}>
+                삭제
+              </button>
+              // <DntiBtn text="삭제" type="black" onClick={deletePost} />
               // </Link>
             )}
-            <Link to="/board/post">
+            <Link to="/board/post" state={{ from: 0 }}>
               <button className="graybtn-s m-3">목록</button>
             </Link>
           </div>

@@ -1,5 +1,11 @@
 import * as React from "react";
-import { Outlet, Link, Navigate, useNavigate } from "react-router-dom";
+import {
+  Outlet,
+  Link,
+  Navigate,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import Box from "@mui/material/Box";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -10,6 +16,7 @@ import { selectGu, selectDong } from "../features/dong/guDongSlice";
 import axios from "../utils/axios";
 import { useEffect } from "react";
 import { useCookies } from "react-cookie";
+import { LocalGasStationTwoTone } from "@mui/icons-material";
 
 export default function Boardpage() {
   const dispatch = useDispatch();
@@ -48,18 +55,14 @@ export default function Boardpage() {
   ]);
   const [dongList, setDongList] = React.useState(["전체"]);
   const [cookies, removeCookie] = useCookies(["userEmail"]);
+  const [dongListCheck, setDongListCheck] = React.useState(false);
   const email = cookies["userEmail"];
 
-  useEffect(() => {
-    console.log("BoardPage useEffect([])");
-    console.log("boardPage initialize");
-
-    setGuDongList();
-  }, []);
+  const location = useLocation();
 
   useEffect(() => {
     return () => {
-      if (user.gu !== null) {
+      if (user.gu !== null && user.gu !== undefined) {
         console.log("cleanUp");
         dispatch(selectGu(user.gu));
         setSelectedGu(user.gu);
@@ -74,33 +77,56 @@ export default function Boardpage() {
     }
   }, [email]);
 
+  // 동 세팅
   useEffect(() => {
-    console.log("BoardPage useEffect(user)");
-    console.log(user.gu);
-    console.log("userGu", user.gu);
-    if (user.gu !== null) {
-      setSelectedGu(user.gu);
-      dispatch(selectGu(user.gu));
+    console.log(location.state);
+    if (location.state.from === 0) {
+      if (user.gu !== null && user.gu !== undefined) {
+        setSelectedGu(user.gu);
+        dispatch(selectGu(user.gu));
+      }
+    } else if (location.state.from === 1) {
+      setSelectedGu("전체");
+      dispatch(selectGu("전체"));
+    } else if (location.state.from === 2) {
+      setSelectedGu(location.state.gu);
+      dispatch(selectGu(location.state.gu));
     }
   }, [user]);
 
   useEffect(() => {
-    console.log("BoardPage useEffect(selectedGu)");
-    console.log("gu changed");
-    axios.get(`address/dong/${selectedGu}`).then(({ data }) => {
-      setDongList(["전체", ...data.response]);
-    });
+    if (selectedGu !== "전체") {
+      axios.get(`address/dong/${selectedGu}`).then(({ data }) => {
+        setDongList(["전체", ...data.response]);
+      });
+    } else {
+      setDongList(["전체"]);
+    }
   }, [selectedGu]);
 
-  async function setGuDongList() {
-    console.log("setGuDongList");
-    // await axios.get(`address/gu`).then(({ data }) => {
-    //   setGuList(["전체", ...data.response]);
-    // });
-    await axios.get(`address/dong/${selectedGu}`).then(({ data }) => {
-      setDongList(["전체", ...data.response]);
-    });
-  }
+  // 동 설정
+  useEffect(() => {
+    console.log("selectedGu", selectedGu);
+    console.log("dongList", dongList);
+    if (dongList.length > 1) {
+      console.log("if문 실행됐어요");
+      if (location.state.from === 0 && selectedGu === user.gu) {
+        // navbar 버튼 클릭을 통해 진입
+        setSelectedDong(user.dong);
+        dispatch(selectDong(user.dong));
+      } else {
+        console.log("실행된다!!!");
+
+        // 동네추천에서 진입
+        setSelectedDong(location.state.dong);
+        dispatch(selectDong(location.state.dong));
+      }
+    } else {
+      console.log("여기는 안되는데");
+      setSelectedDong("전체");
+      dispatch(selectDong("전체"));
+    }
+  }, [dongList]);
 
   const handleGuChange = (event) => {
     dispatch(selectGu(event.target.value));
@@ -142,6 +168,7 @@ export default function Boardpage() {
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth variant="standard">
               <InputLabel id="dongSelect">동</InputLabel>
+              {}
               <Select
                 labelId="dongSelect"
                 id="dongSelect"
