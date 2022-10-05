@@ -108,7 +108,7 @@ export default function ReviewMainComponent() {
     }
   }, [fromOtherPage]);
 
-  useDidMountEffect(() => {
+  useEffect(() => {
     if (location.state.from === 1) return;
     console.log("guDong");
     getHotReview();

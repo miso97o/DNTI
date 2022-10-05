@@ -99,7 +99,7 @@ export default function PostMainComponent() {
     }
   }, [fromOtherPage]);
 
-  useDidMountEffect(() => {
+  useEffect(() => {
     if (location.state.from === 1) return;
     getHotBoard();
     searchBoard();
