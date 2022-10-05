@@ -25,7 +25,7 @@ export default function FreeMainComponent() {
   const [hotBoardList, setHotBoardList] = React.useState([]);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [totalPage, setTotalPage] = React.useState(10);
-  const [fromMyPage, setFromMyPage] = React.useState(false);
+  const [fromOtherPage, setFromOtherPage] = React.useState(false);
   const [criteriaList, setCriteriaList] = React.useState([
     "제목",
     "내용",
@@ -82,36 +82,36 @@ export default function FreeMainComponent() {
         console.log(res);
         setTotalPage(res.data.response.totalPages);
         setBoardList(res.data.response.content);
-        if (location.state.isFromMyPage) {
-          location.state.isFromMyPage = false;
+        if (location.state.from !== 0) {
+          location.state.from = 0;
         }
       });
   }
 
   useEffect(() => {
-    // getBoard(1)
-    if (location.state.isFromMyPage) {
+    console.log("location.state", location.state);
+    if (location.state.from === 1) {
       console.log("location userId", location.state);
       setSearchKey(location.state.userId);
-      setSearchCat(2);
-      setFromMyPage(true);
-    } else {
-      searchBoard();
+      setSearchCat("아이디");
+      setFromOtherPage(true);
     }
   }, []);
 
   useEffect(() => {
     searchBoard();
-  }, [fromMyPage]);
+  }, [fromOtherPage]);
 
   useEffect(() => {
     getHotBoard();
-    setCurrentPage(1);
+    searchBoard();
   }, [guDong]);
 
   useEffect(() => {
+    console.log("실행됐다!!");
+    console.log(guDong);
     searchBoard();
-  }, [guDong, currentPage]);
+  }, [currentPage]);
 
   return (
     <div className="flex flex-col h-full w-4/5 items-center">

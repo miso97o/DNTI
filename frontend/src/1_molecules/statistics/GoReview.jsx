@@ -43,8 +43,7 @@ function GoReview({ dong }) {
       .get(`/board/hot?dong=${dong}`)
       .then(function (res) {
         setBoards(res.data.response);
-        console.log(res.data.response)
-
+        console.log(res.data.response);
       })
       .catch((error) => {
         console.error("실패:", error);
@@ -74,15 +73,24 @@ function GoReview({ dong }) {
         <div className={styles.review}>
           <div className={styles.titleArea}>
             <div className={styles.title}>{dong} 리뷰</div>
-            {rCheck && reviews[0]? (
-              <Link to={`../board/post`} state={{ gu: `${reviews[0].gu}`, dong:`${reviews[0].dong}`, fromRecommend:true }}>
+            {rCheck && reviews[0] ? (
+              <Link
+                to={`../board/review`}
+                state={{
+                  gu: `${reviews[0].gu}`,
+                  dong: `${reviews[0].dong}`,
+                  from: 2,
+                }}
+              >
                 <button className={styles.moreBtn}>MORE</button>
-              </Link>              
-            ) : (<div></div>)}
+              </Link>
+            ) : (
+              <div></div>
+            )}
           </div>
           {rCheck ? (
             <div className={styles.contentArea}>
-              {reviews[0]? (
+              {reviews[0] ? (
                 <div className={styles.contentLine}>
                   <div className={styles.contentTitle}>{reviews[0].title}</div>
                   <Rating
@@ -128,13 +136,20 @@ function GoReview({ dong }) {
 
         <div className={styles.titleArea}>
           <div className={styles.title}>{dong} 게시글</div>
-            {bCheck && boards[0]? (
-              <Link to={`../board/review`} state={{ gu: `${boards[0].gu}`, dong:`${boards[0].dong}`, fromRecommend:true }}>
-                <button className={styles.moreBtn}>MORE</button>
-              </Link>              
-            ) : (
-              <div></div>
-            )}
+          {bCheck && boards[0] ? (
+            <Link
+              to={`../board/post`}
+              state={{
+                gu: `${boards[0].gu}`,
+                dong: `${boards[0].dong}`,
+                from: 2,
+              }}
+            >
+              <button className={styles.moreBtn}>MORE</button>
+            </Link>
+          ) : (
+            <div></div>
+          )}
         </div>
         {bCheck ? (
           <div className={styles.contentArea}>
@@ -142,10 +157,7 @@ function GoReview({ dong }) {
               <div className={styles.contentLine}>
                 <div className={styles.contentTitle}>{boards[0].title}</div>
                 <div className={styles.heart}>
-                  <FavoriteIcon
-                    sx={{ color: pink[500] }}
-                    fontSize="small"
-                  />
+                  <FavoriteIcon sx={{ color: pink[500] }} fontSize="small" />
                   <p>{boards[0].boardLike}</p>
                 </div>
               </div>
@@ -156,12 +168,8 @@ function GoReview({ dong }) {
               <div className={styles.contentLine}>
                 <div className={styles.contentTitle}>{boards[1].title}</div>
                 <div className={styles.heart}>
-                  <FavoriteIcon
-                    sx={{ color: pink[500] }}
-                    fontSize="small"
-                  />
+                  <FavoriteIcon sx={{ color: pink[500] }} fontSize="small" />
                   <p>{boards[1].boardLike}</p>
-
                 </div>
               </div>
             )}
@@ -169,12 +177,8 @@ function GoReview({ dong }) {
               <div className={styles.contentLine}>
                 <div className={styles.contentTitle}>{boards[2].title}</div>
                 <div className={styles.heart}>
-                  <FavoriteIcon
-                    sx={{ color: pink[500] }}
-                    fontSize="small"
-                  />
+                  <FavoriteIcon sx={{ color: pink[500] }} fontSize="small" />
                   <p>{boards[2].boardLike}</p>
-
                 </div>
               </div>
             )}

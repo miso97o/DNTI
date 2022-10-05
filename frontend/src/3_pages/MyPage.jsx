@@ -608,10 +608,7 @@ function MyReview(props) {
         >
           나의 리뷰
         </p>
-        <Link
-          to="/board/review"
-          state={{ isFromMyPage: true, userId: props.email }}
-        >
+        <Link to="/board/review" state={{ from: 1, userId: props.email }}>
           <p
             style={{
               fontSize: "14px",
@@ -666,10 +663,7 @@ function MyPosts(props) {
         >
           작성한 글
         </p>
-        <Link
-          to="/board/post"
-          state={{ isFromMyPage: true, userId: props.email }}
-        >
+        <Link to="/board/post" state={{ from: 1, userId: props.email }}>
           <p
             style={{
               fontSize: "14px",
