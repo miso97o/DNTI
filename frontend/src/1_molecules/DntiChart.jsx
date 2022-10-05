@@ -22,7 +22,7 @@ function Chart({rank,num}) {
       // label: null,
       data: rank.map((data) => data.totalScore),
       backgroundColor: bgColor,
-      barPercentage: 0.6,
+      barPercentage: 0.5,
       // borderRadius: 20,
       // borderSkipped: false,
     }],
@@ -37,7 +37,7 @@ function Chart({rank,num}) {
       y: {
         beginAtZero: false,
         grid: {
-          borderColor: "#d0d0d0",
+          borderColor: "#e0e0e0",
           color: "#f0f0f0"
         }
       },
@@ -64,7 +64,7 @@ function Chart({rank,num}) {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <Bar data={userData} options={options}></Bar>
+        <Bar data={userData} options={options} className={styles.chart}></Bar>
       </div>
     </div>
   );
