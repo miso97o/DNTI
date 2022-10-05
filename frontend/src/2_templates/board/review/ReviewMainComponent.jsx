@@ -77,7 +77,7 @@ export default function ReviewMainComponent() {
           guDong.selectedGu !== "전체" ? guDong.selectedGu : ""
         }&dong=${
           guDong.selectedDong !== "전체" ? guDong.selectedDong : ""
-        }&search=${criteria}&word=${searchWord}&page=${currentPage - 1}&size=5`
+        }&search=${criteria}&word=${searchWord}&page=${currentPage - 1}&size=7`
       )
       .then(({ data }) => {
         setTotalPage(data.response.totalPages);
