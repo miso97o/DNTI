@@ -50,7 +50,10 @@ export default function ReviewWriteComponent() {
           setEnvScore(data.response.environment);
           setSafeScore(data.response.safety);
           setTotalScore(data.response.score);
+          setReviewDong(data.response.dong);
         });
+    } else {
+      setReviewDong(guDong.selectedDong);
     }
   }, []);
 
@@ -94,7 +97,7 @@ export default function ReviewWriteComponent() {
         .post("/review/save", payload)
         .then(() => {
           alert("리뷰가 작성되었습니다.");
-          navigate("/board/review", { replace: true });
+          navigate("/board/review", { state: { from: 0 }, replace: true });
         })
         .catch(() => {
           console.log("review post error");
@@ -114,7 +117,7 @@ export default function ReviewWriteComponent() {
         .then(() => {
           alert("리뷰 수정이 완료되었습니다.");
           navigate("/board/review/view", {
-            state: { reviewId: location.state.reviewId },
+            state: { reviewId: location.state.reviewId, from: 0 },
             replace: true,
           });
         })
@@ -133,7 +136,7 @@ export default function ReviewWriteComponent() {
         </button>
         <Link
           to="/board/review/view"
-          state={{ reviewId: location.state.reviewId }}
+          state={{ reviewId: location.state.reviewId, from: 0 }}
         >
           <button className="graybtn-s">취소</button>
         </Link>
@@ -151,7 +154,7 @@ export default function ReviewWriteComponent() {
           >
             수정
           </button>
-          <Link to="/board/review" state={{ isFromMyPage: false }}>
+          <Link to="/board/review" state={{ from: 0 }}>
             <button className="graybtn-s">취소</button>
           </Link>
         </div>
