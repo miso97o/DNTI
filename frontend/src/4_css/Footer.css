@@ -59,7 +59,7 @@ footer {
   height: 1.3em;
 }
 
-.socials a:hover i {
+a:hover i {
   color: aqua;
 }
 

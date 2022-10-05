@@ -112,7 +112,7 @@ function PrimaryNavigation({ makeBlack, setmakeBlack }) {
         <div className={styles.content} onClick={(e) => change(1)}>
           {one === true ? (
             <Link to={`dnti`} className={styles.link}>
-              <p style={{ color: "#7a08ff" }}>동네TI</p>
+              <p style={{ borderBottom: "5px solid #7a08ff" }}>동네TI</p>
             </Link>
           ) : (
             <Link to={`dnti`} className={styles.link}>
@@ -127,7 +127,7 @@ function PrimaryNavigation({ makeBlack, setmakeBlack }) {
               className={styles.link}
               state={{ dnti: "" }}
             >
-              <p style={{ color: "#7a08ff" }}>동네추천</p>
+              <p style={{ borderBottom: "5px solid #7a08ff" }}>동네추천</p>
             </Link>
           ) : (
             <Link
@@ -142,7 +142,7 @@ function PrimaryNavigation({ makeBlack, setmakeBlack }) {
         <div className={styles.content} onClick={(e) => change(3)}>
           {three === true ? (
             <Link to={`kmMap`} className={styles.link}>
-              <p style={{ color: "#7a08ff" }}>1KM</p>
+              <p style={{ borderBottom: "5px solid #7a08ff" }}>1KM</p>
             </Link>
           ) : (
             <Link to={`kmMap`} className={styles.link}>
@@ -153,7 +153,7 @@ function PrimaryNavigation({ makeBlack, setmakeBlack }) {
         <div className={styles.content} onClick={(e) => change(4)}>
           {four === true ? (
             <Link to={`board`} className={styles.link} state={{ from: 0 }}>
-              <p style={{ color: "#7a08ff" }}>게시판</p>
+              <p style={{ borderBottom: "5px solid #7a08ff" }}>게시판</p>
             </Link>
           ) : (
             <Link to={`board`} className={styles.link} state={{ from: 0 }}>

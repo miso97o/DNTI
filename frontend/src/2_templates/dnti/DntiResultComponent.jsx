@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import axios from "axios";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { useSelector } from "react-redux";
 import DntiCarousel from "../../1_molecules/DntiCarousel";
+import Chart from "../../1_molecules/DntiChart";
 
 function DntiResultCard({ imgsrc, type, content, arr }) {
   const [count, setCount] = React.useState(0);
@@ -77,6 +78,12 @@ function DntiResultCard({ imgsrc, type, content, arr }) {
     });
   }
 
+  useEffect(() => {
+    if (dongList.length > 0) {
+    setSelected(dongList[0].dongName)
+    }
+  }, [dongList])
+
   const data = {
     labels: arr.map((x) =>
       x[0] === "S"
@@ -106,6 +113,32 @@ function DntiResultCard({ imgsrc, type, content, arr }) {
       },
     ],
   };
+
+  let [selectedClass, setSelectedClass] = useState([
+    "ranking yesss",
+    "ranking nooooo",
+    "ranking nooooo",
+    "ranking nooooo",
+    "ranking nooooo",
+  ]);
+
+  const [selected, setSelected] = useState();
+
+  const [num, setNum] = useState(0);
+  function handleSelect(e, i) {
+    setSelected(e);
+    setNum(i);
+    let tmp = [];
+    for (let n = 0; n < dongList.length; n++) {
+      if (n === i) {
+        tmp[n] = "ranking yesss";
+      } else {
+        tmp[n] = "ranking nooooo";
+      }
+    }
+    setSelectedClass(tmp);
+    // console.log(selectedClass)
+  }
 
   return (
     <Card variant="outlined">
@@ -141,19 +174,29 @@ function DntiResultCard({ imgsrc, type, content, arr }) {
             </span>
             에게 어울리는 동네는?
           </p>
-          <div className="w-4/12 flex flex-col gap-2">
-            {dongList.map((x, idx) => {
-              const src = "/img/rank/" + (idx + 1) + ".png";
-              return (
-                <div className="flex items-center">
-                  <img src={src} alt="" className="w-8 h-8" />
-                  <p className="font-bold text-start text-xl">
-                    위. {x.guName} {x.dongName}
-                  </p>
-                </div>
-              );
-            })}
+          <div className="flex gap-10 w-4/5">
+            <div className="w-5/12 flex flex-col gap-2 min-w-min">
+              {dongList.map((x, idx) => {
+                const src = "/img/rank/" + (idx + 1) + ".png";
+                return (
+                  <div className="flex items-center">
+                    <img src={src} alt="" className="w-8 h-8" />
+                    <p className="font-bold text-start text-xl" onClick={() => handleSelect(x.dongName, idx)}>
+                      위. {x.guName} {x.dongName}
+                    </p>
+                  </div>
+                );
+              })}
+              
+            </div>
+            <div className="w-7/12 h-full flex items-center	mt-2">
+              {selected && <Chart rank={dongList} num={num} />} 
+            </div>
+                      
           </div>
+
+          
+          
           <div className="flex flex-col justify-center items-center pt-10">
             <p className="text-sm mb-3">더 자세한 동네추천을 원한다면?</p>
             <Link
@@ -162,7 +205,7 @@ function DntiResultCard({ imgsrc, type, content, arr }) {
               state={{ dnti: type }}
             >
               <Button onClick={saveDnti} variant="contained">
-                <span className="font-bold">동네추천 보러가기</span>
+                동네추천 보러가기
               </Button>
             </Link>
           </div>

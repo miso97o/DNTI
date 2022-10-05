@@ -194,7 +194,10 @@ const ProfileCard = (props) => {
   };
 
   return (
-    <div className={st.profileContainer}>
+    <div
+      className={st.profileContainer}
+      style={{ width: "50%", margin: "40px" }}
+    >
       <Avatar
         src={`${process.env.PUBLIC_URL}/img/dnti_type/${props.info.dnti}.png`}
         sx={{ width: "10rem", height: "10rem", margin: "10px" }}
@@ -250,7 +253,6 @@ const ProfileCard = (props) => {
                 style={{
                   fontSize: "24px",
                   fontWeight: "bold",
-                  marginLeft: "20px",
                 }}
               >
                 {nickname}
@@ -265,13 +267,11 @@ const ProfileCard = (props) => {
 
           <p style={{ color: "gray" }}>{props.info.userId}</p>
         </div>
-        <div style={{ borderBottom: "0.1rem dashed", width: "60%" }}></div>
         <div className={st.ProfileRowContainer}>
           <p
             style={{
-              fontSize: "20px",
-              fontWeight: "bold",
-              marginLeft: "20px",
+              fontSize: "30px",
+              fontWeight: "900",
               marginRight: "50px",
             }}
           >
@@ -436,29 +436,33 @@ function FrequentPlace(props) {
   return (
     <div className={st.colContainer}>
       <div className={st.headRowContainer}>
-        <p
-          style={{ fontSize: "24px", fontWeight: "bold", marginRight: "10px" }}
-        >
-          자주 가는 곳
-        </p>
-        <Tooltip title="자주 가는 곳 추가하기">
-          <IconButton
-            onClick={addFrequentPlace}
-            style={{ marginRight: "20px" }}
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <p
+            style={{
+              fontSize: "24px",
+              fontWeight: "bold",
+              marginRight: "10px",
+            }}
           >
-            <AddCircleIcon fontSize="large" />
-          </IconButton>
-        </Tooltip>
-        <p
-          style={{
-            fontSize: "12px",
-            color: "red",
-            fontWeight: "bold",
-            marginRight: "20px",
-          }}
-        >
-          최대 3곳까지 등록 가능합니다.
-        </p>
+            📍 자주 가는 장소
+          </p>
+          <Tooltip title="자주 가는 장소 추가하기">
+            <IconButton onClick={addFrequentPlace}>
+              <AddCircleIcon fontSize="large" />
+            </IconButton>
+          </Tooltip>
+        </div>
+        <div>
+          <p
+            style={{
+              fontSize: "12px",
+              color: "red",
+              fontWeight: "bold",
+            }}
+          >
+            최대 3곳까지 등록 가능합니다.
+          </p>
+        </div>
       </div>
       <div className={st.bodyColContainer}>
         {props.myPlace.length !== 0 ? (
@@ -488,11 +492,17 @@ function RecommendRow(props) {
   return (
     <div className={st.RecommendRowContainer}>
       <div>
-        <p
-          style={{ fontSize: "18px", fontWeight: "bold", marginRight: "20px" }}
+        <div
+          className="flex"
+          style={{
+            fontSize: "18px",
+            marginRight: "20px",
+            marginBottom: "5px",
+          }}
         >
-          {props.dong}
-        </p>
+          <span className="font-bold"> {props.rank + 1}위 </span>
+          &nbsp;&nbsp;&nbsp; {props.gu} {props.dong}
+        </div>
       </div>
     </div>
   );
@@ -505,7 +515,7 @@ function RecommendedRegion(props) {
         <p
           style={{ fontSize: "24px", fontWeight: "bold", marginRight: "20px" }}
         >
-          나와 어울리는 지역
+          ✨ 나와 어울리는 지역
         </p>
         {props.dnti ? (
           <Link to="/dnRecommend" state={{ dnti: props.dnti.type }}>
@@ -522,7 +532,11 @@ function RecommendedRegion(props) {
           props.info.map((region, index) => {
             return (
               <div key={index} style={{ width: "100%" }}>
-                <RecommendRow dong={region.dongName} />
+                <RecommendRow
+                  rank={index}
+                  gu={region.guName}
+                  dong={region.dongName}
+                />
               </div>
             );
           })
@@ -615,6 +629,7 @@ function MyReview(props) {
               fontWeight: "bold",
               marginRight: "20px",
             }}
+            className="hover:text-dntiblue"
           >
             더보기
           </p>
@@ -625,9 +640,17 @@ function MyReview(props) {
           props.info.map((review, index) => {
             return (
               <div key={index} className={st.list}>
-                <div>
+                <div style={{ width: "50%" }}>
                   <Link to="/board/review/view" state={{ reviewId: review.id }}>
-                    <p style={{ fontWeight: "bold" }}>{review.title}</p>
+                    <p
+                      style={{
+                        fontWeight: "bold",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      {review.title}
+                    </p>
                   </Link>
                 </div>
                 <div className={st.postInfo}>
@@ -670,6 +693,7 @@ function MyPosts(props) {
               fontWeight: "bold",
               marginRight: "20px",
             }}
+            className="hover:text-dntiblue"
           >
             더보기
           </p>
@@ -680,13 +704,21 @@ function MyPosts(props) {
           props.info.map((post, index) => {
             return (
               <div key={index} className={st.list}>
-                <div>
+                <div style={{ width: "40%" }}>
                   <Link
                     to="/board/postview"
                     state={{ boardId: post.boardId }}
                     onClick={() => increaseHit(post.boardId)}
                   >
-                    <p style={{ fontWeight: "bold" }}>{post.title}</p>
+                    <p
+                      style={{
+                        fontWeight: "bold",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      {post.title}
+                    </p>
                   </Link>
                 </div>
                 <div className={st.postInfo}>
