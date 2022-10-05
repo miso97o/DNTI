@@ -115,7 +115,7 @@ export default function SignUpPage() {
       <p className="text-3xl m-10">회원가입</p>
       <div className="flex flex-col h-1/2 w-1/3 justify-center items-center dnticard">
         <div className="flex flex-col mb-5">
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center mt-10">
             <div className="flex flex-row items-center">
               <div className="">
                 {isValidNickName ? (
@@ -138,7 +138,7 @@ export default function SignUpPage() {
                 )}
               </div>
               <div className="ml-3" onClick={checkIfDuplicated}>
-                <DntiBtn text="중복 확인" type="black" />
+                <button className="graybtn-s p-2 text-base">중복 확인</button>
               </div>
             </div>
             {isValidNickName ? (
@@ -160,7 +160,7 @@ export default function SignUpPage() {
               />
             </div>
             <div className="pt-3" onClick={handleClick}>
-              <DntiBtn text="주소 찾기" type="white" />
+              <button className="squarebtn-s p-2 text-base">주소 찾기</button>
             </div>
           </div>
           {/* <div className="flex flex-row w-full justify-center py-3">
@@ -177,12 +177,12 @@ export default function SignUpPage() {
           </div> */}
         </div>
         <div
-          className="pt-2"
+          className="p-2 mb-10"
           onClick={(e) => {
             signUp(userInfo, e);
           }}
         >
-          <DntiBtn text="회원가입" type="blue" />
+          <button className="bluebtn-s">회원 가입</button>
         </div>
       </div>
     </div>
