@@ -141,7 +141,7 @@ function DntiResultCard({ imgsrc, type, content, arr }) {
             </span>
             에게 어울리는 동네는?
           </p>
-          <div className="w-6/12 flex flex-col gap-2">
+          <div className="w-4/12 flex flex-col gap-2">
             {dongList.map((x, idx) => {
               const src = "/img/rank/" + (idx + 1) + ".png";
               return (
@@ -162,7 +162,7 @@ function DntiResultCard({ imgsrc, type, content, arr }) {
               state={{ dnti: type }}
             >
               <Button onClick={saveDnti} variant="contained">
-                동네추천 보러가기
+                <span className="font-bold">동네추천 보러가기</span>
               </Button>
             </Link>
           </div>
