@@ -23,10 +23,10 @@ public interface BoardRepository  extends JpaRepository<Board, Long> {
     Page<Board> findByGuContainingAndDongContainingAndTitleContainingOrderByCreatedTimeDesc(String gu, String dong,String keyword, Pageable pageable);
 
     // 내용으로 찾기
-    Page<Board> findGuContainingAndDongContainingAndByContentsContainingOrderByCreatedTimeDesc(String gu, String dong,String keyword, Pageable pageable);
+    Page<Board> findByGuContainingAndDongContainingAndContentsContainingOrderByCreatedTimeDesc(String gu, String dong,String keyword, Pageable pageable);
 
     // 유저 email로 조회
-    Page<Board> findGuContainingAndDongContainingAndByUser_EmailContainingOrderByCreatedTimeDesc(String gu, String dong,String keyword, Pageable pageable);
+    Page<Board> findByGuContainingAndDongContainingAndUser_EmailContainingOrderByCreatedTimeDesc(String gu, String dong,String keyword, Pageable pageable);
 
     // 내가 쓴글 상위 3개
     List<Board> findTop3ByUser_EmailContainingOrderByCreatedTimeDesc(String email);

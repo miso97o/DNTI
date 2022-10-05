@@ -118,9 +118,9 @@ public class BoardServiceImpl implements BoardService {
         } 
         // 내용으로 검색
         else if(category ==1){
-            return boardRepository.findGuContainingAndDongContainingAndByContentsContainingOrderByCreatedTimeDesc(gu, dong,keyword, pageable).map(BoardResponse::new);
+            return boardRepository.findByGuContainingAndDongContainingAndContentsContainingOrderByCreatedTimeDesc(gu, dong,keyword, pageable).map(BoardResponse::new);
         } else if(category ==2){ //아이디로 검색
-            return boardRepository.findGuContainingAndDongContainingAndByUser_EmailContainingOrderByCreatedTimeDesc(gu, dong,keyword, pageable).map(BoardResponse::new);
+            return boardRepository.findByGuContainingAndDongContainingAndUser_EmailContainingOrderByCreatedTimeDesc(gu, dong,keyword, pageable).map(BoardResponse::new);
         }
         throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
     }
