@@ -79,7 +79,7 @@ export default function Boardpage() {
   }, [email]);
 
   // 구 세팅
-  useDidMountEffect(() => {
+  useEffect(() => {
     if (location.state.from === 0) {
       console.log("navbar로 왔구나");
       if (user.gu !== null && user.gu !== undefined) {
@@ -97,7 +97,7 @@ export default function Boardpage() {
     }
   }, [user]);
 
-  useDidMountEffect(() => {
+  useEffect(() => {
     if (selectedGu !== "전체") {
       axios.get(`address/dong/${selectedGu}`).then(({ data }) => {
         setDongList(["전체", ...data.response]);
@@ -108,15 +108,20 @@ export default function Boardpage() {
   }, [selectedGu]);
 
   // 동 설정
-  useDidMountEffect(() => {
+  useEffect(() => {
     console.log("selectedGu", selectedGu);
     console.log("dongList", dongList);
     if (dongList.length > 1) {
       console.log("if문 실행됐어요");
-      if (location.state.from === 0 && selectedGu === user.gu) {
-        console.log("navbar 버튼 클릭을 통해 진입");
-        setSelectedDong(user.dong);
-        dispatch(selectDong(user.dong));
+      if (location.state.from === 0) {
+        if (selectedGu === user.gu) {
+          console.log("navbar 버튼 클릭을 통해 진입");
+          setSelectedDong(user.dong);
+          dispatch(selectDong(user.dong));
+        } else {
+          setSelectedDong("전체");
+          dispatch(selectDong("전체"));
+        }
       } else {
         console.log("동네추천에서 진입");
 

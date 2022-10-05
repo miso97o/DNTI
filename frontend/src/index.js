@@ -140,9 +140,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <ThemeProvider theme={theme}>
     <Provider store={store}>
-      <React.StrictMode>
-        <RouterProvider router={router} />
-      </React.StrictMode>
+      {/* <React.StrictMode> */}
+      <RouterProvider router={router} />
+      {/* </React.StrictMode> */}
     </Provider>
   </ThemeProvider>
 );
