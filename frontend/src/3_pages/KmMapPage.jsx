@@ -4,7 +4,7 @@ import axios from "axios";
 import Choices from "../2_templates/kmMap/Choices";
 import Favorites from "../1_molecules/kmMap/Favorites";
 // import Loading from "../1_molecules/kmMap/Loading";
-import MoonLoader from "react-spinners/MoonLoader"
+import BounceLoader from "react-spinners/BounceLoader"
 import { useSelector } from "react-redux";
 import BusMarker from "../0_atoms/markers/BusMarker.png";
 import SubwayMarker from "../0_atoms/markers/SubwayMarker.png";
@@ -314,10 +314,10 @@ function KmMap() {
             }}
             className={styles.loading}
           >
-            <MoonLoader
+            <BounceLoader
               color="#7a08ff"
-              size={150}
-              speedMultiplier={0.5}
+              size={100}
+              speedMultiplier={0.75}
             />
           </div>}
           <div className={styles.kakaoMap} id="kakaoMap">
