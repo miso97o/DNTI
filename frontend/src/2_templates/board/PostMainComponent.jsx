@@ -17,8 +17,9 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import * as React from "react";
 import { useEffect } from "react";
+import useDidMountEffect from "../../utils/useDidmountEffect";
 
-export default function FreeMainComponent() {
+export default function PostMainComponent() {
   const [boardList, setBoardList] = React.useState([]);
   const [searchKey, setSearchKey] = React.useState("");
   const [searchCat, setSearchCat] = React.useState("제목");
@@ -55,13 +56,6 @@ export default function FreeMainComponent() {
       });
   }
 
-  async function getBoard(page) {
-    await axios.get(`/board?page=${page - 1}`).then((res) => {
-      console.log(res.data);
-      setBoardList(res.data.response.content);
-    });
-  }
-
   function searchBoard() {
     let category = 0;
     if (searchCat === "내용") category = 1;
@@ -95,22 +89,24 @@ export default function FreeMainComponent() {
       setSearchKey(location.state.userId);
       setSearchCat("아이디");
       setFromOtherPage(true);
-      location.state.from = 0;
     }
   }, []);
 
   useEffect(() => {
-    searchBoard();
+    if (searchKey !== "" && searchCat === "아이디") {
+      getHotBoard();
+      searchBoard();
+    }
   }, [fromOtherPage]);
 
-  useEffect(() => {
+  useDidMountEffect(() => {
+    if (location.state.from === 1) return;
     getHotBoard();
     searchBoard();
   }, [guDong]);
 
-  useEffect(() => {
-    console.log("실행됐다!!");
-    console.log(guDong);
+  useDidMountEffect(() => {
+    if (location.state.from === 1) return;
     searchBoard();
   }, [currentPage]);
 
@@ -126,6 +122,7 @@ export default function FreeMainComponent() {
               {hotBoardList.map((x) => {
                 return (
                   <HotPostRow
+                    key={x.boardId + "hot"}
                     Id={x.boardId}
                     title={x.title}
                     writer={x.nickname}
@@ -138,11 +135,12 @@ export default function FreeMainComponent() {
                 );
               })}
             </div>
-            <div className="flex flex-col w-full">
-              {boardList &&
+            <div className="flex flex-col h-full w-full">
+              {boardList && boardList.length > 0 ? (
                 boardList.map((x) => {
                   return (
                     <PostRow
+                      key={x.boardId}
                       Id={x.boardId}
                       title={x.title}
                       writer={x.nickname}
@@ -153,7 +151,12 @@ export default function FreeMainComponent() {
                       isCertified={x.isCertified}
                     />
                   );
-                })}
+                })
+              ) : (
+                <div className="flex flex-row h-full w-full justify-center items-center">
+                  등록된 글이 없습니다.
+                </div>
+              )}
             </div>
           </div>
           <div className="flex flex-row justify-between items-center m-5 w-full">
@@ -165,20 +168,18 @@ export default function FreeMainComponent() {
                   <Select
                     labelId="criteria"
                     id="criteriaSelect"
-                    value={"title"}
+                    value={searchCat}
                     label="카테고리"
                     onChange={(e) => setSearchCat(e.target.value)}
                     size="small"
                   >
-                    <MenuItem key={"title"} value={"title"}>
-                      제목
-                    </MenuItem>
-                    <MenuItem key={"content"} value={"content"}>
-                      내용
-                    </MenuItem>
-                    <MenuItem key={"id"} value={"id"}>
-                      아이디
-                    </MenuItem>
+                    {criteriaList.map((criteria) => {
+                      return (
+                        <MenuItem key={criteria} value={criteria}>
+                          {criteria}
+                        </MenuItem>
+                      );
+                    })}
                   </Select>
                 </FormControl>
               </Box>
@@ -187,6 +188,7 @@ export default function FreeMainComponent() {
                   variant="outlined"
                   onChange={(e) => handleKeyword(e)}
                   size="small"
+                  value={searchKey}
                 />
                 <IconButton
                   type="button"

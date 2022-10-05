@@ -18,13 +18,6 @@ export default function BoardMainComponent() {
   const [hotBoardList, setHotBoardList] = React.useState([]);
   const [hotReviews, setHotReviews] = React.useState();
 
-  async function getBoard(page) {
-    await axios.get(`/board?page=${page - 1}`).then((res) => {
-      // console.log(res.data);
-      setBoardList(res.data.response.content);
-    });
-  }
-
   async function getHotReview() {
     axios
       .get(
@@ -60,7 +53,7 @@ export default function BoardMainComponent() {
           guDong.selectedGu === "전체" ? "" : guDong.selectedGu
         }&dong=${
           guDong.selectedDong === "전체" ? "" : guDong.selectedDong
-        }&category=0`
+        }&category=0&size=13`
       )
       .then((res) => {
         console.log(res);

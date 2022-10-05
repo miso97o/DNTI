@@ -17,6 +17,7 @@ import axios from "../utils/axios";
 import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { LocalGasStationTwoTone } from "@mui/icons-material";
+import useDidMountEffect from "../utils/useDidmountEffect";
 
 export default function Boardpage() {
   const dispatch = useDispatch();
@@ -60,15 +61,15 @@ export default function Boardpage() {
 
   const location = useLocation();
 
-  useEffect(() => {
-    return () => {
-      if (user.gu !== null && user.gu !== undefined) {
-        console.log("cleanUp");
-        dispatch(selectGu(user.gu));
-        setSelectedGu(user.gu);
-      }
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     if (user.gu !== null && user.gu !== undefined) {
+  //       console.log("cleanUp");
+  //       dispatch(selectGu(user.gu));
+  //       setSelectedGu(user.gu);
+  //     }
+  //   };
+  // }, []);
 
   useEffect(() => {
     if (email === "undefined" || email === undefined) {
@@ -77,24 +78,26 @@ export default function Boardpage() {
     }
   }, [email]);
 
-  // 동 세팅
-  useEffect(() => {
-    console.log(location.state);
+  // 구 세팅
+  useDidMountEffect(() => {
     if (location.state.from === 0) {
+      console.log("navbar로 왔구나");
       if (user.gu !== null && user.gu !== undefined) {
         setSelectedGu(user.gu);
         dispatch(selectGu(user.gu));
       }
     } else if (location.state.from === 1) {
+      console.log("마이페이지에서 왔구나");
       setSelectedGu("전체");
       dispatch(selectGu("전체"));
     } else if (location.state.from === 2) {
+      console.log("동네추천에서 왔구나");
       setSelectedGu(location.state.gu);
       dispatch(selectGu(location.state.gu));
     }
   }, [user]);
 
-  useEffect(() => {
+  useDidMountEffect(() => {
     if (selectedGu !== "전체") {
       axios.get(`address/dong/${selectedGu}`).then(({ data }) => {
         setDongList(["전체", ...data.response]);
@@ -105,28 +108,28 @@ export default function Boardpage() {
   }, [selectedGu]);
 
   // 동 설정
-  useEffect(() => {
+  useDidMountEffect(() => {
     console.log("selectedGu", selectedGu);
     console.log("dongList", dongList);
     if (dongList.length > 1) {
       console.log("if문 실행됐어요");
       if (location.state.from === 0 && selectedGu === user.gu) {
-        // navbar 버튼 클릭을 통해 진입
+        console.log("navbar 버튼 클릭을 통해 진입");
         setSelectedDong(user.dong);
         dispatch(selectDong(user.dong));
       } else {
-        console.log("실행된다!!!");
+        console.log("동네추천에서 진입");
 
         // 동네추천에서 진입
         setSelectedDong(location.state.dong);
         dispatch(selectDong(location.state.dong));
       }
     } else {
-      console.log("여기는 안되는데");
+      console.log("마이페이지에서 진입");
       setSelectedDong("전체");
       dispatch(selectDong("전체"));
     }
-    location.state.from = 0;
+    console.log("selectedDomg", selectedDong);
   }, [dongList]);
 
   const handleGuChange = (event) => {

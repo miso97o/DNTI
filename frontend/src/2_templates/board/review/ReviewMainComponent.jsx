@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import axios from "../../../utils/axios";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import useDidMountEffect from "../../../utils/useDidmountEffect";
 
 export default function ReviewMainComponent() {
   const [reviews, setReviews] = React.useState();
@@ -23,6 +24,7 @@ export default function ReviewMainComponent() {
   const [currentPage, setCurrentPage] = React.useState(1);
   const [totalPage, setTotalPage] = React.useState(10);
   const [selectedCriteria, setSelectedCriteria] = React.useState("제목");
+  const [fromOtherPage, setFromOtherPage] = React.useState(false);
   const [criteriaList, setCriteriaList] = React.useState([
     "제목",
     "내용",
@@ -36,8 +38,15 @@ export default function ReviewMainComponent() {
     setSelectedCriteria(event.target.value);
   };
 
-  // 인기 리뷰 초기 세팅
-  useEffect(() => {
+  const handleCurrentPageChange = (event, value) => {
+    setCurrentPage(value);
+  };
+
+  const handleSearchWordChange = (event) => {
+    setSearchWord(event.target.value);
+  };
+
+  function getHotReview() {
     axios
       .get(
         `/review/hot?gu=${
@@ -45,33 +54,23 @@ export default function ReviewMainComponent() {
         }&dong=${guDong.selectedDong !== "전체" ? guDong.selectedDong : ""}`
       )
       .then(({ data }) => {
-        console.log("hotReview ========");
-        console.log(data);
         setHotReviews(data.response);
         setCurrentPage(1);
-        console.log(hotReviews);
       });
-  }, [guDong]);
-
-  // 초기 접속, 지역 변경, 페이지 변경 시 리뷰 조회
-  useEffect(() => {
-    if (location.state.from === 1) {
-      console.log("location userId", location.state);
-      setSearchWord(location.state.userId);
-      setSelectedCriteria("아이디");
-    }
-    searchReview();
-  }, [guDong, currentPage]);
+  }
 
   const searchReview = () => {
     let criteria = "title";
     if (selectedCriteria === "내용") {
       criteria = "content";
     } else if (selectedCriteria === "아이디") {
-      console.log("아이디로 변했다!!!!!!!!!!!!!");
       criteria = "id";
     }
-
+    console.log("리뷰 찾는다");
+    console.log("selectedGu", guDong.selectedGu);
+    console.log("selectedDong", guDong.selectedDong);
+    console.log("selectedCriteria", selectedCriteria);
+    console.log("searchWord", searchWord);
     axios
       .get(
         `/review/search?gu=${
@@ -81,11 +80,8 @@ export default function ReviewMainComponent() {
         }&search=${criteria}&word=${searchWord}&page=${currentPage - 1}&size=5`
       )
       .then(({ data }) => {
-        console.log("리뷰 조회 성공!");
-        console.log(data);
         setTotalPage(data.response.totalPages);
         setReviews(data.response.content);
-        console.log(reviews);
         if (location.state.from !== 0) {
           location.state.from = 0;
         }
@@ -94,13 +90,37 @@ export default function ReviewMainComponent() {
         console.log("리뷰 조회에 실패했습니다.");
       });
   };
-  const handleCurrentPageChange = (event, value) => {
-    setCurrentPage(value);
-  };
 
-  const handleSearchWordChange = (event) => {
-    setSearchWord(event.target.value);
-  };
+  useEffect(() => {
+    if (location.state.from === 1) {
+      console.log("마이페이지에서 왔구나");
+      setSearchWord(location.state.userId);
+      setSelectedCriteria("아이디");
+      setFromOtherPage(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (searchWord !== "" && selectedCriteria === "아이디") {
+      console.log("fromOtherPage");
+      getHotReview();
+      searchReview();
+    }
+  }, [fromOtherPage]);
+
+  useDidMountEffect(() => {
+    if (location.state.from === 1) return;
+    console.log("guDong");
+    getHotReview();
+    searchReview();
+  }, [guDong]);
+
+  // 초기 접속, 지역 변경, 페이지 변경 시 리뷰 조회
+  useDidMountEffect(() => {
+    if (location.state.from === 1) return;
+    console.log("currentpage");
+    searchReview();
+  }, [currentPage]);
 
   return (
     <div className="flex flex-col h-full w-full items-center mx-3">
@@ -125,8 +145,8 @@ export default function ReviewMainComponent() {
               );
             })}
         </div>
-        <div className="flex flex-col w-full">
-          {reviews &&
+        <div className="flex flex-col h-full w-full">
+          {reviews && reviews.length > 0 ? (
             reviews.map((review) => {
               return (
                 <ReviewRow
@@ -143,7 +163,12 @@ export default function ReviewMainComponent() {
                   nickname={review.nickname}
                 />
               );
-            })}
+            })
+          ) : (
+            <div className="flex flex-row h-full w-full justify-center items-center">
+              등록된 글이 없습니다.
+            </div>
+          )}
         </div>
       </div>
       <div className="flex flex-row justify-between items-start py-10 w-full">
