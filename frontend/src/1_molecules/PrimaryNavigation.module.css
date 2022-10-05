@@ -21,9 +21,10 @@
   color: rgba(0, 0, 0, 1);
   text-align: center;
   word-wrap: break-word;
-  margin: 0px 25px 0px 25px;
+  margin: 14px 25px 0px 25px;
   text-decoration-line: none;
-  cursor: pointer
+  cursor: pointer;
+  border-bottom: 5px solid transparent;
 }
 
 .content .link {
@@ -35,7 +36,7 @@
   height: 60px;
 }
 
-.content p:hover{
+.content p:hover {
   color: #7a08ff;
   border-bottom: 5px solid #7a08ff;
 }
