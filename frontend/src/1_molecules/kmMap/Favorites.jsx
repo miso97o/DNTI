@@ -22,6 +22,9 @@ function Favorites({options}) {
   const [time1, setTime1] = useState();
   const [time2, setTime2] = useState();
   const [showEdits, setShowEdits] = useState(false)
+  const [mainAddr, setMainAddr] = React.useState("");
+  const [cookies, setCookie] = useCookies(["userEmail"]);
+  const email = cookies["userEmail"];
 
   function changeShow() {
     if (showEdits) {
@@ -38,13 +41,13 @@ function Favorites({options}) {
     )
       .then((res) => {
         console.log(res.data)
-        if (n === 0 && typeof time0 === "undefined") {
+        if (n === 0) {
           setTime0(res.data.result);
           console.log(n, res.data.result.path[0])
-        } else if (n === 1 && typeof time1 === "undefined") {
+        } else if (n === 1) {
           setTime1(res.data.result);
           console.log(n, res.data.result.path[0])
-        } else if(n === 2 && typeof time0 === "undefined") {
+        } else if(n === 2) {
           console.log(n, res.data.result.path[0])
           setTime2(res.data.result);
         }
@@ -59,11 +62,12 @@ function Favorites({options}) {
   // 즐겨찾기: 페이지 처음에 한번 랜더
   const [fav, setFav] = useState();
   async function getFavorites() {
-    await axios(`http://j7a601.p.ssafy.io:9090/api/favorite/hiy%40gmail.com`, {
+    // await axios(`http://j7a601.p.ssafy.io:9090/api/favorite/${email}`, {
+    //   method: "GET",
+    // })
+    await axios(`/favorite/${email}`, {
       method: "GET",
     })
-    // await http
-    //   .get(`/favorite/kth1324006%40gmail.com`)
       .then((res) => {
         setFav(res.data.response);
       })
@@ -99,7 +103,10 @@ function Favorites({options}) {
 
 
   async function deleteFavs(e) {
-    await axios(`http://j7a601.p.ssafy.io:9090/api/favorite/${e}`, {
+    // await axios(`http://j7a601.p.ssafy.io:9090/api/favorite/${e}`, {
+    //   method: "DELETE",
+    // })
+    await axios(`/favorite/${e}`, {
       method: "DELETE",
     })
     .then((res) => {
@@ -112,9 +119,7 @@ function Favorites({options}) {
     }
 
 
-  const [mainAddr, setMainAddr] = React.useState("");
-  const [cookies, setCookie] = useCookies(["userEmail"]);
-  const email = cookies["userEmail"];
+
 
   let favoritePlace = {
     name: "일단 고정값",
@@ -142,7 +147,11 @@ function Favorites({options}) {
     favoritePlace.address = fullAddress
     addFavs(favoritePlace)
     async function addFavs(favorite) {
-      await axios(`http://j7a601.p.ssafy.io:9090/api/favorite`, {
+      // await axios(`http://j7a601.p.ssafy.io:9090/api/favorite`, {
+      //   method: "POST",
+      //   data: favorite,
+      // })
+      await axios(`/favorite`, {
         method: "POST",
         data: favorite,
       })
@@ -305,7 +314,11 @@ function Edit({favoriteId, num, getFavorites}) {
     editFavs(eFavoritePlace)
 
   async function editFavs(eFavoritePlace) {
-    await axios(`http://j7a601.p.ssafy.io:9090/api/favorite`, {
+    // await axios(`http://j7a601.p.ssafy.io:9090/api/favorite`, {
+    //   method: "PATCH",
+    //   data: eFavoritePlace,
+    // })
+    await axios(`/favorite`, {
       method: "PATCH",
       data: eFavoritePlace,
     })

@@ -29,14 +29,14 @@ function Statistics({dnti}) {
   }
 
   async function getRank() {
-    await axios(
-      `http://j7a601.p.ssafy.io:9090/api/dong/rank?priorities=${arr2}${gus}`,
-      {
-        method: "GET",
-      }
-    )
-    // await http
-    //   .get(`/dong/rank?priorities=${priorites}${gus}`)
+    // await axios(
+    //   `http://j7a601.p.ssafy.io:9090/api/dong/rank?priorities=${arr2}${gus}`,
+    //   {
+    //     method: "GET",
+    //   }
+    // )
+    await http
+      .get(`/dong/rank?priorities=${arr2}${gus}`)
       .then(function (res) {
         setRank(res.data.response);
         // console.log("data", res.data.response);
