@@ -5,6 +5,8 @@ export default function DntiCarousel({ data }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const carousel = useRef(null);
 
+  console.log("maxScrollWidth", maxScrollWidth);
+
   const movePrev = () => {
     if (currentIndex > 0) {
       setCurrentIndex((prevState) => prevState - 1);
@@ -27,7 +29,8 @@ export default function DntiCarousel({ data }) {
 
     if (direction === "next" && carousel.current !== null) {
       return (
-        carousel.current.offsetWidth * currentIndex >= maxScrollWidth.current
+        carousel.current.offsetWidth * currentIndex >=
+        maxScrollWidth.current + 1
       );
     }
 
@@ -35,15 +38,20 @@ export default function DntiCarousel({ data }) {
   };
 
   useEffect(() => {
+    console.log("carousel.current.scrollLeft", carousel.current.scrollLeft);
+    console.log("carousel.current.offsetWidth", carousel.current.offsetWidth);
+    console.log("currentIndex", currentIndex);
     if (carousel !== null && carousel.current !== null) {
       carousel.current.scrollLeft = carousel.current.offsetWidth * currentIndex;
     }
   }, [currentIndex]);
 
   useEffect(() => {
+    console.log("data", data);
     maxScrollWidth.current = carousel.current
       ? carousel.current.scrollWidth - carousel.current.offsetWidth
-      : 0;
+      : 4624;
+    console.log("maxScrollWidth : ", maxScrollWidth);
   }, [data]);
 
   return (
