@@ -14,9 +14,12 @@ function DnRecommendPage() {
   const [goStatistics, setGoStatics] = useState(false)
   const location = useLocation();
   const dispatch = useDispatch();
-  const type = 0 || location.state.dnti
+  const [dnti, setDnti] = useState(0 || location.state.dnti);
+  // var type = 0 || location.state.dnti
+  // console.log(type)
 
   function Search() {
+    setDnti(0);
     if (goStatistics) {
       setGoStatics(false)
       dispatch(setRanks([]));
@@ -25,9 +28,14 @@ function DnRecommendPage() {
   }
  
   useEffect(() => {
-    if(type) setGoStatics(true)
+    if(dnti) {
+      setGoStatics(true)
+    }
   },[])
 
+  // useEffect(() => {
+  //   type = 0;
+  // },[goStatistics])
 
   return (
     <div className={styles.page}>
@@ -39,7 +47,7 @@ function DnRecommendPage() {
                 <img src={backArrow} alt="backArrow" className={styles.backArrow}/>
                 BACK
               </button>
-              <Statistics dnti={type} />
+              <Statistics dnti={dnti} />
             </div>
           ) : (
           <div className={styles.inChoose}>
