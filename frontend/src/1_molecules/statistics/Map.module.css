@@ -1,0 +1,16 @@
+.TmpMap {
+  height: 800px;
+
+}
+
+
+.container p{
+  color: #300364;
+  /* background-color: rgba(255, 255, 255, 0.6); */
+  /* box-shadow: 0px 0px 2px 1px rgba(255, 249, 249); */
+  /* border: rgb(255, 142, 142); */
+  padding: 0 2px 0 2px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 800;
+}

@@ -1,0 +1,67 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0px 10px 0px 10px;
+}
+
+.titleArea {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.title {
+  font-size: 22px;
+  margin-left: 5px;
+  color: #333333;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.moreBtn {
+  width: 54px;
+  height: 24px;
+  border-radius: 80px;
+  background-color: #333333;
+  font-size: 12px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.contentArea {
+  border-radius: 10px;
+  border: solid 1px #C0C0C0;  
+  padding: 0px 12px 0px 12px;
+  margin-bottom: 25px;
+}
+
+.review {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.contentLine {
+  display: flex;
+  justify-content: space-between;
+  margin: 6px 0 6px 0;
+}
+
+.contentTitle {
+  font-size: 15px;
+}
+
+.board {
+  display: flex;
+  justify-content: space-between;
+}
+
+.heart {
+  font-size: 13px;
+  display: flex;
+}
+.heart p{
+  margin-left: 5px;
+}

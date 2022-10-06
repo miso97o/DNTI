@@ -1,0 +1,42 @@
+/* Kmmap */
+
+@import url("https://fonts.googleapis.com/css2?family=Noto Sans KR:wght@500;700&display=swap");
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.content {
+  margin: 0px 10px 0px 10px;
+}
+
+.content p {
+  font-size: 24px;
+  font-family: "NanumSquare";
+  font-weight: 600;
+  color: rgba(0, 0, 0, 1);
+  text-align: center;
+  word-wrap: break-word;
+  margin: 14px 25px 0px 25px;
+  text-decoration-line: none;
+  cursor: pointer;
+  border-bottom: 5px solid transparent;
+}
+
+.content .link {
+  text-decoration: none;
+}
+
+.image {
+  width: 95px;
+  height: 60px;
+}
+
+.content p:hover {
+  color: #7a08ff;
+  border-bottom: 5px solid #7a08ff;
+}

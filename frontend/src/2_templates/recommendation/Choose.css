@@ -1,0 +1,85 @@
+.selectedOptArea1,
+.selectedOptArea2,
+.selectedOptArea3,
+.selectedOptArea4,
+.selectedOptArea5,
+.selectedOptArea6 {
+  width: 40px;
+  border-radius: 10px;
+}
+.selectedOptArea1 {
+  height: 280px;
+}
+.selectedOptArea2 {
+  height: 240px;
+}
+.selectedOptArea3 {
+  height: 200px;
+}
+.selectedOptArea4 {
+  height: 160px;
+}
+.selectedOptArea5 {
+  height: 120px;
+}
+.selectedOptArea6 {
+  height: 80px;
+}
+
+
+
+
+
+
+.color1 {
+  background-color: #ffbb33;
+}
+.color2 {
+  background-color: #ff6795;
+}
+.color3 {
+  background-color: #3784f6;
+}
+.color4 {
+  background-color: #b83dba;
+}
+.color5 {
+  background-color: #296194;
+}
+.color6 {
+  background-color: #41bc8b;
+}
+.colorundefined {
+  background-color: #f0f0f0;
+}
+
+
+.rDeleteArea {
+  transition: 0.3s ease;
+  opacity: 0;
+  position: absolute;
+  top: 0%;
+  right: 00%;
+  transform: translate(30%, -30%);
+}
+.selectedOptArea1:hover .rDeleteArea,
+.selectedOptArea2:hover .rDeleteArea,
+.selectedOptArea3:hover .rDeleteArea,
+.selectedOptArea4:hover .rDeleteArea,
+.selectedOptArea5:hover .rDeleteArea,
+.selectedOptArea6:hover .rDeleteArea {
+  opacity: 1;
+}
+.rDeleteBtn {
+  background-color: #7a08ff;
+  width: 22px;
+  height: 22px;
+  border-radius: 100px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* padding: 16px 32px; */
+}

@@ -1,0 +1,86 @@
+.page {
+  /* font-family: 'TmoneyRoundWindRegular'; */
+}
+
+.search {
+  margin-bottom: 40px;
+  margin-top: 20px;
+}
+
+.show {
+  gap: 16px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 22px;
+  margin-left: 5px;
+  color: #333333;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.selectedContainer {
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0px 12px 0px 12px;
+}
+
+.selectedOptArea {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.selectedOptIcon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  /* align-items: flex-end; */
+}
+
+.selectedImage {
+  width: 35px;
+  height: 35px;
+  margin-top: 4px;
+}
+
+.selectedBlank {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+  background-color: #f0f0f0;
+}
+
+.selectedUnderline {
+  background-color: #f0f0f0;
+  border: 0;
+  height: 1.3px;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.options {
+  padding: 0px 10px 0px 10px;
+}
+
+.selectedOptIcon {
+  position: relative;
+  width: 100%;
+}
+
+.CancleImg {
+  height: 12px;
+}
+
+
+
+
+

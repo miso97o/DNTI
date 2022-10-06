@@ -1,0 +1,22 @@
+.ranking {
+  display: grid;
+  grid-template-columns: 2fr 6fr 11fr;
+  width: 100%;
+  height: 34px;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-bottom: 6px;
+  /* justify-content: center; */
+  align-items: center;
+  cursor: pointer;
+}
+
+.nooooo:hover {
+  background-color: rgba(122, 8, 255, 0.04);
+}
+
+
+.yesss {
+  background-color: #7a08ff;
+  color: #ffffff;
+}
