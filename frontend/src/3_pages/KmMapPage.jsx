@@ -304,7 +304,7 @@ function KmMap() {
           
         </div>
         <div className={styles.map}>
-          {loading && 
+          {/* {loading && 
           <div
             style={{
               position: "absolute",
@@ -319,7 +319,7 @@ function KmMap() {
               size={100}
               speedMultiplier={0.75}
             />
-          </div>}
+          </div>} */}
           <div className={styles.kakaoMap} id="kakaoMap">
           </div>
           <div className={styles.text}>찾고자 하는 지점을 더블클릭 해주세요</div>

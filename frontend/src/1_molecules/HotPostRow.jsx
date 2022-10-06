@@ -33,35 +33,34 @@ export default function HotPostRow({
         increaseHit();
       }}
     >
-      <div className="flex flex-row h-8 w-full items-center p-5  border-b-slate-200 border-b-2 box-border bg-purple-200 hover:bg-purple-300">
+      <div className="flex flex-row h-8 w-full items-center p-5  border-b-slate-200 border-b-2 box-border bg-purple-100 hover:bg-purple-200">
         <div className="flex flex-row w-full items-stretch justify-between">
-          <div className="flex flex-row items-center w-1/3">
+          <div className="flex flex-row items-center w-7/12">
             {isCertified && (
               <img src={CertifiedMark} alt="인증 마크" className="w-6 mr-2" />
             )}
             <p className="text-ellipsis overflow-hidden font-bold">{title}</p>
           </div>
-          <div className="flex flex-row justify-end items-center w-2/3 text-sm">
-            <div className="flex flex-row items-center mr-6">
+          <div className="grid grid-cols-11 justify-end items-center w-5/12 text-sm">
+            <div className="col-span-3 flex flex-row items-center justify-end mr-2">
               <p>{writer}</p>
             </div>
 
-            <div className="flex flex-row items-center ml-1">
+            <div className="col-span-2 flex flex-row items-center ml-1 justify-start">
               <ChatBubbleOutlineOutlinedIcon fontSize="small" />
-              <p>{replies}</p>
+              <p className="ml-0.5">{replies}</p>
             </div>
-            <div className="flex flex-row items-center ml-1">
+            <div className="col-span-2 flex flex-row items-center ml-1 justify-start">
               <VisibilityOutlinedIcon
                 fontSize="small"
-                className="text-gray-700"
               />
-              <p>{views}</p>
+              <p className="ml-0.5">{views}</p>
             </div>
-            <div className="flex flex-row items-center ml-1">
-              <FavoriteBorderOutlinedIcon fontSize="small" />
-              <p>{likes}</p>
+            <div className="col-span-2 flex flex-row items-center ml-1 justify-start">
+              <FavoriteBorderOutlinedIcon fontSize="small"/>
+              <p className="ml-0.5">{likes}</p>
             </div>
-            <p className="ml-4">{date.replaceAll("-", "/")}</p>
+            <p className="col-span-2 ml-1 flex justify-end">{date.replaceAll("-", "/")}</p>
           </div>
         </div>
       </div>

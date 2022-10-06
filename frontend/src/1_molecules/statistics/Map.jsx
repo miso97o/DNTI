@@ -55,7 +55,7 @@ function Map() {
         strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
         strokeStyle: 'solid', // 선의 스타일입니다
         fillColor: color, // 채우기 색깔입니다
-        fillOpacity: 0.4, // 채우기 불투명도 입니다
+        fillOpacity: 0.3, // 채우기 불투명도 입니다
       });
 
       polygons.push(polygon);
@@ -94,9 +94,10 @@ function Map() {
         }        
         const points = new kakao.maps.LatLng(tLat/coordinates[0].length, tLon/coordinates[0].length)
         name = val.properties.EMD_NM;
+        console.log(name)
         const mapCustomOverlay = new kakao.maps.CustomOverlay({
           position: points,
-          content: name,
+          content: "<p>" + name + "</p>",
           xAnchor: 0.5,
           yAnchor: 0.5,
         });
@@ -105,12 +106,12 @@ function Map() {
             let polygon = new kakao.maps.Polygon({
               map: map,
               path: path, // 그려질 다각형의 좌표 배열입니다
-              strokeWeight: 1, // 선의 두께입니다
-              strokeColor: 'black', // 선의 색깔입니다
-              strokeOpacity: 0.8, // 선의 불투명도
+              strokeWeight: 3, // 선의 두께입니다
+              strokeColor: "#7a08ff", // 선의 색깔입니다
+              strokeOpacity: 1, // 선의 불투명도
               strokeStyle: 'solid', // 선의 스타일입니다
-              fillColor: "red", // 채우기 색깔입니다
-              fillOpacity: 0.4, // 채우기 불투명도 입니다
+              fillColor: "#7a08ff", // 채우기 색깔입니다
+              fillOpacity: 0.3, // 채우기 불투명도 입니다
             });
             polygons.push(polygon);
 
