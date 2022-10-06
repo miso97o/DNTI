@@ -41,9 +41,7 @@ public class BoardController {
     @GetMapping("/{boardId}")
     public ApiResult selectBoard(@PathVariable("boardId") Long boardId) {
         // 성공하면 board 리턴
-        BoardResponse boardResponse = boardService.findByBoardId(boardId);
-
-        return new ApiResult(200, boardResponse);
+        return new ApiResult(200, boardService.findByBoardId(boardId));
     }
 
     // 게시글 여러 개 조회

@@ -1,14 +1,12 @@
 package com.a601.backend.api.service;
 
 import com.a601.backend.api.domain.dto.response.KmResponse;
-import com.a601.backend.api.domain.entity.Km;
 import com.a601.backend.api.repository.KmRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,25 +17,31 @@ public class KmServiceImpl implements KmService {
 
     @Override
     public List<KmResponse> calculateKm(double lat, double lon) {
-        List<Km> allPoint = kmRepository.findAll();
-        List<KmResponse> result = new ArrayList<>();
+
+        List<KmResponse> result = kmRepository.getkmdata(lat, lon).stream().map(km -> KmResponse.builder()
+                .type(km.getType())
+                .name(km.getName())
+                .lat(km.getLat()).lon(km.getLon()).address(km.getAddress()).build()).collect(Collectors.toList());
+
+//        List<Km> allPoint = kmRepository.findAll();
+//        List<KmResponse> result = new ArrayList<>();
 //        System.out.println(allPoint.size());
-        for (Km km:allPoint) {
-            if(distance(lat, lon, km.getLat(), km.getLon()) < 0.5){
-                KmResponse kmResponse = KmResponse.builder()
-                        .type(km.getType())
-                        .lat(km.getLat())
-                        .lon(km.getLon())
-                        .name(km.getName())
-                        .address(km.getAddress())
-                        .build();
-                result.add(kmResponse);
-            }
-        }
-        for(int i = 0 ; i < result.size(); i++){
-            System.out.println(result.get(i).getAddress());
-        }
-//        System.out.println(result.size());
+//        for (Km km:allPoint) {
+//            if(distance(lat, lon, km.getLat(), km.getLon()) < 0.5){
+//                KmResponse kmResponse = KmResponse.builder()
+//                        .type(km.getType())
+//                        .lat(km.getLat())
+//                        .lon(km.getLon())
+//                        .name(km.getName())
+//                        .address(km.getAddress())
+//                        .build();
+//                result.add(kmResponse);
+//            }
+//        }
+//        for(int i = 0 ; i < result.size(); i++){
+//            System.out.println(result.get(i).getAddress());
+//        }
+////        System.out.println(result.size());
         return result;
     }
 
