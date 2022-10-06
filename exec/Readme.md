@@ -29,7 +29,7 @@
 1. 실행 후에 왼쪽 상단의 Session 클릭
 2. SSH 연결
 
-![원격접속.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/33ac2d99-7442-4b6a-8392-5b40b99b320a/%EC%9B%90%EA%B2%A9%EC%A0%91%EC%86%8D.png)
+![원격접속](images/mobax.png)
 
 - Remote host에 Public IP 입력
 - Specify username에 사용할 유저 이름 입력 (현 프로젝트는 ubuntu 사용)
@@ -324,7 +324,7 @@
     
 - 발급 완료되면 인증서가 저장된 위치가 뜸
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2707cc74-c821-4382-a570-2a28ac157733/Untitled.png)
+![인증로그](images/certlog.png)
 
 - `sudo certbot certificates` 명령어를 통해 인증서 확인 가능
     - `certbot renew` 명령어를 통해 재발급 가능
