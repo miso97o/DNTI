@@ -32,8 +32,9 @@ export default function ReviewMainComponent() {
   ]);
   const [searchWord, setSearchWord] = React.useState("");
   const location = useLocation();
-  const user = useSelector((state) => state.userId);
+  const user = useSelector((state) => state.user);
   const guDong = useSelector((state) => state.guDong);
+  const navigate = useNavigate();
   const handleCriteriaChange = (event) => {
     setSelectedCriteria(event.target.value);
   };
@@ -45,6 +46,17 @@ export default function ReviewMainComponent() {
   const handleSearchWordChange = (event) => {
     setSearchWord(event.target.value);
   };
+
+  function canWrite() {
+    if (guDong.selectedGu === user.gu && guDong.selectedDong === user.dong) {
+      navigate(`/board/review/write`, {
+        state: { reviewId: "newReview", from: 0 },
+        replace: true,
+      });
+    } else {
+      alert("이 지역 분이 아니시네요!");
+    }
+  }
 
   function getHotReview() {
     axios
@@ -92,7 +104,8 @@ export default function ReviewMainComponent() {
   };
 
   useEffect(() => {
-    if (location.state.from === 1) {
+    console.log("user", user);
+    if (location.state.from !== null && location.state.from === 1) {
       console.log("마이페이지에서 왔구나");
       setSearchWord(location.state.userId);
       setSelectedCriteria("아이디");
@@ -216,9 +229,10 @@ export default function ReviewMainComponent() {
           <Link to="/board" state={{ from: 0 }}>
             <button className="graybtn-s">목록</button>
           </Link>
-          <Link to="/board/review/write" state={{ reviewId: "newReview" }}>
-            <button className="bluebtn-s">글쓰기</button>
-          </Link>
+
+          <button className="bluebtn-s" onClick={canWrite}>
+            글쓰기
+          </button>
         </div>
       </div>
 

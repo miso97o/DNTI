@@ -35,8 +35,7 @@ export default function ReviewWriteComponent() {
     console.log(location.state.reviewId);
     if (guDong.selectedGu !== user.gu) {
       alert("이 지역 분이 아니신가봐요!");
-      navigate(`/board/review`, { state: { from: 0 }, replace: true });
-      return;
+      navigate(`/board/review`, { state: { from: 0 } });
     }
     if (location.state.reviewId !== "newReview") {
       axios
