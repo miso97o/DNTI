@@ -328,7 +328,7 @@
 
 - `sudo certbot certificates` 명령어를 통해 인증서 확인 가능
     - `certbot renew` 명령어를 통해 재발급 가능
-1. nginx 설정 파일 수정
+3. nginx 설정 파일 수정
     - 컨테이너의 `/etc/nginx/sites-available`의 `default.conf` 파일을 수정
     - sudo 권한 필요 `sudo vim default`
     - `root` 부분을 프론트 빌드된 폴더로 설정
@@ -391,5 +391,5 @@ server {
 }
 ```
 
-1. nginx 재시작
+4. nginx 재시작
 - `sudo systemctl start nginx`
