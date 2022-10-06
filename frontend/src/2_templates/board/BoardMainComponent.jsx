@@ -88,6 +88,8 @@ export default function BoardMainComponent() {
     console.log("boardMain initialize");
     searchBoard();
     getReview(1);
+    getHotReview();
+    getHotBoard();
   }, []);
 
   const mounted = React.useRef(false);
