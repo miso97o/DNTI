@@ -1,7 +1,7 @@
 package com.a601.backend.api.service;
 
 import com.a601.backend.api.domain.dto.request.ReviewRequest;
-import com.a601.backend.api.domain.dto.response.BoardResponse;
+
 import com.a601.backend.api.domain.dto.response.ReviewResponse;
 import com.a601.backend.api.domain.entity.Review;
 import com.a601.backend.api.domain.entity.ReviewLike;
@@ -17,10 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
