@@ -1,6 +1,7 @@
 package com.a601.backend.api.service;
 
 import com.a601.backend.api.domain.dto.response.KmResponse;
+import com.a601.backend.api.domain.entity.Km;
 import com.a601.backend.api.repository.KmRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,20 @@ public class KmServiceImpl implements KmService {
 
     @Override
     public List<KmResponse> calculateKm(double lat, double lon) {
+        long startTime = System.nanoTime();
 
+        List<Km> list =  kmRepository.getkmdata(lat, lon);
+
+        long afterTime = System.nanoTime();
+        System.out.println("Entity로만 계산"+(afterTime-startTime));
+
+        long startTimeD = System.nanoTime();
         List<KmResponse> result = kmRepository.getkmdata(lat, lon).stream().map(km -> KmResponse.builder()
                 .type(km.getType())
                 .name(km.getName())
                 .lat(km.getLat()).lon(km.getLon()).address(km.getAddress()).build()).collect(Collectors.toList());
+        long afterTimeD = System.nanoTime();
+        System.out.println("DTO로 변환 후 계산"+(afterTimeD-startTimeD));
 
 //        List<Km> allPoint = kmRepository.findAll();
 //        List<KmResponse> result = new ArrayList<>();
