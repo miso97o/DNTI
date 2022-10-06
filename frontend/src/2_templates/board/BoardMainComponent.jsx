@@ -122,7 +122,7 @@ export default function BoardMainComponent() {
 
             <div className="flex flex-col h-[42rem] items-center justify-between">
               <div className="h-full w-full dnticard">
-                <div className="flex flex-col w-full">
+                <div className="flex flex-col w-full overflow-hidden text-ellipsis whitespace-nowrap">
                   {hotBoardList &&
                     hotBoardList.map((x) => {
                       return (
@@ -143,7 +143,7 @@ export default function BoardMainComponent() {
                     })}
                 </div>
 
-                <div className="flex flex-col w-full">
+                <div className="flex flex-col w-full overflow-hidden text-ellipsis whitespace-nowrap">
                   {boardList &&
                     boardList.map((x) => {
                       return (
