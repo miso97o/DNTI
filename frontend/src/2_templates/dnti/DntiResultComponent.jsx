@@ -167,7 +167,7 @@ function DntiResultCard({ imgsrc, type, content, arr }) {
         </div>
         <hr />
         <div className="flex flex-col m-12 items-center">
-          <p className="text-center font-bold text-2xl mb-5">
+          <p className="text-center font-bold text-2xl mb-14">
             🏡
             <span className="font-extrabold font-dnti items-center">
               {type}
@@ -179,30 +179,27 @@ function DntiResultCard({ imgsrc, type, content, arr }) {
               {dongList.map((x, idx) => {
                 const src = "/img/rank/" + (idx + 1) + ".png";
                 return (
-                  <div className="flex items-center">
+                  <div className="flex items-center cursor-pointer" onClick={() => handleSelect(x.dongName, idx)}>
                     <img src={src} alt="" className="w-8 h-8" />
-                    <p className="font-bold text-start text-xl" onClick={() => handleSelect(x.dongName, idx)}>
+                    <p className="font-bold text-start text-xl">
                       위. {x.guName} {x.dongName}
                     </p>
                   </div>
                 );
               })}
-              
             </div>
             <div className="w-7/12 h-full flex items-center	mt-2">
               {selected && <Chart rank={dongList} num={num} />} 
             </div>
-                      
           </div>
 
           
-          
-          <div className="flex flex-col justify-center items-center pt-10">
+          <div className="flex flex-col justify-center items-center">
             <p className="text-sm mb-3">더 자세한 동네추천을 원한다면?</p>
             <Link
               to={`/dnRecommend`}
               style={{ textDecoration: "none" }}
-              state={{ dnti: type }}
+              state={{ dnti: type, i:1 }}
             >
               <Button onClick={saveDnti} variant="contained">
                 동네추천 보러가기
