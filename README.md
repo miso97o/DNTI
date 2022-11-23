@@ -57,7 +57,7 @@
     <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
     <img src="https://img.shields.io/badge/hibernate-59666C?style=for-the-badge&logo=hibernate security&logoColor=white">
     <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
-    <img src="https://img.shields.io/badge/Apache Hadoop-66CCFF?style=for-the-badge&logo=Apache Hadoop&logoColor=white">
+    <img src="https://img.shields.io/badge/apache hadoop-66CCFF?style=for-the-badge&logo=apache hadoop&logoColor=white">
 
 </p>
 
